@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@import "../../design-system/tokens.css";
+
+@theme inline {
+  /* --- Fonts --- */
+  --font-display: 'Podkova', serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Didact Gothic', sans-serif;
+
+  /* --- Colors: resolve from theme layer --- */
+  --color-bg-deep: var(--theme-bg-deep);
+  --color-bg-base: var(--theme-bg-base);
+  --color-bg-elevated: var(--theme-bg-elevated);
+  --color-bg-subtle: var(--theme-bg-subtle);
+
+  --color-text-primary: var(--theme-text-primary);
+  --color-text-secondary: var(--theme-text-secondary);
+  --color-text-muted: var(--theme-text-muted);
+  --color-text-inverse: var(--theme-text-inverse);
+
+  --color-accent-primary: var(--theme-accent-primary);
+  --color-accent-hover: var(--theme-accent-hover);
+  --color-accent-muted: var(--theme-accent-muted);
+  --color-accent-glow: var(--theme-accent-glow);
+
+  --color-secondary-primary: var(--theme-secondary-primary);
+  --color-secondary-hover: var(--theme-secondary-hover);
+  --color-secondary-muted: var(--theme-secondary-muted);
+  --color-secondary-glow: var(--theme-secondary-glow);
+
+  --color-border-subtle: var(--theme-border-subtle);
+  --color-border-strong: var(--theme-border-strong);
+
+  --color-success: var(--theme-success);
+  --color-warning: var(--theme-warning);
+  --color-error: var(--theme-error);
+
+  /* --- Typography: Font sizes --- */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3.5rem;
+  --text-5xl: 5rem;
+
+  /* --- Typography: Line heights --- */
+  --leading-tight: 1.1;
+  --leading-snug: 1.3;
+  --leading-normal: 1.65;
+  --leading-loose: 1.8;
+
+  /* --- Typography: Letter spacing --- */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+
+  /* --- Typography: Font weights --- */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* --- Spacing --- */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+
+  /* --- Border radius --- */
+  --radius-none: 0;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* --- Shadows: resolve from theme layer --- */
+  --shadow-sm: var(--theme-shadow-sm);
+  --shadow-md: var(--theme-shadow-md);
+  --shadow-lg: var(--theme-shadow-lg);
+  --shadow-xl: var(--theme-shadow-xl);
+  --shadow-glow-brass: var(--theme-shadow-glow-brass);
+  --shadow-glow-magenta: var(--theme-shadow-glow-magenta);
+
+  /* --- Motion / Transitions --- */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+  --duration-ambient: 1200ms;
+}
+
+body {
+  background-color: var(--color-bg-deep);
+  color: var(--color-text-primary);
+  font-family: var(--font-body), sans-serif;
+  line-height: var(--leading-normal);
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-accent-primary);
+  outline-offset: 2px;
+}
+
+*,
+*::before,
+*::after {
+  transition: background-color 300ms var(--ease-default),
+              color 300ms var(--ease-default),
+              border-color 300ms var(--ease-default),
+              box-shadow 300ms var(--ease-default),
+              opacity 300ms var(--ease-default);
+}
+
+[data-no-transition] *,
+[data-no-transition] *::before,
+[data-no-transition] *::after {
+  transition-duration: 0ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+  }
+}

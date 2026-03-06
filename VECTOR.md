@@ -26,7 +26,7 @@ knowledge:
 
 ## Problem Statement
 
-Design portfolios built with templates look generic and fail to communicate the judgment, craft, and technical depth that distinguish senior product designers. Justin needs a portfolio that demonstrates design thinking through its own construction -- not just through the case studies it displays. Existing portfolio builders and themes do not support the level of visual control, accessibility rigor, or architectural intentionality that the work itself demands.
+Design portfolios built with templates look generic and fail to communicate the judgment, craft, and technical depth that distinguish director level product designers. Justin needs a portfolio that demonstrates design thinking through its own construction -- not just through the case studies it displays. Existing portfolio builders and themes do not support the level of visual control, accessibility rigor, or architectural intentionality that the work itself demands.
 
 ## Target Audience
 

@@ -1,6 +1,6 @@
 ---
 name: writer
-description: Case study builder and content refiner for Justin's portfolio. Use this skill when creating new case studies, refining existing case study content, editing prose in case-studies.ts, structuring content sections, or writing any portfolio copy. Triggers on requests about case study writing, content editing, the meta case study, adding new work entries, or improving existing prose. The Writer directly edits content data files (core/content/case-studies.ts, core/tokens/index.ts metadata) but does not modify UI components or infrastructure.
+description: Case study builder and content refiner for Justin's portfolio. Use this skill when creating new case studies, refining existing case study content, editing case study Markdown files, structuring content sections, or writing any portfolio copy. Triggers on requests about case study writing, content editing, the meta case study, adding new work entries, or improving existing prose. The Writer directly edits Markdown content files (core/content/*.md) and metadata (core/tokens/index.ts) but does not modify UI components or infrastructure.
 ---
 
 # Writer: Case Study Builder & Refiner
@@ -26,7 +26,7 @@ The Writer's domain is the **core/** layer exclusively. Content is data, not UI.
 | Layer | Access |
 |-------|--------|
 | **design-system/** | Read only (reference token names for accent annotations) |
-| **core/** | Read + Write (case-studies.ts, tokens metadata, resume.ts) |
+| **core/** | Read + Write (*.md content files, case-studies.ts, tokens metadata, resume.ts) |
 | **services/** | No access |
 | **src/** | No access |
 
@@ -50,8 +50,9 @@ When Justin says "just do it" or signals flow mode, execute content changes with
 ## Before Starting
 
 1. Read `VECTOR.md` for voice guidelines and project direction
-2. Read `core/content/case-studies.ts` for existing content and the section type system
+2. Read the target case study's `.md` file in `core/content/` for existing content
 3. Read `core/tokens/index.ts` for case study metadata (slugs, titles, heroMetric, heroImage)
+4. Skim `core/content/parse-case-study.ts` if unfamiliar with the Markdown conventions
 
 ---
 
@@ -63,9 +64,68 @@ Case studies have two parts:
 - `caseStudies` array and `metaCaseStudy` object
 - Fields: slug, title, subtitle, tags, heroMetric, heroImage
 
-**Sections** in `core/content/case-studies.ts`:
-- Keyed by slug in the `caseStudySections` record
-- Section types: `text`, `image`, `metrics`, `comparison`, `quote`, `callout`
+**Content** in `core/content/<slug>.md` (Markdown files):
+- One `.md` file per case study
+- Prose is plain Markdown (headings, paragraphs, bold, links)
+- Structured sections use fence syntax (see Markdown conventions below)
+- A parser (`parse-case-study.ts`) converts Markdown to typed `CaseStudySection[]`
+- `case-studies.ts` imports the `.md` files and exports the parsed content
+
+---
+
+## Markdown Conventions
+
+### Prose (TextSection)
+Plain paragraphs. Use `## Heading` for section headings. Separate paragraphs with blank lines.
+
+### Images (ImageSection)
+```markdown
+![Alt text](/images/filename.png)
+*Optional caption*
+<!-- aspect:16:9 placeholder:Description for placeholder div -->
+```
+
+### Metrics (MetricsSection)
+```markdown
+::: metrics Optional Heading
+- 48 hrs | Tokens to production | brass
+- 5 pages | Shipped with full content
+- 100 | Mobile accessibility (Lighthouse) | magenta
+:::
+```
+Format: `- value | label | optional accent`
+
+### Callouts (CalloutSection)
+```markdown
+::: callout Optional Label
+Body text here. Supports **bold** and [links](url).
+:::
+```
+
+### Quotes (QuoteSection)
+```markdown
+::: quote
+The quote text goes here.
+-- Attribution, Optional Role
+:::
+```
+
+### Comparisons (ComparisonSection)
+```markdown
+::: comparison Optional Heading
+**Before**
+![Alt](/images/before.png)
+placeholder: Description text
+label: Before
+description: Optional description
+
+**After**
+![Alt](/images/after.png)
+placeholder: Description text
+label: After
+description: Optional description
+:::
+```
 
 ---
 
@@ -75,16 +135,16 @@ Case studies have two parts:
 
 1. Gather source material (Justin provides notes, friction logs, or paste-in content)
 2. Draft metadata entry for `core/tokens/index.ts` (slug, title, subtitle, tags, heroMetric)
-3. Structure content into sections following the `CaseStudySection` union type
+3. Create `core/content/<slug>.md` using the Markdown conventions above
 4. Write prose in Justin's voice (see voice guidelines below)
-5. Add entries to both files
+5. Add the import and parser call to `core/content/case-studies.ts`
 6. Run `npm run lint && npm run build` to verify
 
 ### Refining existing content
 
-1. Read the target case study's sections from `core/content/case-studies.ts`
-2. Identify areas for improvement (clarity, voice consistency, flow, structure)
-3. Edit in place, preserving section type structure
+1. Read the target case study's `.md` file in `core/content/`
+2. Edit prose directly in Markdown -- no TypeScript syntax to worry about
+3. Preserve fence block structure for metrics, callouts, quotes, comparisons
 4. Run `npm run lint && npm run build` to verify
 
 ---

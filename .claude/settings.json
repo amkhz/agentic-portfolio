@@ -1,15 +1,5 @@
 {
   "permissions": {
-    "allow": [
-      "WebFetch(domain:www.shapeof.ai)",
-      "WebFetch(domain:jakub.kr)",
-      "WebFetch(domain:bigmedium.com)",
-      "WebFetch(domain:www.aiverse.design)",
-      "WebFetch(domain:www.aiuxpatterns.com)",
-      "WebFetch(domain:www.aiuxplayground.com)",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:atlas.moonshot.ooo)",
-      "WebFetch(domain:www.last.fm)"
-    ]
+    "allow": []
   }
 }

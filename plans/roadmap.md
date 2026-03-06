@@ -118,6 +118,7 @@ A route (or set of routes) for creative exploration that doesn't need to meet po
 - **Code splitting:** React Router v7 supports lazy loading. Worth setting up per-route splitting as the bundle grows with React Bits components.
 - **View transitions:** Vite + React Router makes route transitions more natural than Next.js did. Explore the View Transitions API for page-level animations.
 - **MCP development:** Last.fm MCP server is the first project. Pattern can extend to other data sources (photography EXIF data, Figma, reading lists).
+- **Upstream sync automation:** GitHub Action to notify when the Investiture upstream repo has new commits. Lightweight cron check, opens an issue or sends a notification. Low priority but track it here.
 
 ---
 

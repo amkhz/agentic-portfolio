@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Container } from "./Container";
 import { ThemeToggle } from "@/components/interactive/ThemeToggle";
+import { NowPlaying } from "@/components/interactive/NowPlaying";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -41,6 +42,9 @@ export function Header() {
                 </Link>
               </li>
             ))}
+            <li className="hidden sm:list-item">
+              <NowPlaying />
+            </li>
             <li>
               <ThemeToggle />
             </li>

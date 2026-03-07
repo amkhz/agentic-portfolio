@@ -15,7 +15,6 @@ export function Hero() {
           particleCount={310}
           particleSpread={9}
           speed={0.09}
-          moveParticlesOnHover
           particleHoverFactor={0.9}
           alphaParticles
           particleBaseSize={100}

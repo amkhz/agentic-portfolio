@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import type { CaseStudy } from "@core/tokens";
 import { Tag } from "@/components/interactive/Tag";
+import { SpotlightCard } from "@/components/effects/SpotlightCard";
 
 interface ProjectCardProps {
   study: CaseStudy;
@@ -34,11 +35,12 @@ export function ProjectCard({ study }: ProjectCardProps) {
     !study.heroImage.src.includes("placeholder-");
 
   return (
-    <Link
-      to={`/work/${study.slug}`}
-      className="group block overflow-hidden rounded-lg border border-border-subtle bg-bg-base transition-all duration-normal hover:-translate-y-0.5 hover:border-accent-primary hover:shadow-glow-brass focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-    >
-      {hasRealImage ? (
+    <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-all duration-normal">
+      <Link
+        to={`/work/${study.slug}`}
+        className="group block overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+      >
+          {hasRealImage ? (
         <div className="relative aspect-video overflow-hidden border-b border-border-subtle bg-bg-elevated">
           <img
             src={study.heroImage.src}
@@ -90,6 +92,7 @@ export function ProjectCard({ study }: ProjectCardProps) {
           ))}
         </div>
       </div>
-    </Link>
+      </Link>
+    </SpotlightCard>
   );
 }

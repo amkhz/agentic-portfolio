@@ -3,7 +3,7 @@
 > Living roadmap for agentic-portfolio. Updated as priorities shift.
 > Read VECTOR.md and ARCHITECTURE.md first. Work pitch notes live in `plans/work-pitch-notes.md`.
 
-**Last updated:** 2026-03-06
+**Last updated:** 2026-03-07
 
 ---
 
@@ -16,7 +16,8 @@
 - Agent skills infrastructure across Claude Code, Cursor, and Codex
 - SEO metadata, dynamic OG images, custom 404, favicon system
 - Animation layer: Particles hero background, SpotlightCard on ProjectCards, ParticlesTuner (dev-only)
-- Last.fm NowPlaying widget: polling hook, service layer, collapsible header strip with eq bars and album art
+- Last.fm NowPlaying: inverted tab widget with expand/collapse, frosted glass, randomized EqBars, album art reveal
+- `feature-reactbits` and `feature-lastfm` merged to main (2026-03-07), live in production
 
 ---
 
@@ -24,11 +25,11 @@
 
 ### 1. Music integration (Last.fm + MCP)
 
-**Status:** NowPlaying widget live on `feature-lastfm`. Polling hook (30s, visibility-aware), service layer calling Last.fm API directly (API key in env vars for now, Vercel proxy planned for production).
+**Status:** COMPLETE (core widget). NowPlaying merged to main and live in production (2026-03-07). Inverted tab design with expand/collapse, frosted glass matching header, randomized EqBars, album art reveal. Polling hook (30s, visibility-aware), service layer, env vars on Vercel. `prefers-reduced-motion` verified.
 
 **Next steps:**
-- Polish NowPlaying: header balance, smooth transitions, DecryptedText for track reveals
-- Move API key server-side via Vercel serverless function before deploying to production
+- DecryptedText for track name reveal on song change
+- Move API key server-side via Vercel serverless function (low-risk read-only key for now)
 - Last.fm MCP server (Tier 2)
 
 **Bigger vision (phased):**
@@ -41,7 +42,7 @@
 
 ### 2. Animation layer (React Bits)
 
-**Status:** Particles hero and SpotlightCard shipped on `feature-reactbits`. GSAP scroll animations (ScrollFloat, AnimatedContent) tried and reverted -- felt sluggish. Sticking with existing RevealOnScroll for now.
+**Status:** COMPLETE (Phase 1). Particles hero, SpotlightCard, and ParticlesTuner merged to main (2026-03-07). GSAP scroll animations tried and reverted -- felt sluggish. Sticking with existing RevealOnScroll.
 
 **Next steps:**
 - DecryptedText and CountUp (motion library, ~15KB) -- directly serve NowPlaying and MetricCards

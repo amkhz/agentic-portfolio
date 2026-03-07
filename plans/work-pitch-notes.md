@@ -32,3 +32,7 @@
 - Agent skills as cross-tool infrastructure -- skills usable across Claude Code, Cursor, and Codex
 - Token-driven a11y by default -- contrast ratios, heading hierarchy, focus rings
 - Vite migration -- moved from Next.js App Router to Vite + React Router for faster builds and simpler deployment
+- Particles hero -- vanilla canvas particle system, zero dependencies, token-driven colors, respects reduced motion
+- SpotlightCard -- mouse-tracking spotlight effect on project cards, CSS-only with token glow colors
+- Last.fm NowPlaying widget -- live music data on the portfolio via inverted tab UI with frosted glass, expand/collapse reveal, randomized EqBar animation. Demonstrates service layer architecture, polling hooks, and real-time data integration
+- Copy-paste component adoption -- React Bits components adapted as local TS+Tailwind, no monolithic package dependency

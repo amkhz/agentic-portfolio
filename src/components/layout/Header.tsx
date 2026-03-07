@@ -42,15 +42,14 @@ export function Header() {
                 </Link>
               </li>
             ))}
-            <li className="hidden sm:list-item">
-              <NowPlaying />
-            </li>
             <li>
               <ThemeToggle />
             </li>
           </ul>
         </nav>
       </Container>
+
+      <NowPlaying />
     </header>
   );
 }

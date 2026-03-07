@@ -3,7 +3,7 @@
 > Living roadmap for agentic-portfolio. Updated as priorities shift.
 > Read VECTOR.md and ARCHITECTURE.md first. Work pitch notes live in `plans/work-pitch-notes.md`.
 
-**Last updated:** 2026-03-05
+**Last updated:** 2026-03-06
 
 ---
 
@@ -15,6 +15,8 @@
 - Vite + React Router architecture with four-layer separation (design-system, core, services, src)
 - Agent skills infrastructure across Claude Code, Cursor, and Codex
 - SEO metadata, dynamic OG images, custom 404, favicon system
+- Animation layer: Particles hero background, SpotlightCard on ProjectCards, ParticlesTuner (dev-only)
+- Last.fm NowPlaying widget: polling hook, service layer, collapsible header strip with eq bars and album art
 
 ---
 
@@ -22,12 +24,12 @@
 
 ### 1. Music integration (Last.fm + MCP)
 
-**Entry point:** "Now playing" ambient element on the site. Small, warm, atmospheric. Album art, track, artist.
+**Status:** NowPlaying widget live on `feature-lastfm`. Polling hook (30s, visibility-aware), service layer calling Last.fm API directly (API key in env vars for now, Vercel proxy planned for production).
 
-**Architecture:**
-- `use-last-fm` hook (<700 bytes) for the client-side display
-- Vercel Edge Function in `services/` to proxy API calls (keeps key server-side)
-- Last.fm MCP server -- exposes listening data to any agent context. This is both a tool and a portfolio artifact.
+**Next steps:**
+- Polish NowPlaying: header balance, smooth transitions, DecryptedText for track reveals
+- Move API key server-side via Vercel serverless function before deploying to production
+- Last.fm MCP server (Tier 2)
 
 **Bigger vision (phased):**
 - Listening history visualizations -- genre maps, time-of-day patterns, generative art based from album art, mood boards generated from album art palettes
@@ -39,13 +41,12 @@
 
 ### 2. Animation layer (React Bits)
 
-**Goal:** Add atmospheric micro-interactions that reinforce the sci-fi warmth aesthetic. Not decoration. Mood.
+**Status:** Particles hero and SpotlightCard shipped on `feature-reactbits`. GSAP scroll animations (ScrollFloat, AnimatedContent) tried and reverted -- felt sluggish. Sticking with existing RevealOnScroll for now.
 
-**Starting points:**
-- Scroll Reveal / Scroll Float for text animations (may replace or enhance RevealOnScroll)
-- Animated List for case study sections entering the viewport
-- Magnetic hover effects on ProjectCards
-- Background effects -- explore options, combine with music data or photography, or gradients for something novel
+**Next steps:**
+- DecryptedText and CountUp (motion library, ~15KB) -- directly serve NowPlaying and MetricCards
+- Revisit scroll animations later if there's a lighter approach
+- Threads and Waves kept for future music visualization work
 
 **Constraints for the portfolio proper:**
 - `prefers-reduced-motion` respected

@@ -56,6 +56,16 @@
 
     /* GrainOverlay opacity */
     --grain-opacity: 0.04;
+
+    /* Animation: SpotlightCard */
+    --spotlight-color: oklch(0.7087 0.0845 60.96 / 0.15);
+    --spotlight-size: 80%;
+
+
+    /* Animation: Particles */
+    --particle-color-1: oklch(0.7087 0.0845 60.96);
+    --particle-color-2: oklch(0.6634 0.1052 346.74);
+    --particle-color-3: oklch(0.5824 0.0141 75.29);
   }
 
   [data-theme="light"] {
@@ -99,5 +109,15 @@
     --glow-magenta-fade: oklch(0.5400 0.1200 346.74 / 0.03);
 
     --grain-opacity: 0.03;
+
+    /* Animation: SpotlightCard */
+    --spotlight-color: oklch(0.5800 0.1000 60.96 / 0.12);
+    --spotlight-size: 80%;
+
+
+    /* Animation: Particles */
+    --particle-color-1: oklch(0.5800 0.1000 60.96);
+    --particle-color-2: oklch(0.5400 0.1200 346.74);
+    --particle-color-3: oklch(0.4800 0.0141 75.29);
   }
 }

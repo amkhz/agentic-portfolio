@@ -218,7 +218,8 @@ function fetchNowPlaying(): Promise<NowPlayingData>;
 - Token colors for text and borders; album art provides its own color
 - `prefers-reduced-motion`: static glow, no pulse
 
-**Placement:** Start with fixed bottom-right corner. Expands on hover/tap. Collapses on mobile. Prototype alternatives if time permits.
+**Placement:** Start with explorations in or around the top banner. Then consider fixed bottom-right corner. Expands on hover/tap. Collapses on mobile. Prototype alternatives. If clicked, can link to full last.fm profile in new tab.
+
 
 **Animation integration from Phase 1:**
 - DecryptedText for track name reveal on song change
@@ -260,13 +261,16 @@ Total new production weight: ~45KB gzipped. Acceptable for the animation quality
 
 ---
 
+## Resolved Questions
+
+1. **GSAP licensing:** Free for all use cases including commercial. Webflow acquired GSAP in late 2024 and removed all paid tiers.
+2. **RevealOnScroll migration:** Replace with AnimatedContent once feature parity is confirmed during 1.2.
+3. **NowPlaying placement:** Start with header strip (preferred -- avoids obscuring content). Prototype alternatives if time permits.
+4. **Polling interval:** Start at 30 seconds. Tune down if it feels laggy.
+
 ## Open Questions
 
-1. **GSAP licensing:** GSAP recently changed licensing. Verify the free tier covers our use case (portfolio site, no SaaS).
-2. **RevealOnScroll migration:** Replace entirely with AnimatedContent, or keep as a lightweight fallback?
-3. **NowPlaying placement:** Fixed corner vs. header strip vs. something else. Prototype during 2.3.
-4. **Polling interval:** 15s (responsive) vs. 30s (conservative). Start at 30s, tune down if it feels laggy.
-5. **MCP server location:** Last.fm MCP server (Tier 2) -- monorepo (`packages/mcp-lastfm/`) or separate repo? Decide before Tier 2 work begins.
+1. **MCP server location:** Last.fm MCP server (Tier 2) -- incubate in this repo first, then extract to a standalone open-source repo. Nothing like it exists yet, so there's a real opportunity to share it. Decide on extraction timing before Tier 2 work begins.
 
 ---
 

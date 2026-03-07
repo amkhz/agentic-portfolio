@@ -107,6 +107,7 @@
   --duration-slow: 400ms;
   --duration-slower: 600ms;
   --duration-ambient: 1200ms;
+
 }
 
 body {
@@ -144,5 +145,7 @@ button:focus-visible,
   *::before,
   *::after {
     transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

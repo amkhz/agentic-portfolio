@@ -35,13 +35,17 @@ export function RevealOnScroll({
     <div
       ref={ref}
       className={cn(
-        "transition-all ease-out",
-        isVisible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0",
+        isVisible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-2 opacity-0",
         className
       )}
       style={{
+        transitionProperty: "opacity, translate, filter",
         transitionDuration: "600ms",
+        transitionTimingFunction: "var(--ease-out)",
         transitionDelay: isVisible ? `${delay}ms` : "0ms",
+        filter: isVisible ? "blur(0px)" : "blur(4px)",
       }}
     >
       {children}

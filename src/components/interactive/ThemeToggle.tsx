@@ -61,13 +61,9 @@ export function ThemeToggle({ className }: { className?: string }) {
               : "opacity-100 [stroke-width:2]"
           )}
         />
-        {!isDark && (
-          <>
-            <line x1="12" y1="1" x2="12" y2="3" className="opacity-60" />
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" className="opacity-40" />
-            <line x1="19.78" y1="4.22" x2="18.36" y2="5.64" className="opacity-40" />
-          </>
-        )}
+        <line x1="12" y1="1" x2="12" y2="3" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-60")} />
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
+        <line x1="19.78" y1="4.22" x2="18.36" y2="5.64" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
       </svg>
     </button>
   );

@@ -35,7 +35,7 @@ export function Button({
     "min-h-[44px] px-6 py-3",
     "rounded-md",
     "font-heading text-sm font-semibold tracking-wide",
-    "transition-all duration-normal ease-default",
+    "transition-all duration-normal ease-default active:scale-[0.97]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
     "cursor-pointer select-none",
     variantStyles[variant],

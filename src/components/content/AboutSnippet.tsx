@@ -1,17 +1,19 @@
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
+import { ProfileCard } from "@/components/effects/ProfileCard";
 
 export function AboutSnippet() {
   return (
     <section className="border-t border-border-subtle py-20 sm:py-24">
       <Container>
         <div className="grid grid-cols-1 gap-10 md:grid-cols-[280px_1fr] md:gap-16">
-          <div className="relative aspect-square w-full max-w-[280px] overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated">
-            <img
-              src="/images/about.jpeg"
-              alt="Portrait photo of Justin Hernandez"
-              loading="lazy"
-              className="h-full w-full object-cover"
+          <div className="w-full max-w-[280px]">
+            <ProfileCard
+              avatarUrl="/images/about.jpeg"
+              avatarAlt="Portrait photo of Justin Hernandez"
+              iconUrl="/images/oro.svg"
+              iconAngle={-25}
+              enableMobileTilt
             />
           </div>
 

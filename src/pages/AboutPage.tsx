@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
+import { ProfileCard } from "@/components/effects/ProfileCard";
 
 export function AboutPage() {
   return (
@@ -28,12 +29,13 @@ export function AboutPage() {
       <section className="pb-16 sm:pb-20">
         <Container>
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[320px_1fr] md:gap-16">
-            <div className="relative aspect-square w-full max-w-[320px] overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated">
-              <img
-                src="/images/about.jpeg"
-                alt="Portrait photo of Justin Hernandez, design leader"
-                loading="lazy"
-                className="h-full w-full object-cover"
+            <div className="w-full max-w-[320px]">
+              <ProfileCard
+                avatarUrl="/images/about.jpeg"
+                avatarAlt="Portrait photo of Justin Hernandez, design leader"
+                iconUrl="/images/oro.svg"
+                iconAngle={-25}
+                enableMobileTilt
               />
             </div>
 

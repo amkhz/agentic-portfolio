@@ -10,14 +10,16 @@
 ## What's shipped
 
 - 5 pages live: Home, About, Resume, Work (index), Work (4 case studies including meta)
-- 25 components across layout (3), content (16), effects (3), interactive (3)
+- 31 components across layout (3), content (13 + 4 resume), effects (11), interactive (4)
 - OKLCH color system with L-channel light/dark theming, zero dependencies
 - Vite + React Router architecture with four-layer separation (design-system, core, services, src)
 - Agent skills infrastructure across Claude Code, Cursor, and Codex
 - SEO metadata, dynamic OG images, custom 404, favicon system
 - Animation layer: Particles hero background, SpotlightCard on ProjectCards, ParticlesTuner (dev-only)
 - Last.fm NowPlaying: inverted tab widget with expand/collapse, frosted glass, randomized EqBars, album art reveal
-- `feature-reactbits` and `feature-lastfm` merged to main (2026-03-07), live in production
+- Motion effects: DecryptedText (track name scramble), CountUp (spring-animated metrics), ProfileCard (holographic tilt with ouroboros overlay)
+- Mobile header polish: NowPlaying 280px min-width, centered nav between monogram and ThemeToggle
+- `feature-reactbits`, `feature-lastfm`, `feature-motion-effects`, and `fix-widget` merged to main, live in production
 
 ---
 
@@ -28,13 +30,15 @@
 **Status:** COMPLETE (core widget). NowPlaying merged to main and live in production (2026-03-07). Inverted tab design with expand/collapse, frosted glass matching header, randomized EqBars, album art reveal. Polling hook (30s, visibility-aware), service layer, env vars on Vercel. `prefers-reduced-motion` verified.
 
 **Next steps:**
-- DecryptedText for track name reveal on song change
 - Move API key server-side via Vercel serverless function (low-risk read-only key for now)
+- Fix expanded panel backdrop-blur (overflow-hidden kills backdrop-filter, needs alternative collapse strategy)
 - Last.fm MCP server (Tier 2)
 
 **Bigger vision (phased):**
-- Listening history visualizations -- genre maps, time-of-day patterns, generative art based from album art, mood boards generated from album art palettes
+- Listening history visualizations -- genre maps, time-of-day patterns, generative art based from album art (but not the kind that steals from others, more like machines bending pixels and making stuff), mood boards generated from album art palettes
 - DJ playlist mining -- surface patterns in listening data, explore moods, themes, tempos, export to Serato/Rekordbox-compatible formats
+- Music recall (what was that one song i was listening to the other day?)
+- more ideas to be generated via divergence and convergence
 - Apple Music tie-ins -- cross-reference scrobbles with Apple Music, local folders and Audirvana library, surface gaps and overlaps, investigate themes or flows
 - Some of this lives on the portfolio. Some lives in /experiments. Some is pure tooling.
 
@@ -42,10 +46,13 @@
 
 ### 2. Animation layer (React Bits)
 
-**Status:** COMPLETE (Phase 1). Particles hero, SpotlightCard, and ParticlesTuner merged to main (2026-03-07). GSAP scroll animations tried and reverted -- felt sluggish. Sticking with existing RevealOnScroll.
+**Status:** COMPLETE (Phase 1 + 2). All shipped and merged to main (2026-03-07).
+- Phase 1: Particles hero, SpotlightCard, ParticlesTuner (dev-only)
+- Phase 2: DecryptedText (NowPlaying track scramble), CountUp (MetricCard spring animation), ProfileCard (holographic tilt with ouroboros SVG overlay, grain noise, mobile device orientation tilt)
+- GSAP scroll animations tried and reverted -- felt sluggish
+- `motion/react` added as sole new dependency for CountUp spring physics
 
 **Next steps:**
-- DecryptedText and CountUp (motion library, ~15KB) -- directly serve NowPlaying and MetricCards
 - Revisit scroll animations later if there's a lighter approach
 - Threads and Waves kept for future music visualization work
 
@@ -132,5 +139,5 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 |-----|----------|------|--------|
 | 001 | Migrate from Next.js to Vite | 2026-03-04 | Accepted |
 | 002 | (pending) /experiments playground route | -- | Proposed |
-| 003 | (pending) React Bits adoption strategy | -- | Proposed |
-| 004 | (pending) Last.fm MCP server | -- | Proposed |
+| 003 | React Bits adoption strategy | 2026-03-07 | Accepted |
+| 004 | Last.fm integration architecture | 2026-03-07 | Accepted |

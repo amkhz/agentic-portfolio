@@ -53,7 +53,7 @@ export function NowPlaying({ className }: { className?: string }) {
       )}
     >
       {/* Tab + expanded panel container */}
-      <div className="flex flex-col items-stretch">
+      <div className="flex w-[280px] flex-col items-stretch sm:w-auto">
         {/* Tab trigger */}
         <button
           onClick={() => setIsOpen((prev) => !prev)}
@@ -115,13 +115,13 @@ export function NowPlaying({ className }: { className?: string }) {
                   width={48}
                   height={48}
                   className={cn(
-                    "rounded-md transition-shadow duration-slow",
+                    "h-10 w-10 sm:h-12 sm:w-12 rounded-md transition-shadow duration-slow",
                     isPlaying && "shadow-[0_0_12px_var(--theme-accent-glow)]"
                   )}
                 />
               ) : (
                 <div
-                  className="h-12 w-12 rounded-md bg-bg-subtle"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-md bg-bg-subtle"
                   aria-hidden="true"
                 />
               )}

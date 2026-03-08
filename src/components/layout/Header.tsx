@@ -31,7 +31,7 @@ export function Header() {
             <span className="sm:hidden">JH</span>
           </Link>
 
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-4 sm:gap-8">
             {navLinks.map((link) => (
               <li key={link.to}>
                 <Link
@@ -42,10 +42,9 @@ export function Header() {
                 </Link>
               </li>
             ))}
-            <li>
-              <ThemeToggle />
-            </li>
           </ul>
+
+          <ThemeToggle />
         </nav>
       </Container>
 

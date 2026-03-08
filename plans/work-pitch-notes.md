@@ -36,3 +36,8 @@
 - SpotlightCard -- mouse-tracking spotlight effect on project cards, CSS-only with token glow colors
 - Last.fm NowPlaying widget -- live music data on the portfolio via inverted tab UI with frosted glass, expand/collapse reveal, randomized EqBar animation. Demonstrates service layer architecture, polling hooks, and real-time data integration
 - Copy-paste component adoption -- React Bits components adapted as local TS+Tailwind, no monolithic package dependency
+- DecryptedText -- scramble-reveal animation on NowPlaying track changes, pure React with zero dependencies, respects reduced motion
+- CountUp -- spring-physics number animation on MetricCards via motion/react, triggers on scroll into view, parses prefix/suffix from string values
+- ProfileCard -- holographic tilt card with ouroboros SVG mask overlay, CSS grain noise layer, mobile device orientation tilt (iOS permission handling), SVG viewBox padding trick for tile spacing
+- motion/react as a focused dependency -- single-purpose spring physics library, tree-shakeable, not a kitchen-sink animation framework
+- Four documented ADRs -- architectural decisions captured as living records, demonstrating deliberate technical judgment

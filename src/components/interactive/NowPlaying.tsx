@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNowPlaying } from "@/lib/useNowPlaying";
+import { DecryptedText } from "@/components/effects/DecryptedText";
 import { cn } from "@core/utils";
 
 const PROFILE_URL = "https://www.last.fm/user/amkhz_";
@@ -127,7 +128,12 @@ export function NowPlaying({ className }: { className?: string }) {
 
               <div className="flex min-w-0 flex-col gap-0.5">
                 <span className="truncate font-heading text-sm font-medium text-text-primary">
-                  {track.name}
+                  <DecryptedText
+                    text={track.name}
+                    speed={40}
+                    className="text-text-primary"
+                    encryptedClassName="text-text-muted"
+                  />
                 </span>
                 <span className="truncate font-body text-xs text-text-muted">
                   {track.artist}

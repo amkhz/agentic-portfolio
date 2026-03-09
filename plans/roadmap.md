@@ -3,7 +3,7 @@
 > Living roadmap for agentic-portfolio. Updated as priorities shift.
 > Read VECTOR.md and ARCHITECTURE.md first. Work pitch notes live in `plans/work-pitch-notes.md`.
 
-**Last updated:** 2026-03-07
+**Last updated:** 2026-03-08
 
 ---
 
@@ -20,6 +20,8 @@
 - Motion effects: DecryptedText (track name scramble), CountUp (spring-animated metrics), ProfileCard (holographic tilt with ouroboros overlay)
 - Mobile header polish: NowPlaying 280px min-width, centered nav between monogram and ThemeToggle
 - `feature-reactbits`, `feature-lastfm`, `feature-motion-effects`, and `fix-widget` merged to main, live in production
+- Animation refinement spike: RevealOnScroll blur+translateY materializing, Button press feedback, ThemeToggle ray transitions, NowPlaying spring easing + negative delays, --ease-spring token, @property pointer vars
+- Meta case study: three new chapters (Color Migration, Framework Migration, Agentic Workflow), before/after comparison images, all meta images resized to 1400px
 
 ---
 
@@ -70,21 +72,19 @@
 
 ### 3. Meta case study evolution
 
-**Current state:** Linear case study covering the 48-hour sprint. Needs new chapters: OKLCH migration, Vite migration, and future work. But it can't just keep growing longer.
+**Status:** IN PROGRESS. Three new chapters shipped (2026-03-08): Color Migration, Framework Migration, Agentic Workflow. Before/after comparison images for framework migration added. Content is live in linear format.
 
-**Design challenge:** A rolling story that grows over time without becoming overwhelming. Think changelog meets memoir meets design journal.
+**What shipped:**
+- Color Migration chapter: OKLCH conversion, L-channel principle callout, metrics
+- Framework Migration chapter: Next.js to Vite reasoning, before/after comparison block with structure screenshots, Investiture Doctrine context
+- Agentic Workflow chapter: four skills, layer permissions, MCP servers, meta-insight
 
-**Patterns to explore:**
-- Timeline with progressive disclosure -- vertical spine, milestone nodes, expand to read
-- Something more novel -- quantum states, forking paths, spatial navigation. The sci-fi spirit should inform the interaction pattern, not just the color palette.
-- Investigate current UI inspiration sites (ask justin for some too) for unconventional long-form patterns
+**Design challenge (still open):** The case study keeps growing. The linear format works but won't scale. The Codex v1 build plan proposes a vertical spine with expandable chapter nodes as the next evolution.
 
-**Content model implications:** May need new section types (TimelineSection, ChapterSection) or a different rendering path for this specific case study. The standard linear template might not be the right container.
-
-**New chapters to write:**
-- The OKLCH migration (color science, systematic theming, the L-channel insight)
-- The Vite migration (recognizing tool mismatch, having the judgment to change)
-- The agentic workflow itself (skills, MCP, how the tools shape the work)
+**Next steps:**
+- Codex v1 implementation (see `plans/codex-v1-build-plan.md`)
+- Swap meta images with better cropped versions (TODO from commit)
+- Add images for Color Migration and Agentic Workflow chapters (see `plans/meta-case-study-images.md`)
 
 ### 4. Figma token sync
 

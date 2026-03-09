@@ -41,3 +41,6 @@
 - ProfileCard -- holographic tilt card with ouroboros SVG mask overlay, CSS grain noise layer, mobile device orientation tilt (iOS permission handling), SVG viewBox padding trick for tile spacing
 - motion/react as a focused dependency -- single-purpose spring physics library, tree-shakeable, not a kitchen-sink animation framework
 - Four documented ADRs -- architectural decisions captured as living records, demonstrating deliberate technical judgment
+- Animation refinement spike -- motion audit using three expert perspectives (Jakub, Jhey, Emil), resulting in blur materializing reveals, spring easing token via linear(), button press feedback, and negative animation-delay technique
+- Meta case study expansion -- three new chapters (Color Migration, Framework Migration, Agentic Workflow) with before/after comparison images, demonstrating the portfolio as a living document that evolves with the project
+- Tailwind v4 motion gotcha documented -- arbitrary transition values silently fail, and Tailwind v4 uses CSS `translate` not `transform` (real debugging story for the pitch)

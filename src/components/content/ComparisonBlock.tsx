@@ -26,7 +26,7 @@ export function ComparisonBlock({ before, after }: ComparisonBlockProps) {
           src={before.image.src}
           alt={before.image.alt}
           placeholder={before.image.placeholder}
-          aspect="16:9"
+          aspect="4:3"
         />
         {before.description && (
           <p className="mt-2 font-body text-sm leading-normal text-text-secondary">
@@ -43,7 +43,7 @@ export function ComparisonBlock({ before, after }: ComparisonBlockProps) {
           src={after.image.src}
           alt={after.image.alt}
           placeholder={after.image.placeholder}
-          aspect="16:9"
+          aspect="4:3"
         />
         {after.description && (
           <p className="mt-2 font-body text-sm leading-normal text-text-secondary">

@@ -23,7 +23,7 @@ function EqBars({ isPlaying }: { isPlaying: boolean }) {
           style={{
             height: isPlaying ? "12px" : "6px",
             animation: isPlaying
-              ? `nowplaying-bar ${bar.duration}s ease-in-out ${bar.delay}s infinite`
+              ? `nowplaying-bar ${bar.duration}s ease-in-out -${bar.delay}s infinite`
               : "none",
           }}
         />
@@ -94,7 +94,7 @@ export function NowPlaying({ className }: { className?: string }) {
         {/* Expanded panel */}
         <div
           className={cn(
-            "grid transition-[grid-template-rows] duration-slower ease-out",
+            "grid transition-[grid-template-rows] duration-slower ease-spring",
             isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           )}
         >

@@ -75,16 +75,83 @@ Sunday morning I woke up with a dream, and in that dream I had the idea to add a
 
 I spent another hour double-checking everything we built against the plans we had written, then updated all the plans with progress and changes made along the way. Then I deployed the site live, noticed a few tweaks here and there (as you always do), and shipped it.
 
+The big thought at the end: Think harder, work smarter. Do not slop it up.
+
 ## What Came Next
 
 The sprint shipped a portfolio. But the project kept evolving.
 
-**The OKLCH migration** converted the entire color system from hex/rgba to OKLCH, a perceptually uniform color space. Same hues, same feel, but now the math works: light and dark palettes are related by adjusting a single lightness channel. The theme toggle, the light mode, the future Figma sync all flow from that one architectural decision. Three files changed. Zero new dependencies.
+## The Color Migration
 
-**The framework migration** moved from Next.js to Vite + React Router. The portfolio never used server-side rendering, API routes, or any of Next.js's server features. Every page was client-rendered. The four-layer architecture I wanted (design tokens, core logic, services, UI) fought against Next.js's assumption that everything lives under src/app/. Vite gave us a simpler build, faster dev server, and directory structure that matches the mental model.
+The original token system used hex values. `#C8956A` for brass. `#C278A0` for magenta. `#0A0A0B` for the deep background. They worked. They felt familiar. But they only made sense if you already knew what they were supposed to look like.
 
-**The content migration** moved case study prose from TypeScript data structures to Markdown files. The original architecture was sound for structured data but made editing actual words painful: escaped quotes, paragraph breaks as \n\n, and TypeScript syntax around every sentence. Now the content is Markdown, a parser handles structure at the boundary, and the typed rendering layer hasn't changed. The right tool for the right job.
+The realization hit when I was planning to actually start the light mode palette and realized I should be using the most up to date standard and the one that gave me the most control. Hex could still be used in Figma later. With OKLCH, the dark background is `oklch(0.1452 0.0021 286.13)` and the light background is `oklch(0.9750 0.0040 80.72)`. Same chroma, same hue family, inverted lightness. The relationship is visible in the numbers.
 
-These aren't separate stories. They are all the same story: building something, learning what doesn't fit, and having the judgment to change it. The portfolio is a living project with an iterative roadmap, custom agent skills for maintenance and development, and the pipeline from tokens to code to deploy is validated and repeatable.
+The dual accent choices survived the migration just fine. Brass went from `#C8956A` to `oklch(0.7087 0.0845 60.96)`. Magenta went from `#C278A0` to `oklch(0.6634 0.1052 346.74)`. Now you can see the relationship between them: similar lightness (0.70 vs 0.66), similar chroma (0.08 vs 0.10), separated by hue (60 vs 346 degrees around the color wheel). The accents go beyond "two colors that look good together." They show colors that are structurally balanced.
 
-Think smarter and work smarter, not harder. Do not slop it up.
+Every conversion was verified visually and then checked for contrast compliance. The token system uses CSS custom properties consumed by Tailwind v4, so the migration touched the token definition layer and nothing else. Components reference `bg-accent-primary` or `text-text-secondary`, not raw color values. The abstraction held.
+
+::: metrics The Migration
+- 21 | Color tokens converted | brass
+- 6 | Shadow values migrated | brass
+- 3 | Files changed total | magenta
+- 0 | New dependencies | brass
+:::
+
+The OG image generator still uses hex because Satori does not support OKLCH. That's fine. It is an output format, not a design decision. The source of truth remains OKLCH.
+
+There really wasn't a single reason to do the conversion. It was the compounding effect. Light mode palette creation became systematic instead of subjective. Future Figma token sync has a path through the W3C DTCG spec, and plugins that support OKLCH natively. And when you open `design-system/tokens.css`, you can actually read the color system like a system, not a bag of magic numbers.
+
+::: callout The L-Channel Principle
+Dark mode backgrounds range from L 0.14 to L 0.25. Light mode backgrounds range from L 0.93 to L 0.98. Same chroma, same hue. To build a new theme, we adjust the L channel. Everything else follows.
+:::
+
+## The Framework Migration
+
+The portfolio launched on Next.js. App Router, React 19, Turbopack, the whole stack. It was the default choice because it is the default choice for React projects in 2026. But within a few days of building, I started noticing the friction.
+
+I don't need server components. I was not using API routes. I was not using SSR or SSG. I was not using middleware or server actions. Every page was fully client-rendered. The site deploys as static files. Next.js was a full Michelin kitchen and I was making toast.
+
+The real opportunity came when I found the Investiture Doctrine, an opinionated architecture framework I had been wanting to learn. It enforces a four-layer separation: design tokens in their own layer, core logic with no DOM access, services for all external communication, and UI that only renders data. Each layer has clear boundaries and rules about what can import what. It matched exactly how I wanted to build with AI, so the framework migration became a chance to learn by doing. Vite gave us the fast dev server and simple build chain. Investiture gave us the architecture. The migration took a day. The clarity it created pays off every session.
+
+::: comparison The Migration
+**Before**
+![Next.js project structure with everything under src/app](/images/meta-nextjs-structure.png)
+placeholder: Next.js App Router structure showing pages, layouts, and components nested under src/app/
+label: Next.js App Router
+description: Everything lived under src/app/. File-based routing conventions, server/client boundary markers, build steps for features that were never used.
+
+**After**
+![Vite project structure with four-layer separation](/images/meta-vite-structure.png)
+placeholder: Vite project structure showing design-system/, core/, services/, and src/ as top-level directories
+label: Vite + React Router
+description: Four top-level directories. Each layer has a clear boundary. Path aliases (@core/*, @services/*, @design-system/*) make the architecture visible in every import.
+:::
+
+::: metrics After The Migration
+- 4 | Architecture layers, each a top-level directory | brass
+- 0 | Server features used before or after | magenta
+- 1 | Day to complete the migration | brass
+:::
+
+## The Agentic Workflow
+
+This portfolio is not just built with AI. It is built by a team of specialized agents, each with a defined role, clear boundaries, and documented coordination patterns - all working within the Investiture framework.
+
+There are four skills: **Writer**, **Builder**, **Dreamer**, and **Director**. Each one has a SKILL.md file that defines its role, its layer permissions, and its workflow. The Writer creates and refines case study content, operating exclusively in the core/ layer. The Builder implements features across all four layers, enforcing architecture with every change. The Dreamer takes rough ideas and produces structured plans, ADRs, and implementation specs. The Director tracks status, maintains the roadmap, coordinates work between skills, and keeps a running list of pitch-worthy items for deeper case studies.
+
+The coordination flow is simple: Idea goes to the Dreamer. The Dreamer produces a plan. The plan goes to the Builder or the Writer. The Director tracks what shipped.
+
+What makes this more than a prompting strategy is the layer permission model. The Writer cannot touch UI components. The Dreamer cannot write implementation code. The Director cannot modify the codebase. These constraints are not limitations. They prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
+
+::: callout How The Skills Coordinate
+Justin has an idea for a new feature. He talks to the Dreamer. The Dreamer researches feasibility, maps the idea to architecture layers, and writes a plan file in plans/. The Builder reads the plan and implements it in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content that the feature needs. The Director updates the roadmap and flags anything pitch-worthy.
+:::
+
+MCP servers are the other piece. The portfolio connects to external data through Model Context Protocol servers that give agents structured access to tools and information. The React Bits MCP server lets agents search and retrieve component code from the React Bits library. A Last.fm MCP server is planned to turn listening data into a first-class context source. The pattern is extensible: any data source that agents need to reference can become an MCP server, giving them structured context instead of requiring copy-paste.
+
+The meta-insight is the one that matters most: the portfolio itself demonstrates the workflow it documents. The case study about AI-augmented design was written by the Writer skill and edited by me. The interactive effects were implemented by the Builder skill following a Dreamer plan, and I played around with some of the props and adjusted some code myself. The color migration and framework migration were each planned, executed, and documented through this same four-skill pipeline.
+
+This is not about replacing designers or developers. It's about giving AI agents the same kind of structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. The agents are crew members with skill sets, not magic text boxes that you throw prompts at and follow without thought.
+
+The portfolio is the proof that it works. Every token, every component, every case study section went through a process with human judgment at the helm and specialized agents doing the heavy lifting within their lanes. The result is a codebase that runs clean, a design system that is internally consistent, and a body of work that shows the thinking, not just the output.

@@ -140,9 +140,25 @@ button:focus-visible,
   transition-duration: 0ms !important;
 }
 
-@keyframes nowplaying-bar {
-  0%, 100% { height: 4px; }
-  50% { height: 12px; }
+/* EqBars: multiple keyframe sets for organic movement.
+   Uses scaleY (GPU-accelerated) instead of height (layout-triggering). */
+@keyframes eq-bar-a {
+  0%, 100% { transform: scaleY(0.3); }
+  25% { transform: scaleY(0.9); }
+  50% { transform: scaleY(0.5); }
+  75% { transform: scaleY(1); }
+}
+@keyframes eq-bar-b {
+  0%, 100% { transform: scaleY(0.35); }
+  30% { transform: scaleY(1); }
+  60% { transform: scaleY(0.4); }
+  80% { transform: scaleY(0.75); }
+}
+@keyframes eq-bar-c {
+  0%, 100% { transform: scaleY(0.25); }
+  20% { transform: scaleY(0.7); }
+  45% { transform: scaleY(1); }
+  70% { transform: scaleY(0.35); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -26,12 +26,12 @@ No images referenced yet. Candidates:
 
 ---
 
-## The Framework Migration (BLOCKERS)
+## The Framework Migration (SHIPPED)
 
-These are referenced in a `:::comparison` block and will render broken without them:
+- [x] **`meta-nextjs-structure.png`** — Next.js file tree screenshot (added 2026-03-08, resized to 1400px)
+- [x] **`meta-vite-structure.png`** — Vite four-layer file tree screenshot (added 2026-03-08, resized to 1400px)
 
-- [ ] **`meta-nextjs-structure.png`** — Screenshot of the old Next.js file tree (src/app/ with pages, layouts, components nested inside). If you still have the old repo or a git checkout, grab this from VS Code/Cursor sidebar.
-- [ ] **`meta-vite-structure.png`** — Screenshot of the current Vite file tree showing design-system/, core/, services/, src/ as top-level directories. Easy to grab from current project.
+TODO: swap with better cropped versions when available
 
 ---
 

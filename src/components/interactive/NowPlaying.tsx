@@ -5,25 +5,40 @@ import { cn } from "@core/utils";
 
 const PROFILE_URL = "https://www.last.fm/user/amkhz_";
 
-const BAR_TIMING = [
-  { duration: 1.0, delay: 0.0 },
-  { duration: 1.4, delay: 0.3 },
-  { duration: 0.9, delay: 0.15 },
-  { duration: 1.3, delay: 0.45 },
-  { duration: 1.1, delay: 0.1 },
+/** Each bar gets a keyframe variant, duration, and negative delay for organic stagger. */
+const BAR_CONFIG = [
+  { anim: "eq-bar-a", duration: 1.1, delay: 0.0 },
+  { anim: "eq-bar-b", duration: 1.5, delay: 0.35 },
+  { anim: "eq-bar-c", duration: 0.95, delay: 0.15 },
+  { anim: "eq-bar-a", duration: 1.35, delay: 0.5 },
+  { anim: "eq-bar-b", duration: 1.05, delay: 0.2 },
 ];
 
 function EqBars({ isPlaying }: { isPlaying: boolean }) {
   return (
-    <span aria-hidden="true" className="flex items-end gap-[4px]">
-      {BAR_TIMING.map((bar, i) => (
+    <span
+      aria-hidden="true"
+      className="flex items-end gap-[4px]"
+      style={{
+        filter: isPlaying
+          ? "drop-shadow(0 0 4px var(--theme-accent-glow))"
+          : "none",
+        transition: "filter 300ms ease-out",
+      }}
+    >
+      {BAR_CONFIG.map((bar, i) => (
         <span
           key={i}
-          className="inline-block w-[3px] rounded-full bg-accent-primary transition-[height] duration-300"
+          className="inline-block w-[3.5px] rounded-full"
           style={{
-            height: isPlaying ? "12px" : "6px",
+            height: "14px",
+            transformOrigin: "bottom",
+            willChange: isPlaying ? "transform" : "auto",
+            background: `linear-gradient(to top in oklch, var(--theme-accent-primary), var(--theme-secondary-primary))`,
+            transform: isPlaying ? undefined : "scaleY(0.3)",
+            transition: "transform 300ms ease-out",
             animation: isPlaying
-              ? `nowplaying-bar ${bar.duration}s ease-in-out -${bar.delay}s infinite`
+              ? `${bar.anim} ${bar.duration}s ease-in-out -${bar.delay}s infinite`
               : "none",
           }}
         />

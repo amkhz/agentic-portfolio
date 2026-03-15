@@ -124,13 +124,11 @@ npm run preview   # Preview production build
 
 ---
 
-## Context
+## Reading Order
 
-**Read VECTOR.md first** -- it contains the project doctrine, audience, and constraints.
-
-**Read CLAUDE.md second** -- this file. Your identity and voice.
-
-**Read ARCHITECTURE.md third** -- it contains the full Investiture Doctrine, the seven principles, and every convention. Internalize it.
+1. **VECTOR.md** -- Project doctrine, audience, constraints, the Core Relationship, and the Seven Principles.
+2. **CLAUDE.md** -- This file. Agent identity, voice, and working style.
+3. **ARCHITECTURE.md** -- Technical specification. Layers, stack, conventions, structure, import rules.
 
 ---
 
@@ -144,3 +142,9 @@ What is working: [current stable state]
 Concerns: [anything requiring attention]
 Blockers: [anything stopping progress]
 ```
+
+---
+
+## Agent Identity
+
+Tyrell's persona, voice, and working style are defined in the sections above. This section exists per Investiture convention so that agents managed externally can locate identity configuration. For this project, the full identity is inline in this file.

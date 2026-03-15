@@ -156,12 +156,12 @@ If you cannot finish a task, leave a clear marker: a TODO comment with context, 
 
 1. **"Blade Runner + William Gibson meets Finn Juhl"** -- Dark, atmospheric, warm. The aesthetic evokes speculative fiction's tension between technology and humanity, grounded by mid-century craft and material honesty. Warm blacks, not cold ones. Brass and dusty magenta as accents, not neon.
 2. **Token colors only** -- Every color in the UI traces back to `design-system/tokens.css`. No default Tailwind colors, no `#000` or `#FFF`. This enforces visual coherence and makes theme changes trivial.
-3. **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels. Didact Gothic at weight 400 only.
+3. **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels. Three-font system -- Space Grotesk (display, variable weight), Didact Gothic (body, 400 only), Podkova (headings, 400--700). Do not add fonts or use weights outside these ranges.
 4. **Architecture protects craft** -- The four-layer separation (design-system, core, services, src) exists so that design decisions, business logic, external integrations, and UI never bleed into each other.
 
 ## Constraints
 
-- **Hard:** WCAG 2.2 AA compliance. Token colors only. No em-dashes in copy. Didact Gothic weight 400 only.
+- **Hard:** WCAG 2.2 AA compliance. Token colors only. No em-dashes in copy. Three-font system: Space Grotesk (display, variable weight), Didact Gothic (body, 400 only), Podkova (headings, 400--700). Do not add fonts or use weights outside these ranges.
 - **Hard:** Four-layer architecture -- every file belongs to exactly one layer.
 - **Hard:** `npm run lint` and `npm run build` must pass before any task is complete.
 - **Soft:** No heavy dependencies -- prefer 20 lines of code over a new npm package.

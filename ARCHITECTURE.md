@@ -1,6 +1,6 @@
 # Architecture
 
-**Last Updated:** 2026-03-08
+**Last Updated:** 2026-03-14
 
 This file is the technical specification. Layers, stack, conventions, structure, and import rules are defined here.
 

@@ -61,12 +61,36 @@ npm run lint      # ESLint check
 
 ## Upstream
 
-This project's architecture is based on the [Investiture](https://github.com/erikaflowers/investiture) framework. To pull updates:
+This project's architecture is based on the [Investiture](https://github.com/erikaflowers/investiture) framework. The doctrine files (VECTOR.md, CLAUDE.md, ARCHITECTURE.md) have been heavily customized for this project -- **do not merge upstream directly** or it will overwrite all project-specific content with blank templates.
+
+To pull updates safely:
 
 ```bash
 git fetch upstream
-git merge upstream/main
+git checkout -b update-framework
+git checkout upstream/main -- .claude/skills/invest-*   # grab new/updated skills
+git diff upstream/main -- VECTOR.md CLAUDE.md ARCHITECTURE.md  # review doctrine changes
 ```
+
+Then cherry-pick structural improvements (new sections, reorganized conventions) into our customized files by hand. See commit `558ac84` for an example of this process.
+
+### Investiture Skills
+
+Skills pulled from upstream live in `.claude/skills/invest-*/`. Current set:
+
+| Skill | Purpose |
+|-------|---------|
+| `invest-adr` | Generate numbered Architecture Decision Records |
+| `invest-architecture` | Audit project structure against ARCHITECTURE.md |
+| `invest-backfill` | Generate doctrine files for a new project |
+| `invest-brief` | Create design briefs grounded in project research |
+| `invest-changelog` | Write plain-language changelogs from git history |
+| `invest-crew` | Decompose features into scoped agent tasks |
+| `invest-doctrine` | Audit doctrine files for completeness and consistency |
+| `invest-handoff` | Generate onboarding docs by role |
+| `invest-interview` | Build user research discussion guides |
+| `invest-synthesize` | Extract insights from research, propose VECTOR.md patches |
+| `invest-validate` | Prioritize assumptions and generate validation plans |
 
 ## License
 

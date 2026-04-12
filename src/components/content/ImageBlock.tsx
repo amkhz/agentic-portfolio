@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { createPortal } from "react-dom";
 import { cn } from "@core/utils";
+import { ImageLightbox } from "./ImageLightbox";
 
 interface ImageBlockProps {
   src: string;
@@ -6,6 +9,8 @@ interface ImageBlockProps {
   placeholder?: string;
   caption?: string;
   aspect?: "16:9" | "4:3" | "auto";
+  /** Allow click-to-expand lightbox. Default: true for real images. */
+  expandable?: boolean;
 }
 
 const aspectMap = {
@@ -20,6 +25,7 @@ export function ImageBlock({
   placeholder,
   caption,
   aspect = "16:9",
+  expandable,
 }: ImageBlockProps) {
   const displayText = placeholder || alt;
   const hasRealImage =
@@ -27,59 +33,86 @@ export function ImageBlock({
     src.length > 0 &&
     !src.includes("placeholder-");
 
+  const canExpand = expandable ?? hasRealImage;
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <figure className="my-8">
-      {hasRealImage ? (
-        <div
-          className={cn(
-            "relative overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated",
-            aspectMap[aspect]
-          )}
-        >
-          <img
-            src={src}
-            alt={alt}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-contain"
-          />
-        </div>
-      ) : (
-        <div
-          role="img"
-          aria-label={alt}
-          className={cn(
-            "flex flex-col items-center justify-center rounded-lg border border-border-subtle bg-bg-elevated",
-            aspectMap[aspect]
-          )}
-        >
-          <svg
-            aria-hidden="true"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="mb-3 text-text-muted"
+    <>
+      <figure className="my-8">
+        {hasRealImage ? (
+          <div
+            role={canExpand ? "button" : undefined}
+            tabIndex={canExpand ? 0 : undefined}
+            onClick={canExpand ? () => setIsOpen(true) : undefined}
+            onKeyDown={
+              canExpand
+                ? (e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setIsOpen(true);
+                    }
+                  }
+                : undefined
+            }
+            aria-label={canExpand ? `View full size: ${alt}` : undefined}
+            className={cn(
+              "relative overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated",
+              aspectMap[aspect],
+              canExpand && "cursor-zoom-in transition-all duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
+              canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            )}
           >
-            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <polyline points="21 15 16 10 5 21" />
-          </svg>
+            <img
+              src={src}
+              alt={alt}
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-contain"
+            />
+          </div>
+        ) : (
+          <div
+            role="img"
+            aria-label={alt}
+            className={cn(
+              "flex flex-col items-center justify-center rounded-lg border border-border-subtle bg-bg-elevated",
+              aspectMap[aspect]
+            )}
+          >
+            <svg
+              aria-hidden="true"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mb-3 text-text-muted"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+              <circle cx="8.5" cy="8.5" r="1.5" />
+              <polyline points="21 15 16 10 5 21" />
+            </svg>
 
-          <span className="max-w-[48ch] px-6 text-center font-body text-sm leading-normal text-text-muted">
-            {displayText}
-          </span>
-        </div>
-      )}
+            <span className="max-w-[48ch] px-6 text-center font-body text-sm leading-normal text-text-muted">
+              {displayText}
+            </span>
+          </div>
+        )}
 
-      {caption && (
-        <figcaption className="mt-3 text-center font-body text-sm text-text-muted">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
+        {caption && (
+          <figcaption className="mt-3 text-center font-body text-sm text-text-muted">
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+
+      {isOpen && hasRealImage &&
+        createPortal(
+          <ImageLightbox src={src} alt={alt} onClose={() => setIsOpen(false)} />,
+          document.body
+        )}
+    </>
   );
 }

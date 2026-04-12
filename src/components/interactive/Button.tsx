@@ -43,8 +43,19 @@ export function Button({
   );
 
   if (href) {
+    const isExternal =
+      href.startsWith("http") || href.startsWith("//");
+
     return (
-      <a href={href} className={classes} aria-label={ariaLabel}>
+      <a
+        href={href}
+        className={classes}
+        aria-label={ariaLabel}
+        {...(isExternal && {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        })}
+      >
         {children}
       </a>
     );

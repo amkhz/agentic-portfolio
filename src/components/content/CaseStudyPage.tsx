@@ -113,12 +113,6 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
   if (!study) return <Navigate to="/work" replace />;
 
   const sections = caseStudyContent[slug] ?? [];
-  const firstHeadingIndex = sections.findIndex(
-    (section) =>
-      "heading" in section &&
-      typeof section.heading === "string" &&
-      section.heading.length > 0
-  );
 
   const sectionNodes = sections.map((section, index) => {
     const hasHeading =
@@ -126,13 +120,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
       typeof section.heading === "string" &&
       section.heading.length > 0;
 
-    const headingAs = hasHeading
-      ? index === firstHeadingIndex
-        ? "h2"
-        : "h3"
-      : undefined;
-
-    return renderSection(section, index, headingAs);
+    return renderSection(section, index, hasHeading ? "h2" : undefined);
   });
 
   return (

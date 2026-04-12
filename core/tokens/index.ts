@@ -139,45 +139,46 @@ export const motion = {
 // ============================================
 
 export const lightColors = {
-  // Backgrounds — warm cream/paper, not pure white
+  // Backgrounds — warm parchment and natural linen
+  // Niander Wallace's office: wood, paper, amber light
   bg: {
-    deep:      'oklch(0.9750 0.0040 80.72)',    // warm paper
-    base:      'oklch(0.9550 0.0055 80.70)',    // primary surface
-    elevated:  'oklch(0.9900 0.0025 80.72)',    // cards, elevated surfaces (brighter)
-    subtle:    'oklch(0.9300 0.0070 80.70)',    // hover states, subtle distinction
+    deep:      'oklch(0.9400 0.0180 72)',       // warm parchment base
+    base:      'oklch(0.9250 0.0220 70)',       // primary surface — aged linen
+    elevated:  'oklch(0.9600 0.0120 78)',       // cards — bleached paper
+    subtle:    'oklch(0.9050 0.0280 68)',       // hover — deeper amber
   },
 
-  // Text — warm darks
+  // Text — warm near-blacks, never achromatic
   text: {
-    primary:   'oklch(0.1800 0.0074 80.72)',    // headings, primary body
-    secondary: 'oklch(0.3800 0.0156 80.70)',    // supporting text
-    muted:     'oklch(0.4800 0.0141 75.29)',    // captions, metadata
-    inverse:   'oklch(0.9750 0.0040 80.72)',    // text on dark/accent surfaces
+    primary:   'oklch(0.2000 0.0100 60)',       // headings — warm charcoal
+    secondary: 'oklch(0.4000 0.0160 65)',       // supporting — walnut
+    muted:     'oklch(0.5200 0.0180 70)',       // captions — warm stone
+    inverse:   'oklch(0.9400 0.0180 72)',       // text on dark/accent surfaces
   },
 
-  // Primary accent — aged brass (darker on light bg for contrast)
+  // Primary accent — aged brass, slightly more saturated on warm surfaces
   accent: {
-    primary:   'oklch(0.5800 0.1000 60.96)',    // primary actions, links
-    hover:     'oklch(0.5300 0.0950 67.39)',    // hover/focus state
-    muted:     'oklch(0.5800 0.1000 60.96 / 0.15)',  // subtle backgrounds
-    glow:      'oklch(0.5800 0.1000 60.96 / 0.08)',   // ambient glow
+    primary:   'oklch(0.5600 0.1100 60.96)',    // primary actions, links
+    hover:     'oklch(0.5100 0.1050 67.39)',    // hover/focus state
+    muted:     'oklch(0.5600 0.1100 60.96 / 0.15)',  // subtle backgrounds
+    glow:      'oklch(0.5600 0.1100 60.96 / 0.10)',   // ambient glow
   },
 
-  // Secondary accent — dusty magenta (darker on light bg)
+  // Secondary accent — dusty magenta, holds tension against warm palette
   secondary: {
-    primary:   'oklch(0.5400 0.1200 346.74)',   // interactive states
-    hover:     'oklch(0.4900 0.1100 344.91)',   // hover/focus state
-    muted:     'oklch(0.5400 0.1200 346.74 / 0.15)',  // subtle backgrounds
-    glow:      'oklch(0.5400 0.1200 346.74 / 0.08)',   // ambient glow
+    primary:   'oklch(0.5200 0.1300 346.74)',   // interactive states
+    hover:     'oklch(0.4700 0.1200 344.91)',   // hover/focus state
+    muted:     'oklch(0.5200 0.1300 346.74 / 0.15)',  // subtle backgrounds
+    glow:      'oklch(0.5200 0.1300 346.74 / 0.10)',   // ambient glow
   },
 
-  // Borders — warm light grays
+  // Borders — warm, visible but soft
   border: {
-    subtle:    'oklch(0.8800 0.0050 80.70)',    // card edges, dividers
-    strong:    'oklch(0.8200 0.0070 80.70)',    // emphasized borders
+    subtle:    'oklch(0.8600 0.0150 72)',       // card edges — linen thread
+    strong:    'oklch(0.7800 0.0200 68)',       // emphasized — light walnut
   },
 
-  // Semantic — darker for readability on light bg
+  // Semantic — darker for readability on warm bg
   success:     'oklch(0.4800 0.1091 144.35)',
   warning:     'oklch(0.5200 0.1223 83.74)',
   error:       'oklch(0.5000 0.1012 32.36)',
@@ -195,13 +196,13 @@ export const shadows = {
 } as const;
 
 export const lightShadows = {
-  sm:   '0 1px 2px oklch(0.5000 0.0021 80.70 / 0.08)',
-  md:   '0 4px 12px oklch(0.5000 0.0021 80.70 / 0.10)',
-  lg:   '0 8px 24px oklch(0.5000 0.0021 80.70 / 0.12)',
-  xl:   '0 16px 48px oklch(0.5000 0.0021 80.70 / 0.15)',
+  sm:   '0 1px 2px oklch(0.4500 0.0200 65 / 0.10)',
+  md:   '0 4px 12px oklch(0.4500 0.0200 65 / 0.12)',
+  lg:   '0 8px 24px oklch(0.4500 0.0200 65 / 0.15)',
+  xl:   '0 16px 48px oklch(0.4500 0.0200 65 / 0.18)',
   glow: {
-    brass:   '0 2px 12px oklch(0.5800 0.1000 60.96 / 0.20)',
-    magenta: '0 2px 12px oklch(0.5400 0.1200 346.74 / 0.20)',
+    brass:   '0 2px 16px oklch(0.5600 0.1100 60.96 / 0.25)',
+    magenta: '0 2px 16px oklch(0.5200 0.1300 346.74 / 0.25)',
   },
 } as const;
 

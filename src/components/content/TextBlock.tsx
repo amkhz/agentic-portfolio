@@ -23,7 +23,7 @@ export function parseInline(text: string): React.ReactNode[] {
         <a
           key={i}
           href={linkMatch[2]}
-          className="text-accent-primary underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 focus:ring-offset-bg-deep"
+          className="text-accent-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
         >
           {linkMatch[1]}
         </a>
@@ -42,7 +42,7 @@ export function TextBlock({ children }: TextBlockProps) {
       {paragraphs.map((paragraph, i) => (
         <p
           key={i}
-          className="mb-4 font-body text-base leading-normal text-text-secondary last:mb-0"
+          className="mb-6 font-body text-base leading-normal text-text-secondary last:mb-0 sm:text-lg"
         >
           {parseInline(paragraph)}
         </p>

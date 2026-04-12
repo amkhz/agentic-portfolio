@@ -113,6 +113,7 @@
 
 body {
   background-color: var(--color-bg-deep);
+  background-image: var(--texture-linen);
   color: var(--color-text-primary);
   font-family: var(--font-body), sans-serif;
   line-height: var(--leading-normal);

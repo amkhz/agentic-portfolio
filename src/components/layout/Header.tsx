@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import { Container } from "./Container";
 import { ThemeToggle } from "@/components/interactive/ThemeToggle";
 import { NowPlaying } from "@/components/interactive/NowPlaying";
@@ -34,12 +34,15 @@ export function Header() {
           <ul className="flex items-center gap-4 sm:gap-8">
             {navLinks.map((link) => (
               <li key={link.to}>
-                <Link
+                <NavLink
                   to={link.to}
-                  className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium tracking-wide text-text-secondary transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                  end={link.to === "/"}
+                  className={({ isActive }) =>
+                    `inline-flex min-h-[44px] items-center font-heading text-sm font-medium tracking-wide transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep ${isActive ? "text-accent-primary" : "text-text-secondary"}`
+                  }
                 >
                   {link.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>

@@ -66,58 +66,131 @@
     --particle-color-1: oklch(0.7087 0.0845 60.96);
     --particle-color-2: oklch(0.6634 0.1052 346.74);
     --particle-color-3: oklch(0.5824 0.0141 75.29);
+
+    /* Texture — disabled in dark mode */
+    --texture-linen: none;
+    --grain-blend: normal;
   }
 
   [data-theme="light"] {
-    --theme-bg-deep: oklch(0.9750 0.0040 80.72);
-    --theme-bg-base: oklch(0.9550 0.0055 80.70);
-    --theme-bg-elevated: oklch(0.9900 0.0025 80.72);
-    --theme-bg-subtle: oklch(0.9300 0.0070 80.70);
+    /* Backgrounds — warm parchment and natural linen, not cold white
+       Inspired by Niander Wallace's office: wood, paper, amber light */
+    --theme-bg-deep: oklch(0.9350 0.0280 62);
+    --theme-bg-base: oklch(0.9200 0.0320 58);
+    --theme-bg-elevated: oklch(0.9550 0.0200 66);
+    --theme-bg-subtle: oklch(0.9000 0.0380 55);
 
-    --theme-text-primary: oklch(0.1800 0.0074 80.72);
-    --theme-text-secondary: oklch(0.3800 0.0156 80.70);
-    --theme-text-muted: oklch(0.4800 0.0141 75.29);
-    --theme-text-inverse: oklch(0.9750 0.0040 80.72);
+    /* Text — warm near-blacks, never achromatic */
+    --theme-text-primary: oklch(0.2000 0.0100 60);
+    --theme-text-secondary: oklch(0.4000 0.0160 65);
+    --theme-text-muted: oklch(0.5200 0.0180 70);
+    --theme-text-inverse: oklch(0.9400 0.0180 72);
 
-    --theme-accent-primary: oklch(0.5800 0.1000 60.96);
-    --theme-accent-hover: oklch(0.5300 0.0950 67.39);
-    --theme-accent-muted: oklch(0.5800 0.1000 60.96 / 0.15);
-    --theme-accent-glow: oklch(0.5800 0.1000 60.96 / 0.08);
+    /* Accent — aged brass, slightly more saturated on warm surfaces */
+    --theme-accent-primary: oklch(0.5600 0.1100 60.96);
+    --theme-accent-hover: oklch(0.5100 0.1050 67.39);
+    --theme-accent-muted: oklch(0.5600 0.1100 60.96 / 0.15);
+    --theme-accent-glow: oklch(0.5600 0.1100 60.96 / 0.10);
 
-    --theme-secondary-primary: oklch(0.5400 0.1200 346.74);
-    --theme-secondary-hover: oklch(0.4900 0.1100 344.91);
-    --theme-secondary-muted: oklch(0.5400 0.1200 346.74 / 0.15);
-    --theme-secondary-glow: oklch(0.5400 0.1200 346.74 / 0.08);
+    /* Secondary — dusty magenta, holds tension against warm palette */
+    --theme-secondary-primary: oklch(0.5200 0.1300 346.74);
+    --theme-secondary-hover: oklch(0.4700 0.1200 344.91);
+    --theme-secondary-muted: oklch(0.5200 0.1300 346.74 / 0.15);
+    --theme-secondary-glow: oklch(0.5200 0.1300 346.74 / 0.10);
 
-    --theme-border-subtle: oklch(0.8800 0.0050 80.70);
-    --theme-border-strong: oklch(0.8200 0.0070 80.70);
+    /* Borders — warm, visible but soft */
+    --theme-border-subtle: oklch(0.8600 0.0150 72);
+    --theme-border-strong: oklch(0.7800 0.0200 68);
 
     --theme-success: oklch(0.4800 0.1091 144.35);
     --theme-warning: oklch(0.5200 0.1223 83.74);
     --theme-error: oklch(0.5000 0.1012 32.36);
 
-    --theme-shadow-sm: 0 1px 2px oklch(0.5000 0.0021 80.70 / 0.08);
-    --theme-shadow-md: 0 4px 12px oklch(0.5000 0.0021 80.70 / 0.10);
-    --theme-shadow-lg: 0 8px 24px oklch(0.5000 0.0021 80.70 / 0.12);
-    --theme-shadow-xl: 0 16px 48px oklch(0.5000 0.0021 80.70 / 0.15);
-    --theme-shadow-glow-brass: 0 2px 12px oklch(0.5800 0.1000 60.96 / 0.20);
-    --theme-shadow-glow-magenta: 0 2px 12px oklch(0.5400 0.1200 346.74 / 0.20);
+    /* Shadows — warmer, more physical, like real surfaces casting light */
+    --theme-shadow-sm: 0 1px 2px oklch(0.4500 0.0200 65 / 0.10);
+    --theme-shadow-md: 0 4px 12px oklch(0.4500 0.0200 65 / 0.12);
+    --theme-shadow-lg: 0 8px 24px oklch(0.4500 0.0200 65 / 0.15);
+    --theme-shadow-xl: 0 16px 48px oklch(0.4500 0.0200 65 / 0.18);
+    --theme-shadow-glow-brass: 0 2px 16px oklch(0.5600 0.1100 60.96 / 0.25);
+    --theme-shadow-glow-magenta: 0 2px 16px oklch(0.5200 0.1300 346.74 / 0.25);
 
-    --glow-brass-center: oklch(0.5800 0.1000 60.96 / 0.10);
-    --glow-brass-fade: oklch(0.5800 0.1000 60.96 / 0.03);
-    --glow-magenta-center: oklch(0.5400 0.1200 346.74 / 0.10);
-    --glow-magenta-fade: oklch(0.5400 0.1200 346.74 / 0.03);
+    --glow-brass-center: oklch(0.5600 0.1100 60.96 / 0.12);
+    --glow-brass-fade: oklch(0.5600 0.1100 60.96 / 0.04);
+    --glow-magenta-center: oklch(0.5200 0.1300 346.74 / 0.12);
+    --glow-magenta-fade: oklch(0.5200 0.1300 346.74 / 0.04);
 
-    --grain-opacity: 0.03;
+    /* Grain — multiply blend on light, adds patina to the wood surface */
+    --grain-opacity: 0.055;
+    --grain-blend: multiply;
+
+    /* Texture — Translucent linen draped over aged wood
+       Two material layers: the cloth on top, the table beneath.
+       Like Wallace's office before the blackout — natural, worn, layered. */
+    --texture-linen:
+      /* === LINEN LAYER (top) — sheer woven cloth === */
+      /* Warp threads — horizontal */
+      repeating-linear-gradient(
+        0deg,
+        oklch(0.96 0.010 72 / 0.09) 0px,
+        transparent 1px,
+        transparent 4px
+      ),
+      /* Weft threads — vertical */
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.94 0.012 68 / 0.07) 0px,
+        transparent 1px,
+        transparent 5px
+      ),
+      /* Linen body — warm wash veiling the wood */
+      linear-gradient(
+        oklch(0.95 0.018 65 / 0.38),
+        oklch(0.93 0.022 60 / 0.33)
+      ),
+      /* === WOOD LAYER (beneath) — aged, pre-blackout === */
+      /* Primary grain */
+      repeating-linear-gradient(
+        2.5deg,
+        oklch(0.72 0.035 55 / 0.08) 0px,
+        transparent 1px,
+        transparent 18px,
+        oklch(0.70 0.030 52 / 0.055) 19px,
+        transparent 20px,
+        transparent 42px
+      ),
+      /* Counter-grain */
+      repeating-linear-gradient(
+        176deg,
+        oklch(0.68 0.028 58 / 0.045) 0px,
+        transparent 1px,
+        transparent 35px
+      ),
+      /* Drift lines */
+      repeating-linear-gradient(
+        4deg,
+        oklch(0.74 0.032 50 / 0.04) 0px,
+        transparent 1px,
+        transparent 55px,
+        oklch(0.70 0.038 48 / 0.05) 56px,
+        transparent 58px,
+        transparent 90px
+      ),
+      /* Growth rings */
+      repeating-linear-gradient(
+        0.5deg,
+        oklch(0.88 0.030 56 / 0.07) 0px,
+        oklch(0.91 0.022 60 / 0.035) 60px,
+        oklch(0.86 0.035 52 / 0.055) 140px,
+        oklch(0.92 0.020 58 / 0.025) 200px
+      );
 
     /* Animation: SpotlightCard */
-    --spotlight-color: oklch(0.5800 0.1000 60.96 / 0.12);
+    --spotlight-color: oklch(0.5600 0.1100 60.96 / 0.14);
     --spotlight-size: 80%;
 
-
     /* Animation: Particles */
-    --particle-color-1: oklch(0.5800 0.1000 60.96);
-    --particle-color-2: oklch(0.5400 0.1200 346.74);
-    --particle-color-3: oklch(0.4800 0.0141 75.29);
+    --particle-color-1: oklch(0.5600 0.1100 60.96);
+    --particle-color-2: oklch(0.5200 0.1300 346.74);
+    --particle-color-3: oklch(0.5200 0.0180 70);
   }
 }

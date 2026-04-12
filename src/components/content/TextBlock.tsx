@@ -1,4 +1,4 @@
-import { parseInline } from "@core/utils/parseInline";
+import { parseInline } from "@/lib/parseInline";
 
 interface TextBlockProps {
   children: string;

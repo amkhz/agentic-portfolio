@@ -53,7 +53,7 @@ export function ResumePage() {
         <link rel="canonical" href="https://justinh.design/resume" />
       </Helmet>
 
-      <section className="py-24 sm:py-32">
+      <section className="py-24 sm:py-32 motion-safe:animate-[fadeIn_400ms_ease-out]">
         <Container>
           <div className="mx-auto max-w-[920px] space-y-10">
             <div className="flex flex-col gap-5 rounded-lg border border-border-subtle bg-bg-elevated p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">

@@ -39,7 +39,7 @@ export function HomePage() {
               className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-4 focus-visible:ring-offset-bg-deep rounded-lg"
               aria-label={`View case study: ${meta.title}`}
             >
-              <SpotlightCard className="relative overflow-hidden p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-all duration-normal">
+              <SpotlightCard className="relative overflow-hidden p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
                 <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-0">
                   {/* Content side */}
                   <div className="relative flex flex-col justify-center p-8 sm:p-10 md:p-12">
@@ -85,7 +85,7 @@ export function HomePage() {
 
                     <span className="relative mt-8 inline-flex items-center gap-1.5 font-heading text-sm font-medium text-accent-primary transition-colors duration-normal group-hover:text-accent-hover">
                       Read the case study
-                      <span aria-hidden="true" className="transition-transform duration-normal group-hover:translate-x-1">&rarr;</span>
+                      <span aria-hidden="true" className="transition-transform duration-normal motion-safe:group-hover:translate-x-1">&rarr;</span>
                     </span>
                   </div>
 
@@ -96,7 +96,7 @@ export function HomePage() {
                         src={meta.heroImage.src}
                         alt={meta.heroImage.alt}
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-slow group-hover:scale-[1.02]"
+                        className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
                         style={{ minHeight: "280px" }}
                       />
                     ) : (

@@ -25,14 +25,14 @@ export function ResumeHeader({ name, title, contacts }: ResumeHeaderProps) {
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                  className="transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 >
                   {contact.label}
                 </a>
               ) : (
                 <a
                   href={contact.href}
-                  className="transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                  className="transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 >
                   {contact.label}
                 </a>

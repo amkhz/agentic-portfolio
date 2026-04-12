@@ -17,7 +17,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
         "group relative my-6 flex w-full items-start gap-4 rounded-lg p-4 text-left",
         "border border-[var(--constellation-peek-border)]",
         "bg-[var(--constellation-peek-bg)]",
-        "transition-all duration-normal",
+        "transition-[border-color,box-shadow] duration-normal",
         "hover:border-accent-muted hover:shadow-[0_0_20px_var(--constellation-glow-shipped)]",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
       )}
@@ -28,7 +28,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
           "flex shrink-0 items-center justify-center rounded-full",
           "h-8 w-8 border border-[var(--constellation-node-border)]",
           "bg-[var(--constellation-node-bg)]",
-          "transition-all duration-slow",
+          "transition-[border-color,box-shadow] duration-normal",
           "group-hover:border-[var(--constellation-node-active-border)]",
           "group-hover:shadow-[0_0_12px_var(--constellation-glow-shipped)]"
         )}
@@ -52,7 +52,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
         height="16"
         viewBox="0 0 16 16"
         fill="none"
-        className="mt-1 shrink-0 text-text-muted transition-all duration-normal group-hover:translate-x-0.5 group-hover:text-accent-primary"
+        className="mt-1 shrink-0 text-text-muted transition-[color,transform] duration-normal motion-safe:group-hover:translate-x-0.5 group-hover:text-accent-primary"
         aria-hidden="true"
       >
         <path

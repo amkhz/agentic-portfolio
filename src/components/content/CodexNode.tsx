@@ -42,7 +42,7 @@ export function CodexNode({
             "flex items-center justify-center",
             "h-[var(--codex-node-size)] w-[var(--codex-node-size)]",
             "rounded-sm sm:rotate-45",
-            "border transition-all duration-slow",
+            "border transition-[border-color,box-shadow,transform] duration-slow",
             "motion-safe:group-hover:scale-110",
             isOpen
               ? "border-[var(--codex-node-active-border)] bg-[var(--codex-node-bg)] shadow-[0_0_16px_var(--codex-node-active-glow)]"
@@ -93,7 +93,7 @@ export function CodexNode({
         className={cn(
           "ml-auto flex shrink-0 items-center justify-center",
           "h-6 w-6 rounded-full",
-          "transition-all duration-normal",
+          "transition-[background-color] duration-normal",
           isOpen
             ? "bg-accent-muted"
             : "bg-transparent group-hover:bg-bg-subtle"

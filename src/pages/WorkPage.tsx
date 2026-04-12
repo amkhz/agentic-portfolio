@@ -89,14 +89,14 @@ export function WorkPage() {
 
           {/* Featured: Meta case study */}
           <RevealOnScroll className="mt-12">
-            <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-all duration-normal">
+            <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
               <Link
                 to={`/work/${metaCaseStudy.slug}`}
                 aria-label={`View case study: ${metaCaseStudy.title}`}
                 className="group block overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
               >
                 <div className="relative aspect-[21/9] overflow-hidden border-b border-border-subtle bg-bg-elevated">
-                  <HeroImage study={metaCaseStudy} className="transition-transform duration-500 group-hover:scale-[1.02]" />
+                  <HeroImage study={metaCaseStudy} className="motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]" />
                 </div>
 
                 <div className="p-6 sm:p-8">
@@ -134,14 +134,14 @@ export function WorkPage() {
           <div className="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
             {caseStudies.map((study, i) => (
               <RevealOnScroll key={study.slug} delay={i * 100}>
-                <SpotlightCard className="h-full p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-all duration-normal">
+                <SpotlightCard className="h-full p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
                   <Link
                     to={`/work/${study.slug}`}
                     aria-label={`View case study: ${study.title}`}
                     className="group flex h-full flex-col overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                   >
                     <div className="relative aspect-video overflow-hidden border-b border-border-subtle bg-bg-elevated">
-                      <HeroImage study={study} className="transition-transform duration-500 group-hover:scale-[1.02]" />
+                      <HeroImage study={study} className="motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]" />
                     </div>
 
                     <div className="flex flex-1 flex-col p-4 sm:p-5">

@@ -24,7 +24,7 @@ export function Header() {
         <nav aria-label="Primary navigation" className="flex h-16 items-center justify-between">
           <Link
             to="/"
-            className="font-heading text-lg font-semibold tracking-tight text-text-primary transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            className="font-heading text-lg font-semibold tracking-tight text-text-primary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             aria-label="Justin Hernandez - Home"
           >
             <span className="hidden sm:inline">Justin Hernandez</span>
@@ -38,7 +38,7 @@ export function Header() {
                   to={link.to}
                   end={link.to === "/"}
                   className={({ isActive }) =>
-                    `inline-flex min-h-[44px] items-center font-heading text-sm font-medium tracking-wide transition-colors duration-200 hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep ${isActive ? "text-accent-primary" : "text-text-secondary"}`
+                    `inline-flex min-h-[44px] items-center font-heading text-sm font-medium tracking-wide transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep ${isActive ? "text-accent-primary" : "text-text-secondary"}`
                   }
                 >
                   {link.label}

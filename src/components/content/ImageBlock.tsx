@@ -58,7 +58,7 @@ export function ImageBlock({
             className={cn(
               "relative overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated",
               aspectMap[aspect],
-              canExpand && "cursor-zoom-in transition-all duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
+              canExpand && "cursor-zoom-in transition-[border-color,box-shadow] duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             )}
           >

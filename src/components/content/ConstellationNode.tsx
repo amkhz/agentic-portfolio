@@ -9,6 +9,8 @@ interface ConstellationNodeProps {
   onHover: (id: string | null) => void;
   /** Compact sidebar mode: always show labels, smaller markers. */
   compact?: boolean;
+  /** Index for staggered entrance animation. */
+  index?: number;
 }
 
 const statusStyles: Record<NodeStatus, string> = {
@@ -36,6 +38,7 @@ export function ConstellationNode({
   onSelect,
   onHover,
   compact = false,
+  index = 0,
 }: ConstellationNodeProps) {
   const showLabel = compact || node.size === "lg" || isSelected || isHighlighted || node.status === "planned";
 
@@ -50,6 +53,7 @@ export function ConstellationNode({
       disabled={node.status === "planned"}
       className={cn(
         "group absolute flex min-h-[44px] min-w-[44px] flex-col items-center justify-start",
+        "motion-safe:animate-[fadeIn_500ms_ease-out_both]",
         node.status === "planned" && "cursor-default"
       )}
       style={{
@@ -57,6 +61,7 @@ export function ConstellationNode({
         top: `${node.position.y * 100}%`,
         transform: "translate(-50%, -50%)",
         zIndex: isSelected ? 20 : isHighlighted ? 10 : 1,
+        animationDelay: `${300 + index * 80}ms`,
       }}
       aria-label={`${node.title}: ${node.inscription}${node.status === "planned" ? " (coming soon)" : ""}`}
       aria-current={isSelected ? "true" : undefined}
@@ -66,7 +71,7 @@ export function ConstellationNode({
         className={cn(
           "flex items-center justify-center rounded-full",
           "bg-[var(--constellation-node-bg)]",
-          "transition-all duration-slow",
+          "transition-[border-color,box-shadow,transform] duration-fast",
           compact ? "h-5 w-5" : sizeMap[node.size],
           statusStyles[node.status],
           isSelected && "shadow-[0_0_20px_var(--constellation-glow-shipped)] border-[var(--constellation-node-active-border)]",
@@ -78,7 +83,7 @@ export function ConstellationNode({
       >
         <div
           className={cn(
-            "rounded-full transition-all duration-normal",
+            "rounded-full transition-opacity duration-normal",
             dotSize[node.size],
             isSelected
               ? "bg-accent-primary opacity-100"

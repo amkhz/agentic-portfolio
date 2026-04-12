@@ -17,11 +17,13 @@ function ConnectionLine({
   to,
   isHighlighted,
   compact,
+  index,
 }: {
   from: PositionedNode;
   to: PositionedNode;
   isHighlighted: boolean;
   compact?: boolean;
+  index: number;
 }) {
   return (
     <line
@@ -29,6 +31,7 @@ function ConnectionLine({
       y1={`${from.position.y * 100}%`}
       x2={`${to.position.x * 100}%`}
       y2={`${to.position.y * 100}%`}
+      pathLength={1}
       stroke={
         isHighlighted
           ? "var(--constellation-line-active)"
@@ -36,7 +39,9 @@ function ConnectionLine({
       }
       strokeWidth={isHighlighted ? 1.5 : compact ? 0.75 : 1}
       strokeOpacity={isHighlighted ? 0.6 : 0.3}
-      className="transition-all duration-slow"
+      strokeDasharray={1}
+      className="transition-[stroke,stroke-width,stroke-opacity] duration-normal motion-safe:animate-[drawLine_800ms_ease-out_both]"
+      style={{ animationDelay: `${index * 120}ms` }}
     />
   );
 }
@@ -110,19 +115,20 @@ export function ConstellationField({
           className="absolute inset-0 h-full w-full"
           aria-hidden="true"
         >
-          {connectionPairs.map(([a, b]) => (
+          {connectionPairs.map(([a, b], i) => (
             <ConnectionLine
               key={`${a.id}-${b.id}`}
               from={a}
               to={b}
               isHighlighted={isConnectionHighlighted(a, b)}
               compact={compact}
+              index={i}
             />
           ))}
         </svg>
 
         {/* Nodes */}
-        {nodes.map((node) => (
+        {nodes.map((node, i) => (
           <ConstellationNode
             key={node.id}
             node={node}
@@ -131,6 +137,7 @@ export function ConstellationField({
             onSelect={onSelectNode}
             onHover={handleHover}
             compact={compact}
+            index={i}
           />
         ))}
       </div>

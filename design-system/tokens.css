@@ -108,6 +108,22 @@
         oklch(0.17 0.006 286 / 0.07) 600px
       );
     --grain-blend: normal;
+
+    /* Constellation field */
+    --constellation-node-size-sm: 1.5rem;
+    --constellation-node-size-md: 2rem;
+    --constellation-node-size-lg: 2.75rem;
+    --constellation-line-color: var(--theme-border-subtle);
+    --constellation-line-active: var(--theme-accent-primary);
+    --constellation-line-width: 1px;
+    --constellation-glow-shipped: var(--theme-accent-glow);
+    --constellation-glow-active: var(--theme-secondary-glow);
+    --constellation-glow-planned: oklch(0.5824 0.0141 75.29 / 0.06);
+    --constellation-node-bg: var(--theme-bg-elevated);
+    --constellation-node-border: var(--theme-border-strong);
+    --constellation-node-active-border: var(--theme-accent-primary);
+    --constellation-peek-bg: var(--theme-bg-elevated);
+    --constellation-peek-border: var(--theme-border-subtle);
   }
 
   [data-theme="light"] {
@@ -230,5 +246,21 @@
     --particle-color-1: oklch(0.5600 0.1100 60.96);
     --particle-color-2: oklch(0.5200 0.1300 346.74);
     --particle-color-3: oklch(0.5200 0.0180 70);
+
+    /* Constellation field — tuned for warm parchment, boosted contrast */
+    --constellation-node-size-sm: 1.5rem;
+    --constellation-node-size-md: 2rem;
+    --constellation-node-size-lg: 2.75rem;
+    --constellation-line-color: oklch(0.7200 0.0200 65 / 0.4);
+    --constellation-line-active: var(--theme-accent-primary);
+    --constellation-line-width: 1px;
+    --constellation-glow-shipped: oklch(0.5600 0.1100 60.96 / 0.20);
+    --constellation-glow-active: oklch(0.5200 0.1300 346.74 / 0.20);
+    --constellation-glow-planned: oklch(0.5200 0.0180 70 / 0.10);
+    --constellation-node-bg: oklch(0.8800 0.0250 62);
+    --constellation-node-border: oklch(0.7000 0.0240 65);
+    --constellation-node-active-border: var(--theme-accent-primary);
+    --constellation-peek-bg: var(--theme-bg-elevated);
+    --constellation-peek-border: oklch(0.7800 0.0200 68);
   }
 }

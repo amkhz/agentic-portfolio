@@ -193,6 +193,13 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
           });
           break;
         }
+        case 'peek':
+          sections.push({
+            type: 'peek' as const,
+            targetId: fenceHeading ?? '',
+            tease: fenceLines.join('\n').trim(),
+          });
+          break;
       }
       continue;
     }
@@ -246,4 +253,45 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
 
   flushText();
   return sections;
+}
+
+// --- Node delimiter regex ---
+// Matches <!-- node:the-sprint --> style delimiters
+const NODE_DELIMITER_RE = /^<!--\s*node:(\S+)\s*-->$/;
+
+/**
+ * Split a markdown file containing node delimiters into per-node sections.
+ * Content before the first delimiter becomes the 'preamble' key.
+ * Each node delimiter starts a new key matching the node id.
+ */
+export function parseConstellationContent(
+  markdown: string,
+): { preamble: CaseStudySection[]; nodes: Record<string, CaseStudySection[]> } {
+  const lines = markdown.split(/\r?\n/);
+  const chunks: { id: string; lines: string[] }[] = [];
+  let current: { id: string; lines: string[] } = { id: 'preamble', lines: [] };
+
+  for (const line of lines) {
+    const match = line.match(NODE_DELIMITER_RE);
+    if (match) {
+      chunks.push(current);
+      current = { id: match[1], lines: [] };
+    } else {
+      current.lines.push(line);
+    }
+  }
+  chunks.push(current);
+
+  const preambleChunk = chunks.find((c) => c.id === 'preamble');
+  const preamble = preambleChunk
+    ? parseCaseStudyMarkdown(preambleChunk.lines.join('\n'))
+    : [];
+
+  const nodes: Record<string, CaseStudySection[]> = {};
+  for (const chunk of chunks) {
+    if (chunk.id === 'preamble') continue;
+    nodes[chunk.id] = parseCaseStudyMarkdown(chunk.lines.join('\n'));
+  }
+
+  return { preamble, nodes };
 }

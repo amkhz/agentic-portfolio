@@ -55,13 +55,20 @@ export type CalloutSection = {
   body: string;
 };
 
+export type PeekSection = {
+  type: 'peek';
+  targetId: string;
+  tease: string;
+};
+
 export type CaseStudySection =
   | TextSection
   | ImageSection
   | MetricsSection
   | ComparisonSection
   | QuoteSection
-  | CalloutSection;
+  | CalloutSection
+  | PeekSection;
 
 // --- Markdown file imports ---
 
@@ -69,7 +76,10 @@ import aiLeadershipMd from './ai-leadership.md?raw';
 import instantSowMd from './instant-sow.md?raw';
 import instantDocReviewMd from './instant-doc-review.md?raw';
 import buildingThisPortfolioMd from './building-this-portfolio.md?raw';
-import { parseCaseStudyMarkdown } from './parse-case-study';
+import theCraftMd from './the-craft.md?raw';
+import theSoundMd from './the-sound.md?raw';
+import theSystemMd from './the-system.md?raw';
+import { parseCaseStudyMarkdown, parseConstellationContent } from './parse-case-study';
 
 // --- Content by slug ---
 
@@ -78,4 +88,21 @@ export const caseStudyContent: Record<string, CaseStudySection[]> = {
   'instant-sow': parseCaseStudyMarkdown(instantSowMd),
   'instant-doc-review': parseCaseStudyMarkdown(instantDocReviewMd),
   'building-this-portfolio': parseCaseStudyMarkdown(buildingThisPortfolioMd),
+};
+
+// --- Constellation content (meta case study only) ---
+
+const constellationBase = parseConstellationContent(buildingThisPortfolioMd);
+
+export const constellationContent: {
+  preamble: CaseStudySection[];
+  nodes: Record<string, CaseStudySection[]>;
+} = {
+  preamble: constellationBase.preamble,
+  nodes: {
+    ...constellationBase.nodes,
+    'the-craft': parseCaseStudyMarkdown(theCraftMd),
+    'the-sound': parseCaseStudyMarkdown(theSoundMd),
+    'the-system': parseCaseStudyMarkdown(theSystemMd),
+  },
 };

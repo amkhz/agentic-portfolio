@@ -9,6 +9,7 @@ const VALID_SECTION_TYPES: CaseStudySection['type'][] = [
   'comparison',
   'quote',
   'callout',
+  'peek',
 ];
 
 // ============================================

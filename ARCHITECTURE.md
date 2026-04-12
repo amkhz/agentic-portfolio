@@ -84,6 +84,8 @@ agentic-portfolio/
 │       ├── /builder       # Builder skill (implements plans, enforces quality)
 │       ├── /director      # Director skill (tracks project status)
 │       ├── /dreamer       # Dreamer skill (refines ideas into plans)
+│       ├── /roy           # Roy skill (post-build reviewer, quality checks)
+│       ├── /joi           # Joi skill (voice calibration for Writer)
 │       └── /writer        # Writer skill (case study content)
 ├── /design-system         # Visual foundation layer
 │   └── tokens.css         # CSS variables (colors, spacing, typography)

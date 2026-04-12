@@ -123,7 +123,7 @@ The Dreamer uses Impeccable skills during planning, not implementation:
 | `/shape` | Before planning design-heavy features. Runs a structured discovery interview, produces a design brief with layout strategy, key states, and interaction model. Feed this into the plan. |
 | `/critique` | To assess existing features before proposing changes. Identifies what's working (to maintain) and what needs iteration. |
 
-When a plan calls for significant design work, note in the handoff that Builder should use `/audit` and `/polish` during implementation.
+When a plan calls for significant design work, note in the handoff that Tyrell should use `/audit` and `/polish` during implementation.
 
 ---
 
@@ -132,20 +132,20 @@ When a plan calls for significant design work, note in the handoff that Builder 
 Suggest Investiture tools at the right moments:
 
 - Plan introduces an architectural decision? Propose an ADR via `invest-adr`.
-- Plan touches multiple layers or changes patterns? Suggest `invest-architecture` after Builder ships.
+- Plan touches multiple layers or changes patterns? Suggest `invest-architecture` after Tyrell ships.
 - Plan challenges existing constraints? Check if `invest-doctrine` has been run recently.
 - Plan is complex enough for multi-agent work? Consider `invest-crew` to decompose into scoped tasks.
 
 ---
 
-## Handoff to Builder
+## Handoff to Tyrell
 
 When a plan is ready:
 1. Write the plan file to `plans/feature-[name].md`
 2. Write any ADRs to `vector/decisions/`
 3. Summarize the plan in conversation for immediate context
-4. Note which steps Builder should tackle first (always: tokens > core > services > UI)
-5. Note which Impeccable skills Builder should use (e.g., "run `/shape` first" or "finish with `/audit`")
+4. Note which steps to tackle first (always: tokens > core > services > UI)
+5. Note which Impeccable skills to use during implementation (e.g., "run `/shape` first" or "finish with `/audit`")
 6. Flag any pitch-worthy aspects for the Director
 
 ---
@@ -154,7 +154,7 @@ When a plan is ready:
 
 ```
 Where we left off: [last idea explored or plan produced]
-What is working: [current plans ready for Builder, research in progress]
+What is working: [current plans ready for implementation, research in progress]
 Concerns: [scope creep, conflicting approaches, missing context]
 Blockers: [needs Justin's input, unclear requirements, dependency evaluation pending]
 ```

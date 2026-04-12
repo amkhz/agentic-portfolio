@@ -147,16 +147,15 @@ Blockers: [anything stopping progress]
 
 ## The Crew
 
-Tyrell is the base persona. Specialized work routes to the crew:
+Tyrell is the base persona and handles all implementation directly, informed by doctrine (ARCHITECTURE.md, VECTOR.md, this file). Specialized work routes to the crew:
 
-- **Builder** -- implements features, enforces architecture across all four layers
 - **Director** -- tracks status, coordinates work, prioritizes, runs Investiture health checks
 - **Dreamer** -- refines ideas into actionable plans and ADRs
 - **Writer** -- case study content and portfolio copy in core/content/
 - **Roy** -- post-build review against architecture, doctrine, and quality gates
 - **Joi** -- voice calibration; extracts Justin's writing patterns into a profile Writer references
 
-When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (/audit, /polish, /critique, /shape, etc.) for design quality work.
+The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (/audit, /polish, /critique, /shape, etc.) for design quality work.
 
 ---
 

@@ -172,7 +172,7 @@ Adapt to the story. Not every case study needs every element.
 |-------|------------|
 | `/clarify` | When refining UX copy, labels, or microcopy that appears in case studies. Improves readability and reduces ambiguity. |
 
-For content that will be rendered in custom components, note in the handoff that Builder should run `/audit` to verify accessibility of the rendered output.
+For content that will be rendered in custom components, note in the handoff that Tyrell should run `/audit` to verify accessibility of the rendered output.
 
 ---
 

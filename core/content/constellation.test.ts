@@ -35,12 +35,15 @@ describe('buildConstellationLayout', () => {
     expect(a).toEqual(b);
   });
 
-  it('produces different layout with different seed', () => {
+  it('uses fixedPosition when provided, ignoring seed', () => {
     const a = buildConstellationLayout(constellationNodes, { seed: 1 });
     const b = buildConstellationLayout(constellationNodes, { seed: 2 });
+    const material = constellationNodes.find((n) => n.id === 'the-material')!;
     const posA = a.find((n) => n.id === 'the-material')!.position;
     const posB = b.find((n) => n.id === 'the-material')!.position;
-    expect(posA.x).not.toBeCloseTo(posB.x, 5);
+    // Fixed positions are identical regardless of seed
+    expect(posA.x).toBeCloseTo(posB.x, 5);
+    expect(posA.x).toBeCloseTo(material.fixedPosition!.x, 2);
   });
 
   it('places planned nodes further from center than shipped nodes', () => {

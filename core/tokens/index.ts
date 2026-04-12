@@ -215,6 +215,7 @@ export interface CaseStudy {
   title: string;
   subtitle: string;          // one-line description
   tags: string[];             // skills, tools, themes
+  template?: 'standard' | 'constellation';  // rendering template (default: standard)
   heroMetric?: {
     value: string;            // e.g., "56%"
     label: string;            // e.g., "reduction in manual work"
@@ -288,15 +289,16 @@ export const caseStudies: CaseStudy[] = [
   },
 ];
 
-// Meta case study — will be populated during/after sprint
+// Meta case study — living constellation, not a static page
 export const metaCaseStudy: CaseStudy = {
   slug: 'building-this-portfolio',
   title: 'Building This Portfolio',
-  subtitle: 'Design system to deployed site in 48 hours using AI-powered workflows.',
-  tags: ['Design Systems', 'AI Workflow', 'Meta', 'Process'],
+  subtitle: 'A living case study that grows with the project. Every node is a transformation.',
+  tags: ['Design Systems', 'AI Workflow', 'Meta', 'Process', 'Living System'],
+  template: 'constellation',
   heroMetric: {
-    value: '48 hours',
-    label: 'tokens to production',
+    value: '7 nodes',
+    label: 'and growing',
   },
   heroImage: {
     src: '/images/meta.png',

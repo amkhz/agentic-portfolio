@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { caseStudies, metaCaseStudy } from "@core/tokens";
 import { CaseStudyPageTemplate } from "@/components/content/CaseStudyPage";
+import { ConstellationPageTemplate } from "@/components/content/ConstellationPage";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -18,7 +19,11 @@ export function CaseStudyPage() {
           <link rel="canonical" href={`https://justinh.design/work/${study.slug}`} />
         </Helmet>
       )}
-      <CaseStudyPageTemplate slug={slug!} />
+      {study?.template === "constellation" ? (
+        <ConstellationPageTemplate slug={slug!} />
+      ) : (
+        <CaseStudyPageTemplate slug={slug!} />
+      )}
     </>
   );
 }

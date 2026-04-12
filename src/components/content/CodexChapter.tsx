@@ -73,7 +73,7 @@ export function CodexChapter({
                     className={cn(
                       "rounded-full border border-border-subtle px-3 py-1",
                       "font-heading text-xs font-medium text-text-secondary",
-                      "transition-all duration-normal",
+                      "transition-[border-color,color,box-shadow] duration-normal",
                       "hover:border-accent-primary/40 hover:text-accent-primary hover:shadow-[0_0_12px_var(--theme-accent-glow)]",
                       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                     )}

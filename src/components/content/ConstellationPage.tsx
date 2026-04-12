@@ -53,17 +53,19 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
       window.history.replaceState(null, "", `#${selectedId}`);
       // Scroll to content top after render commits, offset for sticky header
       if (prevSelectedId.current !== selectedId) {
-        setTimeout(() => {
-          const el = document.getElementById("constellation-content");
-          if (el) {
-            const headerOffset = 80; // header (64px) + breathing room
-            const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-            window.scrollTo({
-              top,
-              behavior: getReducedMotion() ? "instant" : "smooth",
-            });
-          }
-        }, 50);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const el = document.getElementById("constellation-content");
+            if (el) {
+              const headerOffset = 80; // header (64px) + breathing room
+              const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+              window.scrollTo({
+                top,
+                behavior: getReducedMotion() ? "instant" : "smooth",
+              });
+            }
+          });
+        });
       }
     } else {
       window.history.replaceState(null, "", window.location.pathname);
@@ -131,11 +133,13 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
 
       {/* Mobile strip */}
       {isReading && (
-        <ConstellationStrip
-          nodes={constellationNodes}
-          selectedId={selectedId}
-          onSelectNode={handleSelectNode}
-        />
+        <div className="motion-safe:animate-[fadeIn_200ms_ease-out]">
+          <ConstellationStrip
+            nodes={constellationNodes}
+            selectedId={selectedId}
+            onSelectNode={handleSelectNode}
+          />
+        </div>
       )}
 
       {/* Main layout: animated grid on desktop, stacked on mobile */}
@@ -199,8 +203,9 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
           >
             {isReading && selectedNode && selectedSections ? (
               <div
+                key={selectedId}
                 id="constellation-content"
-                className="motion-safe:animate-[fadeIn_400ms_ease-out]"
+                className="motion-safe:animate-[fadeIn_400ms_var(--ease-spring)]"
                 aria-live="polite"
               >
                 <ConstellationContent
@@ -213,7 +218,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
               </div>
             ) : !isReading && constellationContent.preamble.length > 0 ? (
               /* Preamble below the field in hero state */
-              <div className="mx-auto max-w-[65ch] lg:col-span-2">
+              <div className="mx-auto max-w-[65ch] lg:col-span-2 motion-safe:animate-[fadeIn_400ms_var(--ease-spring)]">
                 {constellationContent.preamble.map((section, i) => {
                   if (section.type === "text") {
                     return <TextBlock key={i}>{section.body}</TextBlock>;

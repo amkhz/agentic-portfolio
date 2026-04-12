@@ -49,7 +49,7 @@ export function ConstellationStrip({
               onClick={!isPlanned ? () => onSelectNode(node.id) : undefined}
               disabled={isPlanned}
               className={cn(
-                "flex flex-col items-center gap-0.5 rounded-md px-1.5 py-1 transition-all duration-normal",
+                "flex flex-col items-center gap-0.5 rounded-md px-1.5 py-1 transition-[background-color] duration-normal",
                 isSelected
                   ? "bg-bg-elevated/60"
                   : "hover:bg-bg-subtle/30",
@@ -60,7 +60,7 @@ export function ConstellationStrip({
             >
               <div
                 className={cn(
-                  "rounded-full transition-all duration-normal",
+                  "rounded-full transition-[width,height,background-color,border-color,box-shadow] duration-normal",
                   isSelected
                     ? "h-2.5 w-2.5 bg-accent-primary shadow-[0_0_8px_var(--constellation-glow-shipped)]"
                     : isConnected

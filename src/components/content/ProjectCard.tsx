@@ -35,7 +35,7 @@ export function ProjectCard({ study }: ProjectCardProps) {
     !study.heroImage.src.includes("placeholder-");
 
   return (
-    <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-all duration-normal">
+    <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
       <Link
         to={`/work/${study.slug}`}
         className="group block overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"

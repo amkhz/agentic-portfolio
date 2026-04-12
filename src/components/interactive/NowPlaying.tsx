@@ -109,7 +109,7 @@ export function NowPlaying({ className }: { className?: string }) {
         {/* Expanded panel */}
         <div
           className={cn(
-            "grid transition-[grid-template-rows] duration-slower ease-spring",
+            "grid motion-safe:transition-[grid-template-rows] motion-safe:duration-slower motion-safe:ease-spring",
             isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
           )}
         >
@@ -117,7 +117,7 @@ export function NowPlaying({ className }: { className?: string }) {
             <div
               className={cn(
                 "flex items-center gap-3 px-4 pb-3 pt-1",
-                "transition-opacity duration-slower ease-out",
+                "motion-safe:transition-opacity motion-safe:duration-slower motion-safe:ease-spring",
                 isOpen ? "opacity-100" : "opacity-0",
                 "bg-bg-elevated/80 backdrop-blur-md border-x border-b border-border-subtle",
                 "rounded-b-lg"

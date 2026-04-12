@@ -7,7 +7,7 @@ const DEV = import.meta.env.DEV;
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-24 pb-16">
+    <section className="relative overflow-hidden pt-24 pb-16 bg-bg-deep" style={{ backgroundImage: "none" }}>
       {DEV ? (
         <ParticlesTuner />
       ) : (

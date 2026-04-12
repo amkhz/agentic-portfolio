@@ -53,7 +53,7 @@ export function SpotlightCard({
       )}
     >
       <div
-        className="pointer-events-none absolute inset-0 transition-opacity duration-500 ease-out"
+        className="pointer-events-none absolute inset-0 transition-opacity duration-slow ease-out"
         style={{
           opacity,
           background: `radial-gradient(circle at ${position.x}px ${position.y}px, ${color}, transparent ${spotlightColor ? "80%" : "var(--spotlight-size)"})`,

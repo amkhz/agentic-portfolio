@@ -81,7 +81,7 @@ agentic-portfolio/
 ├── package.json           # Scripts: dev, build, test, lint
 ├── /.agents               # Agent skill definitions
 │   └── /skills
-│       ├── /builder       # Builder skill (implements plans, enforces quality)
+│       ├── /builder       # Retired 2026-04-12 (RETIRED.md archive)
 │       ├── /director      # Director skill (tracks project status)
 │       ├── /dreamer       # Dreamer skill (refines ideas into plans)
 │       ├── /roy           # Roy skill (post-build reviewer, quality checks)

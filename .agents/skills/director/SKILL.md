@@ -61,7 +61,7 @@ ADRs live in `vector/decisions/`. The Director:
 
 The Director understands each crew member's lane:
 
-- **Builder** implements across all four layers, enforces architecture
+- **Tyrell** implements across all four layers, informed by doctrine
 - **Dreamer** refines ideas into plans/ and proposes ADRs
 - **Writer** creates/refines case study content in core/content/
 - **Roy** reviews post-build output against doctrine, architecture, and quality gates

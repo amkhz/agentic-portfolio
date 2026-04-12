@@ -57,6 +57,23 @@
     /* GrainOverlay opacity */
     --grain-opacity: 0.04;
 
+    /* Constellation field */
+    --constellation-node-size-sm: 1.5rem;
+    --constellation-node-size-md: 2rem;
+    --constellation-node-size-lg: 2.75rem;
+    --constellation-line-color: var(--theme-border-subtle);
+    --constellation-line-active: var(--theme-accent-primary);
+    --constellation-line-width: 1px;
+    --constellation-glow-shipped: var(--theme-accent-glow);
+    --constellation-glow-active: var(--theme-secondary-glow);
+    --constellation-node-bg: var(--theme-bg-elevated);
+    --constellation-node-border: var(--theme-border-strong);
+    --constellation-node-active-border: var(--theme-accent-primary);
+    --constellation-peek-bg: var(--theme-bg-elevated);
+    --constellation-peek-border: var(--theme-border-subtle);
+    --constellation-sidebar-width: 320px;
+    --constellation-strip-height: 44px;
+
     /* Animation: SpotlightCard */
     --spotlight-color: oklch(0.7087 0.0845 60.96 / 0.15);
     --spotlight-size: 80%;
@@ -237,6 +254,21 @@
         oklch(0.84 0.038 52 / 0.07) 140px,
         oklch(0.90 0.024 58 / 0.03) 200px
       );
+
+    /* Constellation field — stronger contrast, muted glow */
+    --constellation-node-size-sm: 1.5rem;
+    --constellation-node-size-md: 2rem;
+    --constellation-node-size-lg: 2.75rem;
+    --constellation-line-color: var(--theme-border-subtle);
+    --constellation-line-active: var(--theme-accent-primary);
+    --constellation-line-width: 1px;
+    --constellation-glow-shipped: var(--theme-accent-glow);
+    --constellation-glow-active: var(--theme-secondary-glow);
+    --constellation-node-bg: var(--theme-bg-elevated);
+    --constellation-node-border: var(--theme-border-strong);
+    --constellation-node-active-border: var(--theme-accent-primary);
+    --constellation-peek-bg: var(--theme-bg-elevated);
+    --constellation-peek-border: var(--theme-border-subtle);
 
     /* Animation: SpotlightCard */
     --spotlight-color: oklch(0.5600 0.1100 60.96 / 0.14);

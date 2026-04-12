@@ -1,14 +1,14 @@
-AI is not magic. It does not replace thinking. You still have to articulate what you want, define what "good" looks like, and understand how the thing you are building actually works. Because you can build fast, you should think slow. Slower than ever before. Every prompt should count. Every use should count. Review the code with your own eyes, understand what changed and why, and course-correct when it drifts. I am acutely aware of the environmental cost of these tools, which makes intentional, deliberate use a responsibility, not a nice-to-have. At least until we figure out how to make them sustainable for everyone.
+AI gives you the power to build anything. Design the world you want. But you need guidelines, frameworks, and your own willingness to think before you commit. You need to understand what you want and who is using what you build. Because without that you get slop. You get people thinking designers aren't needed anymore, and that is not the case. What these tools actually do is give designers superpowers. People with design minds can now move at the speed of their ideas. And we can design the world we want.
 
-This is a living case study. It grows as the portfolio evolves. Each node below is a transformation. A moment where the system changed shape.
+This is a living case study. It grows as the portfolio evolves. Each node is a transformation. A moment where the system changed shape.
 
 <!-- node:the-sprint -->
 
 ## The Sprint
 
-Before I opened Cursor or Claude, I had been collecting material for months. Case study metrics and slide decks organized in NotebookLM. Font and color inspiration bookmarked but not decided. I forced myself to pick and follow my gut. A previous portfolio site with voice and tone I could riff on. A library of links, articles, and videos about AI-augmented workflows. And most importantly, an idea I could articulate: a 48-hour portfolio sprint, tokens first, AI augmented, built as a beta test for a larger workflow presentation at work.
+Before I opened Cursor or Claude, I had been collecting material for months. Case study metrics in NotebookLM. Font and color inspiration bookmarked but not decided. A previous portfolio with voice and tone I could riff on. And most importantly, an idea I could articulate: a 48-hour portfolio sprint, tokens first, AI augmented, built as a beta test for a larger workflow presentation at work.
 
-Friday afternoon I sat down with Claude and started planning. My process is messy at first: I talk, ramble, type, refine, and iterate until the shape of the plan emerges. Over about two hours, I had a structured plan, a set of strong starting prompts, and a context file that would act as a guardrail for every agent interaction going forward.
+Friday afternoon I sat down with Claude and started planning. My process is messy at first: I talk, ramble, type, refine, and iterate until the shape emerges. Over about two hours, I had a structured plan, a set of strong starting prompts, and a context file that would act as a guardrail for every agent interaction going forward. Two hours sounds like a lot for "just planning." But plans are where it all starts. If you're not planning, you're going to end up with slop.
 
 ![Claude conversation showing the iterative planning session with structured plan output](/images/meta-planning.png)
 *The plan emerged from a messy conversation. Rambling in, structured plan out.*
@@ -18,9 +18,7 @@ Friday afternoon I sat down with Claude and started planning. My process is mess
 *The context file gave every AI agent the same brief: design direction, constraints, and non-negotiables.*
 <!-- aspect:16:9 placeholder:Screenshot of the Cursor context file that served as the AI guardrail for the entire project -->
 
-Friday evening at 8:41, I started scaffolding in Cursor. The first prompt set up the project with my token system, extended Tailwind with all the token values, configured three fonts, and created a utility helper. Then I had the agent build the full layout shell: container, header, footer, and a test hero to verify the type system. By midnight I had the site running locally with themed skeletons of every page.
-
-Saturday afternoon I hit a rhythm. Content refinement, visual tweaks, hybrid typing and prompting and committing. I got staging live on Vercel. Somewhere around 3pm I fell into a flow state and stopped documenting individual steps. The key discipline was baking accessibility rules into everything as we went, not as an afterthought.
+Friday evening I started scaffolding. Token system, Tailwind configuration, three fonts, layout shell. By midnight I had themed skeletons of every page running locally. Saturday I hit a rhythm: content refinement, visual tweaks, hybrid typing and prompting and committing. Somewhere around 3pm I fell into a flow state and stopped documenting individual steps.
 
 ::: callout Example Prompt
 Read CURSOR_CONTEXT.md and src/lib/tokens.ts. Build a ProjectCard component at src/components/content/ProjectCard.tsx.
@@ -34,13 +32,13 @@ Hover: subtle lift (translateY -2px), border transitions to accent-primary with 
 *Token-driven colors and type across every template. Knowing a little about code helps with prompting.*
 <!-- aspect:16:9 placeholder:Screenshot showing the styled scaffold with token-driven colors, typography, and layout across multiple pages -->
 
-Saturday around 1pm, I realized my case study content lived in the same file as my front-end UI tokens. Content and design tokens are different concerns, and coupling them would create maintenance headaches. I used Claude to talk through the separation plan, refined it together, and started the migration. About 45 minutes total. A good reminder that you can course-correct once you have set a plan.
+The first real friction: Saturday around 1pm, I realized my case study content lived in the same file as my UI tokens. Content and design tokens are different concerns, and coupling them would create maintenance headaches. I talked through the separation with Claude, refined the plan, and migrated in about 45 minutes. Course-correcting early is cheap. That's the whole point of thinking slow.
 
 ![Claude conversation showing the content and token separation plan](/images/meta-content-separation.png)
 *Talking through the architecture change in plain English before touching any code.*
 <!-- aspect:16:9 placeholder:Screenshot of the conversation where the content/token separation was planned and refined -->
 
-The accessibility work helped ground me: running Lighthouse audits and checking focus states gave me concrete benchmarks instead of subjective "does this feel done?" What AI got right by default through the token system was significant: contrast ratios, semantic heading hierarchy, and focus ring styles all came along for free because the tokens enforced them. What had to be explicitly enforced through human-in-the-loop review was subtler: reading order, link target clarity, and making sure nothing important was conveyed through color alone.
+The accessibility work grounded everything. What the token system gave us for free was significant: contrast ratios, semantic heading hierarchy, focus ring styles. What had to be enforced through human review was subtler: reading order, link target clarity, making sure nothing important was conveyed through color alone. Automated audits give you numbers. The real work is in the judgment calls.
 
 ![Accessibility testing results showing Lighthouse audit scores](/images/meta-a11y.png)
 *The a11y pass: automated audits for the numbers, manual review for the nuance.*
@@ -53,7 +51,7 @@ The accessibility work helped ground me: running Lighthouse audits and checking 
 - 100 | Mobile accessibility (Lighthouse) | brass
 :::
 
-By Saturday night I was tired. Sunday morning I woke with the idea to add a resume page. What if the resume was just a Markdown file that generated both a downloadable PDF and the website page? Built in about two hours. Then I deployed, double-checked against the plans, and shipped. The sprint was done, but the project was just beginning.
+Sunday morning I added a resume page, deployed, double-checked against the plans, and shipped. The sprint was done. But the project was just beginning.
 
 ::: peek the-material
 The token system that made this sprint possible would soon undergo its own transformation.
@@ -134,23 +132,21 @@ The four-layer architecture became the foundation for something bigger: a crew o
 
 ## The Process
 
-This portfolio is not just built with AI. It is built by a team of specialized agents, each with a defined role, clear boundaries, and documented coordination patterns, all working within the Investiture framework.
+This portfolio is built by a crew. Not just me prompting an AI. A crew of specialized agents, each with a defined role and clear boundaries, all working within the same four-layer architecture.
 
-There are four project skills: **Writer**, **Builder**, **Dreamer**, and **Director**. Each one has a skill file that defines its role, its layer permissions, and its workflow. The Writer creates and refines case study content, operating exclusively in the core/ layer. The Builder implements features across all four layers, enforcing architecture with every change. The Dreamer takes rough ideas and produces structured plans, ADRs, and implementation specs. The Director tracks status, maintains the roadmap, coordinates work between skills, and keeps a running list of pitch-worthy items.
+The Builder implements features across all four layers. The Writer creates and refines content, operating exclusively in the core layer. The Dreamer takes rough ideas and produces structured plans. The Director tracks what shipped and what's next. Each one has a skill file that defines what it can and cannot touch.
 
-The coordination flow: Idea goes to the Dreamer. The Dreamer produces a plan. The plan goes to the Builder or the Writer. The Director tracks what shipped.
+That last part is what makes this more than a prompting strategy. The Writer cannot touch UI components. The Dreamer cannot write implementation code. These constraints are just creative boundaries, right? They prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
 
-What makes this more than a prompting strategy is the layer permission model. The Writer cannot touch UI components. The Dreamer cannot write implementation code. The Director cannot modify the codebase. These constraints prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
-
-::: callout How The Skills Coordinate
-Justin has an idea for a new feature. He talks to the Dreamer. The Dreamer researches feasibility, maps the idea to architecture layers, and writes a plan file in plans/. The Builder reads the plan and implements it in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content that the feature needs. The Director updates the roadmap and flags anything pitch-worthy.
+::: callout How The Crew Coordinates
+I have an idea. I talk to the Dreamer. The Dreamer researches feasibility, maps it to architecture layers, and writes a plan. The Builder reads the plan and implements in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content the feature needs. The Director updates the roadmap and flags anything pitch-worthy.
 :::
 
-Beyond the four project skills, the Investiture framework brings its own pipeline: invest-doctrine audits the project documentation for drift, invest-architecture checks the codebase against its own rules, invest-crew decomposes features into scoped agent tasks, invest-adr generates decision records, and invest-brief produces design briefs from research. Each skill reads from the same doctrine files and respects the same layer boundaries.
+Beyond the crew, the Investiture framework brings its own pipeline: doctrine audits for drift, architecture checks against its own rules, decision records, design briefs from research. Each tool reads from the same doctrine files and respects the same layer boundaries.
 
-The meta-insight is the one that matters most: this portfolio demonstrates the workflow it documents. The case study about AI-augmented design was written by the Writer skill and edited by me. The interactive effects were implemented by the Builder skill following a Dreamer plan. The color migration and framework migration were each planned, executed, and documented through this same pipeline.
+The meta-insight is the one that matters most: this portfolio demonstrates the workflow it documents. The case study you're reading was written by the Writer skill and edited by me. The interactive constellation you're navigating was planned by the Dreamer and built by the Builder. The color migration, the framework migration, all of it went through this same pipeline.
 
-This is not about replacing designers or developers. It is about giving AI agents the same kind of structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. The agents are crew members with skill sets, not magic text boxes that you throw prompts at and follow without thought.
+This is not about replacing designers or developers. It's about giving AI agents the same structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. Crew members with skill sets, not magic text boxes you throw prompts at and hope for the best.
 
 ::: peek the-craft
 Structure enables quality. But quality has to be actively pursued.

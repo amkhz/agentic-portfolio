@@ -293,13 +293,9 @@ export const caseStudies: CaseStudy[] = [
 export const metaCaseStudy: CaseStudy = {
   slug: 'building-this-portfolio',
   title: 'Building This Portfolio',
-  subtitle: 'A living case study that grows with the project. Every node is a transformation.',
-  tags: ['Design Systems', 'AI Workflow', 'Meta', 'Process', 'Living System'],
+  subtitle: 'A living case study that grows with the project.',
+  tags: ['Design Systems', 'AI Workflow', 'Meta', 'Process'],
   template: 'constellation',
-  heroMetric: {
-    value: '7 nodes',
-    label: 'and growing',
-  },
   heroImage: {
     src: '/images/meta.png',
     alt: 'Composite preview of the portfolio build process and final UI',

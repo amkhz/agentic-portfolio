@@ -18,6 +18,8 @@ export interface ConstellationNode {
   connections: string[];
   /** Normalized 0-1 offset to nudge the algorithmic position. */
   offset?: { x: number; y: number };
+  /** Hand-tuned position (0-1). Bypasses the layout algorithm entirely. */
+  fixedPosition?: { x: number; y: number };
 }
 
 export interface ConnectionPeek {
@@ -35,6 +37,11 @@ export interface ConstellationData {
 
 // --- Node definitions ---
 
+// Positions are hand-tuned for spatial meaning:
+// Left cluster = design foundation (Material, System)
+// Right cluster = architecture (Structure, Process)
+// Center = Sprint (origin), Craft (bridges both)
+// Outer = Sound (creative thread), Lab (future)
 export const constellationNodes: ConstellationNode[] = [
   {
     id: 'the-sprint',
@@ -43,7 +50,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'lg',
     status: 'shipped',
     connections: ['the-material', 'the-structure', 'the-process'],
-    offset: { x: 0, y: 0 },
+    fixedPosition: { x: 0.50, y: 0.42 },
   },
   {
     id: 'the-material',
@@ -52,7 +59,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-sprint', 'the-structure', 'the-craft'],
-    offset: { x: -0.04, y: -0.03 },
+    fixedPosition: { x: 0.24, y: 0.30 },
   },
   {
     id: 'the-structure',
@@ -61,7 +68,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-sprint', 'the-material', 'the-process'],
-    offset: { x: 0.02, y: 0.02 },
+    fixedPosition: { x: 0.76, y: 0.28 },
   },
   {
     id: 'the-process',
@@ -70,7 +77,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-sprint', 'the-structure', 'the-craft'],
-    offset: { x: 0.03, y: -0.02 },
+    fixedPosition: { x: 0.80, y: 0.55 },
   },
   {
     id: 'the-craft',
@@ -79,17 +86,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'active',
     connections: ['the-material', 'the-process'],
-    offset: { x: -0.02, y: 0.03 },
-  },
-  // Planned nodes (v2+)
-  {
-    id: 'the-lab',
-    title: 'The Lab',
-    inscription: 'Speculative design for frontier technologies.',
-    size: 'sm',
-    status: 'planned',
-    connections: ['the-process', 'the-craft'],
-    offset: { x: 0, y: 0 },
+    fixedPosition: { x: 0.50, y: 0.75 },
   },
   {
     id: 'the-sound',
@@ -98,7 +95,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-sprint', 'the-process', 'the-material'],
-    offset: { x: 0.02, y: -0.01 },
+    fixedPosition: { x: 0.35, y: 0.12 },
   },
   {
     id: 'the-system',
@@ -107,7 +104,17 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-material', 'the-craft'],
-    offset: { x: -0.03, y: 0 },
+    fixedPosition: { x: 0.16, y: 0.58 },
+  },
+  // Planned nodes
+  {
+    id: 'the-lab',
+    title: 'The Lab',
+    inscription: 'Speculative design for frontier technologies.',
+    size: 'sm',
+    status: 'planned',
+    connections: ['the-process', 'the-craft'],
+    fixedPosition: { x: 0.72, y: 0.85 },
   },
 ];
 
@@ -141,10 +148,10 @@ export interface LayoutOptions {
 /**
  * Compute positioned nodes from node definitions.
  *
- * The center node (largest, or first 'lg') sits at the center.
- * Remaining nodes distribute radially around it. Planned nodes
- * sit on a wider ring. Each node gets seeded jitter plus its
- * per-node offset for hand-tuning.
+ * Nodes with fixedPosition use their hand-tuned coordinates directly.
+ * Remaining nodes distribute radially around the center. Planned nodes
+ * sit on a wider ring. Each algorithmic node gets seeded jitter plus
+ * its per-node offset.
  */
 export function buildConstellationLayout(
   nodes: ConstellationNode[],
@@ -158,52 +165,60 @@ export function buildConstellationLayout(
   } = options;
 
   const rand = seededRandom(seed);
-
-  // Separate center node from the rest
-  const centerNode = nodes.find((n) => n.size === 'lg') ?? nodes[0];
-  const orbitNodes = nodes.filter((n) => n.id !== centerNode.id);
-
-  // Split by status for layered rings
-  const shipped = orbitNodes.filter((n) => n.status !== 'planned');
-  const planned = orbitNodes.filter((n) => n.status === 'planned');
-
   const positioned: PositionedNode[] = [];
 
-  // Place center node
-  positioned.push({
-    ...centerNode,
-    position: {
-      x: clamp(center.x + (centerNode.offset?.x ?? 0)),
-      y: clamp(center.y + (centerNode.offset?.y ?? 0)),
-    },
-  });
-
-  // Place shipped/active nodes on inner ring
-  const innerAngleStep = (2 * Math.PI) / Math.max(shipped.length, 1);
-  // Start from top-left quadrant for visual balance
-  const innerOffset = -Math.PI / 4;
-
-  for (let i = 0; i < shipped.length; i++) {
-    const node = shipped[i];
-    const angle = innerOffset + i * innerAngleStep;
-    const r = radius + (rand() - 0.5) * jitter * 2;
-    const x = center.x + Math.cos(angle) * r + (node.offset?.x ?? 0) + (rand() - 0.5) * jitter;
-    const y = center.y + Math.sin(angle) * r + (node.offset?.y ?? 0) + (rand() - 0.5) * jitter;
-    positioned.push({ ...node, position: { x: clamp(x), y: clamp(y) } });
+  // Hand-tuned nodes go directly
+  const algorithmic: ConstellationNode[] = [];
+  for (const node of nodes) {
+    if (node.fixedPosition) {
+      positioned.push({
+        ...node,
+        position: { x: clamp(node.fixedPosition.x), y: clamp(node.fixedPosition.y) },
+      });
+    } else {
+      algorithmic.push(node);
+    }
   }
 
-  // Place planned nodes on outer ring
-  const outerRadius = radius * 1.6;
-  const outerAngleStep = (2 * Math.PI) / Math.max(planned.length, 1);
-  const outerOffset = Math.PI / 6;
+  // Algorithmic placement for any nodes without fixedPosition
+  if (algorithmic.length > 0) {
+    const centerNode = algorithmic.find((n) => n.size === 'lg') ?? algorithmic[0];
+    const orbitNodes = algorithmic.filter((n) => n.id !== centerNode.id);
+    const shipped = orbitNodes.filter((n) => n.status !== 'planned');
+    const planned = orbitNodes.filter((n) => n.status === 'planned');
 
-  for (let i = 0; i < planned.length; i++) {
-    const node = planned[i];
-    const angle = outerOffset + i * outerAngleStep;
-    const r = outerRadius + (rand() - 0.5) * jitter * 2;
-    const x = center.x + Math.cos(angle) * r + (node.offset?.x ?? 0) + (rand() - 0.5) * jitter;
-    const y = center.y + Math.sin(angle) * r + (node.offset?.y ?? 0) + (rand() - 0.5) * jitter;
-    positioned.push({ ...node, position: { x: clamp(x), y: clamp(y) } });
+    if (!centerNode.fixedPosition) {
+      positioned.push({
+        ...centerNode,
+        position: {
+          x: clamp(center.x + (centerNode.offset?.x ?? 0)),
+          y: clamp(center.y + (centerNode.offset?.y ?? 0)),
+        },
+      });
+    }
+
+    const innerAngleStep = (2 * Math.PI) / Math.max(shipped.length, 1);
+    const innerOffset = -Math.PI / 4;
+    for (let i = 0; i < shipped.length; i++) {
+      const node = shipped[i];
+      const angle = innerOffset + i * innerAngleStep;
+      const r = radius + (rand() - 0.5) * jitter * 2;
+      const x = center.x + Math.cos(angle) * r + (node.offset?.x ?? 0) + (rand() - 0.5) * jitter;
+      const y = center.y + Math.sin(angle) * r + (node.offset?.y ?? 0) + (rand() - 0.5) * jitter;
+      positioned.push({ ...node, position: { x: clamp(x), y: clamp(y) } });
+    }
+
+    const outerRadius = radius * 1.6;
+    const outerAngleStep = (2 * Math.PI) / Math.max(planned.length, 1);
+    const outerOffset = Math.PI / 6;
+    for (let i = 0; i < planned.length; i++) {
+      const node = planned[i];
+      const angle = outerOffset + i * outerAngleStep;
+      const r = outerRadius + (rand() - 0.5) * jitter * 2;
+      const x = center.x + Math.cos(angle) * r + (node.offset?.x ?? 0) + (rand() - 0.5) * jitter;
+      const y = center.y + Math.sin(angle) * r + (node.offset?.y ?? 0) + (rand() - 0.5) * jitter;
+      positioned.push({ ...node, position: { x: clamp(x), y: clamp(y) } });
+    }
   }
 
   return positioned;

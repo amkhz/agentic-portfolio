@@ -8,15 +8,17 @@ A design portfolio built with intention. Every architectural decision, every col
 
 This is [Justin Hernandez's](https://justinh.design/) portfolio and playground -- a showcase of product design craft, case studies, and agentic development practice. The visual direction draws from "Blade Runner + William Gibson meets Finn Juhl": dark, atmospheric, warm blacks with brass and dusty magenta accents.
 
-## The Migration
+Built and maintained by Justin and a crew of AI collaborators using Claude Code, with specialized agent skills for building, directing, writing, and design review.
 
-This project started as a Next.js (App Router) site, but none of the server-side features were being used -- no server components, no API routes, no SSR/SSG, no middleware. Every page was fully client-rendered and the content lives in TypeScript data models, not a CMS or database.
+## What's Here
 
-Next.js was adding complexity without providing value, and its file-based routing conventions conflicted with the architectural goals. So we migrated to **Vite 6** with **react-router v7** for client-side routing and **react-helmet-async** for SEO metadata.
-
-The result: faster builds, a simpler dev server, and clean separation of concerns across four architectural layers.
-
-See [ADR-001](vector/decisions/ADR-001-nextjs-to-vite.md) for the full decision record.
+- **5 pages:** Home, About, Resume, Work index, and case studies
+- **Constellation navigation:** The meta case study ("Building This Portfolio") uses a spatial 2D node field with SVG connections, three responsive states, and a spring-eased layout transition. Nodes represent topics; connections reveal relationships. The navigation pattern itself is a portfolio artifact.
+- **Motion design system:** 5 semantic durations, 5 easing functions (including a `linear()` spring approximation), comprehensive `prefers-reduced-motion` support, and scoped transition properties. Constellation nodes fade in as "stars appearing" with staggered draw-on line animations.
+- **OKLCH color system:** Perceptually uniform color tokens with L-channel light/dark theming, dual accent palette (brass + dusty magenta), WCAG 2.2 AA throughout.
+- **Effect components:** Particle field hero (WebGL), holographic profile card with pointer tracking, spotlight cards, scroll-reveal materializing, decrypted text scramble, spring-animated metrics.
+- **Last.fm NowPlaying:** Live listening widget in the header with EQ bar animations, expand/collapse panel, album art, and spring-eased transitions.
+- **CSS texture system:** Linen and circuit-mesh background patterns that adapt to light/dark themes.
 
 ## Architecture
 
@@ -31,14 +33,17 @@ src/              UI only. Components import from the other three layers.
 
 Features are built in that order: tokens first, core logic second, services third, UI last.
 
+See [ARCHITECTURE.md](ARCHITECTURE.md) for the full specification and [VECTOR.md](VECTOR.md) for design principles and constraints.
+
 ## Stack
 
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React 19 + Vite 6 |
 | Language | TypeScript (strict mode) |
-| Styling | Tailwind v4 + CSS variable tokens |
+| Styling | Tailwind v4 + CSS variable tokens (OKLCH) |
 | Routing | react-router v7 + react-helmet-async |
+| Animation | CSS transitions/keyframes + motion/react (CountUp only) |
 | Testing | Vitest |
 | Deployment | Vercel |
 
@@ -55,13 +60,53 @@ npm run lint      # ESLint check
 ## Design Principles
 
 - **Token colors only** -- every color traces back to `design-system/tokens.css`. No raw hex values in components.
-- **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. Proper heading hierarchy, sufficient contrast ratios.
+- **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. Proper heading hierarchy, sufficient contrast ratios, `prefers-reduced-motion` respected across all animation.
 - **Architecture protects craft** -- the four-layer separation ensures design decisions, business logic, external integrations, and UI never bleed into each other.
-- **No library sprawl** -- prefer 20 lines of code over a new npm package.
+- **No library sprawl** -- prefer 20 lines of code over a new npm package. Framer Motion is limited to a single component.
+- **Motion serves purpose** -- animations communicate spatial relationships, state changes, and material metaphors. Nothing decorative.
+
+## Agent Crew
+
+This project is built with a crew of specialized AI agents, each with a defined lane:
+
+| Agent | Role |
+|-------|------|
+| **Tyrell** | Base persona. Expert product designer and full-stack developer. |
+| **Director** | Status tracking, coordination, prioritization, Investiture health checks. |
+| **Dreamer** | Idea refinement, planning, ADRs. |
+| **Writer** | Case study content and portfolio copy. |
+| **Roy** | Post-build review against architecture, doctrine, and quality gates. |
+| **Joi** | Voice calibration; extracts writing patterns for Writer reference. |
+
+The crew also uses the **Impeccable design skill suite** for systematic design quality work: `/audit`, `/polish`, `/critique`, `/shape`, `/animate`, and more.
+
+## Decisions
+
+Significant choices are documented as Architecture Decision Records in `vector/decisions/`.
+
+| ADR | Decision | Status |
+|-----|----------|--------|
+| 001 | [Migrate from Next.js to Vite](vector/decisions/ADR-001-nextjs-to-vite.md) | Accepted |
+| 003 | [React Bits adoption strategy](vector/decisions/ADR-003-reactbits-adoption.md) | Accepted |
+| 004 | [Last.fm integration architecture](vector/decisions/ADR-004-lastfm-integration.md) | Accepted |
+| 005 | [CSS-only texture system](vector/decisions/ADR-005-css-texture-system.md) | Accepted |
+| 006 | [Systematic audit and polish pass](vector/decisions/ADR-006-audit-polish-pass.md) | Accepted |
+| 007 | [Constellation spatial navigation](vector/decisions/ADR-007-constellation-navigation.md) | Accepted |
+
+## Project Structure
+
+```
+plans/              Living roadmap and active plans
+vector/             Investiture framework: decisions, audits, missions, research
+design-system/      CSS tokens (colors, typography, spacing, textures)
+core/               Pure logic, data models, content definitions
+services/           External API integrations (Last.fm)
+src/                UI components, pages, styles, effects
+```
 
 ## Upstream
 
-This project's architecture is based on the [Investiture](https://github.com/erikaflowers/investiture) framework. The doctrine files (VECTOR.md, CLAUDE.md, ARCHITECTURE.md) have been heavily customized for this project -- **do not merge upstream directly** or it will overwrite all project-specific content with blank templates.
+This project's architecture is based on the [Investiture](https://github.com/erikaflowers/investiture) framework. The doctrine files (VECTOR.md, CLAUDE.md, ARCHITECTURE.md) have been heavily customized -- **do not merge upstream directly**.
 
 To pull updates safely:
 
@@ -72,15 +117,13 @@ git checkout upstream/main -- .claude/skills/invest-*   # grab new/updated skill
 git diff upstream/main -- VECTOR.md CLAUDE.md ARCHITECTURE.md  # review doctrine changes
 ```
 
-Then cherry-pick structural improvements (new sections, reorganized conventions) into our customized files by hand. See commit `558ac84` for an example of this process.
-
 ### Investiture Skills
 
-Skills pulled from upstream live in `.claude/skills/invest-*/`. Current set:
+Skills pulled from upstream live in `.claude/skills/invest-*/`:
 
 | Skill | Purpose |
 |-------|---------|
-| `invest-adr` | Generate numbered Architecture Decision Records |
+| `invest-adr` | Generate Architecture Decision Records |
 | `invest-architecture` | Audit project structure against ARCHITECTURE.md |
 | `invest-backfill` | Generate doctrine files for a new project |
 | `invest-brief` | Create design briefs grounded in project research |

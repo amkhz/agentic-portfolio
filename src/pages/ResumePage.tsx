@@ -19,7 +19,24 @@ export function ResumePage() {
     return (
       <section className="py-24 sm:py-32">
         <Container>
-          <p className="font-body text-text-secondary">Loading resume...</p>
+          <div className="mx-auto max-w-[920px] space-y-10">
+            <h1 className="font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+              Resume
+            </h1>
+            {/* Skeleton blocks matching the real layout */}
+            <div className="space-y-8 rounded-lg border border-border-subtle bg-bg-base p-6 sm:p-8">
+              <div className="h-4 w-48 animate-pulse rounded bg-bg-subtle" />
+              <div className="space-y-3">
+                <div className="h-3 w-full max-w-[65ch] animate-pulse rounded bg-bg-subtle" />
+                <div className="h-3 w-4/5 max-w-[52ch] animate-pulse rounded bg-bg-subtle" />
+              </div>
+              <div className="border-t border-border-subtle pt-6 space-y-3">
+                <div className="h-4 w-32 animate-pulse rounded bg-bg-subtle" />
+                <div className="h-3 w-full max-w-[65ch] animate-pulse rounded bg-bg-subtle" />
+                <div className="h-3 w-3/4 max-w-[48ch] animate-pulse rounded bg-bg-subtle" />
+              </div>
+            </div>
+          </div>
         </Container>
       </section>
     );

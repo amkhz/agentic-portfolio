@@ -20,18 +20,35 @@ interface CaseStudyPageProps {
   slug: string;
 }
 
+/**
+ * Renders a case study section with type-aware spacing and visual treatment.
+ * Headings get extra top margin (chapter break). Metrics get a background band.
+ * Images break slightly wider than text for visual rhythm.
+ */
 function renderSection(
   section: CaseStudySection,
   index: number,
   headingAs?: "h2" | "h3"
 ) {
+  const isChapterStart = headingAs === "h2";
+
   switch (section.type) {
     case "text":
       return (
         <RevealOnScroll key={index}>
-          <div>
+          <div className={isChapterStart ? "mt-4" : undefined}>
             {section.heading && headingAs && (
-              <SectionHeading as={headingAs}>{section.heading}</SectionHeading>
+              <>
+                {isChapterStart && index > 0 && (
+                  <div
+                    className="mb-10 h-px w-12 bg-accent-primary opacity-30"
+                    aria-hidden="true"
+                  />
+                )}
+                <SectionHeading as={headingAs}>
+                  {section.heading}
+                </SectionHeading>
+              </>
             )}
             <TextBlock>{section.body}</TextBlock>
           </div>
@@ -41,20 +58,22 @@ function renderSection(
     case "image":
       return (
         <RevealOnScroll key={index}>
-          <ImageBlock
-            src={section.src}
-            alt={section.alt}
-            placeholder={section.placeholder}
-            caption={section.caption}
-            aspect={section.aspect}
-          />
+          <div className="-mx-2 sm:-mx-4">
+            <ImageBlock
+              src={section.src}
+              alt={section.alt}
+              placeholder={section.placeholder}
+              caption={section.caption}
+              aspect={section.aspect}
+            />
+          </div>
         </RevealOnScroll>
       );
 
     case "metrics":
       return (
         <RevealOnScroll key={index}>
-          <div>
+          <div className="-mx-6 rounded-lg bg-bg-elevated/50 px-6 py-8 sm:-mx-8 sm:px-8">
             {section.heading && headingAs && (
               <SectionHeading as={headingAs}>{section.heading}</SectionHeading>
             )}
@@ -76,9 +95,13 @@ function renderSection(
     case "comparison":
       return (
         <RevealOnScroll key={index}>
-          <div>
+          <div className="-mx-2 sm:-mx-4">
             {section.heading && headingAs && (
-              <SectionHeading as={headingAs}>{section.heading}</SectionHeading>
+              <div className="mx-2 sm:mx-4">
+                <SectionHeading as={headingAs}>
+                  {section.heading}
+                </SectionHeading>
+              </div>
             )}
             <ComparisonBlock before={section.before} after={section.after} />
           </div>
@@ -88,11 +111,13 @@ function renderSection(
     case "quote":
       return (
         <RevealOnScroll key={index}>
-          <QuoteBlock
-            text={section.text}
-            attribution={section.attribution}
-            role={section.role}
-          />
+          <div className="py-2">
+            <QuoteBlock
+              text={section.text}
+              attribution={section.attribution}
+              role={section.role}
+            />
+          </div>
         </RevealOnScroll>
       );
 
@@ -176,7 +201,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
 
       <section className="py-16 sm:py-20">
         <Container>
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-10 sm:gap-14">
             {sectionNodes}
           </div>
 

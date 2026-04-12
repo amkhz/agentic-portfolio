@@ -126,18 +126,21 @@ button:focus-visible,
   outline-offset: 2px;
 }
 
-*,
-*::before,
-*::after {
+/* Theme-switch transitions — scoped to elements that actually carry token colors.
+   The old * selector was making canvas children, SVGs, and inert elements pay the tax. */
+body,
+header, footer, main, nav, section, article, aside,
+div, p, span, h1, h2, h3, h4, h5, h6,
+a, button, input, textarea, select,
+li, ul, ol, figure, figcaption, blockquote,
+img, svg {
   transition: background-color 300ms var(--ease-default),
               color 300ms var(--ease-default),
               border-color 300ms var(--ease-default),
               box-shadow 300ms var(--ease-default);
 }
 
-[data-no-transition] *,
-[data-no-transition] *::before,
-[data-no-transition] *::after {
+[data-no-transition] * {
   transition-duration: 0ms !important;
 }
 

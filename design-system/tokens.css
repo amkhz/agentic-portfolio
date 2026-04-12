@@ -67,8 +67,46 @@
     --particle-color-2: oklch(0.6634 0.1052 346.74);
     --particle-color-3: oklch(0.5824 0.0141 75.29);
 
-    /* Texture — disabled in dark mode */
-    --texture-linen: none;
+    /* Texture — circuit mesh: technical precision meets organic drift.
+       Like the infrastructure under Blade Runner's rain — alive, humming.
+       Brass and magenta traces at near-invisible opacity. */
+    --texture-linen:
+      /* Primary circuit traces — near-vertical, brass-tinted */
+      repeating-linear-gradient(
+        91deg,
+        oklch(0.71 0.08 61 / 0.032) 0px,
+        transparent 1px,
+        transparent 50px
+      ),
+      /* Cross traces — horizontal, sparse */
+      repeating-linear-gradient(
+        0.5deg,
+        oklch(0.71 0.08 61 / 0.024) 0px,
+        transparent 1px,
+        transparent 80px
+      ),
+      /* Diagonal interference — magenta ghost, breaks the grid */
+      repeating-linear-gradient(
+        37deg,
+        oklch(0.66 0.10 347 / 0.016) 0px,
+        transparent 1px,
+        transparent 120px
+      ),
+      /* Counter-diagonal — organic drift against the technical grid */
+      repeating-linear-gradient(
+        143deg,
+        oklch(0.66 0.10 347 / 0.011) 0px,
+        transparent 1px,
+        transparent 90px
+      ),
+      /* Deep ambient undulation — slow warmth shift across the surface */
+      repeating-linear-gradient(
+        2deg,
+        oklch(0.18 0.008 61 / 0.17) 0px,
+        oklch(0.16 0.005 286 / 0.10) 200px,
+        oklch(0.19 0.010 347 / 0.12) 400px,
+        oklch(0.17 0.006 286 / 0.07) 600px
+      );
     --grain-blend: normal;
   }
 
@@ -131,57 +169,57 @@
       /* Warp threads — horizontal */
       repeating-linear-gradient(
         0deg,
-        oklch(0.96 0.010 72 / 0.09) 0px,
+        oklch(0.93 0.014 72 / 0.12) 0px,
         transparent 1px,
         transparent 4px
       ),
       /* Weft threads — vertical */
       repeating-linear-gradient(
         90deg,
-        oklch(0.94 0.012 68 / 0.07) 0px,
+        oklch(0.91 0.016 68 / 0.09) 0px,
         transparent 1px,
         transparent 5px
       ),
       /* Linen body — warm wash veiling the wood */
       linear-gradient(
-        oklch(0.95 0.018 65 / 0.38),
-        oklch(0.93 0.022 60 / 0.33)
+        oklch(0.95 0.018 65 / 0.42),
+        oklch(0.93 0.022 60 / 0.36)
       ),
       /* === WOOD LAYER (beneath) — aged, pre-blackout === */
       /* Primary grain */
       repeating-linear-gradient(
         2.5deg,
-        oklch(0.72 0.035 55 / 0.08) 0px,
+        oklch(0.70 0.038 55 / 0.10) 0px,
         transparent 1px,
         transparent 18px,
-        oklch(0.70 0.030 52 / 0.055) 19px,
+        oklch(0.68 0.034 52 / 0.07) 19px,
         transparent 20px,
         transparent 42px
       ),
       /* Counter-grain */
       repeating-linear-gradient(
         176deg,
-        oklch(0.68 0.028 58 / 0.045) 0px,
+        oklch(0.66 0.032 58 / 0.06) 0px,
         transparent 1px,
         transparent 35px
       ),
       /* Drift lines */
       repeating-linear-gradient(
         4deg,
-        oklch(0.74 0.032 50 / 0.04) 0px,
+        oklch(0.72 0.036 50 / 0.05) 0px,
         transparent 1px,
         transparent 55px,
-        oklch(0.70 0.038 48 / 0.05) 56px,
+        oklch(0.68 0.042 48 / 0.065) 56px,
         transparent 58px,
         transparent 90px
       ),
       /* Growth rings */
       repeating-linear-gradient(
         0.5deg,
-        oklch(0.88 0.030 56 / 0.07) 0px,
-        oklch(0.91 0.022 60 / 0.035) 60px,
-        oklch(0.86 0.035 52 / 0.055) 140px,
-        oklch(0.92 0.020 58 / 0.025) 200px
+        oklch(0.86 0.034 56 / 0.09) 0px,
+        oklch(0.89 0.026 60 / 0.045) 60px,
+        oklch(0.84 0.038 52 / 0.07) 140px,
+        oklch(0.90 0.024 58 / 0.03) 200px
       );
 
     /* Animation: SpotlightCard */

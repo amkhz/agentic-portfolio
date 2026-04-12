@@ -1,5 +1,5 @@
 import React from "react";
-import { parseInline } from "./TextBlock";
+import { parseInline } from "@core/utils/parseInline";
 
 interface CalloutBlockProps {
   label?: string;

@@ -72,7 +72,7 @@ export function WorkPage() {
       <Helmet>
         <title>Work | Justin Hernandez</title>
         <meta name="description" content="Case studies in AI-powered enterprise product design." />
-        <link rel="canonical" href="/work" />
+        <link rel="canonical" href="https://justinh.design/work" />
       </Helmet>
 
       <section className="py-24 sm:py-32">

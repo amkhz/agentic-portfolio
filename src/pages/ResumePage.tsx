@@ -50,7 +50,7 @@ export function ResumePage() {
           name="description"
           content="Resume of Justin Hernandez, Lead Product Designer focused on AI-powered enterprise product design."
         />
-        <link rel="canonical" href="/resume" />
+        <link rel="canonical" href="https://justinh.design/resume" />
       </Helmet>
 
       <section className="py-24 sm:py-32">

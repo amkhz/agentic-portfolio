@@ -12,7 +12,7 @@ export function AboutPage() {
           name="description"
           content="Product design leader specializing in complex, human-centered systems. Currently focused on AI."
         />
-        <link rel="canonical" href="/about" />
+        <link rel="canonical" href="https://justinh.design/about" />
       </Helmet>
 
       <section className="pt-24 pb-16 sm:pt-32 sm:pb-20">

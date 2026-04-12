@@ -15,7 +15,7 @@ export function CaseStudyPage() {
         <Helmet>
           <title>{study.title} | Justin Hernandez</title>
           <meta name="description" content={study.subtitle} />
-          <link rel="canonical" href={`/work/${study.slug}`} />
+          <link rel="canonical" href={`https://justinh.design/work/${study.slug}`} />
         </Helmet>
       )}
       <CaseStudyPageTemplate slug={slug!} />

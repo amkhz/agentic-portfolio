@@ -159,7 +159,7 @@ export function NowPlaying({ className }: { className?: string }) {
                 href={PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="ml-auto flex-shrink-0 rounded-md p-1.5 text-text-muted transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                className="ml-auto flex-shrink-0 rounded-md p-2.5 text-text-muted transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 aria-label="View Last.fm profile"
               >
                 <svg

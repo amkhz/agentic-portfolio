@@ -1,4 +1,4 @@
-import { useTheme } from "@/providers/ThemeProvider";
+import { useTheme } from "@/lib/useTheme";
 import { cn } from "@core/utils";
 
 export function ThemeToggle({ className }: { className?: string }) {

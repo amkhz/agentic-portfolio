@@ -14,6 +14,16 @@ import { Tag } from "@/components/interactive/Tag";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 
+/** Brass accent line with ambient glow — used as a chapter break. */
+function ChapterBreak() {
+  return (
+    <div className="relative mb-10" aria-hidden="true">
+      <GlowEffect color="brass" size="sm" className="left-0 top-1/2 -translate-y-1/2" />
+      <div className="relative h-px w-12 bg-accent-primary opacity-40" />
+    </div>
+  );
+}
+
 const allProjects = [...caseStudies, metaCaseStudy];
 
 interface CaseStudyPageProps {
@@ -39,12 +49,7 @@ function renderSection(
           <div className={isChapterStart ? "mt-4" : undefined}>
             {section.heading && headingAs && (
               <>
-                {isChapterStart && index > 0 && (
-                  <div
-                    className="mb-10 h-px w-12 bg-accent-primary opacity-30"
-                    aria-hidden="true"
-                  />
-                )}
+                {isChapterStart && index > 0 && <ChapterBreak />}
                 <SectionHeading as={headingAs}>
                   {section.heading}
                 </SectionHeading>

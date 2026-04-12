@@ -242,5 +242,7 @@ Architecture Decision Records live in `/vector/decisions/`.
 | 001 | Migrate from Next.js to Vite | 2026-03-04 | Accepted |
 | 003 | React Bits adoption | 2026-03-07 | Accepted |
 | 004 | Last.fm integration | 2026-03-07 | Accepted |
+| 005 | CSS-only texture system for themed backgrounds | 2026-04-11 | Accepted |
+| 006 | Systematic audit/polish pass using Impeccable pipeline | 2026-04-11 | Accepted |
 
 When you make a significant technical choice, document it as an ADR.

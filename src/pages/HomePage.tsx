@@ -145,10 +145,11 @@ export function HomePage() {
         </Container>
       </section>
 
-      {/* Atmospheric break — accent line + breathing room */}
-      <div className="py-8" aria-hidden="true">
-        <Container>
-          <div className="mx-auto h-px w-24 bg-accent-primary opacity-40" />
+      {/* Atmospheric break — accent line with ambient glow */}
+      <div className="relative py-8" aria-hidden="true">
+        <Container className="relative">
+          <GlowEffect color="brass" size="sm" className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+          <div className="relative mx-auto h-px w-24 bg-accent-primary opacity-50" />
         </Container>
       </div>
 

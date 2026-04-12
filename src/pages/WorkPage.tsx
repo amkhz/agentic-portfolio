@@ -115,12 +115,6 @@ export function WorkPage() {
                     {metaCaseStudy.subtitle}
                   </p>
 
-                  {metaCaseStudy.heroMetric && (
-                    <p className="mt-2 font-heading text-sm tracking-wide text-text-muted">
-                      {metaCaseStudy.heroMetric.value} {metaCaseStudy.heroMetric.label}
-                    </p>
-                  )}
-
                   <div className="mt-4 flex flex-wrap gap-2">
                     {metaCaseStudy.tags.map((tag) => (
                       <Tag

@@ -216,19 +216,21 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
                   onNavigate={handleSelectNode}
                 />
               </div>
-            ) : !isReading && constellationContent.preamble.length > 0 ? (
-              /* Preamble below the field in hero state */
-              <div className="mx-auto max-w-[65ch] lg:col-span-2 motion-safe:animate-[fadeIn_400ms_var(--ease-spring)]">
-                {constellationContent.preamble.map((section, i) => {
-                  if (section.type === "text") {
-                    return <TextBlock key={i}>{section.body}</TextBlock>;
-                  }
-                  return null;
-                })}
-              </div>
             ) : null}
           </div>
         </div>
+
+        {/* Preamble below the field in hero state */}
+        {!isReading && constellationContent.preamble.length > 0 && (
+          <div className="mx-auto mt-12 max-w-[65ch] px-6 sm:px-8 lg:px-12 motion-safe:animate-[fadeIn_400ms_var(--ease-spring)_both]">
+            {constellationContent.preamble.map((section, i) => {
+              if (section.type === "text") {
+                return <TextBlock key={i}>{section.body}</TextBlock>;
+              }
+              return null;
+            })}
+          </div>
+        )}
       </section>
 
       {/* Footer nav */}

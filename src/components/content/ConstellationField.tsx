@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useSearchParams } from "react-router";
 import type { PositionedNode } from "@core/content/constellation";
 import { cn } from "@core/utils";
 import { ConstellationNode } from "./ConstellationNode";
@@ -70,13 +71,34 @@ function buildConnectionPairs(
   return pairs;
 }
 
+/** Dev-only: check for ?tune query param to enable position tuning mode. */
+function useTuneMode() {
+  const [searchParams] = useSearchParams();
+  return import.meta.env.DEV && searchParams.has("tune");
+}
+
 export function ConstellationField({
-  nodes,
+  nodes: propNodes,
   selectedId,
   onSelectNode,
   compact = false,
 }: ConstellationFieldProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const tuneMode = useTuneMode();
+  const fieldRef = useRef<HTMLDivElement>(null);
+
+  // In tune mode, maintain mutable positions
+  const [tunedPositions, setTunedPositions] = useState<Record<string, { x: number; y: number }>>({});
+
+  // Apply tuned positions over prop nodes
+  const nodes = useMemo(() => {
+    if (!tuneMode || Object.keys(tunedPositions).length === 0) return propNodes;
+    return propNodes.map((n) => {
+      const tuned = tunedPositions[n.id];
+      return tuned ? { ...n, position: tuned } : n;
+    });
+  }, [propNodes, tunedPositions, tuneMode]);
+
   const connectionPairs = useMemo(() => buildConnectionPairs(nodes), [nodes]);
 
   const handleHover = useCallback((id: string | null) => {
@@ -96,23 +118,62 @@ export function ConstellationField({
     return node.connections.includes(activeId);
   };
 
+  // Drag handling for tune mode
+  const dragRef = useRef<{ nodeId: string; startX: number; startY: number; startPos: { x: number; y: number } } | null>(null);
+
+  const handleTuneDragStart = useCallback((nodeId: string, e: React.PointerEvent) => {
+    if (!tuneMode || !fieldRef.current) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const node = nodes.find((n) => n.id === nodeId);
+    if (!node) return;
+    dragRef.current = { nodeId, startX: e.clientX, startY: e.clientY, startPos: { ...node.position } };
+    fieldRef.current.setPointerCapture(e.pointerId);
+  }, [tuneMode, nodes]);
+
+  const handleTuneDragMove = useCallback((e: React.PointerEvent) => {
+    if (!dragRef.current || !fieldRef.current) return;
+    const rect = fieldRef.current.getBoundingClientRect();
+    const dx = (e.clientX - dragRef.current.startX) / rect.width;
+    const dy = (e.clientY - dragRef.current.startY) / rect.height;
+    const newX = Math.max(0.05, Math.min(0.95, dragRef.current.startPos.x + dx));
+    const newY = Math.max(0.05, Math.min(0.95, dragRef.current.startPos.y + dy));
+    setTunedPositions((prev) => ({
+      ...prev,
+      [dragRef.current!.nodeId]: { x: newX, y: newY },
+    }));
+  }, []);
+
+  const handleTuneDragEnd = useCallback(() => {
+    dragRef.current = null;
+  }, []);
+
+  const copyPositions = useCallback(() => {
+    const output = nodes.map((n) => `'${n.id}': { x: ${n.position.x.toFixed(2)}, y: ${n.position.y.toFixed(2)} }`).join(",\n");
+    navigator.clipboard.writeText(output);
+  }, [nodes]);
+
   return (
     <nav aria-label="Case study topics" className={compact ? "h-full" : undefined}>
       {/* Spatial field -- hidden on very small screens when not compact */}
       <div
+        ref={fieldRef}
         className={cn(
           "relative mx-auto w-full",
-          compact ? "block h-full" : "hidden min-[375px]:block"
+          compact ? "block h-full" : "hidden min-[375px]:block",
+          tuneMode && "cursor-crosshair"
         )}
         style={
           compact
             ? undefined
             : { aspectRatio: "4 / 3", maxHeight: "min(60vh, 500px)" }
         }
+        onPointerMove={tuneMode ? handleTuneDragMove : undefined}
+        onPointerUp={tuneMode ? handleTuneDragEnd : undefined}
       >
-        {/* Connection lines */}
+        {/* Connection lines -- behind nodes */}
         <svg
-          className="absolute inset-0 h-full w-full"
+          className="absolute inset-0 z-0 h-full w-full pointer-events-none"
           aria-hidden="true"
         >
           {connectionPairs.map(([a, b], i) => (
@@ -134,12 +195,30 @@ export function ConstellationField({
             node={node}
             isSelected={node.id === selectedId}
             isHighlighted={isNodeHighlighted(node)}
-            onSelect={onSelectNode}
+            onSelect={tuneMode ? () => {} : onSelectNode}
             onHover={handleHover}
             compact={compact}
             index={i}
+            tuneMode={tuneMode}
+            onTuneDragStart={tuneMode ? handleTuneDragStart : undefined}
           />
         ))}
+
+        {/* Tune mode overlay */}
+        {tuneMode && (
+          <div className="absolute bottom-2 left-2 z-50 flex gap-2">
+            <button
+              type="button"
+              onClick={copyPositions}
+              className="rounded bg-accent-primary px-3 py-1.5 font-heading text-xs font-medium text-bg-base shadow-lg transition-opacity hover:opacity-80"
+            >
+              Copy positions
+            </button>
+            <span className="self-center font-body text-xs text-text-muted">
+              Drag nodes to reposition. Click "Copy positions" when done.
+            </span>
+          </div>
+        )}
       </div>
 
       {/* List fallback for very small screens (<375px) -- hero mode only */}

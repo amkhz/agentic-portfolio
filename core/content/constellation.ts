@@ -76,8 +76,17 @@ export const constellationNodes: ConstellationNode[] = [
     inscription: 'Crew members with skill sets, not magic text boxes.',
     size: 'md',
     status: 'shipped',
-    connections: ['the-sprint', 'the-structure', 'the-craft'],
+    connections: ['the-sprint', 'the-structure', 'the-craft', 'the-evolution'],
     fixedPosition: { x: 0.80, y: 0.55 },
+  },
+  {
+    id: 'the-evolution',
+    title: 'The Evolution',
+    inscription: 'The crew that built itself out of a job.',
+    size: 'md',
+    status: 'shipped',
+    connections: ['the-process', 'the-structure', 'the-craft'],
+    fixedPosition: { x: 0.58, y: 0.64 },
   },
   {
     id: 'the-craft',

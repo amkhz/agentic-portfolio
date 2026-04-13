@@ -134,19 +134,23 @@ The four-layer architecture became the foundation for something bigger: a crew o
 
 This portfolio is built by a crew. Not just me prompting an AI. A crew of specialized agents, each with a defined role and clear boundaries, all working within the same four-layer architecture.
 
-The Builder implements features across all four layers. The Writer creates and refines content, operating exclusively in the core layer. The Dreamer takes rough ideas and produces structured plans. The Director tracks what shipped and what's next. Each one has a skill file that defines what it can and cannot touch.
+The crew started with the Builder. It was the first skill I wrote, the engineering expert that turned plans into working code across all four layers. The Builder enforced token discipline, held the line on accessibility, and shipped every major feature from the Vite migration through the constellation navigation you are reading right now. For weeks, it was the crew's backbone.
 
-That last part is what makes this more than a prompting strategy. The Writer cannot touch UI components. The Dreamer cannot write implementation code. These constraints are just creative boundaries, right? They prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
+Then the ecosystem grew up around it. CLAUDE.md and ARCHITECTURE.md absorbed the execution context the Builder used to carry alone. invest-crew took over pre-flight decomposition. A review pipeline caught layer violations and token drift automatically. One by one, the Builder's responsibilities migrated into the doctrine and tooling until the generalist role was no longer necessary. The Builder was retired, not replaced. Its knowledge lives on in every quality gate and architecture rule the system enforces today.
+
+The crew that remains is leaner and more focused. The Writer creates and refines content, operating exclusively in the core layer. The Dreamer takes rough ideas and produces structured plans. The Director tracks what shipped and what's next. Each one has a skill file that defines what it can and cannot touch.
+
+That last part is what makes this more than a prompting strategy. The Writer cannot touch UI components. The Dreamer cannot write implementation code. These constraints are creative boundaries that prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
 
 ::: callout How The Crew Coordinates
-I have an idea. I talk to the Dreamer. The Dreamer researches feasibility, maps it to architecture layers, and writes a plan. The Builder reads the plan and implements in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content the feature needs. The Director updates the roadmap and flags anything pitch-worthy.
+I have an idea. I talk to the Dreamer. The Dreamer researches feasibility, maps it to architecture layers, and writes a plan. Implementation follows in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content the feature needs. The Director updates the roadmap and flags anything pitch-worthy. The doctrine and review pipeline enforce quality throughout.
 :::
 
 Beyond the crew, the Investiture framework brings its own pipeline: doctrine audits for drift, architecture checks against its own rules, decision records, design briefs from research. Each tool reads from the same doctrine files and respects the same layer boundaries.
 
-The meta-insight is the one that matters most: this portfolio demonstrates the workflow it documents. The case study you're reading was written by the Writer skill and edited by me. The interactive constellation you're navigating was planned by the Dreamer and built by the Builder. The color migration, the framework migration, all of it went through this same pipeline.
+The meta-insight is the one that matters most: this portfolio demonstrates the workflow it documents. The case study you are reading was written by the Writer skill and edited by me. The interactive constellation you are navigating was planned by the Dreamer and built through the same pipeline that now runs without a dedicated Builder. The color migration, the framework migration, all of it went through this process. The fact that the system matured enough to retire its first crew member is itself proof the approach works.
 
-This is not about replacing designers or developers. It's about giving AI agents the same structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. Crew members with skill sets, not magic text boxes you throw prompts at and hope for the best.
+This is not about replacing designers or developers. It is about giving AI agents the same structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. Crew members with skill sets, not magic text boxes you throw prompts at and hope for the best. And when the structure is strong enough, roles can evolve.
 
 ::: peek the-craft
 Structure enables quality. But quality has to be actively pursued.

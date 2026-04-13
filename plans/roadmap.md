@@ -2,8 +2,10 @@
 
 > Living roadmap for agentic-portfolio. Updated as priorities shift.
 > Read VECTOR.md and ARCHITECTURE.md first. Work pitch notes live in `plans/work-pitch-notes.md`.
+>
+> **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-04-12
+**Last updated:** 2026-04-13
 
 ---
 
@@ -34,16 +36,18 @@
 ### 1. Constellation enhancements
 
 **Status:** V1 shipped and polished. Spatial navigation live on meta case study.
+**Plan:** `plans/archive/meta-case-study-field.md` | **Mission:** `vector/missions/archive/constellation-field.md`
 
 **Next steps:**
 - View Transitions API for node-to-node crossfade (eliminates exit animation gap)
 - `@property --glow-intensity` for smooth node glow interpolation
 - Scroll-driven constellation reveal on page entry
-- Add images for Color Migration and Agentic Workflow chapters (see `plans/meta-case-study-images.md`)
+- Add images for Color Migration and Agentic Workflow chapters
 
 ### 2. Music integration (Last.fm + MCP)
 
 **Status:** COMPLETE (core widget). NowPlaying merged to main and live in production.
+**Plan:** `plans/lastfm-music-integration.md`
 
 **Next steps:**
 - Move API key server-side via Vercel serverless function
@@ -52,10 +56,10 @@
 
 ### 3. Crew and skills evolution
 
-**Status:** PLANNED. Skill refresh initiative documented in `plans/skill-refresh-initiative.md`.
+**Status:** PLANNED. Builder retired. Skill refresh initiative archived after Builder retirement.
+**Plan:** `plans/archive/skill-refresh-initiative.md`
 
 **Workstreams:**
-- Slim and sharpen core four skills (Writer, Director, Dreamer, Builder replacement)
 - Build Roy (post-build reviewer against architecture, doctrine, quality gates)
 - Add Investiture health check to Director
 - Voice calibration skill (Joi)

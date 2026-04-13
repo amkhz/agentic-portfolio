@@ -107,7 +107,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         id="constellation-hero"
         className={cn(
           "border-b border-border-subtle pt-24 sm:pt-32",
-          isReading ? "pb-8" : "pb-0"
+          isReading ? "pb-8" : "pb-12"
         )}
       >
         <Container>

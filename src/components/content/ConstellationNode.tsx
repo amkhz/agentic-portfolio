@@ -11,6 +11,10 @@ interface ConstellationNodeProps {
   compact?: boolean;
   /** Index for staggered entrance animation. */
   index?: number;
+  /** Dev-only: enable drag-to-tune positioning. */
+  tuneMode?: boolean;
+  /** Dev-only: pointer down handler for drag start. */
+  onTuneDragStart?: (nodeId: string, e: React.PointerEvent) => void;
 }
 
 const statusStyles: Record<NodeStatus, string> = {
@@ -39,6 +43,8 @@ export function ConstellationNode({
   onHover,
   compact = false,
   index = 0,
+  tuneMode = false,
+  onTuneDragStart,
 }: ConstellationNodeProps) {
   const showLabel = compact || node.size === "lg" || isSelected || isHighlighted || node.status === "planned";
 
@@ -51,22 +57,25 @@ export function ConstellationNode({
       onFocus={() => onHover(node.id)}
       onBlur={() => onHover(null)}
       disabled={node.status === "planned"}
+      onPointerDown={tuneMode ? (e) => onTuneDragStart?.(node.id, e) : undefined}
       className={cn(
-        "group absolute flex min-h-[44px] min-w-[44px] flex-col items-center justify-start",
+        "group absolute -translate-x-1/2 -translate-y-1/2 m-0 appearance-none border-none bg-transparent p-0 leading-none",
         "motion-safe:animate-[fadeIn_500ms_ease-out_both]",
-        node.status === "planned" && "cursor-default"
+        tuneMode ? "cursor-grab active:cursor-grabbing" : node.status === "planned" && "cursor-default"
       )}
       style={{
         left: `${node.position.x * 100}%`,
         top: `${node.position.y * 100}%`,
-        transform: "translate(-50%, -50%)",
-        zIndex: isSelected ? 20 : isHighlighted ? 10 : 1,
+        zIndex: isSelected ? 20 : isHighlighted ? 10 : 2,
         animationDelay: `${300 + index * 80}ms`,
       }}
       aria-label={`${node.title}: ${node.inscription}${node.status === "planned" ? " (coming soon)" : ""}`}
       aria-current={isSelected ? "true" : undefined}
     >
-      {/* Node marker */}
+      {/* Invisible touch target -- 44x44 minimum centered on the dot */}
+      <div className="absolute left-1/2 top-1/2 min-h-[44px] min-w-[44px] -translate-x-1/2 -translate-y-1/2" />
+
+      {/* Node marker -- this is the only layout child, so translate(-50%,-50%) centers it on the coordinate */}
       <div
         className={cn(
           "flex items-center justify-center rounded-full",
@@ -94,10 +103,10 @@ export function ConstellationNode({
         />
       </div>
 
-      {/* Label -- shown on hover/focus/select/lg, with bg to clear connection lines */}
+      {/* Label -- absolutely positioned below the dot so it doesn't shift the marker */}
       <div
         className={cn(
-          "mt-1.5 flex flex-col items-center rounded px-1.5 py-0.5 transition-opacity duration-normal",
+          "absolute left-1/2 top-full mt-1.5 flex -translate-x-1/2 flex-col items-center rounded px-1.5 py-0.5 transition-opacity duration-normal",
           "bg-bg-base/90",
           showLabel ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
         )}

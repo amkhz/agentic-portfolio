@@ -86,7 +86,7 @@ export const constellationNodes: ConstellationNode[] = [
     size: 'md',
     status: 'shipped',
     connections: ['the-process', 'the-structure', 'the-craft'],
-    fixedPosition: { x: 0.65, y: 0.70 },
+    fixedPosition: { x: 0.58, y: 0.64 },
   },
   {
     id: 'the-craft',

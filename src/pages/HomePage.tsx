@@ -8,7 +8,7 @@ import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import { SpotlightCard } from "@/components/effects/SpotlightCard";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { Tag } from "@/components/interactive/Tag";
-import { caseStudies, metaCaseStudy } from "@core/tokens";
+import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
 export function HomePage() {
   const meta = metaCaseStudy;

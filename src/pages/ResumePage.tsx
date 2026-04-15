@@ -10,10 +10,38 @@ import { ResumeSkillGroup } from "@/components/content/resume/ResumeSkillGroup";
 
 export function ResumePage() {
   const [resume, setResume] = useState<ResumeModel | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getResumeModel().then(setResume);
+    getResumeModel().then(setResume).catch(() => {
+      setError("Unable to load resume. Please try again later.");
+    });
   }, []);
+
+  if (error) {
+    return (
+      <section className="py-24 sm:py-32">
+        <Container>
+          <div className="mx-auto max-w-[920px] space-y-10">
+            <h1 className="font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+              Resume
+            </h1>
+            <div className="rounded-lg border border-border-subtle bg-bg-elevated p-6 sm:p-8 text-center">
+              <p className="font-body text-base text-text-secondary">{error}</p>
+              <Button
+                variant="primary"
+                href="/resume/justin-hernandez-resume-1page.pdf"
+                className="mt-6"
+                aria-label="Download Justin Hernandez resume PDF"
+              >
+                Download Resume (PDF)
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+    );
+  }
 
   if (!resume) {
     return (

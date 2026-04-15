@@ -3,7 +3,6 @@ import {
   buildConstellationLayout,
   constellationNodes,
   getNode,
-  getConnections,
 } from './constellation';
 
 describe('buildConstellationLayout', () => {
@@ -83,18 +82,3 @@ describe('getNode', () => {
   });
 });
 
-describe('getConnections', () => {
-  const positioned = buildConstellationLayout(constellationNodes);
-
-  it('returns connected nodes', () => {
-    const connections = getConnections(positioned, 'the-sprint');
-    const ids = connections.map((n) => n.id);
-    expect(ids).toContain('the-material');
-    expect(ids).toContain('the-structure');
-    expect(ids).toContain('the-process');
-  });
-
-  it('returns empty array for unknown node', () => {
-    expect(getConnections(positioned, 'nope')).toEqual([]);
-  });
-});

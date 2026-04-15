@@ -222,6 +222,9 @@ function parseRawSections(lines: string[]): Array<{ heading: string; lines: stri
 
 export async function getResumeModel(): Promise<ResumeModel> {
   const response = await fetch('/1pageresume.md');
+  if (!response.ok) {
+    throw new Error(`Failed to load resume: ${response.status}`);
+  }
   const markdown = await response.text();
   const lines = markdown.split(/\r?\n/).map((line) => line.trimEnd());
   const { name, title, contacts } = parseHeader(lines);

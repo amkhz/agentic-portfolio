@@ -1,8 +1,88 @@
 // ============================================
-// CASE STUDY CONTENT — Types + Markdown loader
+// CASE STUDY CONTENT — Types, metadata + Markdown loader
 // Content lives in .md files alongside this file.
 // Parser converts Markdown to typed sections.
 // ============================================
+
+// --- Case Study Metadata ---
+
+export interface CaseStudy {
+  slug: string;
+  title: string;
+  subtitle: string;
+  tags: string[];
+  template?: 'standard' | 'constellation';
+  heroMetric?: {
+    value: string;
+    label: string;
+  };
+  heroImage: {
+    src: string;
+    alt: string;
+    placeholder?: string;
+  };
+}
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: 'ai-leadership',
+    title: 'Pioneering AI Adoption',
+    subtitle: 'Strategy, tooling, and the future of design control.',
+    tags: ['Strategy', 'AI/ML', 'Design Leadership', 'Organizational Change'],
+    heroMetric: {
+      value: '100%',
+      label: 'team AI tool adoption',
+    },
+    heroImage: {
+      src: '/images/intro.png',
+      alt: 'AI workshop presentation showing the 6-step prototyping process',
+      placeholder: 'Screenshot of "Building with AI Tools" presentation title slide, or a composite showing the Define→Scope→Plan→Build→Test→Iterate workflow',
+    },
+  },
+  {
+    slug: 'instant-sow',
+    title: 'Instant Scope of Work',
+    subtitle: 'AI-augmented scope of work for renovation projects.',
+    tags: ['Product Design', 'GenAI', 'Efficiency', 'B2B'],
+    heroMetric: {
+      value: '50%',
+      label: 'target reduction in SOW completion time',
+    },
+    heroImage: {
+      src: '/images/sow-toolbox.png',
+      alt: 'My SOW Toolbox interface showing Upload, Describe, and Recycle options',
+      placeholder: 'High-fidelity mockup of the "My Scope of Work Toolbox" UI showing the three AI-assisted paths: Upload Files, Describe Your Project, Select Previous SOW',
+    },
+  },
+  {
+    slug: 'instant-doc-review',
+    title: 'Instant Document Review',
+    subtitle: 'Transparent, auditable AI for loan document processing.',
+    tags: ['Product Design', 'HITL', 'Enterprise', 'AI Ops'],
+    heroMetric: {
+      value: '75%',
+      label: 'reduction in document review time',
+    },
+    heroImage: {
+      src: '/images/idr-hifi.png',
+      alt: 'Property Admin Page showing extracted data alongside original document viewer',
+      placeholder: 'High-fidelity mockup of the Property Admin Page with document viewer panel, extracted data fields, and rule override controls',
+    },
+  },
+];
+
+export const metaCaseStudy: CaseStudy = {
+  slug: 'building-this-portfolio',
+  title: 'Building This Portfolio',
+  subtitle: 'A living case study that grows with the project.',
+  tags: ['Design Systems', 'AI Workflow', 'Meta', 'Process'],
+  template: 'constellation',
+  heroImage: {
+    src: '/images/meta.png',
+    alt: 'Composite preview of the portfolio build process and final UI',
+    placeholder: 'Meta case study hero image showing process and outcome side by side',
+  },
+};
 
 // --- Section Types ---
 

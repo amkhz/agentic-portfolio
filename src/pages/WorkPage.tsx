@@ -4,8 +4,8 @@ import { Container } from "@/components/layout/Container";
 import { Tag } from "@/components/interactive/Tag";
 import { SpotlightCard } from "@/components/effects/SpotlightCard";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
-import { caseStudies, metaCaseStudy } from "@core/tokens";
-import type { CaseStudy } from "@core/tokens";
+import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
+import type { CaseStudy } from "@core/content/case-studies";
 
 function hasRealImage(study: CaseStudy): boolean {
   return (

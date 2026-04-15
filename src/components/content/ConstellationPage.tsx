@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, Navigate } from "react-router";
-import { caseStudies, metaCaseStudy } from "@core/tokens";
+import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 import { constellationContent } from "@core/content/case-studies";
 import {
   constellationNodes,

@@ -242,18 +242,6 @@ export function getNode(nodes: PositionedNode[], id: string): PositionedNode | u
   return nodes.find((n) => n.id === id);
 }
 
-/** Get all connections for a node as positioned nodes. */
-export function getConnections(
-  nodes: PositionedNode[],
-  id: string,
-): PositionedNode[] {
-  const node = getNode(nodes, id);
-  if (!node) return [];
-  return node.connections
-    .map((connId) => getNode(nodes, connId))
-    .filter((n): n is PositionedNode => n != null);
-}
-
 /**
  * Logical reading order for the mobile strip.
  * Follows narrative flow, not spatial position.

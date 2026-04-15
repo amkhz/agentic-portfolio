@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import type { CaseStudy } from "@core/tokens";
+import type { CaseStudy } from "@core/content/case-studies";
 import { Tag } from "@/components/interactive/Tag";
 import { SpotlightCard } from "@/components/effects/SpotlightCard";
 

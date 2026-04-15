@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import { Helmet } from "react-helmet-async";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
-import { CaseStudyPageTemplate } from "@/components/content/CaseStudyPage";
+import { CaseStudyPageTemplate } from "@/components/content/CaseStudyPageTemplate";
 import { ConstellationPageTemplate } from "@/components/content/ConstellationPage";
 
 const allProjects = [...caseStudies, metaCaseStudy];

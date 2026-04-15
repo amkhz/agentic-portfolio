@@ -55,7 +55,6 @@ utils.test.ts                   — Tests: cn, formatDate, slugify, truncate, de
 
 ```
 analytics.ts                    — Re-exports Vercel Analytics and SpeedInsights components
-api.ts                          — Generic HTTP client with typed request/response and env-based base URL
 lastfm.ts                       — Last.fm API: fetches now-playing/recent tracks with metadata parsing
 ```
 
@@ -89,7 +88,7 @@ NotFoundPage.tsx                — 404: decorative glow, link home
 Hero.tsx                        — Full-width hero with animated particles background, heading, CTA
 AboutSnippet.tsx                — Profile card with bio and CTA button
 ProjectCard.tsx                 — Case study link card with hero image, title, metric badge, tags
-CaseStudyPage.tsx               — Linear case study template: hero, breadcrumb, tags, rendered sections
+CaseStudyPageTemplate.tsx       — Linear case study template: hero, breadcrumb, tags, rendered sections
 CodexPage.tsx                   — Multi-chapter case study with expandable spine navigation
 CodexSpine.tsx                  — Interactive vertical accordion with spine line and staggered entrance
 CodexChapter.tsx                — Collapsible chapter section with grid animation and connections
@@ -131,10 +130,10 @@ GrainOverlay.tsx                — SVG fractal noise grain filter applied full-
 Particles.tsx                   — WebGL point cloud with Perlin motion and hover tracking (ogl)
 ParticlesTuner.tsx              — Dev-only slider panel for tuning Particles parameters
 ProfileCard.tsx                 — 3D tilt card with pointer-driven parallax and holographic shine
+tiltEngine.ts                   — Pointer-driven tilt physics engine extracted from ProfileCard
 RevealOnScroll.tsx              — Intersection-triggered fade-in with blur transition
 SpotlightCard.tsx               — Mouse-tracked radial light effect over card
 Threads.tsx                     — WebGL animated line threads with Perlin noise (ogl)
-Waves.tsx                       — Canvas wave grid with Perlin noise and cursor interaction
 ```
 
 ### src/components/interactive/
@@ -252,7 +251,7 @@ index.html                      — HTML template with theme detection script
 | Hero | 44 | Landing hero with particles | — | No |
 | AboutSnippet | 44 | Profile card + CTA | — | No |
 | ProjectCard | 98 | Case study link card | study | No |
-| CaseStudyPage (content) | 101 | Linear case study template | slug | No |
+| CaseStudyPageTemplate | 101 | Linear case study template | slug | No |
 | CodexPage | 134 | Multi-chapter case study | slug | Yes |
 | CodexSpine | 165 | Vertical accordion spine | chapters | Yes |
 | CodexChapter | 91 | Collapsible chapter | id, isOpen, sections | No |
@@ -279,11 +278,10 @@ index.html                      — HTML template with theme detection script
 | GrainOverlay | 56 | SVG grain filter overlay | — | No |
 | Particles | 247 | WebGL point cloud (ogl) | particleCount, speed | Yes |
 | ParticlesTuner | 204 | Dev-only particle tuner | className | Yes |
-| ProfileCard | 556 | 3D tilt card with parallax | avatarUrl, enableTilt | Yes |
+| ProfileCard | 431 | 3D tilt card with parallax | avatarUrl, enableTilt | Yes |
 | RevealOnScroll | 65 | Intersection fade-in | children, delay | Yes |
 | SpotlightCard | 66 | Mouse-tracked light effect | children, spotlightColor | Yes |
 | Threads | 210 | WebGL line threads (ogl) | color, amplitude | Yes |
-| Waves | 301 | Canvas wave grid | lineColor, waveSpeed | Yes |
 | Button | 70 | Polymorphic button/anchor | variant, href | No |
 | NowPlaying | 187 | Last.fm now-playing | className | Yes |
 | Tag | 29 | Capsule badge | children, tone | No |

@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "generate:og": "tsx scripts/generate-og-images.ts"
+    "generate:og": "tsx scripts/generate-og-images.ts",
+    "generate:favicons": "tsx scripts/generate-favicons.ts",
+    "generate:sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.1.2",

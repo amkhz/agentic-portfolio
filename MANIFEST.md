@@ -88,7 +88,7 @@ NotFoundPage.tsx                — 404: decorative glow, link home
 Hero.tsx                        — Full-width hero with animated particles background, heading, CTA
 AboutSnippet.tsx                — Profile card with bio and CTA button
 ProjectCard.tsx                 — Case study link card with hero image, title, metric badge, tags
-CaseStudyPage.tsx               — Linear case study template: hero, breadcrumb, tags, rendered sections
+CaseStudyPageTemplate.tsx       — Linear case study template: hero, breadcrumb, tags, rendered sections
 CodexPage.tsx                   — Multi-chapter case study with expandable spine navigation
 CodexSpine.tsx                  — Interactive vertical accordion with spine line and staggered entrance
 CodexChapter.tsx                — Collapsible chapter section with grid animation and connections
@@ -251,7 +251,7 @@ index.html                      — HTML template with theme detection script
 | Hero | 44 | Landing hero with particles | — | No |
 | AboutSnippet | 44 | Profile card + CTA | — | No |
 | ProjectCard | 98 | Case study link card | study | No |
-| CaseStudyPage (content) | 101 | Linear case study template | slug | No |
+| CaseStudyPageTemplate | 101 | Linear case study template | slug | No |
 | CodexPage | 134 | Multi-chapter case study | slug | Yes |
 | CodexSpine | 165 | Vertical accordion spine | chapters | Yes |
 | CodexChapter | 91 | Collapsible chapter | id, isOpen, sections | No |

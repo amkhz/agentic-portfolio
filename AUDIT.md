@@ -2,13 +2,13 @@
 
 **Date:** 2026-04-14
 **Target:** agentic-portfolio (justinh.design)
-**Overall Classification:** ~~SIGNIFICANT DEBT~~ MINOR DEBT (post-remediation)
+**Overall Classification:** ~~SIGNIFICANT DEBT~~ CLEAN (all actionable findings resolved)
 
 ## Summary Metrics
 - Files audited: 95
 - Critical findings: 3 (3 resolved)
-- Significant findings: 8 (5 resolved, 1 moot, 2 deferred)
-- Minor findings: 6 (1 resolved, 1 deferred, 4 open)
+- Significant findings: 8 (6 resolved, 1 moot, 1 deferred)
+- Minor findings: 6 (5 resolved, 1 deferred)
 - Dead code files: ~~2~~ 0
 - Dead exports: ~~4~~ 0
 - Monolith flags (>500 lines): ~~1~~ 0 (ProfileCard.tsx reduced to 431 lines)
@@ -61,10 +61,10 @@
 
 **Resolution:** Already addressed prior to remediation. `response.ok` check at line 41, `Array.isArray(tracks)` validation at line 48, graceful fallback returning `{ isPlaying: false, track: null, recentTracks: [] }`.
 
-**8. useNowPlaying fires initial poll regardless of tab visibility — DEFERRED**
+**8. useNowPlaying fires initial poll regardless of tab visibility — RESOLVED**
 - `src/lib/useNowPlaying.ts:31` — `poll()` fires on mount even if tab is hidden. Subsequent polls correctly check `document.hidden`, but first fetch is unconditional.
 
-**Status:** Deferred. Low impact (single extra fetch on hidden tab mount). Not addressed in this remediation.
+**Resolution:** Wrapped initial `poll()` in `if (!document.hidden)` guard. The existing `handleVisibility` listener handles deferred loading when tab becomes visible. Commit: 21732fe.
 
 **9. .env.example is incomplete — DEFERRED**
 - `.env.example` — Missing `VITE_LASTFM_API_KEY` and `VITE_LASTFM_USER` (both required by `services/lastfm.ts`). Only documents `VITE_SITE_URL` and `VITE_API_URL`.
@@ -76,19 +76,19 @@
 
 **Resolution:** Moved `CaseStudy` interface, `caseStudies`, and `metaCaseStudy` to `core/content/case-studies.ts`. Updated 9 import sites. `core/tokens/index.ts` now contains only design tokens (207 lines). Commit: de5e6b6.
 
-**11. ARCHITECTURE.md references outdated directory structure — OPEN**
+**11. ARCHITECTURE.md references outdated directory structure — RESOLVED**
 - `ARCHITECTURE.md:82-89` — References `/.agents/` directory and retired builder skill. Actual skills live in `.claude/skills/` per Investiture v1.5. Documentation drift, not functional.
 
-**Status:** Open. Not addressed in this remediation. Documentation-only issue, no functional impact.
+**Resolution:** Updated to reference `.claude/skills/` with current skill listing (director, dreamer, writer, roy, joi, builder, invest-*). Notes `.agents/skills` as legacy mirror. Commit: 21732fe.
 
 ---
 
 ## Minor Findings
 
-**12. Duplicate filename: CaseStudyPage.tsx — OPEN**
+**12. Duplicate filename: CaseStudyPage.tsx — RESOLVED**
 - `src/pages/CaseStudyPage.tsx` and `src/components/content/CaseStudyPage.tsx` share the same filename. Different exports (`CaseStudyPage` vs `CaseStudyPageTemplate`) but confusing. The component version should be renamed to match the `Template` export.
 
-**Status:** Open. Not addressed in this remediation.
+**Resolution:** Renamed `src/components/content/CaseStudyPage.tsx` to `CaseStudyPageTemplate.tsx`. Import in `src/pages/CaseStudyPage.tsx` updated. No dangling references. Commit: 21732fe.
 
 **13. Four unused utility exports — RESOLVED**
 - `core/content/constellation.ts` — `getConnections()` exported but never called
@@ -96,25 +96,25 @@
 
 **Resolution:** All four exports removed along with their tests. `slugify()` and `getNode()` retained (still used). Commit: de5e6b6.
 
-**14. SpotlightCard inline style object recreated every render — OPEN**
+**14. SpotlightCard inline style object recreated every render — RESOLVED**
 - `src/components/effects/SpotlightCard.tsx:57-60` — Style object with radial gradient is rebuilt on every mouse move. Could use CSS variables for smoother updates.
 
-**Status:** Open. Not addressed in this remediation.
+**Resolution:** Mouse move now sets `--spot-x` / `--spot-y` CSS variables via ref (no React re-render). Gradient reads `var(--spot-x)` / `var(--spot-y)`. `isFocused` converted from state to ref since only read in handler. Commit: 21732fe.
 
 **15. Missing security headers in vercel.json — RESOLVED**
 - `vercel.json` — Only has rewrites. Missing `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection` headers.
 
 **Resolution:** Added `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and `Referrer-Policy: strict-origin-when-cross-origin`. Used Referrer-Policy over deprecated X-XSS-Protection. Commit: de5e6b6.
 
-**16. No CI/CD pipeline — OPEN**
+**16. No CI/CD pipeline — DEFERRED**
 - No `.github/workflows/` directory. Build and lint gates exist locally but are not enforced on push or PR.
 
-**Status:** Open. Not addressed in this remediation.
+**Status:** Deferred. Feature addition, not a code quality remediation. Belongs in project roadmap.
 
-**17. generate-favicons.ts and generate-sitemap.ts unreferenced — OPEN**
+**17. generate-favicons.ts and generate-sitemap.ts unreferenced — RESOLVED**
 - `scripts/generate-favicons.ts` and `scripts/generate-sitemap.ts` are not wired into any npm script. May be run manually but not documented.
 
-**Status:** Open. Not addressed in this remediation.
+**Resolution:** Wired as `generate:favicons` and `generate:sitemap` npm scripts in package.json, matching existing `generate:og` pattern. Commit: 21732fe.
 
 ---
 
@@ -161,6 +161,9 @@
 | P6 | Add security headers to vercel.json | **DONE** |
 | P7 | Decompose ProfileCard.tsx | **DONE** |
 | P8 | Move case study metadata out of tokens | **DONE** |
+| Phase 1 | Rename template, update ARCHITECTURE.md, wire scripts | **DONE** |
+| Phase 2 | SpotlightCard CSS variable optimization | **DONE** |
+| Phase 3 | useNowPlaying initial poll guard | **DONE** |
 
 ---
 
@@ -201,7 +204,7 @@
 | src/components/content/CodexChapter.tsx | 91 | CLEAN | |
 | src/components/content/CodexNode.tsx | 130 | CLEAN | |
 | src/components/content/ConnectionPeek.tsx | 68 | CLEAN | |
-| src/components/content/CaseStudyPage.tsx | 101 | CLEAN | |
+| src/components/content/CaseStudyPageTemplate.tsx | 101 | CLEAN | Renamed from CaseStudyPage.tsx |
 | src/components/content/renderSection.tsx | 129 | CLEAN | |
 | src/components/content/ImageBlock.tsx | 118 | CLEAN | |
 | src/components/content/ImageLightbox.tsx | 66 | CLEAN | |
@@ -224,7 +227,7 @@
 | src/components/effects/GlowEffect.tsx | 49 | CLEAN | |
 | src/components/effects/GrainOverlay.tsx | 56 | CLEAN | |
 | src/components/effects/RevealOnScroll.tsx | 65 | CLEAN | |
-| src/components/effects/SpotlightCard.tsx | 66 | MINOR DEBT | Inline style recreation |
+| src/components/effects/SpotlightCard.tsx | 67 | CLEAN | CSS variable optimization applied |
 | src/components/effects/Threads.tsx | 210 | CLEAN | Proper cleanup |
 | src/components/interactive/Button.tsx | 70 | CLEAN | |
 | src/components/interactive/NowPlaying.tsx | 187 | CLEAN | |
@@ -236,7 +239,7 @@
 | src/components/ScrollToTop.tsx | 13 | CLEAN | |
 | src/lib/parseInline.tsx | 31 | CLEAN | |
 | src/lib/site-metadata.ts | 11 | CLEAN | |
-| src/lib/useNowPlaying.ts | 54 | MINOR DEBT | Initial poll ignores visibility (deferred) |
+| src/lib/useNowPlaying.ts | 56 | CLEAN | Visibility guard added |
 | src/lib/useTheme.ts | 18 | CLEAN | |
 | src/providers/ThemeProvider.tsx | 71 | CLEAN | |
 | src/styles/globals.css | 197 | CLEAN | |

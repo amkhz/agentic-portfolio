@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { caseStudyContent, type CaseStudySection } from './case-studies';
-import { caseStudies, metaCaseStudy } from '../tokens/index';
+import { caseStudies, metaCaseStudy } from './case-studies';
 
 const VALID_SECTION_TYPES: CaseStudySection['type'][] = [
   'text',

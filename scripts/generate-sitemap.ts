@@ -8,8 +8,8 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
-// Import case study slugs from core tokens
-import { caseStudies, metaCaseStudy } from '../core/tokens/index.js';
+// Import case study slugs from core content
+import { caseStudies, metaCaseStudy } from '../core/content/case-studies.js';
 
 const SITE_URL = process.env.VITE_SITE_URL ?? 'https://justinh.design';
 const OUT_PATH = join(import.meta.dirname ?? '.', '..', 'public', 'sitemap.xml');

@@ -1,5 +1,5 @@
 import { Link, Navigate } from "react-router";
-import { caseStudies, metaCaseStudy } from "@core/tokens";
+import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 import { caseStudyContent } from "@core/content/case-studies";
 import { groupIntoChapters } from "@core/content/codex";
 import { Container } from "@/components/layout/Container";

@@ -8,9 +8,8 @@ import {
   motion,
   shadows,
   lightShadows,
-  caseStudies,
-  type CaseStudy,
 } from './index';
+import { caseStudies, type CaseStudy } from '../content/case-studies';
 
 // ============================================
 // Design token structure validation

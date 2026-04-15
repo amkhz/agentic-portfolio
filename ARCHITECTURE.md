@@ -85,7 +85,6 @@ agentic-portfolio/
 │   ├── /writer            # Writer skill (case study content)
 │   ├── /roy               # Roy skill (post-build reviewer, quality checks)
 │   ├── /joi               # Joi skill (voice calibration for Writer)
-│   ├── /builder           # Tyrell builder skill
 │   └── /invest-*          # Investiture framework skills (adr, architecture, crew, doctrine, etc.)
 ├── /.agents/skills         # Mirror of .claude/skills (legacy path, kept in sync)
 ├── /design-system         # Visual foundation layer

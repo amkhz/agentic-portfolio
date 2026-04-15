@@ -2,98 +2,132 @@
 
 **Date:** 2026-04-14
 **Target:** agentic-portfolio (justinh.design)
-**Overall Classification:** SIGNIFICANT DEBT
+**Overall Classification:** ~~SIGNIFICANT DEBT~~ MINOR DEBT (post-remediation)
 
 ## Summary Metrics
 - Files audited: 95
-- Critical findings: 3
-- Significant findings: 8
-- Minor findings: 6
-- Dead code files: 2 (Waves.tsx, api.ts)
-- Dead exports: 4 (getConnections, formatDate, truncate, debounce)
-- Monolith flags (>500 lines): 1 (ProfileCard.tsx at 556 lines)
+- Critical findings: 3 (3 resolved)
+- Significant findings: 8 (5 resolved, 1 moot, 2 deferred)
+- Minor findings: 6 (1 resolved, 1 deferred, 4 open)
+- Dead code files: ~~2~~ 0
+- Dead exports: ~~4~~ 0
+- Monolith flags (>500 lines): ~~1~~ 0 (ProfileCard.tsx reduced to 431 lines)
 
 ---
 
 ## Critical Findings
 
-**1. Resume page has no error handling**
+**1. Resume page has no error handling — RESOLVED**
 - `src/pages/ResumePage.tsx:14-16` — `getResumeModel().then(setResume)` with no `.catch()`. If `/1pageresume.md` fails to load, user sees an infinite loading skeleton. No error state, no feedback.
-- `core/content/resume.ts:223-225` — `getResumeModel()` does not check `response.ok` before calling `.text()`. A 404 throws but nothing catches it upstream.
+- `core/content/resume.ts:223-225` �� `getResumeModel()` does not check `response.ok` before calling `.text()`. A 404 throws but nothing catches it upstream.
 
-**2. Dependency vulnerabilities (npm audit)**
+**Resolution:** Added `response.ok` check in `getResumeModel()` and `.catch()` with error state UI + PDF download fallback in ResumePage. Commit: de5e6b6.
+
+**2. Dependency vulnerabilities (npm audit) — RESOLVED**
 - `vite <=6.4.1` — HIGH: path traversal in `.map` handling, arbitrary file read via WebSocket (dev server only, not production-facing)
 - `picomatch 4.0.0-4.0.3` — HIGH: ReDoS via extglob quantifiers, method injection in POSIX character classes
 - `flatted <=3.4.1` — HIGH: unbounded recursion DoS in parse(), prototype pollution
 - `brace-expansion` — MODERATE: zero-step sequence causes hang
 - All fixable via `npm audit fix`
 
-**3. ProfileCard.tsx is a 556-line god component**
+**Resolution:** `npm audit fix` applied, 0 vulnerabilities remaining. Commit: de5e6b6.
+
+**3. ProfileCard.tsx is a 556-line god component — RESOLVED**
 - `src/components/effects/ProfileCard.tsx` — Embeds a TiltEngine class (150+ lines of pointer math), device orientation handling, CSS variable management, holographic shader effects, grain overlays, glow effects, and responsive behavior. 16 props, 11 hooks. Should be decomposed but works correctly as-is.
+
+**Resolution:** Extracted TiltEngine to `src/components/effects/tiltEngine.ts` (133 lines). ProfileCard reduced from 556 to 431 lines, under the 500-line monolith threshold. Commit: de5e6b6.
 
 ---
 
 ## Significant Findings
 
-**4. Waves.tsx is entirely dead code (301 lines)**
+**4. Waves.tsx is entirely dead code (301 lines) — RESOLVED**
 - `src/components/effects/Waves.tsx` — Fully implemented canvas wave animation with embedded Perlin noise class. Imported nowhere. 301 lines providing zero value.
 
-**5. services/api.ts is dead infrastructure**
+**Resolution:** File deleted. No dangling imports found. Commit: de5e6b6.
+
+**5. services/api.ts is dead infrastructure — RESOLVED**
 - `services/api.ts` — Generic HTTP client exporting `get`, `post`, `put`, `del`. None are imported anywhere. 44 lines of unused code.
 
-**6. Waves.tsx has a memory leak in resize listener (moot since dead, but noting)**
+**Resolution:** File deleted. No dangling imports found. Commit: de5e6b6.
+
+**6. Waves.tsx has a memory leak in resize listener — MOOT**
 - `src/components/effects/Waves.tsx:281,286` — `addEventListener` and `removeEventListener` use different anonymous function references. Cleanup never actually removes the listener.
 
-**7. Last.fm API response shape is not validated**
+**Status:** Moot. Waves.tsx was deleted (see Finding 4).
+
+**7. Last.fm API response shape is not validated — RESOLVED**
 - `services/lastfm.ts:37-45` — No validation that `data?.recenttracks?.track` exists or is an array before accessing. Could crash on unexpected API response shapes.
 
-**8. useNowPlaying fires initial poll regardless of tab visibility**
+**Resolution:** Already addressed prior to remediation. `response.ok` check at line 41, `Array.isArray(tracks)` validation at line 48, graceful fallback returning `{ isPlaying: false, track: null, recentTracks: [] }`.
+
+**8. useNowPlaying fires initial poll regardless of tab visibility — DEFERRED**
 - `src/lib/useNowPlaying.ts:31` — `poll()` fires on mount even if tab is hidden. Subsequent polls correctly check `document.hidden`, but first fetch is unconditional.
 
-**9. .env.example is incomplete**
+**Status:** Deferred. Low impact (single extra fetch on hidden tab mount). Not addressed in this remediation.
+
+**9. .env.example is incomplete — DEFERRED**
 - `.env.example` — Missing `VITE_LASTFM_API_KEY` and `VITE_LASTFM_USER` (both required by `services/lastfm.ts`). Only documents `VITE_SITE_URL` and `VITE_API_URL`.
 
-**10. core/tokens/index.ts mixes design tokens with case study metadata**
+**Status:** Deferred. Explicitly excluded from remediation scope by project owner.
+
+**10. core/tokens/index.ts mixes design tokens with case study metadata — RESOLVED**
 - `core/tokens/index.ts` — 306 lines conflating design tokens (colors, typography, spacing) with domain data (caseStudies array, metaCaseStudy). Case study metadata belongs in `core/content/`.
 
-**11. ARCHITECTURE.md references outdated directory structure**
+**Resolution:** Moved `CaseStudy` interface, `caseStudies`, and `metaCaseStudy` to `core/content/case-studies.ts`. Updated 9 import sites. `core/tokens/index.ts` now contains only design tokens (207 lines). Commit: de5e6b6.
+
+**11. ARCHITECTURE.md references outdated directory structure — OPEN**
 - `ARCHITECTURE.md:82-89` — References `/.agents/` directory and retired builder skill. Actual skills live in `.claude/skills/` per Investiture v1.5. Documentation drift, not functional.
+
+**Status:** Open. Not addressed in this remediation. Documentation-only issue, no functional impact.
 
 ---
 
 ## Minor Findings
 
-**12. Duplicate filename: CaseStudyPage.tsx**
+**12. Duplicate filename: CaseStudyPage.tsx — OPEN**
 - `src/pages/CaseStudyPage.tsx` and `src/components/content/CaseStudyPage.tsx` share the same filename. Different exports (`CaseStudyPage` vs `CaseStudyPageTemplate`) but confusing. The component version should be renamed to match the `Template` export.
 
-**13. Four unused utility exports**
+**Status:** Open. Not addressed in this remediation.
+
+**13. Four unused utility exports — RESOLVED**
 - `core/content/constellation.ts` — `getConnections()` exported but never called
 - `core/utils/format.ts` — `formatDate()`, `truncate()`, `debounce()` exported but never imported outside tests
 
-**14. SpotlightCard inline style object recreated every render**
+**Resolution:** All four exports removed along with their tests. `slugify()` and `getNode()` retained (still used). Commit: de5e6b6.
+
+**14. SpotlightCard inline style object recreated every render — OPEN**
 - `src/components/effects/SpotlightCard.tsx:57-60` — Style object with radial gradient is rebuilt on every mouse move. Could use CSS variables for smoother updates.
 
-**15. Missing security headers in vercel.json**
+**Status:** Open. Not addressed in this remediation.
+
+**15. Missing security headers in vercel.json — RESOLVED**
 - `vercel.json` — Only has rewrites. Missing `X-Content-Type-Options`, `X-Frame-Options`, `X-XSS-Protection` headers.
 
-**16. No CI/CD pipeline**
+**Resolution:** Added `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, and `Referrer-Policy: strict-origin-when-cross-origin`. Used Referrer-Policy over deprecated X-XSS-Protection. Commit: de5e6b6.
+
+**16. No CI/CD pipeline — OPEN**
 - No `.github/workflows/` directory. Build and lint gates exist locally but are not enforced on push or PR.
 
-**17. generate-favicons.ts and generate-sitemap.ts unreferenced**
+**Status:** Open. Not addressed in this remediation.
+
+**17. generate-favicons.ts and generate-sitemap.ts unreferenced — OPEN**
 - `scripts/generate-favicons.ts` and `scripts/generate-sitemap.ts` are not wired into any npm script. May be run manually but not documented.
+
+**Status:** Open. Not addressed in this remediation.
 
 ---
 
-## Dead Code
+## Dead Code — ALL RESOLVED
 
-| Item | Location | Lines | Type |
-|------|----------|-------|------|
-| Waves component | `src/components/effects/Waves.tsx` | 301 | Entire file unused |
-| API service | `services/api.ts` | 44 | All exports unused |
-| getConnections() | `core/content/constellation.ts:246-255` | 10 | Unused export |
-| formatDate() | `core/utils/format.ts:1-5` | 5 | Unused export |
-| truncate() | `core/utils/format.ts:13-16` | 4 | Unused export |
-| debounce() | `core/utils/format.ts:18-29` | 12 | Unused export |
+| Item | Location | Lines | Status |
+|------|----------|-------|--------|
+| Waves component | `src/components/effects/Waves.tsx` | 301 | Deleted |
+| API service | `services/api.ts` | 44 | Deleted |
+| getConnections() | `core/content/constellation.ts` | 10 | Removed |
+| formatDate() | `core/utils/format.ts` | 5 | Removed |
+| truncate() | `core/utils/format.ts` | 4 | Removed |
+| debounce() | `core/utils/format.ts` | 12 | Removed |
 
 ---
 
@@ -115,23 +149,18 @@
 
 ---
 
-## Recommended Remediation Priority
+## Remediation Status
 
-**Priority 1: Run `npm audit fix`** — Patches 4 dependency CVEs including Vite path traversal. Zero risk, immediate security improvement.
-
-**Priority 2: Add error handling to ResumePage** — Catch fetch failure, show error state. Currently broken UX on network failure. Low risk fix.
-
-**Priority 3: Delete dead code** — Remove Waves.tsx (301 lines), api.ts (44 lines), and unused function exports. Zero risk, reduces maintenance surface.
-
-**Priority 4: Update .env.example** — Add `VITE_LASTFM_API_KEY` and `VITE_LASTFM_USER`. Prevents onboarding friction.
-
-**Priority 5: Add Last.fm response validation** — Check response shape before accessing nested properties. Prevents potential runtime crash on API changes.
-
-**Priority 6: Add security headers to vercel.json** — `X-Content-Type-Options`, `X-Frame-Options`. Low effort, good hygiene.
-
-**Priority 7: Decompose ProfileCard.tsx** — Extract TiltEngine to separate module, split effects into composed sub-components. Medium risk but improves maintainability.
-
-**Priority 8: Move case study metadata out of tokens** — `caseStudies` and `metaCaseStudy` belong in `core/content/`, not `core/tokens/index.ts`. Medium effort refactor.
+| Priority | Action | Status |
+|----------|--------|--------|
+| P1 | Run `npm audit fix` | **DONE** |
+| P2 | Add error handling to ResumePage | **DONE** |
+| P3 | Delete dead code | **DONE** |
+| P4 | Update .env.example | Deferred (owner decision) |
+| P5 | Add Last.fm response validation | **DONE** (already present) |
+| P6 | Add security headers to vercel.json | **DONE** |
+| P7 | Decompose ProfileCard.tsx | **DONE** |
+| P8 | Move case study metadata out of tokens | **DONE** |
 
 ---
 
@@ -142,16 +171,16 @@
 | design-system/tokens.css | 299 | CLEAN | Well-structured, all tokens referenced |
 | core/content/case-studies.ts | 109 | CLEAN | |
 | core/content/codex.ts | 133 | CLEAN | |
-| core/content/constellation.ts | 262 | MINOR DEBT | Unused getConnections export, mixed data/algorithm |
+| core/content/constellation.ts | 252 | CLEAN | getConnections removed |
 | core/content/lastfm.ts | 16 | CLEAN | |
 | core/content/parse-case-study.ts | 298 | MINOR DEBT | Deep nesting in parser, but justified by format diversity |
-| core/content/resume.ts | 241 | SIGNIFICANT DEBT | No response.ok check |
-| core/tokens/index.ts | 306 | SIGNIFICANT DEBT | Mixes tokens with domain data |
-| core/utils/format.ts | 30 | MINOR DEBT | 3 of 4 exports unused |
+| core/content/resume.ts | 244 | CLEAN | response.ok check added |
+| core/tokens/index.ts | 207 | CLEAN | Domain data moved to core/content/ |
+| core/utils/format.ts | 9 | CLEAN | Unused exports removed |
 | core/utils/index.ts | 7 | CLEAN | |
 | services/analytics.ts | 3 | CLEAN | |
-| services/api.ts | 44 | SIGNIFICANT DEBT | Entirely unused |
-| services/lastfm.ts | 64 | SIGNIFICANT DEBT | No response shape validation |
+| services/api.ts | — | DELETED | — |
+| services/lastfm.ts | 64 | CLEAN | Response validation already present |
 | src/App.tsx | 23 | CLEAN | |
 | src/main.tsx | 27 | CLEAN | |
 | src/layouts/Layout.tsx | 22 | CLEAN | |
@@ -159,7 +188,7 @@
 | src/pages/AboutPage.tsx | 184 | CLEAN | |
 | src/pages/WorkPage.tsx | 182 | CLEAN | |
 | src/pages/CaseStudyPage.tsx | 29 | CLEAN | |
-| src/pages/ResumePage.tsx | 148 | CRITICAL | No error handling on async fetch |
+| src/pages/ResumePage.tsx | 178 | CLEAN | Error handling + fallback added |
 | src/pages/NotFoundPage.tsx | 35 | CLEAN | |
 | src/components/content/Hero.tsx | 44 | CLEAN | |
 | src/components/content/ConstellationPage.tsx | 252 | MINOR DEBT | Complex but justified |
@@ -187,8 +216,9 @@
 | src/components/content/ProjectCard.tsx | 98 | CLEAN | |
 | src/components/effects/Particles.tsx | 247 | CLEAN | Proper cleanup, reduced motion |
 | src/components/effects/ParticlesTuner.tsx | 204 | CLEAN | Dev-only gated |
-| src/components/effects/ProfileCard.tsx | 556 | CRITICAL | God component, works but unmaintainable |
-| src/components/effects/Waves.tsx | 301 | SIGNIFICANT DEBT | Entirely dead code + memory leak |
+| src/components/effects/ProfileCard.tsx | 431 | MINOR DEBT | TiltEngine extracted, still complex but under 500 lines |
+| src/components/effects/tiltEngine.ts | 133 | CLEAN | Extracted from ProfileCard |
+| src/components/effects/Waves.tsx | — | DELETED | — |
 | src/components/effects/CountUp.tsx | 130 | CLEAN | |
 | src/components/effects/DecryptedText.tsx | 127 | CLEAN | |
 | src/components/effects/GlowEffect.tsx | 49 | CLEAN | |
@@ -206,7 +236,7 @@
 | src/components/ScrollToTop.tsx | 13 | CLEAN | |
 | src/lib/parseInline.tsx | 31 | CLEAN | |
 | src/lib/site-metadata.ts | 11 | CLEAN | |
-| src/lib/useNowPlaying.ts | 54 | SIGNIFICANT DEBT | Initial poll ignores visibility |
+| src/lib/useNowPlaying.ts | 54 | MINOR DEBT | Initial poll ignores visibility (deferred) |
 | src/lib/useTheme.ts | 18 | CLEAN | |
 | src/providers/ThemeProvider.tsx | 71 | CLEAN | |
 | src/styles/globals.css | 197 | CLEAN | |

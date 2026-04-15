@@ -55,7 +55,6 @@ utils.test.ts                   — Tests: cn, formatDate, slugify, truncate, de
 
 ```
 analytics.ts                    — Re-exports Vercel Analytics and SpeedInsights components
-api.ts                          — Generic HTTP client with typed request/response and env-based base URL
 lastfm.ts                       — Last.fm API: fetches now-playing/recent tracks with metadata parsing
 ```
 
@@ -131,10 +130,10 @@ GrainOverlay.tsx                — SVG fractal noise grain filter applied full-
 Particles.tsx                   — WebGL point cloud with Perlin motion and hover tracking (ogl)
 ParticlesTuner.tsx              — Dev-only slider panel for tuning Particles parameters
 ProfileCard.tsx                 — 3D tilt card with pointer-driven parallax and holographic shine
+tiltEngine.ts                   — Pointer-driven tilt physics engine extracted from ProfileCard
 RevealOnScroll.tsx              — Intersection-triggered fade-in with blur transition
 SpotlightCard.tsx               — Mouse-tracked radial light effect over card
 Threads.tsx                     — WebGL animated line threads with Perlin noise (ogl)
-Waves.tsx                       — Canvas wave grid with Perlin noise and cursor interaction
 ```
 
 ### src/components/interactive/
@@ -279,11 +278,10 @@ index.html                      — HTML template with theme detection script
 | GrainOverlay | 56 | SVG grain filter overlay | — | No |
 | Particles | 247 | WebGL point cloud (ogl) | particleCount, speed | Yes |
 | ParticlesTuner | 204 | Dev-only particle tuner | className | Yes |
-| ProfileCard | 556 | 3D tilt card with parallax | avatarUrl, enableTilt | Yes |
+| ProfileCard | 431 | 3D tilt card with parallax | avatarUrl, enableTilt | Yes |
 | RevealOnScroll | 65 | Intersection fade-in | children, delay | Yes |
 | SpotlightCard | 66 | Mouse-tracked light effect | children, spotlightColor | Yes |
 | Threads | 210 | WebGL line threads (ogl) | color, amplitude | Yes |
-| Waves | 301 | Canvas wave grid | lineColor, waveSpeed | Yes |
 | Button | 70 | Polymorphic button/anchor | variant, href | No |
 | NowPlaying | 187 | Last.fm now-playing | className | Yes |
 | Tag | 29 | Capsule badge | children, tone | No |

@@ -28,7 +28,9 @@ export function useNowPlaying() {
   }, []);
 
   useEffect(() => {
-    poll();
+    if (!document.hidden) {
+      poll();
+    }
 
     const interval = setInterval(() => {
       if (!document.hidden) {

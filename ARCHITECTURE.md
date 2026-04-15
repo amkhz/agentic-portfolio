@@ -79,14 +79,15 @@ agentic-portfolio/
 ├── vite.config.ts         # Vite + Tailwind + path aliases
 ├── tsconfig.json          # TypeScript strict config
 ├── package.json           # Scripts: dev, build, test, lint
-├── /.agents               # Agent skill definitions
-│   └── /skills
-│       ├── /builder       # Retired 2026-04-12 (RETIRED.md archive)
-│       ├── /director      # Director skill (tracks project status)
-│       ├── /dreamer       # Dreamer skill (refines ideas into plans)
-│       ├── /roy           # Roy skill (post-build reviewer, quality checks)
-│       ├── /joi           # Joi skill (voice calibration for Writer)
-│       └── /writer        # Writer skill (case study content)
+├── /.claude/skills         # Agent skill definitions (Investiture v1.5)
+│   ├── /director          # Director skill (tracks project status)
+│   ├── /dreamer           # Dreamer skill (refines ideas into plans)
+│   ├── /writer            # Writer skill (case study content)
+│   ├── /roy               # Roy skill (post-build reviewer, quality checks)
+│   ├── /joi               # Joi skill (voice calibration for Writer)
+│   ├── /builder           # Tyrell builder skill
+│   └── /invest-*          # Investiture framework skills (adr, architecture, crew, doctrine, etc.)
+├── /.agents/skills         # Mirror of .claude/skills (legacy path, kept in sync)
 ├── /design-system         # Visual foundation layer
 │   └── tokens.css         # CSS variables (colors, spacing, typography)
 ├── /core                  # Pure logic layer

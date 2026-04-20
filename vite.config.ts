@@ -11,6 +11,7 @@ export default defineConfig({
       '@core': path.resolve(__dirname, './core'),
       '@services': path.resolve(__dirname, './services'),
       '@design-system': path.resolve(__dirname, './design-system'),
+      '@lab': path.resolve(__dirname, './src/lab'),
     },
   },
   build: {
@@ -22,6 +23,11 @@ export default defineConfig({
     open: true,
   },
   test: {
-    include: ['core/**/*.test.ts', 'src/**/*.test.{ts,tsx}'],
+    include: [
+      'core/**/*.test.ts',
+      'core/lab/**/*.test.ts',
+      'src/**/*.test.{ts,tsx}',
+      'src/lab/**/*.test.{ts,tsx}',
+    ],
   },
 });

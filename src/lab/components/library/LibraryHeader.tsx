@@ -1,0 +1,34 @@
+interface LibraryHeaderProps {
+  guideCount: number;
+  territoryCount: number;
+}
+
+const MANIFESTO =
+  "The future isn't coming, it's already here, being built now in peer-reviewed papers and NSF-funded labs. This library is how I learn it. Deep-dive research guides on the science behind vacuum engineering, UAP detection, and consciousness as technology. Prep for how we design for this world.";
+
+export function LibraryHeader({
+  guideCount,
+  territoryCount,
+}: LibraryHeaderProps) {
+  const counter =
+    guideCount === 1
+      ? `1 guide across ${territoryCount} territories`
+      : `${guideCount} guides across ${territoryCount} territories`;
+
+  return (
+    <header className="pt-16 md:pt-24">
+      <p className="font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted">
+        labs.justinh.design
+      </p>
+      <h1 className="mt-6 font-lab-heading text-4xl font-semibold tracking-tight text-lab-text-primary md:text-6xl md:leading-tight">
+        Speculative Design Lab
+      </h1>
+      <p className="mt-8 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl">
+        {MANIFESTO}
+      </p>
+      <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
+        {counter}
+      </p>
+    </header>
+  );
+}

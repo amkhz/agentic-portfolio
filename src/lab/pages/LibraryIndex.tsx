@@ -1,16 +1,31 @@
 import { Helmet } from "react-helmet-async";
+import { guides } from "@core/lab/guides";
+import { territories } from "@core/lab/territories";
+import { LibraryHeader } from "@lab/components/library/LibraryHeader";
+import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
 
-// STUB — Session B (T6) replaces this with the real library index page.
 export function LibraryIndex() {
   return (
     <>
       <Helmet>
         <title>Speculative Design Lab — labs.justinh.design</title>
+        <meta
+          name="description"
+          content="Deep-dive research guides on frontier physics, vacuum engineering, UAP detection, and consciousness as technology."
+        />
+        <meta property="og:title" content="Speculative Design Lab" />
+        <meta
+          property="og:description"
+          content="A library of deep-dive research guides on frontier science."
+        />
+        <meta property="og:type" content="website" />
       </Helmet>
-      <div className="mx-auto max-w-6xl px-6 py-24 md:px-10">
-        <p className="font-lab-mono text-xs tracking-wide text-lab-text-muted">
-          Library index placeholder. Real page lands in T6.
-        </p>
+      <div className="mx-auto max-w-6xl px-6 pb-32 md:px-10">
+        <LibraryHeader
+          guideCount={guides.length}
+          territoryCount={territories.length}
+        />
+        <TerritoryGrid guides={guides} />
       </div>
     </>
   );

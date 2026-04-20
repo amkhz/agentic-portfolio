@@ -17,6 +17,7 @@
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.1.2",
     "@fontsource/didact-gothic": "^5.1.1",
+    "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/podkova": "^5.1.1",
     "@vercel/analytics": "^1.6.1",
     "@vercel/speed-insights": "^1.3.1",

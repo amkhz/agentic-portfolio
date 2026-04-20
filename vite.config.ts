@@ -17,6 +17,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: path.resolve(__dirname, 'index.html'),
+        labs: path.resolve(__dirname, 'labs.html'),
+      },
+    },
   },
   server: {
     port: 5173,

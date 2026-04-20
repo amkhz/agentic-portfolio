@@ -20,6 +20,7 @@ import type { GuideMode } from "./GuideTabBar";
 import { GuideSectionNav } from "./GuideSectionNav";
 import { GuideSection } from "./GuideSection";
 import { GuidePrevNext } from "./GuidePrevNext";
+import { GuideGlossaryView } from "./GuideGlossaryView";
 
 interface GuideRendererProps {
   guide: Guide;
@@ -85,7 +86,9 @@ export function GuideRenderer({ guide }: GuideRendererProps) {
         aria-labelledby="guide-tab-glossary"
         hidden={mode !== "glossary"}
       >
-        {mode === "glossary" ? <GuideGlossaryPlaceholder /> : null}
+        {mode === "glossary" ? (
+          <GuideGlossaryView glossary={guide.glossary} />
+        ) : null}
       </div>
     </article>
   );
@@ -142,10 +145,3 @@ function GuideBody({
   );
 }
 
-function GuideGlossaryPlaceholder() {
-  return (
-    <p className="mt-12 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-      Glossary view lands in T9.
-    </p>
-  );
-}

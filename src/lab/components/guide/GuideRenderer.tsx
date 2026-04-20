@@ -18,6 +18,7 @@ import { GuideHeader } from "./GuideHeader";
 import { GuideTabBar } from "./GuideTabBar";
 import type { GuideMode } from "./GuideTabBar";
 import { GuideSectionNav } from "./GuideSectionNav";
+import { GuideSection } from "./GuideSection";
 import { GuidePrevNext } from "./GuidePrevNext";
 
 interface GuideRendererProps {
@@ -120,36 +121,20 @@ function GuideBody({
           const prev = guide.sections[index - 1];
           const next = guide.sections[index + 1];
           return (
-            <section
-              key={section.id}
-              id={section.id}
-              aria-labelledby={`${section.id}-heading`}
-              className="scroll-mt-28"
-            >
-              <h2
-                id={`${section.id}-heading`}
-                className="font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
-              >
-                {section.icon ? (
-                  <span
-                    aria-hidden
-                    className="mr-3 inline-block align-[-0.05em]"
-                  >
-                    {section.icon}
-                  </span>
-                ) : null}
-                {section.heading}
-              </h2>
-              <p className="mt-6 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-                Section content rendering lands in T8.
-              </p>
+            <div key={section.id}>
+              <GuideSection
+                section={section}
+                glossary={guide.glossary}
+                figures={guide.figures}
+                guideSlug={guide.slug}
+              />
               <GuidePrevNext
                 prevId={prev?.id}
                 prevLabel={prev?.heading}
                 nextId={next?.id}
                 nextLabel={next?.heading}
               />
-            </section>
+            </div>
           );
         })}
       </div>

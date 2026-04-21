@@ -83,6 +83,22 @@ describe('parseGuide', () => {
     expect(term && term.kind === 'term' && term.term).toBe('ambiguity');
   });
 
+  it('splits term markers out of a surrounding bold run', () => {
+    const source = VALID_SOURCE.replace(
+      'Paragraph with an |ambiguity| and a **bold phrase**.',
+      '**The |ambiguity| is the point:** trailing text.',
+    );
+    const guide = parseGuide(source, 'bold-nested');
+    const paragraph = guide.sections[0].blocks[0];
+    expect(paragraph.kind).toBe('paragraph');
+    if (paragraph.kind !== 'paragraph') return;
+    const kinds = paragraph.nodes.map((n) => n.kind);
+    expect(kinds).toEqual(['bold', 'term', 'bold', 'text']);
+    expect(paragraph.nodes[0].kind === 'bold' && paragraph.nodes[0].value).toBe('The ');
+    expect(paragraph.nodes[1].kind === 'term' && paragraph.nodes[1].term).toBe('ambiguity');
+    expect(paragraph.nodes[2].kind === 'bold' && paragraph.nodes[2].value).toBe(' is the point:');
+  });
+
   it('emits figure references as their own blocks', () => {
     const guide = parseGuide(VALID_SOURCE, 'sample-guide');
     const figureBlock = guide.sections[0].blocks[1];

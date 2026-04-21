@@ -152,6 +152,35 @@ function splitLeadingIcon(heading: string): { icon?: string; title: string } {
   return { icon: first, title: match[2] };
 }
 
+const TERM_RE = /\|([^|\n]+?)\|/g;
+
+// Emit a bold run with embedded |term| markers as an alternating sequence
+// of BoldNode + TermNode. Authors frequently write `**The |term| is X**`;
+// without this pass the pipes show up as literal characters inside the
+// bold span. The data model stays flat — the term loses the bold weight
+// but gains its accent + interactive styling, which reads cleanly.
+function emitBoldRun(inner: string, nodes: ParagraphNode[]): void {
+  let last = 0;
+  TERM_RE.lastIndex = 0;
+  let m: RegExpExecArray | null;
+  while ((m = TERM_RE.exec(inner)) !== null) {
+    if (m.index > last) {
+      const chunk = inner.slice(last, m.index);
+      if (chunk) nodes.push({ kind: 'bold', value: chunk } satisfies BoldNode);
+    }
+    nodes.push({ kind: 'term', term: m[1].trim() } satisfies TermNode);
+    last = m.index + m[0].length;
+  }
+  if (last === 0) {
+    nodes.push({ kind: 'bold', value: inner } satisfies BoldNode);
+    return;
+  }
+  if (last < inner.length) {
+    const chunk = inner.slice(last);
+    if (chunk) nodes.push({ kind: 'bold', value: chunk } satisfies BoldNode);
+  }
+}
+
 function parseInline(text: string): ParagraphNode[] {
   const nodes: ParagraphNode[] = [];
   let last = 0;
@@ -163,7 +192,7 @@ function parseInline(text: string): ParagraphNode[] {
       if (value) nodes.push({ kind: 'text', value } satisfies TextNode);
     }
     if (match[1] !== undefined) {
-      nodes.push({ kind: 'bold', value: match[1] } satisfies BoldNode);
+      emitBoldRun(match[1], nodes);
     } else if (match[2] !== undefined) {
       nodes.push({ kind: 'term', term: match[2].trim() } satisfies TermNode);
     }

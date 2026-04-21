@@ -71,5 +71,26 @@
     --lab-heading-font: 'Podkova', Georgia, serif;
     --lab-body-font: Georgia, 'Podkova', serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* --- Academic preprint watermark ---
+       A graph-paper-under-ink texture: fine horizontal ruling every
+       28px plus a sparse vertical margin line every 128px. Alpha is
+       deliberately minimal (~0.02–0.03) so the surface reads as
+       "on paper" rather than decorated. Pattern follows the same
+       CSS-only layered gradient technique as ADR-005's portfolio
+       textures but tuned to the cool lab palette. */
+    --lab-texture:
+      repeating-linear-gradient(
+        180deg,
+        oklch(0.32 0.010 250 / 0.028) 0px,
+        transparent 1px,
+        transparent 28px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.32 0.010 250 / 0.018) 0px,
+        transparent 1px,
+        transparent 128px
+      );
   }
 }

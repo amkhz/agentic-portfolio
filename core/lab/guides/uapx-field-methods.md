@@ -70,6 +70,7 @@ glossary:
   anomaly: "UAPx term: a multi-sensor coincidence reaching ≥5σ significance (one-in-3.5-million odds of being accidental). Borrowed from particle physics discovery threshold."
   Look Elsewhere Effect: "Statistical fallacy: overstating significance by ignoring how many places the finding could have appeared. Finding 10 heads in a row somewhere in 1000 flips is much more probable than finding it at a specific position."
   Local Positioning System: "Short-range equivalent of GPS using fixed beacons for centimeter-precision positioning. Would lock down each camera's exact location and orientation for reliable multi-station triangulation."
+  Cash–Landrum: "A 1980 close-encounter incident near Huffman, Texas, in which Betty Cash, Vickie Landrum, and Colby Landrum reported a diamond-shaped craft escorted by military helicopters and afterward developed injuries consistent with ionizing radiation and intense UV exposure — burns, hair loss, and acute illness. The UAPx paper cites it (alongside Rendlesham Forest) as one of the strongest historical motivations for adding radiation sensors to a multi-modal UAP detection package."
 ---
 
 ## 🔍 The Forensic Problem {#forensic-problem}

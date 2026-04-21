@@ -41,23 +41,28 @@ export function LabLayout() {
       </main>
 
       <footer className="mt-24 border-t border-lab-border-subtle">
-        <div className="mx-auto flex max-w-6xl flex-col items-start gap-3 px-6 py-10 font-lab-mono text-xs tracking-wide text-lab-text-muted md:flex-row md:items-center md:justify-between md:px-10">
-          <span>
-            Frontier Lab is part of{" "}
+        <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
+          <div className="flex flex-col items-start gap-3 font-lab-mono text-xs tracking-wide text-lab-text-muted md:flex-row md:items-center md:justify-between">
+            <span>
+              Frontier Lab is part of{" "}
+              <a
+                href="https://justinh.design"
+                className="text-lab-text-secondary hover:text-guide-accent hover:underline"
+              >
+                justinh.design
+              </a>
+              , the portfolio of Justin Hernandez.
+            </span>
             <a
-              href="https://justinh.design"
-              className="text-lab-text-secondary hover:text-guide-accent hover:underline"
+              href="https://github.com/amkhz/portfolio"
+              className="text-lab-text-muted hover:text-lab-text-secondary hover:underline"
             >
-              justinh.design
+              Source on GitHub
             </a>
-            , the portfolio of Justin Hernandez.
-          </span>
-          <a
-            href="https://github.com/amkhz/portfolio"
-            className="text-lab-text-muted hover:text-lab-text-secondary hover:underline"
-          >
-            Source on GitHub
-          </a>
+          </div>
+          <p className="mt-6 font-lab-body text-sm italic leading-relaxed text-lab-text-muted">
+            A reader&apos;s notebook. Designed to be prep, not product.
+          </p>
         </div>
       </footer>
     </>

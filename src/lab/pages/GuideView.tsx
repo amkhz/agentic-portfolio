@@ -12,18 +12,19 @@ export function GuideView() {
     return <NotFoundPage />;
   }
 
-  const { title, description, source } = guide.frontmatter;
-  const citation = [source.authors, source.year, source.venue]
-    .filter(Boolean)
-    .join(" · ");
+  const { title, description } = guide.frontmatter;
+  // Search engines truncate meta descriptions around 155–160 chars; keep
+  // the primary description as the meta so it never gets cut mid-citation.
+  const metaDescription =
+    description.length > 160 ? `${description.slice(0, 157).trimEnd()}…` : description;
 
   return (
     <>
       <Helmet>
         <title>{`${title} — Speculative Design Lab`}</title>
-        <meta name="description" content={`${description} Source: ${citation}`} />
+        <meta name="description" content={metaDescription} />
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
       </Helmet>
       <GuideRenderer guide={guide} />

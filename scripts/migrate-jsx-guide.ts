@@ -252,33 +252,68 @@ function extractHeader(ast: Node): Header {
     }
   }
 
-  // Accent: first 6-digit hex found anywhere in the file whose color is NOT
-  // one of the known neutrals (backgrounds, text, borders). Search in source
-  // string directly since inline styles are embedded as object properties.
-  // Fallback: first hex seen.
-  const neutral = new Set([
-    '#0d1520', '#1a2636', '#141e2c', '#0a1018', '#2a3a4a',
-    '#e8edf2', '#c0ccd8', '#a0b0c0', '#8090a0', '#708090', '#607080',
-  ]);
-  const accent = findFirstAccent(ast, neutral) ?? '#c8956a';
+  // Accent: pick the hex that best matches a real accent — non-neutral,
+  // not too dark (would be invisible on the lab's dark background), and
+  // preferring repeated occurrences (an accent tends to be used multiple
+  // times while a one-off background is rare).
+  //
+  // Without this luminance + frequency filter, the first DIRD migration
+  // picked up the page background (#0d1620, ~1:1 contrast) and shipped
+  // four guides with invisible accents. The frequency tally catches what
+  // the neutrals-list couldn't.
+  const accent = pickAccent(ast) ?? '#c8956a';
 
   return { title, source, accent, kicker };
 }
 
-function findFirstAccent(ast: Node, neutral: Set<string>): string | null {
-  let found: string | null = null;
+const KNOWN_NEUTRALS = new Set([
+  '#0d1520', '#0d1620', '#1a2636', '#141e2c', '#0a1018', '#2a3a4a',
+  '#4a5a6a', '#e8edf2', '#c0ccd8', '#a0b0c0', '#8090a0', '#708090',
+  '#607080', '#5a6a7a',
+]);
+
+// Minimum relative luminance for a hex to be considered accent-eligible.
+// 0.05 ≈ any color darker than #3a3a3a — below that the hex is almost
+// certainly a background or subtle border, not an accent.
+const MIN_ACCENT_LUMINANCE = 0.05;
+
+function hexLuminance(hex: string): number {
+  const m = hex.match(/^#?([0-9a-fA-F]{6})$/);
+  if (!m) return 0;
+  const v = m[1];
+  const toLinear = (c: number) => {
+    const s = c / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  };
+  const r = toLinear(parseInt(v.slice(0, 2), 16));
+  const g = toLinear(parseInt(v.slice(2, 4), 16));
+  const b = toLinear(parseInt(v.slice(4, 6), 16));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function pickAccent(ast: Node): string | null {
+  const counts = new Map<string, number>();
   traverse(ast, {
     StringLiteral(path) {
-      if (found) return;
       const v = path.node.value;
-      const m = v.match(/^#[0-9a-fA-F]{6}$/);
-      if (!m) return;
+      if (!/^#[0-9a-fA-F]{6}$/.test(v)) return;
       const hex = v.toLowerCase();
-      if (neutral.has(hex)) return;
-      found = hex;
+      if (KNOWN_NEUTRALS.has(hex)) return;
+      if (hexLuminance(hex) < MIN_ACCENT_LUMINANCE) return;
+      counts.set(hex, (counts.get(hex) ?? 0) + 1);
     },
   });
-  return found;
+  if (counts.size === 0) return null;
+  // Highest count wins; ties broken by first occurrence (insertion order).
+  let best: string | null = null;
+  let bestCount = 0;
+  for (const [hex, count] of counts) {
+    if (count > bestCount) {
+      best = hex;
+      bestCount = count;
+    }
+  }
+  return best;
 }
 
 // --- Source citation parsing ------------------------------------------------

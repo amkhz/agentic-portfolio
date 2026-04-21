@@ -1,7 +1,7 @@
 ---
 id: emergent-quantization
 title: Emergent Quantization from a Dynamic Vacuum
-kicker: Paper Explainer
+kicker: Research Guide Series
 source:
   authors: White, Vera, Sylvester & Dudzinski
   year: 2026

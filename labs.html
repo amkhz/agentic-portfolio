@@ -7,6 +7,21 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <title>Frontier Lab — labs.justinh.design</title>
     <meta name="description" content="A library of deep-dive research guides on frontier physics, vacuum engineering, UAP detection, and consciousness as technology." />
+    <script>
+      // If we arrived here because the portfolio's index.html bounced the
+      // lab subdomain root to /labs.html (see the workaround in index.html),
+      // swap the URL back to '/' so React Router's lab routes match. React
+      // Router reads window.location.pathname when it mounts; replaceState
+      // updates that silently without reloading.
+      (function(){
+        try {
+          if (window.location.pathname === '/labs.html') {
+            var clean = '/' + window.location.search + window.location.hash;
+            window.history.replaceState(null, '', clean);
+          }
+        } catch(e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

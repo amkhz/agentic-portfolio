@@ -55,3 +55,18 @@ export const territoryMeta: Record<Territory, TerritoryMeta> = {
 export const territories: TerritoryMeta[] = Object.values(territoryMeta).sort(
   (a, b) => a.order - b.order,
 );
+
+// Lab-wide corpus stats. Hand-maintained — bump these when new source
+// material is ingested. Numbers seed the library-hero meta line.
+// Rationale: N guides is derived from the manifest at render time;
+// peer-reviewed + DIRD counts describe the source material the guides
+// draw from, not the guides themselves, so they can't be auto-counted.
+export interface LabStats {
+  peerReviewedPapersCited: number;
+  dirdBriefsWalked: number;
+}
+
+export const labStats: LabStats = {
+  peerReviewedPapersCited: 6,
+  dirdBriefsWalked: 11,
+};

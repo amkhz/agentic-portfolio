@@ -1,3 +1,4 @@
+import { labStats } from "@core/lab/territories";
 import { CommunityStrip } from "./CommunityStrip";
 
 interface LibraryHeaderProps {
@@ -31,6 +32,11 @@ export function LibraryHeader({
       <CommunityStrip />
       <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         {counter}
+      </p>
+      <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
+        {guideCount} {guideCount === 1 ? "guide" : "guides"} ·{" "}
+        {labStats.peerReviewedPapersCited} peer-reviewed papers cited ·{" "}
+        {labStats.dirdBriefsWalked} DIRD briefs walked
       </p>
     </header>
   );

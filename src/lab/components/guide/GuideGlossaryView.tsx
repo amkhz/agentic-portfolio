@@ -56,7 +56,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
             <li key={letter}>
               <a
                 href={`#glossary-${letter}`}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-lab-border-subtle bg-lab-bg-surface font-lab-mono text-xs tracking-wide text-lab-text-secondary hover:border-guide-accent hover:text-guide-accent"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-lab-border-subtle bg-lab-bg-surface font-lab-mono text-sm tracking-wide text-lab-text-secondary hover:border-guide-accent hover:text-guide-accent"
               >
                 {letter}
               </a>

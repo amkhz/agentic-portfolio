@@ -46,7 +46,7 @@ export function GuideDefinitionCard({
             type="button"
             onClick={onClose}
             aria-label={`Close definition of ${term}`}
-            className="shrink-0 rounded-sm p-1 font-lab-mono text-base leading-none text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-lab-text-primary"
+            className="-mr-2 -mt-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-sm font-lab-mono text-lg leading-none text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-lab-text-primary"
           >
             ×
           </button>

@@ -54,8 +54,8 @@ export function GuideTabBar({ mode, onModeChange }: GuideTabBarProps) {
             onKeyDown={handleKeyDown}
             className={
               selected
-                ? "relative -mb-px border-b-2 border-guide-accent pb-3 font-lab-mono text-sm uppercase tracking-wider text-guide-accent"
-                : "relative -mb-px border-b-2 border-transparent pb-3 font-lab-mono text-sm uppercase tracking-wider text-lab-text-muted hover:text-lab-text-secondary"
+                ? "relative -mb-px flex min-h-11 items-center border-b-2 border-guide-accent px-1 font-lab-mono text-sm uppercase tracking-wider text-guide-accent"
+                : "relative -mb-px flex min-h-11 items-center border-b-2 border-transparent px-1 font-lab-mono text-sm uppercase tracking-wider text-lab-text-muted hover:text-lab-text-secondary"
             }
           >
             {tab.label}

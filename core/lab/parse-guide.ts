@@ -6,7 +6,7 @@
 // error. Soft warnings go to console.warn.
 // ============================================
 
-import matter from 'gray-matter';
+import yaml from 'js-yaml';
 import type {
   BoldNode,
   Figure,
@@ -247,12 +247,31 @@ export function contrastRatio(hexA: string, hexB: string): number {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
+// --- Frontmatter extraction -------------------------------------------------
+
+// Direct YAML + body split. gray-matter pulls in a Buffer-using polyfill
+// that crashes in the browser, so we avoid it — js-yaml is already a dep
+// and runs fine in both environments.
+const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/;
+
+function extractFrontmatter(source: string, slug: string): { data: Record<string, unknown>; body: string } {
+  const match = source.match(FRONTMATTER_RE);
+  if (!match) {
+    throw new Error(`Guide '${slug}': missing '---' frontmatter fence`);
+  }
+  const parsed = yaml.load(match[1]);
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+    throw new Error(`Guide '${slug}': frontmatter must be a YAML mapping`);
+  }
+  return { data: parsed as Record<string, unknown>, body: match[2] };
+}
+
 // --- Public entrypoint ------------------------------------------------------
 
 export function parseGuide(source: string, slug: string): Guide {
-  const parsed = matter(source);
-  const frontmatter = validateFrontmatter(parsed.data as Record<string, unknown>, slug);
-  const sections = parseBody(parsed.content, slug);
+  const parsed = extractFrontmatter(source, slug);
+  const frontmatter = validateFrontmatter(parsed.data, slug);
+  const sections = parseBody(parsed.body, slug);
 
   const figures: Record<string, Figure> = {};
   for (const fig of frontmatter.figures) {

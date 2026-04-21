@@ -4,6 +4,14 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
 export default defineConfig({
+  define: {
+    // Baked at build time. Used by the lab library header as a
+    // fallback 'Last updated' stamp until guides grow a frontmatter
+    // `updated:` field of their own.
+    'import.meta.env.VITE_BUILD_DATE': JSON.stringify(
+      new Date().toISOString().split('T')[0],
+    ),
+  },
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

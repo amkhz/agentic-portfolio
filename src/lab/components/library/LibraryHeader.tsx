@@ -38,6 +38,9 @@ export function LibraryHeader({
         {labStats.peerReviewedPapersCited} peer-reviewed papers cited ·{" "}
         {labStats.dirdBriefsWalked} DIRD briefs walked
       </p>
+      <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
+        Last updated {import.meta.env.VITE_BUILD_DATE}
+      </p>
     </header>
   );
 }

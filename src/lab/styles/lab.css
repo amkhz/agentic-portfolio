@@ -169,6 +169,17 @@ button:focus-visible,
   box-shadow: 0 1px 0 var(--lab-border-subtle);
 }
 
+/* Per-territory accent scope. TerritoryGrid sets one of these classes
+   on each <section> so everything inside — the territory badge, the
+   accent ring, any per-territory chrome — picks up the matching
+   --lab-territory-tN via the --guide-accent variable. Class-based
+   instead of inline style so the ADR-009 inline-style budget stays
+   reserved for GuideRenderer + GuideCard. */
+.lab-territory-t1 { --guide-accent: var(--lab-territory-t1); }
+.lab-territory-t2 { --guide-accent: var(--lab-territory-t2); }
+.lab-territory-t3 { --guide-accent: var(--lab-territory-t3); }
+.lab-territory-t4 { --guide-accent: var(--lab-territory-t4); }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

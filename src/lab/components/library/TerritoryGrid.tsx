@@ -1,6 +1,7 @@
 import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import { GuideCard } from "./GuideCard";
+import { TerritoryBadge } from "./TerritoryBadge";
 
 interface TerritoryGridProps {
   guides: Guide[];
@@ -14,6 +15,22 @@ function groupByTerritory(guides: Guide[]): Record<Territory, Guide[]> {
   return out;
 }
 
+// The roadmap assigns a lifecycle state to each territory based on
+// its order. Active gets the pulsing badge; extending reads normal;
+// queued visually dims so the eye lands on live work first.
+type Lifecycle = "active" | "extending" | "queued";
+function lifecycleFor(order: number): Lifecycle {
+  if (order === 1) return "active";
+  if (order === 2) return "extending";
+  return "queued";
+}
+
+const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
+  active: "Active",
+  extending: "Extending",
+  queued: "Queued",
+};
+
 export function TerritoryGrid({ guides }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
 
@@ -21,28 +38,35 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
     <div className="mt-16 space-y-20">
       {territories.map((territory) => {
         const territoryGuides = grouped[territory.id];
+        const lifecycle = lifecycleFor(territory.order);
+        const isQueued = lifecycle === "queued";
+
         return (
           <section
             key={territory.id}
             aria-labelledby={`territory-${territory.id}-heading`}
+            className={`lab-territory-${territory.id.toLowerCase()}`}
           >
-            <header className="flex flex-col gap-2 border-b border-lab-border-subtle pb-5">
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden
-                  className={
-                    territory.id === "T1"
-                      ? "h-3 w-3 rounded-full bg-lab-t1"
-                      : territory.id === "T2"
-                        ? "h-3 w-3 rounded-full bg-lab-t2"
-                        : territory.id === "T3"
-                          ? "h-3 w-3 rounded-full bg-lab-t3"
-                          : "h-3 w-3 rounded-full bg-lab-t4"
-                  }
+            <header
+              className={
+                isQueued
+                  ? "flex flex-col gap-3 border-b border-lab-border-subtle pb-6 opacity-70"
+                  : "flex flex-col gap-3 border-b border-lab-border-subtle pb-6"
+              }
+            >
+              <div className="flex items-center gap-4">
+                <TerritoryBadge
+                  id={territory.id}
+                  isActive={lifecycle === "active"}
                 />
-                <p className="font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted">
-                  Territory {territory.id}
-                </p>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
+                    Territory
+                  </span>
+                  <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
+                    {LIFECYCLE_LABEL[lifecycle]}
+                  </span>
+                </div>
               </div>
               <h2
                 id={`territory-${territory.id}-heading`}
@@ -50,7 +74,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
               >
                 {territory.name}
               </h2>
-              <p className="max-w-3xl font-lab-body text-base leading-relaxed text-lab-text-secondary md:text-lg">
+              <p className="max-w-3xl font-lab-body text-base italic leading-relaxed text-lab-text-secondary md:text-lg">
                 {territory.premise}
               </p>
             </header>

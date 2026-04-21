@@ -19,6 +19,8 @@ import type {
   Paragraph,
   ParagraphNode,
   SourceMeta,
+  TableBlock,
+  TableRow,
   Territory,
   TermNode,
   TextNode,
@@ -135,6 +137,10 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
 const HEADING_RE = /^##\s+(.+?)(?:\s+\{#([a-z0-9-]+)\})?\s*$/;
 const FIGURE_RE = /^\{figure:([a-z0-9-]+)\}\s*$/i;
 const INLINE_RE = /\*\*([^*]+?)\*\*|\|([^|\n]+?)\|/g;
+// Markdown table row: starts and ends with a pipe, has at least one inner pipe.
+const TABLE_ROW_RE = /^\|(.+)\|\s*$/;
+// Separator row: pipes and dashes only (optional colons for alignment, ignored).
+const TABLE_SEP_RE = /^\|[\s\-:|]+\|\s*$/;
 
 function slugifyHeading(text: string): string {
   return text
@@ -205,6 +211,49 @@ function parseInline(text: string): ParagraphNode[] {
   return nodes;
 }
 
+// A |term| marker inside a table cell has pipe delimiters that must
+// NOT be treated as cell boundaries. Heuristic: a term marker is
+// |word|-like (content bordered by non-whitespace). Cell delimiters are
+// |-space or space-|. We find term-marker pipe positions first, mask
+// them out, then split on the rest.
+function splitTableRow(line: string): string[] {
+  const protectedPositions = new Set<number>();
+  const termMarker = /\|(\S(?:[^|\n]*?\S)?)\|/g;
+  let m: RegExpExecArray | null;
+  while ((m = termMarker.exec(line)) !== null) {
+    protectedPositions.add(m.index);
+    protectedPositions.add(m.index + m[0].length - 1);
+  }
+
+  const cells: string[] = [];
+  let buffer = '';
+  for (let i = 0; i < line.length; i++) {
+    if (line[i] === '|' && !protectedPositions.has(i)) {
+      cells.push(buffer.trim());
+      buffer = '';
+    } else {
+      buffer += line[i];
+    }
+  }
+  if (buffer.trim()) cells.push(buffer.trim());
+  // Drop outer empty cells produced by the leading and trailing pipes.
+  if (cells.length && cells[0] === '') cells.shift();
+  if (cells.length && cells[cells.length - 1] === '') cells.pop();
+  return cells;
+}
+
+function parseTable(tableLines: string[]): TableBlock {
+  const headerCells = splitTableRow(tableLines[0]).map((cell) => ({
+    nodes: parseInline(cell),
+  }));
+  const header: TableRow = { cells: headerCells };
+  // Skip the separator row (tableLines[1]).
+  const rows: TableRow[] = tableLines.slice(2).map((line) => ({
+    cells: splitTableRow(line).map((cell) => ({ nodes: parseInline(cell) })),
+  }));
+  return { kind: 'table', header, rows };
+}
+
 function parseBody(body: string, slug: string): GuideSection[] {
   const lines = body.split(/\r?\n/);
   const sections: GuideSection[] = [];
@@ -219,7 +268,8 @@ function parseBody(body: string, slug: string): GuideSection[] {
     current.blocks.push({ kind: 'paragraph', nodes: parseInline(text) } satisfies Paragraph);
   };
 
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const heading = line.match(HEADING_RE);
     if (heading) {
       flushParagraph();
@@ -239,6 +289,25 @@ function parseBody(body: string, slug: string): GuideSection[] {
         throw new Error(`Guide '${slug}': figure reference '${figure[1]}' appears before any section heading`);
       }
       current.blocks.push({ kind: 'figure', slug: figure[1] } satisfies FigureRef);
+      continue;
+    }
+    // Table: a row, followed by a separator row, plus zero or more data rows.
+    if (
+      TABLE_ROW_RE.test(line) &&
+      i + 1 < lines.length &&
+      TABLE_SEP_RE.test(lines[i + 1])
+    ) {
+      flushParagraph();
+      const tableLines: string[] = [line, lines[i + 1]];
+      let j = i + 2;
+      while (j < lines.length && TABLE_ROW_RE.test(lines[j])) {
+        tableLines.push(lines[j]);
+        j++;
+      }
+      if (current) {
+        current.blocks.push(parseTable(tableLines));
+      }
+      i = j - 1;
       continue;
     }
     if (line.trim() === '') {
@@ -318,6 +387,19 @@ export function parseGuide(source: string, slug: string): Guide {
   // Orphan |term| markers (no matching glossary entry) degrade to plain
   // bold nodes instead of throwing. One authoring mistake in one guide
   // must not brick the whole library.
+  const rewriteParagraphNodes = (nodes: ParagraphNode[]): void => {
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+      if (node.kind !== 'term') continue;
+      if (node.term in glossary) {
+        referencedTerms.add(node.term);
+        continue;
+      }
+      orphanTerms.add(node.term);
+      nodes[i] = { kind: 'bold', value: node.term } satisfies BoldNode;
+    }
+  };
+
   for (const section of sections) {
     for (const block of section.blocks) {
       if (block.kind === 'figure') {
@@ -329,16 +411,14 @@ export function parseGuide(source: string, slug: string): Guide {
         referencedFigures.add(block.slug);
         continue;
       }
-      for (let i = 0; i < block.nodes.length; i++) {
-        const node = block.nodes[i];
-        if (node.kind !== 'term') continue;
-        if (node.term in glossary) {
-          referencedTerms.add(node.term);
-          continue;
+      if (block.kind === 'table') {
+        for (const cell of block.header.cells) rewriteParagraphNodes(cell.nodes);
+        for (const row of block.rows) {
+          for (const cell of row.cells) rewriteParagraphNodes(cell.nodes);
         }
-        orphanTerms.add(node.term);
-        block.nodes[i] = { kind: 'bold', value: node.term } satisfies BoldNode;
+        continue;
       }
+      rewriteParagraphNodes(block.nodes);
     }
   }
 

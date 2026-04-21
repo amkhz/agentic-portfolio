@@ -99,6 +99,31 @@ describe('parseGuide', () => {
     expect(paragraph.nodes[2].kind === 'bold' && paragraph.nodes[2].value).toBe(' is the point:');
   });
 
+  it('parses pipe-style markdown tables into TableBlocks', () => {
+    const source = VALID_SOURCE.replace(
+      'Paragraph with an |ambiguity| and a **bold phrase**.',
+      [
+        'Intro paragraph.',
+        '',
+        '| Column A | Column B |',
+        '|---|---|',
+        '| cell with |ambiguity| | **bold cell** |',
+        '| plain | row |',
+      ].join('\n'),
+    );
+    const guide = parseGuide(source, 'table-guide');
+    const table = guide.sections[0].blocks.find((b) => b.kind === 'table');
+    expect(table).toBeDefined();
+    if (!table || table.kind !== 'table') return;
+    expect(table.header.cells).toHaveLength(2);
+    expect(table.rows).toHaveLength(2);
+    // First data cell contains a term node pointing at an existing glossary entry.
+    const termNode = table.rows[0].cells[0].nodes.find((n) => n.kind === 'term');
+    expect(termNode && termNode.kind === 'term' && termNode.term).toBe('ambiguity');
+    // Second header cell is plain text.
+    expect(table.header.cells[1].nodes[0].kind).toBe('text');
+  });
+
   it('emits figure references as their own blocks', () => {
     const guide = parseGuide(VALID_SOURCE, 'sample-guide');
     const figureBlock = guide.sections[0].blocks[1];

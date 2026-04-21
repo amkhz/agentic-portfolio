@@ -77,7 +77,21 @@ export interface FigureRef {
   slug: string;
 }
 
-export type SectionBlock = Paragraph | FigureRef;
+export interface TableCell {
+  nodes: ParagraphNode[];
+}
+
+export interface TableRow {
+  cells: TableCell[];
+}
+
+export interface TableBlock {
+  kind: 'table';
+  header: TableRow;
+  rows: TableRow[];
+}
+
+export type SectionBlock = Paragraph | FigureRef | TableBlock;
 
 export interface GuideSection {
   id: string;

@@ -4,6 +4,7 @@ import type {
 } from "@core/lab/guide-types";
 import { GuideParagraph } from "./GuideParagraph";
 import { GuideFigure } from "./GuideFigure";
+import { GuideTable } from "./GuideTable";
 
 interface GuideSectionProps {
   section: GuideSectionType;
@@ -45,6 +46,15 @@ export function GuideSection({
                 key={`${section.id}-fig-${index}`}
                 figure={figure}
                 guideSlug={guideSlug}
+              />
+            );
+          }
+          if (block.kind === "table") {
+            return (
+              <GuideTable
+                key={`${section.id}-t-${index}`}
+                table={block}
+                glossary={glossary}
               />
             );
           }

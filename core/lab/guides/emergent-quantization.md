@@ -8,7 +8,7 @@ source:
   venue: Physical Review Research
 accent: "#f0a050"
 territory: T1
-status: draft
+status: complete
 order: 1
 description: "A walk through the Madelung-hydrodynamics derivation of hydrogen's energy levels, treating the vacuum as a physical medium shaped by the proton."
 figures: []

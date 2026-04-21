@@ -5,6 +5,9 @@ import type {
 import { GuideParagraph } from "./GuideParagraph";
 import { GuideFigure } from "./GuideFigure";
 import { GuideTable } from "./GuideTable";
+import { GuideHeading } from "./GuideHeading";
+import { GuideList } from "./GuideList";
+import { GuideBlockquote } from "./GuideBlockquote";
 
 interface GuideSectionProps {
   section: GuideSectionType;
@@ -54,6 +57,32 @@ export function GuideSection({
               <GuideTable
                 key={`${section.id}-t-${index}`}
                 table={block}
+                glossary={glossary}
+              />
+            );
+          }
+          if (block.kind === "heading") {
+            return (
+              <GuideHeading
+                key={`${section.id}-h-${index}`}
+                heading={block}
+              />
+            );
+          }
+          if (block.kind === "list") {
+            return (
+              <GuideList
+                key={`${section.id}-l-${index}`}
+                list={block}
+                glossary={glossary}
+              />
+            );
+          }
+          if (block.kind === "blockquote") {
+            return (
+              <GuideBlockquote
+                key={`${section.id}-bq-${index}`}
+                block={block}
                 glossary={glossary}
               />
             );

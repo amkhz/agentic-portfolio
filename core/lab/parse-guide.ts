@@ -8,6 +8,7 @@
 
 import yaml from 'js-yaml';
 import type {
+  BlockquoteBlock,
   BoldNode,
   Figure,
   FigureBackground,
@@ -16,6 +17,10 @@ import type {
   GuideFrontmatter,
   GuideSection,
   GuideStatus,
+  HeadingBlock,
+  ItalicNode,
+  ListBlock,
+  ListItem,
   Paragraph,
   ParagraphNode,
   SourceMeta,
@@ -134,13 +139,20 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
 
 // --- Body parsing -----------------------------------------------------------
 
-const HEADING_RE = /^##\s+(.+?)(?:\s+\{#([a-z0-9-]+)\})?\s*$/;
+const HEADING_H2_RE = /^##\s+(.+?)(?:\s+\{#([a-z0-9-]+)\})?\s*$/;
+const HEADING_H3_RE = /^###\s+(.+?)(?:\s+\{#([a-z0-9-]+)\})?\s*$/;
 const FIGURE_RE = /^\{figure:([a-z0-9-]+)\}\s*$/i;
-const INLINE_RE = /\*\*([^*]+?)\*\*|\|([^|\n]+?)\|/g;
+// Inline marker alternation — order matters: **bold** must try before *italic*
+// so **text** doesn't get mis-consumed as italic-text-italic.
+const INLINE_RE =
+  /\*\*([^*\n]+?)\*\*|\*([^*\n]+?)\*|\|([^|\n]+?)\|/g;
 // Markdown table row: starts and ends with a pipe, has at least one inner pipe.
 const TABLE_ROW_RE = /^\|(.+)\|\s*$/;
 // Separator row: pipes and dashes only (optional colons for alignment, ignored).
 const TABLE_SEP_RE = /^\|[\s\-:|]+\|\s*$/;
+const BULLET_RE = /^[*-]\s+(.+)$/;
+const ORDERED_RE = /^(\d+)\.\s+(.+)$/;
+const BLOCKQUOTE_RE = /^>\s?(.*)$/;
 
 function slugifyHeading(text: string): string {
   return text
@@ -200,7 +212,9 @@ function parseInline(text: string): ParagraphNode[] {
     if (match[1] !== undefined) {
       emitBoldRun(match[1], nodes);
     } else if (match[2] !== undefined) {
-      nodes.push({ kind: 'term', term: match[2].trim() } satisfies TermNode);
+      nodes.push({ kind: 'italic', value: match[2] } satisfies ItalicNode);
+    } else if (match[3] !== undefined) {
+      nodes.push({ kind: 'term', term: match[3].trim() } satisfies TermNode);
     }
     last = match.index + match[0].length;
   }
@@ -254,6 +268,30 @@ function parseTable(tableLines: string[]): TableBlock {
   return { kind: 'table', header, rows };
 }
 
+function parseList(listLines: string[], ordered: boolean): ListBlock {
+  const items: ListItem[] = listLines.map((line) => {
+    const match = ordered ? line.match(ORDERED_RE) : line.match(BULLET_RE);
+    const content = ordered ? match?.[2] ?? '' : match?.[1] ?? '';
+    return { nodes: parseInline(content) };
+  });
+  return { kind: 'list', ordered, items };
+}
+
+function parseBlockquote(bqLines: string[]): BlockquoteBlock {
+  // Strip the leading `> ` / `>` from each line, then split into paragraphs
+  // on blank inner lines. Nested blocks are not supported — blockquote
+  // bodies are Paragraph-only at this iteration.
+  const inner = bqLines
+    .map((line) => line.replace(BLOCKQUOTE_RE, '$1'))
+    .join('\n');
+  const paragraphs: Paragraph[] = inner
+    .split(/\n\s*\n/)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean)
+    .map((chunk) => ({ kind: 'paragraph', nodes: parseInline(chunk) }));
+  return { kind: 'blockquote', paragraphs };
+}
+
 function parseBody(body: string, slug: string): GuideSection[] {
   const lines = body.split(/\r?\n/);
   const sections: GuideSection[] = [];
@@ -270,16 +308,27 @@ function parseBody(body: string, slug: string): GuideSection[] {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const heading = line.match(HEADING_RE);
-    if (heading) {
+    const h2 = line.match(HEADING_H2_RE);
+    if (h2) {
       flushParagraph();
-      const rawHeading = heading[1].trim();
+      const rawHeading = h2[1].trim();
       const { icon, title } = splitLeadingIcon(rawHeading);
-      const id = heading[2]?.trim() ?? slugifyHeading(title);
+      const id = h2[2]?.trim() ?? slugifyHeading(title);
       const section: GuideSection = { id, heading: title, blocks: [] };
       if (icon) section.icon = icon;
       sections.push(section);
       current = section;
+      continue;
+    }
+    const h3 = line.match(HEADING_H3_RE);
+    if (h3 && current) {
+      flushParagraph();
+      const rawHeading = h3[1].trim();
+      const { icon, title } = splitLeadingIcon(rawHeading);
+      const id = h3[2]?.trim() ?? `${current.id}-${slugifyHeading(title)}`;
+      const heading: HeadingBlock = { kind: 'heading', level: 3, id, text: title };
+      if (icon) heading.icon = icon;
+      current.blocks.push(heading);
       continue;
     }
     const figure = line.match(FIGURE_RE);
@@ -307,6 +356,45 @@ function parseBody(body: string, slug: string): GuideSection[] {
       if (current) {
         current.blocks.push(parseTable(tableLines));
       }
+      i = j - 1;
+      continue;
+    }
+    // Ordered list: consecutive `N. ` lines.
+    if (ORDERED_RE.test(line) && current) {
+      flushParagraph();
+      const listLines: string[] = [line];
+      let j = i + 1;
+      while (j < lines.length && ORDERED_RE.test(lines[j])) {
+        listLines.push(lines[j]);
+        j++;
+      }
+      current.blocks.push(parseList(listLines, true));
+      i = j - 1;
+      continue;
+    }
+    // Unordered list: consecutive `- ` or `* ` lines. Must not also match table rows.
+    if (BULLET_RE.test(line) && current) {
+      flushParagraph();
+      const listLines: string[] = [line];
+      let j = i + 1;
+      while (j < lines.length && BULLET_RE.test(lines[j])) {
+        listLines.push(lines[j]);
+        j++;
+      }
+      current.blocks.push(parseList(listLines, false));
+      i = j - 1;
+      continue;
+    }
+    // Blockquote: consecutive `> ` lines, possibly with empty `>` separators.
+    if (BLOCKQUOTE_RE.test(line) && current) {
+      flushParagraph();
+      const bqLines: string[] = [line];
+      let j = i + 1;
+      while (j < lines.length && BLOCKQUOTE_RE.test(lines[j])) {
+        bqLines.push(lines[j]);
+        j++;
+      }
+      current.blocks.push(parseBlockquote(bqLines));
       i = j - 1;
       continue;
     }
@@ -411,11 +499,22 @@ export function parseGuide(source: string, slug: string): Guide {
         referencedFigures.add(block.slug);
         continue;
       }
+      if (block.kind === 'heading') {
+        continue;
+      }
       if (block.kind === 'table') {
         for (const cell of block.header.cells) rewriteParagraphNodes(cell.nodes);
         for (const row of block.rows) {
           for (const cell of row.cells) rewriteParagraphNodes(cell.nodes);
         }
+        continue;
+      }
+      if (block.kind === 'list') {
+        for (const item of block.items) rewriteParagraphNodes(item.nodes);
+        continue;
+      }
+      if (block.kind === 'blockquote') {
+        for (const p of block.paragraphs) rewriteParagraphNodes(p.nodes);
         continue;
       }
       rewriteParagraphNodes(block.nodes);

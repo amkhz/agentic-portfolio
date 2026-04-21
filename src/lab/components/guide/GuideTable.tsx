@@ -18,35 +18,31 @@ function renderNodes(
   keyPrefix: string,
 ) {
   return nodes.map((node, index) => {
-    if (node.kind === "text") {
-      return <span key={`${keyPrefix}-${index}`}>{node.value}</span>;
-    }
+    const key = `${keyPrefix}-${index}`;
+    if (node.kind === "text") return <span key={key}>{node.value}</span>;
     if (node.kind === "bold") {
       return (
-        <strong
-          key={`${keyPrefix}-${index}`}
-          className="font-semibold text-lab-text-primary"
-        >
+        <strong key={key} className="font-semibold text-lab-text-primary">
           {node.value}
         </strong>
+      );
+    }
+    if (node.kind === "italic") {
+      return (
+        <em key={key} className="italic">
+          {node.value}
+        </em>
       );
     }
     const hasDef = node.term in glossary;
     if (!hasDef) {
       return (
-        <span key={`${keyPrefix}-${index}`} className="text-lab-text-primary">
+        <span key={key} className="text-lab-text-primary">
           {node.term}
         </span>
       );
     }
-    return (
-      <GuideTerm
-        key={`${keyPrefix}-${index}`}
-        term={node.term}
-        active={false}
-        onToggle={() => {}}
-      />
-    );
+    return <GuideTerm key={key} term={node.term} active={false} onToggle={() => {}} />;
   });
 }
 

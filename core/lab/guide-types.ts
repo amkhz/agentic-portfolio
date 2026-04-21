@@ -60,12 +60,17 @@ export interface BoldNode {
   value: string;
 }
 
+export interface ItalicNode {
+  kind: 'italic';
+  value: string;
+}
+
 export interface TermNode {
   kind: 'term';
   term: string;
 }
 
-export type ParagraphNode = TextNode | BoldNode | TermNode;
+export type ParagraphNode = TextNode | BoldNode | ItalicNode | TermNode;
 
 export interface Paragraph {
   kind: 'paragraph';
@@ -91,7 +96,36 @@ export interface TableBlock {
   rows: TableRow[];
 }
 
-export type SectionBlock = Paragraph | FigureRef | TableBlock;
+export interface HeadingBlock {
+  kind: 'heading';
+  level: 3;
+  id: string;
+  text: string;
+  icon?: string;
+}
+
+export interface ListItem {
+  nodes: ParagraphNode[];
+}
+
+export interface ListBlock {
+  kind: 'list';
+  ordered: boolean;
+  items: ListItem[];
+}
+
+export interface BlockquoteBlock {
+  kind: 'blockquote';
+  paragraphs: Paragraph[];
+}
+
+export type SectionBlock =
+  | Paragraph
+  | FigureRef
+  | TableBlock
+  | HeadingBlock
+  | ListBlock
+  | BlockquoteBlock;
 
 export interface GuideSection {
   id: string;

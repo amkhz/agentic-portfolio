@@ -54,6 +54,13 @@ export function GuideParagraph({ paragraph, glossary }: GuideParagraphProps) {
               </strong>
             );
           }
+          if (node.kind === "italic") {
+            return (
+              <em key={index} className="italic">
+                {node.value}
+              </em>
+            );
+          }
           return (
             <GuideTerm
               key={index}

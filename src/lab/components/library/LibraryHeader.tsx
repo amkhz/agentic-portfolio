@@ -29,6 +29,10 @@ export function LibraryHeader({
       <p className="mt-8 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl">
         {MANIFESTO}
       </p>
+      <p className="mt-4 max-w-3xl font-lab-body text-base leading-relaxed text-lab-text-muted md:text-lg">
+        The library grows as I read. New guides land roughly monthly. Five more
+        are in the pipeline; check back or follow along.
+      </p>
       <CommunityStrip />
       <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         {counter}

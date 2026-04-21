@@ -1,3 +1,5 @@
+import { CommunityStrip } from "./CommunityStrip";
+
 interface LibraryHeaderProps {
   guideCount: number;
   territoryCount: number;
@@ -26,6 +28,7 @@ export function LibraryHeader({
       <p className="mt-8 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl">
         {MANIFESTO}
       </p>
+      <CommunityStrip />
       <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         {counter}
       </p>

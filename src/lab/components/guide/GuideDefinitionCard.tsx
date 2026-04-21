@@ -6,6 +6,11 @@ interface GuideDefinitionCardProps {
   onClose: () => void;
 }
 
+// Crossfades with a tiny translate instead of animating height.
+// Animating height forces layout on every frame and compounds when
+// multiple cards open at once; opacity + transform stays on the
+// compositor. The small Y shift preserves the "this appeared under
+// the paragraph" read.
 export function GuideDefinitionCard({
   term,
   definition,
@@ -18,12 +23,12 @@ export function GuideDefinitionCard({
 
   return (
     <motion.aside
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
+      initial={{ opacity: 0, y: -4 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -4 }}
       transition={transition}
       aria-label={`Definition of ${term}`}
-      className="mt-3 overflow-hidden"
+      className="mt-3"
     >
       <div className="rounded-md border border-lab-border-subtle bg-lab-bg-surface p-5">
         <div className="flex items-start justify-between gap-4">

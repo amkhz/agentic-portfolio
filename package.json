@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "generate:og": "tsx scripts/generate-og-images.ts",
     "generate:favicons": "tsx scripts/generate-favicons.ts",
-    "generate:sitemap": "tsx scripts/generate-sitemap.ts"
+    "generate:sitemap": "tsx scripts/generate-sitemap.ts",
+    "audit:orphans": "tsx scripts/report-orphan-terms.ts"
   },
   "dependencies": {
     "@fontsource-variable/space-grotesk": "^5.1.2",

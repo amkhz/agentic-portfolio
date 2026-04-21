@@ -37,6 +37,15 @@ export function GuideView() {
         </Link>
       </div>
       <GuideRenderer guide={guide} />
+      <div className="mx-auto max-w-4xl px-6 pb-16 pt-4 text-center md:px-10">
+        <Link
+          to="/"
+          className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+        >
+          <span aria-hidden>←</span>
+          Back to the library
+        </Link>
+      </div>
     </>
   );
 }

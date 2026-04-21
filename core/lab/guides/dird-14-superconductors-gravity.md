@@ -6,7 +6,7 @@ source:
   authors: DIA / AAWSA Program
   year: 2026
   venue: Unknown
-accent: "#0d1620"
+accent: "#e8a849"
 territory: T3
 status: draft
 order: 1

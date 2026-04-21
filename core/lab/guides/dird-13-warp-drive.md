@@ -6,7 +6,7 @@ source:
   authors: Puthoff et al.
   year: 2026
   venue: EarthTech International
-accent: "#0d1620"
+accent: "#f0a050"
 territory: T1
 status: draft
 order: 2
@@ -56,6 +56,7 @@ glossary:
   environment context: "The surroundings the craft is moving through, even though they don't affect the craft's performance. Air density, water depth, subsurface geology — all irrelevant to the physics of the drive but critical to navigation, mission planning, and awareness. This is a new display design challenge: showing information about an environment that has no mechanical effect on your vehicle. It's purely contextual, like showing altitude to a spacecraft that doesn't experience air pressure."
   two temporal frames: "Inside the warp bubble, time runs at one rate (ship time or proper time). Outside, time runs at another rate (coordinate time or mission time). The ratio between them depends on the strength of the spacetime engineering. For design: this means every time-stamped element of the interface has two valid readings. A clock, a mission timeline, a rendezvous schedule, a communication log — all exist in two versions. The operator needs both without confusion."
   spatial legibility: "The degree to which a space's layout can be understood and navigated intuitively. In normal architecture, spatial legibility comes from visible cues: windows showing the outside, consistent room proportions, hallways that correspond to the building's external shape. In a metrically expanded interior, all of these cues are misleading. New legibility systems would need to make the non-Euclidean geometry navigable — perhaps through color-coded zones, spatial audio gradients, or AR overlays showing 'true' geometry."
+  String theory: "A theoretical framework proposing that the fundamental constituents of the universe are not point particles but tiny vibrating strings of energy, with different vibration patterns producing different particles. It is the leading candidate for a theory of quantum gravity and requires extra spatial dimensions — typically 6 or 7 beyond our familiar 3 — to be mathematically consistent. Those extra dimensions are predicted to be compactified at the Planck scale (~10⁻³⁵ meters), too small for direct observation."
 ---
 
 ## 🎯 The Big Picture {#big-picture}

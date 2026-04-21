@@ -6,7 +6,7 @@ source:
   authors: DIA / AAWSA Program
   year: 2026
   venue: Unknown
-accent: "#0d1620"
+accent: "#4ecdc4"
 territory: T1
 status: draft
 order: 4
@@ -60,6 +60,7 @@ glossary:
   intent-to-action gap: "The conceptual and temporal distance between what the operator wants to happen and what the vehicle does. In manual flight, this gap is milliseconds and mechanical. In AI-managed flight, it's seconds and computational. In consciousness-driven flight, it's potentially instantaneous but requires the operator to be in the correct trained state. The interface design must make this gap transparent: the operator should know their intent has been received, is being processed, and has (or hasn't) produced the desired result."
   Failure modes: "The ways a system can go wrong. For breakthrough flight: bubble collapse is catastrophic — the vehicle instantly transitions from protected freefall to whatever the external conditions are (potentially hypersonic flow or hard vacuum). Field asymmetry means different parts of the vehicle experience different physics — one end could be time-dilated relative to the other. Coherence loss in consciousness-driven systems means the propulsion literally stops working because the operator's mental state changed. These failures have no analog in existing aviation — the warning and response systems must be designed from first principles."
   training environment: "A simulated or graduated-exposure system for building the skills needed to operate in breakthrough flight. It must teach: interpreting exotic displays (what does spacetime curvature 'look' like?), maintaining orientation in the sensory void, managing AI-human task sharing, responding to novel failure modes, and (for consciousness-driven models) achieving and sustaining the required consciousness state. The parallels to RV training are direct: CRV/TDM protocols use structured, feedback-rich practice to develop a perceptual skill that has no everyday analog."
+  visual motion cues: "Synthetic visual signals — flowing horizon displays, peripheral optical flow fields, drifting starfields — engineered to give the operator a sense of motion that the breakthrough-flight environment no longer provides naturally. In conventional flight, the rate at which terrain or clouds slide past the canopy tells you how fast you're moving and in what direction; inside a warp bubble, that information is absent or distorted by gravitational lensing and frequency shifts. These displays substitute a designed perceptual signal in its place, restoring the visual channel of orientation."
 ---
 
 ## 🎯 The Big Picture {#big-picture}

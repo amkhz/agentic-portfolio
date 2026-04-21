@@ -6,7 +6,7 @@ source:
   authors: Hal Puthoff
   year: 2026
   venue: Institute for Advanced Studies at Austin
-accent: "#0d1620"
+accent: "#b48efa"
 territory: T1
 status: draft
 order: 3

@@ -40,6 +40,17 @@ export function Footer() {
           {/* Accent line */}
           <div className="h-px w-12 bg-accent-primary opacity-30" aria-hidden="true" />
 
+          {/* Cross-surface link to the lab */}
+          <p className="font-body text-sm text-text-muted">
+            Also building{" "}
+            <a
+              href="https://labs.justinh.design"
+              className="font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary hover:underline hover:decoration-accent-primary hover:underline-offset-4 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            >
+              labs.justinh.design →
+            </a>
+          </p>
+
           {/* Colophon row */}
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-body text-sm text-text-muted">

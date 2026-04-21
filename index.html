@@ -8,6 +8,21 @@
     <title>Justin Hernandez | Product Designer</title>
     <meta name="description" content="Lead product designer specializing in AI-powered enterprise product design." />
     <script>
+      // If someone lands on this file via the lab subdomain (Vercel's rewrite
+      // engine has a stubborn quirk where host-based rewrites don't fire for
+      // the empty root path), bounce them to /labs.html before any portfolio
+      // JS or CSS loads. Runs first and synchronously to avoid a flash of
+      // portfolio content.
+      (function(){
+        try {
+          if (window.location.hostname === 'labs.justinh.design' && window.location.pathname === '/') {
+            window.location.replace('/labs.html' + window.location.search + window.location.hash);
+            return;
+          }
+        } catch(e) {}
+      })();
+    </script>
+    <script>
       (function(){
         try {
           var m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)/);

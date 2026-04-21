@@ -1,3 +1,5 @@
+import { termCardId } from "./termCardId";
+
 interface GuideTermProps {
   term: string;
   active: boolean;
@@ -10,6 +12,7 @@ export function GuideTerm({ term, active, onToggle }: GuideTermProps) {
       type="button"
       onClick={() => onToggle(term)}
       aria-expanded={active}
+      aria-controls={termCardId(term)}
       className={
         active
           ? "rounded-sm border-b border-guide-accent bg-guide-accent/15 px-0.5 text-guide-accent transition-colors duration-[var(--duration-fast)]"

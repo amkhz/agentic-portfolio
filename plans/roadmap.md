@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-04-13
+**Last updated:** 2026-04-21
 
 ---
 
@@ -28,6 +28,7 @@
 - Hero and footer void sections (no texture behind particles)
 - Builder skill retired and absorbed into doctrine and review ecosystem
 - `feature-reactbits`, `feature-lastfm`, `feature-motion-effects`, `fix-widget`, `feature-constellation` merged to main
+- Frontier Lab at `labs.justinh.design`: second Vite entry, data-driven research guide library with 8 launch guides across T1/T3/T4 territories, markdown + frontmatter content model, per-guide accent via CSS custom property, pipe-table + blockquote + list + h3 support, accessibility-audited and polished (ADR-009)
 
 ---
 
@@ -64,11 +65,23 @@
 - Add Investiture health check to Director
 - Voice calibration skill (Joi)
 
-### 4. Speculative design lab (/lab)
+### 4. Frontier Lab (labs.justinh.design)
 
-**Status:** PLANNED. Handoff document in `plans/HANDOFF-speculative-lab.md`.
+**Status:** SHIPPED. Deployed at `labs.justinh.design` via host-based Vercel rewrite.
+**Plan:** `plans/feature-speculative-lab-library.md` | **Mission:** `vector/missions/speculative-lab-library.md` | **ADR:** `vector/decisions/ADR-009-lab-subdomain-architecture.md`
 
-**Goal:** Curated route for speculative design explorations, separate from /experiments. Higher craft bar than experiments, lower rigor than case studies.
+**What shipped at launch:**
+- Eight research guides across territories (T1 Consciousness & Spacetime × 5, T3 Materials & Sensing × 1, T4 UAP Detection × 2)
+- Guide renderer: tab bar (Guide / Glossary), sticky section nav with masked-edge scroll, inline term definitions, figure paper-container, prev/next navigation, top and bottom back-to-library affordances
+- Authoring pipeline: markdown + YAML frontmatter, hand-rolled parser, one-shot JSX migration script for legacy content, orphan-term audit script (`npm run audit:orphans`)
+- Markdown feature coverage: bold, italic, glossary terms, figures, pipe tables, h3 subsections, ordered/bullet lists, blockquotes
+
+**Next steps (post-MVP):**
+- Per-guide dynamic import / code-split (bundle crossed Vite's 500 KB threshold with 8 guides)
+- Territory landing pages (`/t/:territory`) once the library has ~15+ guides
+- Figure intrinsic dimensions on `<img>` to eliminate layout shift
+- Build-time figure optimization via `vite-imagetools`
+- Full-text search once content volume demands it
 
 ### 5. Figma token sync
 
@@ -104,3 +117,5 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 005 | CSS-only texture system | 2026-04-11 | Accepted |
 | 006 | Systematic audit and polish pass | 2026-04-11 | Accepted |
 | 007 | Constellation spatial navigation | 2026-04-12 | Accepted |
+| 008 | Defer DESIGN.md adoption | 2026-04-14 | Accepted |
+| 009 | Lab subdomain architecture (two Vite builds, one repo) | 2026-04-20 | Accepted |

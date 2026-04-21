@@ -17,7 +17,8 @@
       "@/*": ["./src/*"],
       "@core/*": ["./core/*"],
       "@services/*": ["./services/*"],
-      "@design-system/*": ["./design-system/*"]
+      "@design-system/*": ["./design-system/*"],
+      "@lab/*": ["./src/lab/*"]
     }
   },
   "include": [

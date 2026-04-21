@@ -154,6 +154,28 @@ export function AboutPage() {
         </Container>
       </section>
 
+      <section className="py-16 sm:py-20">
+        <Container>
+          <h2 className="font-display text-2xl leading-snug tracking-tight text-text-primary">
+            Elsewhere I&apos;m working
+          </h2>
+
+          <p className="mt-8 max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
+            I&apos;m also building the{" "}
+            <a
+              href="https://labs.justinh.design"
+              className="text-text-secondary underline decoration-accent-primary/40 underline-offset-4 transition-colors duration-normal hover:text-accent-primary hover:decoration-accent-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            >
+              Frontier Design Lab
+            </a>
+            , a growing library of research guides on frontier physics, UAP
+            detection, and consciousness as technology. It&apos;s prep for the
+            design work that follows a world already being built in
+            peer-reviewed papers and NSF-funded labs.
+          </p>
+        </Container>
+      </section>
+
       <section className="py-16 pb-24 sm:py-20 sm:pb-32">
         <Container>
           <h2 className="font-display text-2xl leading-snug tracking-tight text-text-primary">

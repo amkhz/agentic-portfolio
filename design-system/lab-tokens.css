@@ -1,0 +1,105 @@
+/* ============================================
+   LAB DESIGN TOKENS — Frontier Lab
+   ----------------------------------------------
+   Dark-academic palette for labs.justinh.design.
+   Distinct from the portfolio palette in tokens.css:
+   cooler blacks, serif body, per-guide accent driven
+   by frontmatter via the --guide-accent variable.
+
+   Scoping: :root is shared with portfolio tokens. All
+   variables in this file are prefixed --lab-* or
+   --guide-* so there is no collision. This file is
+   only imported by src/lab/styles/lab.css, so portfolio
+   pages do not pay the cost.
+
+   Migration path (see ADR-009): in Stage 1 select
+   tokens here may be rewritten to reference portfolio
+   base tokens where the values actually match.
+   Stage 3 may retire this file entirely if lab and
+   portfolio visual systems fully integrate. Until then,
+   the lab is intentionally isolated.
+
+   Font families are declared here but the actual font
+   loading happens in src/lab/main.tsx (@fontsource for
+   Podkova and JetBrains Mono; Georgia is a system font).
+   ============================================ */
+
+@layer theme {
+  :root {
+    /* --- Backgrounds: cool near-black, academic --- */
+    --lab-bg-deep: oklch(0.0800 0.0030 270);
+    --lab-bg-surface: oklch(0.1250 0.0060 270);
+    --lab-bg-raised: oklch(0.1650 0.0090 270);
+
+    /* --- Borders --- */
+    --lab-border-subtle: oklch(0.2600 0.0100 270);
+    --lab-border-strong: oklch(0.3600 0.0140 270);
+
+    /* --- Text: verified ≥ WCAG AA against --lab-bg-deep --- */
+    --lab-text-primary: oklch(0.9500 0.0050 270);     /* ~16:1 on bg-deep */
+    --lab-text-secondary: oklch(0.7500 0.0150 250);   /* ~9:1 on bg-deep */
+    --lab-text-muted: oklch(0.5800 0.0150 250);       /* ~4.8:1 on bg-deep */
+
+    /* --- Figure container: warm off-white paper --- */
+    /* Scanned academic figures live on white paper; this container
+       matches that convention so photographic figures look natural
+       and line-art diagrams stay legible without per-figure flags. */
+    --lab-figure-bg: oklch(0.9400 0.0080 80);
+    --lab-figure-border: oklch(0.8500 0.0120 80);
+    --lab-figure-text: oklch(0.2000 0.0050 80);
+
+    /* --- Territory accents ---
+       Referenced by core/lab/territories.ts via var() — territory
+       metadata in core/ never ships raw hex. Accents tuned to meet
+       WCAG AA against --lab-bg-deep at 14px body size. */
+    --lab-territory-t1: oklch(0.7400 0.1500 295);  /* Consciousness & Spacetime — violet */
+    --lab-territory-t2: oklch(0.7400 0.1200 240);  /* Space Manufacturing — blue */
+    --lab-territory-t3: oklch(0.7200 0.1400 15);   /* Materials & Sensing — rose */
+    --lab-territory-t4: oklch(0.8200 0.2000 145);  /* UAP Detection — signal green */
+
+    /* --- Upcoming status pill accents ---
+       Dimmer companions to the built-guide status styles so
+       placeholder ("in the pipeline") cards read as queued
+       without competing with shipped work. Contrast verified
+       ≥ WCAG AA at small mono type against --lab-bg-surface.
+       'Planned' reuses --lab-text-muted directly in the UI. */
+    --lab-upcoming-drafting: oklch(0.7800 0.1300 145);    /* signal-green, dimmed */
+    --lab-upcoming-researching: oklch(0.7800 0.1000 80);  /* brass, dimmed */
+
+    /* --- Per-guide accent ---
+       Default fallback resolves to portfolio brass for lab chrome
+       outside of a guide context. GuideRenderer overrides this at
+       runtime by setting --guide-accent on its root element from
+       frontmatter data (the ONE permitted inline-style exception,
+       documented in ADR-009). */
+    --guide-accent: var(--theme-accent-primary);
+
+    /* --- Typography families ---
+       Weights loaded by src/lab/main.tsx. Georgia is a system
+       font (no network request). */
+    --lab-heading-font: 'Podkova', Georgia, serif;
+    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* --- Academic preprint watermark ---
+       A graph-paper-under-ink texture: fine horizontal ruling every
+       28px plus a sparse vertical margin line every 128px. Alpha is
+       deliberately minimal (~0.02–0.03) so the surface reads as
+       "on paper" rather than decorated. Pattern follows the same
+       CSS-only layered gradient technique as ADR-005's portfolio
+       textures but tuned to the cool lab palette. */
+    --lab-texture:
+      repeating-linear-gradient(
+        180deg,
+        oklch(0.32 0.010 250 / 0.028) 0px,
+        transparent 1px,
+        transparent 28px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.32 0.010 250 / 0.018) 0px,
+        transparent 1px,
+        transparent 128px
+      );
+  }
+}

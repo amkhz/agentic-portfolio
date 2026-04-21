@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { guidesBySlug } from "@core/lab/guides";
 import { GuideRenderer } from "@lab/components/guide/GuideRenderer";
 import { NotFoundPage } from "./NotFoundPage";
@@ -27,6 +27,15 @@ export function GuideView() {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
       </Helmet>
+      <div className="mx-auto max-w-4xl px-6 pt-8 md:px-10">
+        <Link
+          to="/"
+          className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+        >
+          <span aria-hidden>←</span>
+          Library
+        </Link>
+      </div>
       <GuideRenderer guide={guide} />
     </>
   );

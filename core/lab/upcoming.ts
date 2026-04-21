@@ -37,16 +37,6 @@ export const upcomingGuides: UpcomingGuide[] = [
     status: 'researching',
   },
 
-  // T4 — UAP Detection
-  {
-    id: 'knuth-2025-new-science',
-    title: 'Knuth et al. (2025): The New Science of UAP',
-    source: 'Submitted to Progress in Aerospace Sciences',
-    territory: 'T4',
-    status: 'planned',
-    note: 'Landscape review of the international detection ecosystem.',
-  },
-
   // T3 — Materials & Sensing
   {
     id: 'dird-22-metamaterials',

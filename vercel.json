@@ -11,6 +11,11 @@
   ],
   "rewrites": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "labs.justinh.design" }],
+      "destination": "/labs.html"
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "labs.justinh.design" }],
       "destination": "/labs.html"

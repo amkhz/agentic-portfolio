@@ -49,7 +49,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
       </h2>
       <nav
         aria-label="Glossary letters"
-        className="sticky top-0 z-10 -mx-6 overflow-x-auto border-b border-lab-border-subtle bg-lab-bg-deep/90 px-6 py-3 backdrop-blur md:-mx-10 md:px-10"
+        className="lab-sticky-nav lab-hscroll sticky top-0 z-10 -mx-6 border-b border-lab-border-subtle bg-lab-bg-deep/90 px-6 py-3 backdrop-blur md:-mx-10 md:px-10"
       >
         <ul className="flex min-w-max gap-2">
           {groups.map(([letter]) => (

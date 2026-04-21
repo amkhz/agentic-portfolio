@@ -135,6 +135,40 @@ button:focus-visible,
   top: 1rem;
 }
 
+/* Horizontal-scrolling nav. Hides the native scrollbar
+   (still scrollable via trackpad, swipe, wheel, keyboard) and
+   fades the right edge so overflowing content reads as a
+   "there's more over there" cue instead of a cut-off. The mask
+   tapers over 3rem, which matches the padding of the parent and
+   keeps the first/last pill fully legible. */
+.lab-hscroll {
+  overflow-x: auto;
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;         /* legacy Edge */
+  mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 3rem),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black 0,
+    black calc(100% - 3rem),
+    transparent 100%
+  );
+}
+.lab-hscroll::-webkit-scrollbar {   /* Chromium / WebKit */
+  display: none;
+}
+
+/* Sticky-nav scroll shadow — strengthens the boundary when content
+   passes under the sticky row. Subtle so it doesn't compete with
+   the accent-driven chrome inside the nav. */
+.lab-sticky-nav {
+  box-shadow: 0 1px 0 var(--lab-border-subtle);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

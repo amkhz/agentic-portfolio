@@ -33,6 +33,10 @@
 
   --color-guide-accent: var(--guide-accent);
 
+  /* --- Upcoming status accents (pipeline placeholder cards) --- */
+  --color-lab-upcoming-drafting: var(--lab-upcoming-drafting);
+  --color-lab-upcoming-researching: var(--lab-upcoming-researching);
+
   /* --- Territory accents for library grid --- */
   --color-lab-t1: var(--lab-territory-t1);
   --color-lab-t2: var(--lab-territory-t2);

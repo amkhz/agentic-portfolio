@@ -1,7 +1,10 @@
 import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
+import type { UpcomingGuide } from "@core/lab/upcoming";
+import { upcomingGuides } from "@core/lab/upcoming";
 import { GuideCard } from "./GuideCard";
 import { TerritoryBadge } from "./TerritoryBadge";
+import { UpcomingCard } from "./UpcomingCard";
 
 interface TerritoryGridProps {
   guides: Guide[];
@@ -11,6 +14,21 @@ function groupByTerritory(guides: Guide[]): Record<Territory, Guide[]> {
   const out: Record<Territory, Guide[]> = { T1: [], T2: [], T3: [], T4: [] };
   for (const guide of guides) {
     out[guide.frontmatter.territory].push(guide);
+  }
+  return out;
+}
+
+function groupUpcomingByTerritory(
+  upcoming: UpcomingGuide[],
+): Record<Territory, UpcomingGuide[]> {
+  const out: Record<Territory, UpcomingGuide[]> = {
+    T1: [],
+    T2: [],
+    T3: [],
+    T4: [],
+  };
+  for (const u of upcoming) {
+    out[u.territory].push(u);
   }
   return out;
 }
@@ -33,11 +51,15 @@ const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
 
 export function TerritoryGrid({ guides }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
+  const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
 
   return (
     <div className="mt-16 space-y-20">
       {territories.map((territory) => {
         const territoryGuides = grouped[territory.id];
+        const territoryUpcoming = groupedUpcoming[territory.id];
+        const hasBuilt = territoryGuides.length > 0;
+        const hasUpcoming = territoryUpcoming.length > 0;
         const lifecycle = lifecycleFor(territory.order);
         const isQueued = lifecycle === "queued";
 
@@ -79,18 +101,49 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
               </p>
             </header>
 
-            {territoryGuides.length === 0 ? (
+            {!hasBuilt && !hasUpcoming ? (
               <p className="mt-8 font-lab-mono text-xs tracking-wide text-lab-text-muted">
                 No guides in this territory yet.
               </p>
             ) : (
-              <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                {territoryGuides.map((guide) => (
-                  <li key={guide.slug}>
-                    <GuideCard guide={guide} />
-                  </li>
-                ))}
-              </ul>
+              <>
+                {hasBuilt ? (
+                  <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                    {territoryGuides.map((guide) => (
+                      <li key={guide.slug}>
+                        <GuideCard guide={guide} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+
+                {hasUpcoming ? (
+                  <>
+                    <div
+                      className={
+                        hasBuilt
+                          ? "mt-12 flex items-center gap-3"
+                          : "mt-8 flex items-center gap-3"
+                      }
+                    >
+                      <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
+                        In the pipeline
+                      </span>
+                      <span
+                        aria-hidden
+                        className="h-px flex-1 bg-lab-border-subtle"
+                      />
+                    </div>
+                    <ul className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                      {territoryUpcoming.map((upcoming) => (
+                        <li key={upcoming.id}>
+                          <UpcomingCard upcoming={upcoming} />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
+              </>
             )}
           </section>
         );

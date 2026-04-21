@@ -5,7 +5,7 @@ export function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title>Not found — Speculative Design Lab</title>
+        <title>Not found — Frontier Lab</title>
       </Helmet>
       <div className="mx-auto max-w-2xl px-6 py-32 text-center md:px-10">
         <p className="font-lab-mono text-xs tracking-wider text-lab-text-muted">

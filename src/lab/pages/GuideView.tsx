@@ -21,7 +21,7 @@ export function GuideView() {
   return (
     <>
       <Helmet>
-        <title>{`${title} — Speculative Design Lab`}</title>
+        <title>{`${title} — Frontier Lab`}</title>
         <meta name="description" content={metaDescription} />
         <meta property="og:title" content={title} />
         <meta property="og:description" content={metaDescription} />

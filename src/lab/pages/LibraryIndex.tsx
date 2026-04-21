@@ -8,12 +8,12 @@ export function LibraryIndex() {
   return (
     <>
       <Helmet>
-        <title>Speculative Design Lab — labs.justinh.design</title>
+        <title>Frontier Lab — labs.justinh.design</title>
         <meta
           name="description"
           content="Deep-dive research guides on frontier physics, vacuum engineering, UAP detection, and consciousness as technology."
         />
-        <meta property="og:title" content="Speculative Design Lab" />
+        <meta property="og:title" content="Frontier Lab" />
         <meta
           property="og:description"
           content="A library of deep-dive research guides on frontier science."

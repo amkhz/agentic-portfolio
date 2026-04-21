@@ -12,10 +12,10 @@ export function LabLayout() {
           <a
             href="/"
             className="group inline-flex flex-col gap-1"
-            aria-label="Speculative Design Lab — return to library index"
+            aria-label="Frontier Lab — return to library index"
           >
             <span className="font-lab-heading text-xl font-medium tracking-tight text-lab-text-primary md:text-2xl">
-              Speculative Design Lab
+              Frontier Lab
             </span>
             <span className="font-lab-mono text-xs tracking-wide text-lab-text-muted">
               labs.justinh.design

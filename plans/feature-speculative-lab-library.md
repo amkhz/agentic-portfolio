@@ -186,7 +186,7 @@ The expedition ran four sensor modalities in parallel...
 | Question | Resolution |
 |----------|-----------|
 | Figures inline vs. block | Block-only at MVP. `{figure:slug}` on its own line. Parser turns it into a `FigureNode` between paragraphs. |
-| Glossary declaration | Frontmatter only, flat map. Inline `\|term\|` markers reference keys. Parser validates: every `\|term\|` must resolve, unused glossary entries emit a warning (not an error). |
+| Glossary declaration | Frontmatter only, flat map. Inline `\|term\|` markers reference keys. Orphan `\|term\|` markers (no matching glossary entry) degrade gracefully — term node rewrites to a bold node and a single console.warn per guide lists the orphans. Unused glossary entries emit a warning. One authoring mistake in one guide must not brick the whole library. |
 | Section structure | H2 headings define sections. Optional `{#id}` for stable anchors (enables deep links). Icon emojis live in the heading text — they're Unicode, render everywhere. |
 | Kicker | Free-form string in frontmatter. Authors choose: "DIRD Guide Series", "Research Guide Series", "Synthesis Guide", anything else. |
 | Source metadata | Structured object (authors, year, venue, url). Rendered in a consistent format by the header component. |
@@ -639,6 +639,8 @@ These are explicitly out of scope for this plan but worth naming:
 - **External position document page** — published when the doc reaches external-ready
 - **Guide authoring in-repo** — eventually, if/when Writer skill wants to author guides directly rather than ingesting from Claude project
 - **MDX support** — only if a guide genuinely needs React components inline (not anticipated)
+- **Definition card UX study** — MVP ships with paragraph-level `activeTerm` state, meaning multiple definition cards can be open simultaneously across a guide. This diverges from the original JSX guides (single card at a time) and is intentional: complex topics benefit from stacking definitions for cross-reference. Revisit after ~10 guides are live with real reader telemetry (or Justin's lived experience) — decide whether to (a) keep multi-card default, (b) add a "single card" toggle in the tab bar, or (c) revert to renderer-level single activeTerm.
+- **Generated accent CSS map** — MVP uses the inline-style-sets-CSS-variable pattern in two files (`GuideRenderer`, `GuideCard`) to pass per-guide accents from frontmatter into `--guide-accent`. A future iteration could generate a CSS file at build time from the guides manifest, mapping `[data-guide-slug="..."] { --guide-accent: ...; }` per guide. Pros: truly zero inline styles, single source of truth for accent values at build output, stronger migration story. Cons: build-time generation step, slug-to-CSS coupling. Revisit if a bigger token-unification pass is ever scoped.
 
 ---
 

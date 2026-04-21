@@ -284,7 +284,11 @@ export function parseGuide(source: string, slug: string): Guide {
   const glossary = frontmatter.glossary;
   const referencedTerms = new Set<string>();
   const referencedFigures = new Set<string>();
+  const orphanTerms = new Set<string>();
 
+  // Orphan |term| markers (no matching glossary entry) degrade to plain
+  // bold nodes instead of throwing. One authoring mistake in one guide
+  // must not brick the whole library.
   for (const section of sections) {
     for (const block of section.blocks) {
       if (block.kind === 'figure') {
@@ -296,14 +300,24 @@ export function parseGuide(source: string, slug: string): Guide {
         referencedFigures.add(block.slug);
         continue;
       }
-      for (const node of block.nodes) {
+      for (let i = 0; i < block.nodes.length; i++) {
+        const node = block.nodes[i];
         if (node.kind !== 'term') continue;
-        if (!(node.term in glossary)) {
-          throw new Error(`Guide '${slug}': term '|${node.term}|' has no glossary entry`);
+        if (node.term in glossary) {
+          referencedTerms.add(node.term);
+          continue;
         }
-        referencedTerms.add(node.term);
+        orphanTerms.add(node.term);
+        block.nodes[i] = { kind: 'bold', value: node.term } satisfies BoldNode;
       }
     }
+  }
+
+  if (orphanTerms.size > 0) {
+    const list = Array.from(orphanTerms).map((t) => `"${t}"`).join(', ');
+    console.warn(
+      `[guide:${slug}] Orphan term markers (will render as plain emphasized text): ${list}`,
+    );
   }
 
   for (const term of Object.keys(glossary)) {

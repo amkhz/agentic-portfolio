@@ -92,9 +92,21 @@ describe('parseGuide', () => {
     }
   });
 
-  it('throws when a |term| has no glossary entry', () => {
+  it('degrades orphan |term| markers to bold nodes and warns', () => {
     const bad = VALID_SOURCE.replace('|ambiguity|', '|missing-term|');
-    expect(() => parseGuide(bad, 'bad-guide')).toThrow(/missing-term/);
+    const guide = parseGuide(bad, 'orphan-guide');
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringMatching(/orphan-guide.*Orphan.*missing-term/i),
+    );
+    const paragraph = guide.sections[0].blocks[0];
+    expect(paragraph.kind).toBe('paragraph');
+    if (paragraph.kind !== 'paragraph') return;
+    const bold = paragraph.nodes.find((n) => n.kind === 'bold' && n.value === 'missing-term');
+    expect(bold).toBeDefined();
+    const stillAsTerm = paragraph.nodes.find(
+      (n) => n.kind === 'term' && n.term === 'missing-term',
+    );
+    expect(stillAsTerm).toBeUndefined();
   });
 
   it('throws when a figure reference has no frontmatter entry', () => {

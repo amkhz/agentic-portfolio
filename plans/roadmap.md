@@ -68,7 +68,7 @@
 ### 4. Perihelion (labs.justinh.design)
 
 **Status:** SHIPPED (Archive arm). Deployed at `labs.justinh.design` via host-based Vercel rewrite. Renamed from "Frontier Lab" to "Perihelion" on 2026-04-21 (two-arm house: Archive and Works).
-**Plan:** `plans/feature-speculative-lab-library.md` · `plans/lab-naming-pivot.md` | **Mission:** `vector/missions/speculative-lab-library.md` | **ADRs:** `vector/decisions/ADR-009-lab-subdomain-architecture.md` · `vector/decisions/ADR-010-perihelion-rename.md`
+**Plan:** `plans/feature-speculative-lab-library.md` · `plans/lab-naming-pivot.md` · `plans/perihelion-next-steps.md` (punch list) | **Mission:** `vector/missions/speculative-lab-library.md` | **ADRs:** `vector/decisions/ADR-009-lab-subdomain-architecture.md` · `vector/decisions/ADR-010-perihelion-rename.md`
 
 **What shipped at launch:**
 - Eight research guides across territories (T1 Consciousness & Spacetime × 5, T3 Materials & Sensing × 1, T4 UAP Detection × 2)
@@ -76,7 +76,11 @@
 - Authoring pipeline: markdown + YAML frontmatter, hand-rolled parser, one-shot JSX migration script for legacy content, orphan-term audit script (`npm run audit:orphans`)
 - Markdown feature coverage: bold, italic, glossary terms, figures, pipe tables, h3 subsections, ordered/bullet lists, blockquotes
 
-**Next steps (post-MVP):**
+**Next steps:**
+
+See `plans/perihelion-next-steps.md` for the full punch list captured 2026-04-21: origins intro, content sweep across the eight Archive guides (voice sweep, stale-info scan, podcast numbers, source links, cross-links, paper-reference scan), design system overhaul (light mode + emoji-to-icons), logotype and sigil pass.
+
+**Engineering follow-ups (not in the punch list):**
 - Per-guide dynamic import / code-split (bundle crossed Vite's 500 KB threshold with 8 guides)
 - Territory landing pages (`/t/:territory`) once the library has ~15+ guides
 - Figure intrinsic dimensions on `<img>` to eliminate layout shift

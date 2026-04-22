@@ -24,7 +24,7 @@ export function LibraryHeader({
         labs.justinh.design
       </p>
       <h1 className="mt-6 font-lab-heading text-4xl font-semibold tracking-tight text-lab-text-primary md:text-6xl md:leading-tight">
-        Frontier Lab
+        Perihelion Archive
       </h1>
       <p className="mt-8 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl">
         {MANIFESTO}

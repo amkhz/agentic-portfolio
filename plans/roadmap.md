@@ -28,7 +28,7 @@
 - Hero and footer void sections (no texture behind particles)
 - Builder skill retired and absorbed into doctrine and review ecosystem
 - `feature-reactbits`, `feature-lastfm`, `feature-motion-effects`, `fix-widget`, `feature-constellation` merged to main
-- Frontier Lab at `labs.justinh.design`: second Vite entry, data-driven research guide library with 8 launch guides across T1/T3/T4 territories, markdown + frontmatter content model, per-guide accent via CSS custom property, pipe-table + blockquote + list + h3 support, accessibility-audited and polished (ADR-009)
+- Perihelion at `labs.justinh.design`: second Vite entry, two-arm house (Perihelion Archive for research, Perihelion Works reserved for applied design). Archive ships as a data-driven research guide library with 8 launch guides across T1/T3/T4 territories, markdown + frontmatter content model, per-guide accent via CSS custom property, pipe-table + blockquote + list + h3 support, accessibility-audited and polished (ADR-009, rename in ADR-010)
 
 ---
 
@@ -65,10 +65,10 @@
 - Add Investiture health check to Director
 - Voice calibration skill (Joi)
 
-### 4. Frontier Lab (labs.justinh.design)
+### 4. Perihelion (labs.justinh.design)
 
-**Status:** SHIPPED. Deployed at `labs.justinh.design` via host-based Vercel rewrite.
-**Plan:** `plans/feature-speculative-lab-library.md` | **Mission:** `vector/missions/speculative-lab-library.md` | **ADR:** `vector/decisions/ADR-009-lab-subdomain-architecture.md`
+**Status:** SHIPPED (Archive arm). Deployed at `labs.justinh.design` via host-based Vercel rewrite. Renamed from "Frontier Lab" to "Perihelion" on 2026-04-21 (two-arm house: Archive and Works).
+**Plan:** `plans/feature-speculative-lab-library.md` · `plans/lab-naming-pivot.md` | **Mission:** `vector/missions/speculative-lab-library.md` | **ADRs:** `vector/decisions/ADR-009-lab-subdomain-architecture.md` · `vector/decisions/ADR-010-perihelion-rename.md`
 
 **What shipped at launch:**
 - Eight research guides across territories (T1 Consciousness & Spacetime × 5, T3 Materials & Sensing × 1, T4 UAP Detection × 2)
@@ -119,3 +119,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 007 | Constellation spatial navigation | 2026-04-12 | Accepted |
 | 008 | Defer DESIGN.md adoption | 2026-04-14 | Accepted |
 | 009 | Lab subdomain architecture (two Vite builds, one repo) | 2026-04-20 | Accepted |
+| 010 | Rename lab to Perihelion (two-arm house: Archive and Works) | 2026-04-21 | Accepted |

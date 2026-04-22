@@ -118,8 +118,8 @@ export const constellationNodes: ConstellationNode[] = [
   // Planned nodes
   {
     id: 'the-lab',
-    title: 'The Lab',
-    inscription: 'Speculative design for frontier technologies.',
+    title: 'Perihelion',
+    inscription: 'Research and design at closest approach to the frontier.',
     size: 'sm',
     status: 'planned',
     connections: ['the-process', 'the-craft'],

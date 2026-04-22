@@ -161,17 +161,19 @@ export function AboutPage() {
           </h2>
 
           <p className="mt-8 max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
-            I&apos;m also building the{" "}
+            I&apos;m also building{" "}
             <a
               href="https://labs.justinh.design"
               className="text-text-secondary underline decoration-accent-primary/40 underline-offset-4 transition-colors duration-normal hover:text-accent-primary hover:decoration-accent-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
-              Frontier Design Lab
+              Perihelion
             </a>
-            , a growing library of research guides on frontier physics, UAP
-            detection, and consciousness as technology. It&apos;s prep for the
-            design work that follows a world already being built in
-            peer-reviewed papers and NSF-funded labs.
+            , a two-arm house for frontier science. The Archive is a growing
+            library of deep-dive research guides on frontier physics, UAP
+            detection, and consciousness as technology. Works is the
+            applied-design practice that comes with it. Both are prep and
+            practice for a world already being built in peer-reviewed papers
+            and NSF-funded labs.
           </p>
         </Container>
       </section>

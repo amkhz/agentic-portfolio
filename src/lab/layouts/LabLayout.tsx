@@ -54,7 +54,7 @@ export function LabLayout() {
               , the portfolio of Justin Hernandez.
             </span>
             <a
-              href="https://github.com/amkhz/portfolio"
+              href="https://github.com/amkhz/agentic-portfolio"
               className="text-lab-text-muted hover:text-lab-text-secondary hover:underline"
             >
               Source on GitHub

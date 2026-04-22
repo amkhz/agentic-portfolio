@@ -2,23 +2,34 @@
 
 A design portfolio built with intention. Every architectural decision, every color token, every accessibility detail is deliberate -- this site demonstrates design thinking through its own construction, not just through the case studies it displays.
 
-**Live site:** [justinh.design](https://justinh.design/)
+**Live sites:** [justinh.design](https://justinh.design/) (portfolio) · [labs.justinh.design](https://labs.justinh.design/) (Perihelion)
 
 ## About
 
 This is [Justin Hernandez's](https://justinh.design/) portfolio and playground -- a showcase of product design craft, case studies, and agentic development practice. The visual direction draws from "Blade Runner + William Gibson meets Finn Juhl": dark, atmospheric, warm blacks with brass and dusty magenta accents.
 
+The repo also hosts **Perihelion** at `labs.justinh.design`, a two-arm house with its own dark-academic visual language. **Perihelion Archive** is the research arm (shipped): long-form research guides on frontier science. **Perihelion Works** is the applied-design arm (reserved): systems, interface, human factors, and product design for the same frontier territories. See ADR-010 for the rename rationale.
+
 Built and maintained by Justin and a crew of AI collaborators using Claude Code, with specialized agent skills for building, directing, writing, and design review.
 
 ## What's Here
 
-- **5 pages:** Home, About, Resume, Work index, and case studies
+### Portfolio (`justinh.design`)
+
+- **Pages:** Home, About, Resume, Work index, and case studies
 - **Constellation navigation:** The meta case study ("Building This Portfolio") uses a spatial 2D node field with SVG connections, three responsive states, and a spring-eased layout transition. Nodes represent topics; connections reveal relationships. The navigation pattern itself is a portfolio artifact.
 - **Motion design system:** 5 semantic durations, 5 easing functions (including a `linear()` spring approximation), comprehensive `prefers-reduced-motion` support, and scoped transition properties. Constellation nodes fade in as "stars appearing" with staggered draw-on line animations.
 - **OKLCH color system:** Perceptually uniform color tokens with L-channel light/dark theming, dual accent palette (brass + dusty magenta), WCAG 2.2 AA throughout.
 - **Effect components:** Particle field hero (WebGL), holographic profile card with pointer tracking, spotlight cards, scroll-reveal materializing, decrypted text scramble, spring-animated metrics.
 - **Last.fm NowPlaying:** Live listening widget in the header with EQ bar animations, expand/collapse panel, album art, and spring-eased transitions.
 - **CSS texture system:** Linen and circuit-mesh background patterns that adapt to light/dark themes.
+
+### Perihelion (`labs.justinh.design`)
+
+- **Perihelion Archive:** Deep-dive research guides on frontier physics, UAP detection methodology, vacuum engineering, and consciousness as technology. Markdown-driven content in `core/lab/guides/`, build-time indexed, rendered as a scholarly preprint viewer.
+- **Four territories:** UAP Detection (T4), Consciousness & Spacetime (T1), Materials & Sensing (T3), Space Manufacturing (T2). Each has its own accent color and thematic premise.
+- **Distinct visual identity:** Cool near-black background, Podkova serif for body, JetBrains Mono for labels, per-guide accent colors declared in frontmatter and scoped via CSS custom properties.
+- **Shared infrastructure:** Same repo, same four-layer architecture, same agent crew. See ADR-009 for the rationale.
 
 ## Architecture
 
@@ -32,6 +43,8 @@ src/              UI only. Components import from the other three layers.
 ```
 
 Features are built in that order: tokens first, core logic second, services third, UI last.
+
+Two applications are served from one repository via Vite multi-entry: `index.html` boots the portfolio from `src/main.tsx`, and `labs.html` boots the lab from `src/lab/main.tsx`. Vercel routes by host header. Both apps share `design-system/`, `core/`, and `services/`. Lab-specific content and logic live in `core/lab/`; lab UI lives in `src/lab/`. See [ADR-009](vector/decisions/ADR-009-lab-subdomain-architecture.md) for the rationale.
 
 See [ARCHITECTURE.md](ARCHITECTURE.md) for the full specification and [VECTOR.md](VECTOR.md) for design principles and constraints.
 

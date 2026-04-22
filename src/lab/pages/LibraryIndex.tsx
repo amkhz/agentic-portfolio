@@ -8,15 +8,15 @@ export function LibraryIndex() {
   return (
     <>
       <Helmet>
-        <title>Frontier Lab — labs.justinh.design</title>
+        <title>Perihelion Archive — labs.justinh.design</title>
         <meta
           name="description"
-          content="Deep-dive research guides on frontier physics, vacuum engineering, UAP detection, and consciousness as technology."
+          content="Deep-dive research guides on frontier physics, vacuum engineering, UAP detection, and consciousness as technology. The research arm of Perihelion."
         />
-        <meta property="og:title" content="Frontier Lab" />
+        <meta property="og:title" content="Perihelion Archive" />
         <meta
           property="og:description"
-          content="A library of deep-dive research guides on frontier science."
+          content="Research guides at closest approach to the frontier."
         />
         <meta property="og:type" content="website" />
       </Helmet>

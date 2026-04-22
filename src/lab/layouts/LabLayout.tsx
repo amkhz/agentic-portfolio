@@ -12,13 +12,13 @@ export function LabLayout() {
           <a
             href="/"
             className="group inline-flex flex-col gap-1"
-            aria-label="Frontier Lab — return to library index"
+            aria-label="Perihelion — return to the archive"
           >
             <span className="font-lab-heading text-xl font-medium tracking-tight text-lab-text-primary md:text-2xl">
-              Frontier Lab
+              Perihelion
             </span>
             <span className="font-lab-mono text-xs tracking-wide text-lab-text-muted">
-              a research library by Justin Hernandez
+              closest approach to the frontier
             </span>
           </a>
 
@@ -44,7 +44,7 @@ export function LabLayout() {
         <div className="mx-auto max-w-6xl px-6 py-10 md:px-10">
           <div className="flex flex-col items-start gap-3 font-lab-mono text-xs tracking-wide text-lab-text-muted md:flex-row md:items-center md:justify-between">
             <span>
-              Frontier Lab is part of{" "}
+              Perihelion is part of{" "}
               <a
                 href="https://justinh.design"
                 className="text-lab-text-secondary hover:text-guide-accent hover:underline"

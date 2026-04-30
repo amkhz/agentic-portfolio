@@ -19,33 +19,35 @@
 
 ### Post-merge tasks
 
-- [ ] Archive `plans/lab-naming-pivot.md` into `plans/archive/` (separate small PR)
-- [ ] Consider renaming the constellation node `id: 'the-lab'` to `id: 'perihelion'`. Check first whether any deep links or anchors point at `the-lab` before making this change.
-- [ ] Update the shipped-bullet in `plans/roadmap.md` section "What's shipped" if any phrasing feels off post-merge.
+- Archive `plans/lab-naming-pivot.md` into `plans/archive/` (separate small PR)
+- Consider renaming the constellation node `id: 'the-lab'` to `id: 'perihelion'`. Check first whether any deep links or anchors point at `the-lab` before making this change.
+- Update the shipped-bullet in `plans/roadmap.md` section "What's shipped" if any phrasing feels off post-merge.
 
 ---
 
 ## Locked decisions (from this session)
 
-| Decision | Status |
-|---|---|
-| Brand: **Perihelion** | Locked |
-| Arms: **Archive** (research) + **Works** (applied design), peers not pipeline | Locked |
-| Umbrella tagline: "closest approach to the frontier" | Locked |
-| Archive tagline (preserved): "A reader's notebook. Designed to be prep, not product." | Locked |
-| Voice reference: `core/content/voice-profile.md` (Joi Phase 1, 8 samples) | Available, another calibration pass planned when content grows |
-| Icon libraries: Lucide + Phosphor as defaults | Locked |
-| Light mode direction: start from portfolio light-mode tokens with justified modifications | Locked (implementation deferred) |
-| Cross-link and paper-reference scans: hybrid (automated script surfaces candidates, Justin reviews) | Locked (implementation pending) |
-| Subdomain: stays at `labs.justinh.design` | Locked |
-| Design system overhaul: "important but a lot of work," deferred | Locked posture |
-| Sequence: naming first (done), then content sweep, then design system | Locked |
+
+| Decision                                                                                            | Status                                                         |
+| --------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Brand: **Perihelion**                                                                               | Locked                                                         |
+| Arms: **Archive** (research) + **Works** (applied design), peers not pipeline                       | Locked                                                         |
+| Umbrella tagline: "closest approach to the frontier"                                                | Locked                                                         |
+| Archive tagline (preserved): "A reader's notebook. Designed to be prep, not product."               | Locked                                                         |
+| Voice reference: `core/content/voice-profile.md` (Joi Phase 1, 8 samples)                           | Available, another calibration pass planned when content grows |
+| Icon libraries: Lucide + Phosphor as defaults                                                       | Locked                                                         |
+| Light mode direction: start from portfolio light-mode tokens with justified modifications           | Locked (implementation deferred)                               |
+| Cross-link and paper-reference scans: hybrid (automated script surfaces candidates, Justin reviews) | Locked (implementation pending)                                |
+| Subdomain: stays at `labs.justinh.design`                                                           | Locked                                                         |
+| Design system overhaul: "important but a lot of work," deferred                                     | Locked posture                                                 |
+| Sequence: naming first (done), then content sweep, then design system                               | Locked                                                         |
+
 
 ---
 
 ## The mission reveal
 
-Captured here so it does not get lost: Justin is building Perihelion for himself AND to invite other designers who have not yet considered frontier science. The invitational posture is load-bearing. Every design and content decision on the lab should be tested against: "does this open the door or does this gatekeep?"
+Captured here so it does not get lost: Justin is building Perihelion for himself AND to invite other designers who have not yet considered frontier science. The invitational posture is load-bearing. Every design and content decision on the lab should be tested against: "does this open the door or does this gatekeep?" Reading it should feel exciting, and inspiring, like exploring a new place for the first time.
 
 This principle is why the naming session rejected obscure-as-flex candidates (Wunderkammer, Syzygy, Orrery, Alembic) in favor of a word that rewards curiosity without demanding credentials.
 
@@ -73,6 +75,7 @@ The original punch list Justin raised, organized into workstreams. Each workstre
 Bundles six of Justin's original items into one coherent sweep. The guides all need the same kinds of attention.
 
 **Covers original items:**
+
 - #2 Update each guide with Justin's voice
 - #5 Scan for stale or outdated information
 - #6 Update podcast episode numbers
@@ -100,10 +103,12 @@ Justin then reviews the reports and decides which to action. Writer does the voi
 Covers two visual items together because the light mode work and the icon sweep share touchpoints.
 
 **Covers original items:**
+
 - #3 Full UI overhaul: tokens, light mode, subtle personal branding
 - #4 Replace emoji with icons
 
 **Approach:**
+
 - Light mode palette sourced from portfolio light-mode tokens, with justified modifications where the academic-preprint register demands something the portfolio does not offer (warm cream paper backgrounds, warm ink text, etc.)
 - Emoji-to-icon pass using Lucide for standard UI affordances and Phosphor where a more opinionated pictorial register is wanted
 - Subtle personal branding: typographic mark, pull-quote treatment, or a sigil that appears as a colophon mark at the end of each guide. Tied to Workstream D.
@@ -121,6 +126,7 @@ A brand mark for Perihelion. Delayed until the brand has had time to settle.
 **Covers:** follow-up task added in this session.
 
 **Candidates to explore:**
+
 - Abstract mark based on an orbital diagram (the elliptical orbit plus a highlighted point of closest approach)
 - A small sigil (colophon mark) that appears at the end of guides
 - Typographic wordmark only (no pictorial element)
@@ -147,12 +153,12 @@ Workstream B is the main thing. It is also the most time-intensive. Expect it to
 
 ## Open questions for when Justin returns
 
-1. **Does Perihelion Works get a placeholder landing page now,** or wait until the first design piece is ready? A placeholder might read as premature; waiting keeps the surface honest.
-2. **Constellation node migration.** Should `id: 'the-lab'` migrate to `id: 'perihelion'`? Requires checking whether any deep links or anchors reference the current id.
-3. **Joi calibration.** Do we run a second Joi session before the voice sweep in Workstream B, or is the Phase 1 profile enough?
-4. **Podcast episode numbers.** Is there a source of truth (a spreadsheet, a RSS feed, a Notion doc) or are these manually researched per guide?
-5. **Writer posture for the guide sweep.** Read each guide and propose voice-tuning diffs wholesale, or only touch explicitly flagged sections? First option is higher-quality but more effort.
-6. **Tagline when Works ships.** Keep "closest approach to the frontier" at the umbrella, or evolve it to explicitly name both arms?
+1. **Does Perihelion Works get a placeholder landing page now,** or wait until the first design piece is ready? A placeholder might read as premature; waiting keeps the surface honest. Answer - No placeholder for now, when we're ready for this part of the project we'll do it right.
+2. **Constellation node migration.** Should `id: 'the-lab'` migrate to `id: 'perihelion'`? Requires checking whether any deep links or anchors reference the current id. Answer - yes we should.
+3. **Joi calibration.** Do we run a second Joi session before the voice sweep in Workstream B, or is the Phase 1 profile enough? Answer - I want to really capture my voice as best we can, both to make my porfolio content better but also to help me understand complext topics. Is that a good use of the voice print, Tyrell?
+4. **Podcast episode numbers.** Is there a source of truth (a spreadsheet, a RSS feed, a Notion doc) or are these manually researched per guide? Answer - I have to hunt for the podcast numbers but thankfully there are only a few that are wrong and they're the ones with single digit numbers. I just need to look at the ecosystemtic futures website to remind myself of the numbers based on the episode titles.
+5. **Writer posture for the guide sweep.** Read each guide and propose voice-tuning diffs wholesale, or only touch explicitly flagged sections? First option is higher-quality but more effort. Answer - we're gonna do the high-qualtiy version but we can do this in stages and over time, some of the other work can happen around it 
+6. **Tagline when Works ships.** Keep "closest approach to the frontier" at the umbrella, or evolve it to explicitly name both arms? Answer - I'm not sure yet, let's give this a think.
 
 ---
 

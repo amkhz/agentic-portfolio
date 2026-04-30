@@ -53,17 +53,16 @@ export function AboutPage() {
                 lender helping to revitalize thousands of aged homes across the
                 United States. We make complex things efficient and satisfying to
                 use, which is an interesting challenge in an equally challenging
-                industry. My recent focus has been on AI-augmented lending
+                industry. Recently, I&apos;ve been designing AI-augmented lending
                 tools, the kind of products where a bad interaction isn&apos;t
                 just frustrating, it&apos;s a compliance risk or a delayed
                 closing.
               </p>
               <p>
-                I led the AI adoption initiative across our design and product
+                I helped lead the AI adoption initiative across our design and product
                 organization, building the training, the prototyping workflow,
                 and the strategic framework for how design operates when the
-                interface starts thinking for itself. That work shaped the
-                products I designed -- embedding principles like decision
+                interface starts thinking for itself. The work I&apos;ve been doing at Kiavi reflects that: embedding principles like decision
                 versioning, human-in-the-loop review, and auditable AI directly
                 into our products. I love to observe and listen, to
                 question and hypothesize, to learn, and to iterate.
@@ -86,10 +85,10 @@ export function AboutPage() {
 
           <div className="mt-8 max-w-[65ch] space-y-6 font-body text-base leading-normal text-text-secondary sm:text-lg">
             <p>
-              I live in Michigan in a 1950&apos;s ranch house with my wonderful
+              I live in Michigan in a 1950s ranch house with my wonderful
               wife. We&apos;re both fortunate to work from home, which makes it
               easier to keep finding new projects to work on together. Right now
-              we&apos;re renovating the house and cultivating our back yard into
+              we&apos;re renovating the house and cultivating our backyard into
               a place we can grow food and flowers and watch our animals run
               around. Our rascally dog Carlos and our cats Pistachio and Larry
               complete the picture.
@@ -97,14 +96,14 @@ export function AboutPage() {
             <p>
               I&apos;m a music and technology nerd, a living room DJ, a
               motorsports enthusiast, a knowledge curator, and a relentlessly
-              curious human. I enjoy back country camping, feeling the warmth of
+              curious human. I enjoy backcountry camping, feeling the warmth of
               the sun on the California coast, and searching for music I
               haven&apos;t heard yet. And of course, Porsches.
             </p>
           </div>
 
           <p className="mt-8 max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
-            Talk to me about product design, art, music, design, architecture, record
+            Talk to me about product design, art, music, design culture, architecture, record
             collecting, photography, hiking, sustainable living, cooking and dining, all
             things Porsche, video games, cybersecurity, home networking, open
             source intelligence, aerospace, or even cryptozoology. And probably
@@ -124,8 +123,8 @@ export function AboutPage() {
                 <strong className="font-bold text-accent-primary">
                   Trust is designed, not declared.
                 </strong>{" "}
-                Users don&apos;t trust AI because you tell them to. They trust it
-                because they can see what it did, why, and how to fix it when
+                People don&apos;t trust AI because you tell them to. They trust it
+                because they can see what it did, why it&apos;s useful to them, and how to fix it or turn it off when
                 it&apos;s wrong.
               </p>
             </div>
@@ -136,7 +135,7 @@ export function AboutPage() {
                   Automation should augment judgment, not replace it.
                 </strong>{" "}
                 The best AI tools make us work smarter, not harder. The worst ones make
-                everyone equally mediocre.
+                everyone equally sloppy.
               </p>
             </div>
 
@@ -146,7 +145,7 @@ export function AboutPage() {
                   Accessibility isn&apos;t a feature.
                 </strong>{" "}
                 It&apos;s the baseline. Every token, component, and interaction
-                in my work meets modern accessibility standards. Not because it&apos;s required,
+                meets modern accessibility standards. Not because it&apos;s required,
                 but because design that excludes people isn&apos;t design.
               </p>
             </div>

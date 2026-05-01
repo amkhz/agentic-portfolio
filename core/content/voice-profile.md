@@ -3,7 +3,8 @@
 Generated: 2026-04-12 (Phase 1)
 Updated: 2026-04-30 (Phase 2 — humor register and scientific voice)
 Updated: 2026-04-30 (Phase 3 — edited prose patterns from About-page corpus)
-Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3)
+Updated: 2026-04-30 (Phase 3.1 — calibration tweaks from Emergent Quantization rewrite)
+Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3) + cold-read calibration on lab guide rewrite (Phase 3.1)
 
 ## What changed in Phase 2
 
@@ -41,6 +42,8 @@ A designer who talks like a builder: problem-first, specific, conversational, se
 "at the core," "stuff" (used naturally, not lazily), "right?" (rhetorical check-in), "all that jazz," "clutch," "vision," "duty," "creative boundaries/constraints," "bring people along," "the more I know, the better I can be"
 
 **Edited-prose markers (Phase 3):** "tons" / "lots" as casual quantifier, often in three-beat triplets ("Lots of enterprise, tons of complexity, always tons to learn"); "the kind of [thing] where [low-stakes] isn't just [adjective], it's [high-stakes]" (stakes-escalation construction); "And of course, [thing]." (final-item deflation after a list); "NOT" in all caps for emphatic exclusion ("But NOT Skynet") — use sparingly; sentence-starting "And" for warm afterthought closes ("And probably a lot of other stuff too.")
+
+**Phase 3.1 — physical-work metaphors over abstract-evaluative ones.** When describing what a word, phrase, or concept is contributing inside a sentence, reach for physical-work metaphors: "doing some heavy lifting here," "carrying the weight," "doing the work." Avoid the abstract-evaluative variants — "doing real work here," "doing important work" — which read as journalist-voice rather than Justin. The metaphor needs a body.
 
 ### Register-breakers (Phase 2 confirmed)
 
@@ -105,6 +108,8 @@ At the moment the key idea must land, switch to declarative clarity. *"This soun
 ### Audience-naming close
 
 Guide openers and closers often name the audience explicitly through inclusive *we*. *"Are we ready to design for it?"* The reader is invited in by being named.
+
+**Frequency rule (Phase 3.1).** This move is potent and easy to overuse. Cap at one per piece, placed at the moment audience-naming actually escalates the stakes — the line where the speculative claim hands itself to the reader. Sprinkled across multiple paragraphs, the move loses force and starts to feel like a tic.
 
 ## Structural Templates (edited prose)
 

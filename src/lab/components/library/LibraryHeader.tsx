@@ -7,7 +7,7 @@ interface LibraryHeaderProps {
 }
 
 const MANIFESTO =
-  "The future isn't coming. It's already here, being built in peer-reviewed papers and NSF-funded labs. The kind of work that makes you put the paper down and stare at the ceiling. This library is how I'm learning it: deep-dive guides on the science behind vacuum engineering, UAP detection, and consciousness as technology. Written for designers who maybe haven't considered this kind of work yet. The open-minded ones who can see the opportunity and the challenges it brings. A reader's notebook, prep not product. Pull up a chair.";
+  "The future is already here. It's just not very evenly distributed. It's being built and shaped in peer-reviewed papers, NSF-funded labs, and private money think tanks. The kind of work that often happens in the dark, on the cutting edge of what's possible. This library is where I'm learning about it: deep-dive guides on the science behind vacuum engineering, UAP detection, and consciousness as technology. Science fiction becoming engineered reality. Written for designers who haven't found a reason to look here yet, but might. A reader's notebook, prep not product. We learn today to build for tomorrow. Pull up a chair.";
 
 export function LibraryHeader({
   guideCount,

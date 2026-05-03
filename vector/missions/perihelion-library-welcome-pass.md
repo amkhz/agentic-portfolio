@@ -200,6 +200,30 @@ Voice pass on the three NOTES strings plus the carried-over manifesto trim, sing
 - Test on mobile (375px), tablet (768px), desktop (1280px+)
 - One commit per file is preferred so the diff stays reviewable
 
+#### T5 landed — 2026-05-03 (Tyrell)
+
+Layout massage closed across seven micro-passes, each its own commit so the diff stays reviewable:
+
+| Pass | Commit | What |
+|---|---|---|
+| (drop) | `97b8a9f` | Removed CommunityStrip ("Adjacent to the work of Sol Foundation, The Visible College, and Hyperstition.") and deleted the component file. Content to be relocated in a future pass. |
+| T5a | `18ebd74` | Split MANIFESTO into 3 paragraphs (setting → library → invitation) using `mt-8`/`mt-4` rhythm. Dropped redundant guide count from the stats line so it reads "X papers cited · Y briefs walked". |
+| T5b | `2ccfbeb` | Equalized header→welcome and welcome→grid gaps to `mt-20 md:mt-28`. The 80/112 px gap between major sections also matches TerritoryGrid's `space-y-20` between territories — nested rhythm at two scales. Per /arrange recommendation. |
+| T5d | `5baf883` | Dropped the redundant "Territory" mono kicker above each territory's lifecycle word. Badge + lifecycle now form a single horizontal pair. |
+| T5c | `4077730` | Dropped the cadence paragraph in LibraryHeader ("The library grows as I read…"). Redundant with the upcoming-guide cards in TerritoryGrid; the hard-coded "Five more" was prone to drift. |
+| T5e | `57c3683` | Aligned welcome triptych responsive cascade with TerritoryGrid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`. Fixes tablet readability and creates a 2+1 asymmetry beat at md width. Surfaced by /layout audit. |
+| T5f | `2f82fb7` | Dropped the `labs.justinh.design` URL kicker above the h1. URL is in the address bar; the kicker added technical-flavored text without serving the scholarly-adjacent register. |
+
+**Plus content commit `75e1eb2`** (Justin's Note 01 body refinement: `A world with this technology needs to be designed for all of us. We'll show up ready to design the future we deserve.`) — captured here for the record.
+
+**Carry-overs to T6:**
+- /critique pass against `.impeccable.md` Perihelion design context (mission test: opens the door, never gatekeeps)
+- /polish for any alignment/spacing micro-issues
+- Optional /bolder if energy lift still feels short — anchored to lab register, not SaaS hero
+- Subtle motion (T5 originally scoped this but it falls more naturally into T6 polish): entrance fades on cards, hover refinements, `prefers-reduced-motion` gate
+
+T5 originally scoped GuideCard hierarchy refinements (pass "e" in Tyrell's plan); on review the existing card was solid and Justin called the skip. If T6 critique surfaces card-level issues, address in the polish pass.
+
 ---
 
 ### T6: Impeccable critique and polish pass

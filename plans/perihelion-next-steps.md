@@ -1,6 +1,6 @@
 # Perihelion: next steps
 
-> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing.
+> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence.
 
 ---
 
@@ -15,11 +15,11 @@
 - **Joi voice profile through Phase 3.1** — calibrated from 16 interview samples + About-page edited-prose corpus + cold-read calibration on a lab-guide rewrite. Voice is now production-ready for the Workstream B sweep.
 - **About-page voice and proofread pass** — first content surface refined against the locked profile.
 - **PR #40 — Workstream A: origins intro / library welcome pass.** Welcome triptych, MANIFESTO refinement, T5a–T5f sub-passes; mission log at `vector/missions/perihelion-library-welcome-pass.md`. Merged.
+- **PR #41 — plan resync + format spec mirror + B.1/B.2 split.** Merged.
 
 ### Open / in flight
 
-- **Visual critique pass on the library homepage** — active follow-on to the welcome pass, applying Impeccable design skills (`/critique`, `/polish`) to the now-shipped surface. Not yet on a feature branch as of this resync; results will inform the next library iteration.
-- **This docs sync** — branch `chore/perihelion-plan-sync-2026-05-03`. Edits the plan, mirrors the design-futures format spec into `plans/perihelion-format-rules.md` and `plans/perihelion-format-alignment-brief.md`. Merges cleanly with any in-flight UI work — touches `plans/` only.
+- **T6 polish PR** — branch `feat/perihelion-library-t6-polish`. Closes Workstream A's Impeccable critique + polish follow-on. Five sub-passes: T6.1 viewport-gated TerritoryBadge pulse with settle, T6.2 perihelion-sigil drop cap + manifesto fade, T6.3 DIRD metric drop + colophon source-corpus affordance (copy placeholder, TODO Writer), T6.4 GuideCard hover refinement (PARKED, deferred to Workstream C), T6.5 entrance fades for welcome triptych + territory sections. Mission log: `vector/missions/perihelion-library-welcome-pass.md`.
 
 ---
 
@@ -36,8 +36,9 @@
 | Light mode direction: start from portfolio light-mode tokens with justified modifications | Locked (implementation deferred) |
 | Cross-link and paper-reference scans: hybrid (script surfaces, Justin curates) | Locked (implementation pending) |
 | Subdomain: stays at `labs.justinh.design` | Locked |
-| Design system overhaul: deferred until content sweep is well underway | Locked posture |
-| Sequence: naming (done) → content sweep → design system | Locked |
+| Design system overhaul (Workstream C): runs in parallel with B once B.1's renderer enhancement lands as a discrete sub-pass (clears the only collision on `GuideBlockquote.tsx`) | Locked 2026-05-03 (revised from "deferred") |
+| Sequence: naming (done) → A welcome pass + T6 polish (done) → B.1 renderer enhancement (next) → B + C in parallel | Locked 2026-05-03 (revised) |
+| Workstream C may split into C.1 (light-mode tokens, contained to `lab-tokens.css`) and C.2 (icon sweep + lab-component restyling) for incremental landing | Locked 2026-05-03 |
 | Works placeholder: no, ship the surface only when the first piece is ready | Locked (Q1 resolved) |
 | Constellation node id: migrated `the-lab` → `perihelion` | Locked (Q2 resolved) |
 | Voice work cadence: voice profile is a long-term tool for both portfolio content and personal sense-making on hard topics | Locked (Q3 resolved) |
@@ -71,7 +72,11 @@ This principle is why the naming session rejected obscure-as-flex candidates (Wu
 
 **Shipped:** PR #40 (`feat/perihelion-library-welcome-pass`). Mission log at `vector/missions/perihelion-library-welcome-pass.md`. Welcome triptych + MANIFESTO refinement + T5a–T5f sub-passes.
 
-**Active follow-on:** visual critique pass on the now-shipped library homepage, applying Impeccable design skills. Findings will inform the next library iteration; not yet on a dedicated branch.
+**Polish landed in flight:** T6 critique + polish on `feat/perihelion-library-t6-polish`. Closes the Impeccable follow-on the welcome pass left open. Sub-passes T6.1–T6.5 as logged in the mission file. T6.4 (GuideCard hover refinement) parked into Workstream C.
+
+**Carry-overs to other workstreams:**
+- T6.3's DIRD colophon copy is a `TODO Writer` placeholder — refine in a Writer session.
+- T6.4 GuideCard hover refinement folds into Workstream C alongside light-mode tokens and the icon sweep.
 
 ---
 
@@ -99,7 +104,9 @@ Mechanical work to bring all eight guides up to the canonical spec. The executio
 **Owner:** Tyrell (mechanical work, parser/renderer), Glossarian skill (orphan resolution).
 **Touches:** `core/lab/guides/*.md`, `core/lab/parse-guide.ts`, `core/lab/guide-types.ts`, `src/lab/components/guide/GuideBlockquote.tsx`, new `.claude/skills/glossarian/`, new entries in `scripts/`.
 **Effort:** L.
-**Status:** Ready to begin once the welcome-pass visual critique concludes.
+**Status:** Ready to begin. The welcome-pass critique landed as T6 polish; B.1 is next on the critical path.
+
+**Sequencing note (2026-05-03):** B.1's renderer enhancement (variants on `BlockquoteBlock` + per-variant treatment in `GuideBlockquote.tsx` + parser changes) is the only file collision with Workstream C. Land it as a discrete first sub-pass within B.1 — once it ships, C unfreezes and runs in parallel with the rest of B (schema migration, DIRD frontmatter, callout retrofit, definition glosses, B.2 voice sweep). The other B.1 sub-passes touch `core/lab/guides/*.md` exclusively and don't collide with C.
 
 #### Workstream B.2 — Voice sweep
 
@@ -116,20 +123,25 @@ Per-guide prose pass against `core/content/voice-profile.md` (Phase 3.1). High-q
 
 ### Workstream C — Design system overhaul for the lab
 
-Two visual items together — light mode and the icon sweep share touchpoints.
+Two visual items together — light mode and the icon sweep share touchpoints. Picks up the GuideCard hover refinement parked from T6.4.
 
-**Covers:** full UI overhaul (tokens, light mode, subtle personal branding), emoji-to-icon replacement.
+**Covers:** full UI overhaul (tokens, light mode, subtle personal branding), emoji-to-icon replacement, GuideCard hover refinement (carried over from T6.4).
 
 **Approach:**
 
 - Light mode palette sourced from portfolio light-mode tokens, with justified modifications where the academic-preprint register demands something the portfolio does not offer (warm cream paper backgrounds, warm ink text).
 - Emoji-to-icon pass using Lucide for standard UI affordances and Phosphor where a more opinionated pictorial register is wanted.
 - Subtle personal branding ties to Workstream D.
+- GuideCard hover refinement: keep the three-shift cascade (border + bg + title color) but find a treatment that reads as polished rather than over-keyed. Earlier attempt at staggered durations + accent glow was not perceptibly different live; revisit alongside the broader token / icon work where the change has more company.
+
+**Possible sub-split (per locked decision 2026-05-03):**
+- **C.1 — Light-mode tokens.** Add a light-mode variable set to `design-system/lab-tokens.css`. Contained scope, no component file collisions, can land immediately once B.1's renderer enhancement is in. Existing components inherit through CSS custom properties.
+- **C.2 — Icon sweep + lab-component restyling + GuideCard hover.** Touches `src/lab/components/guide/*` and `src/lab/components/library/*`. Larger scope; follows C.1.
 
 **Owner:** Tyrell, with Impeccable design skills (`/audit`, `/polish`, `/colorize`, `/typeset`).
-**Touches:** `design-system/lab-tokens.css` (new light-mode variable set), `src/lab/` components that use emoji, possibly a new SVG mark component.
+**Touches:** `design-system/lab-tokens.css` (new light-mode variable set), `src/lab/` components broadly, possibly a new SVG mark component, `src/lab/components/library/GuideCard.tsx` (hover refinement carry-over).
 **Effort:** L.
-**Status:** Deferred until Workstream B is well underway.
+**Status:** Unfreezes once B.1's renderer enhancement lands. Then runs in parallel with the rest of B.
 
 ---
 
@@ -172,13 +184,17 @@ A brand mark for Perihelion. Delayed until the brand has had time to settle.
 
 ## Suggested sequence
 
-1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40. Visual critique is the active follow-on.
-2. **Workstream B (content sweep).** The bulk of remaining lab work. Two parallel tracks (B.1 format alignment, B.2 voice sweep) operating per guide. Build Glossarian + the three audit scripts first, then pipeline guide-by-guide. Expect this to span several sessions.
-3. **Workstream D (logotype).** Can start in parallel with B. Different hands, different surfaces.
-4. **Workstream E (nested definitions).** Run a Dreamer session whenever Justin wants to explore. Output is a plan, not code yet.
-5. **Workstream C (design system).** Deferred until B is well underway and the brand has had time to settle.
+1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40. T6 polish PR closes the Impeccable critique follow-on (in flight).
+2. **Workstream B.1 — renderer enhancement first.** Discrete sub-pass: variants on `BlockquoteBlock`, parser updates, per-variant treatment in `GuideBlockquote.tsx`. Lands before C touches `src/lab/components/guide/`. 1–2 sessions.
+3. **Workstream B + Workstream C in parallel** (after step 2 lands):
+   - B.1 rest — schema migration, DIRD frontmatter corrections, callout retrofit, inline definition glosses. Touches `core/lab/guides/*.md`. Tyrell + Glossarian.
+   - B.2 voice sweep — Writer, per guide, on B.1-cleaned structures.
+   - C.1 light-mode tokens — `design-system/lab-tokens.css` only. Tyrell.
+   - C.2 icon sweep + lab-component restyling + GuideCard hover (carry-over from T6.4) — Tyrell + Impeccable.
+4. **Workstream D (logotype).** Can start any time alongside the above. Different hands, different surfaces.
+5. **Workstream E (nested definitions).** Run a Dreamer session whenever Justin wants to explore. Output is a plan, not code yet.
 
-Workstream B is the main thing.
+Workstream B is still the main thing. C runs alongside it once the renderer collision is cleared.
 
 ---
 
@@ -214,6 +230,7 @@ Surfaced for Justin's review at the appropriate moment in B.1 execution:
 - **Renderer chip-per-callout scope** — Confirm before parser/`GuideBlockquote.tsx` are touched: introduce new variants (`design-hook`, `territory-bridge`, `read-next`, `subguide-queued`, `definition`) to `BlockquoteBlock` and key off the first line, OR split into a tagged union, OR a different splitting convention?
 - **`scripts/migrate-jsx-guide.ts`** — JSX→MD conversion is done and dusted. Archive (`scripts/archive/`), delete, or keep as reference for the next migration?
 - **Renderer support for inline-definition variant** — confirmed today the renderer treats all `>` blocks generically. The B.1 renderer enhancement covers both callouts AND first-mention definition glosses; confirm both should get distinct visual treatment, or whether definition glosses should remain plain blockquote.
+- **T6.3 colophon copy** — the new "+ On the source corpus" `<details>` affordance in `LibraryHeader.tsx` (`ColophonNote`) ships with `TODO Writer` placeholder copy that names DIRD once and broadens the corpus picture. Refine summary label and gloss in a Writer session against the Phase 3.1 voice profile.
 
 ---
 

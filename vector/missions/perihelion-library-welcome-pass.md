@@ -229,8 +229,8 @@ T5 originally scoped GuideCard hierarchy refinements (pass "e" in Tyrell's plan)
 ### T6: Impeccable critique and polish pass
 **Layer:** multi (`src/lab/components/library/*.tsx`, `src/lab/pages/LibraryIndex.tsx`, occasionally `design-system/lab-tokens.css` if a token gap surfaces)
 **Owner:** Tyrell (running `/critique`, then `/polish`, optionally `/bolder` if energy lift is still short — anchored to lab register, not SaaS)
-**Branch:** `feat/perihelion-library-welcome-pass`
-**Commit prefix:** `polish:`
+**Branch:** `feat/perihelion-library-t6-polish` (cut fresh off `main` after PR #40 + #41 merged; original mission's parent branch was `feat/perihelion-library-welcome-pass` which was already merged at T6 start)
+**Commit prefix:** `polish:` / `feat:`
 **Inputs:** T5 (all visual changes landed)
 **Outputs:**
 - `/critique` run on the library homepage: assessment against the locked Perihelion design context (now in `.impeccable.md`), the mission test, voice-profile alignment
@@ -243,6 +243,24 @@ T5 originally scoped GuideCard hierarchy refinements (pass "e" in Tyrell's plan)
 - Anchor `/bolder` if used: "lift the energy without leaving the dark-academic register; no SaaS-hero tropes"
 - Any token gaps surfaced get added to `design-system/lab-tokens.css` rather than via raw hex — but prefer existing tokens
 - Roy review (post-mission) re-runs the doctrine check; this task is the design-quality pass
+
+#### T6 landed — 2026-05-03 (Tyrell)
+
+`/critique` surfaced 1 P1 + 3 P2 findings against `.impeccable.md` Perihelion design context. T6 split into five sub-passes, one branch (`feat/perihelion-library-t6-polish`), one commit per pass.
+
+| Pass | Commit | What |
+|---|---|---|
+| T6.1 | `2788e36` | TerritoryBadge pulse: viewport-gated via `useInView` (once: true), runs three cycles ~5s each, then settles at lowest opacity. Heartbeat, not strobe. Reduced-motion users continue to see the static badge with no ring. Resolves the "infinite-loop motion competing for attention" P2 finding. |
+| T6.2 | `3d864e0` | New `PerihelionSigil` component: tilted 45° elliptical orbit with brass perihelion dot + dim aphelion micro-dot, gradient stroke (dim apoapsis → brass periapsis), soft outer bloom + dot halo for holographic edge. Rendered as illuminated-initial drop cap floated at the start of the manifesto. The whole 3-paragraph manifesto block fades up together (500ms), then the orbit draws in (520ms), then the perihelion dot pops with a slight overshoot. `prefers-reduced-motion` renders fully drawn and static. Resolves the "first screen text-only" P2 finding. |
+| T6.3 | `376bd33` | Drop the `dirdBriefsWalked` metric line from `LibraryHeader.tsx`. Add a small `<details>` colophon affordance ("+ On the source corpus") below the metadata that unfurls a one-paragraph gloss naming DIRD and broadening the corpus picture. Native details, keyboard-accessible by default, custom marker rotates 45° on open. Copy is `TODO Writer` placeholder for refinement in a Writer session. Resolves the P1 mission-test finding. |
+| T6.4 | (PARKED) | Attempted GuideCard hover refinement — staggered cascade durations (240/480/560/640ms) plus accent-tinted box-shadow halo. Justin couldn't see the difference perceptibly in the browser; reverted to last committed state. Carry-over to Workstream C, where it can be considered alongside light-mode tokens, the icon sweep, and broader lab-component restyling. |
+| T6.5 | `a76aba5` | Entrance fades for the welcome triptych (stagger-fade-up after the manifesto settles, base delay 0.75s + 0.15s per panel) and each TerritoryGrid section (`whileInView` once with `amount: 0.15`). Both gated by `useReducedMotion`. Closes the T5 motion carry-over. |
+
+**Critique posture verdict:** Conditional pass at start; full pass after T6.1–T6.3 + T6.5 landed. T6.4 conditional on Workstream C, not blocking.
+
+**Carry-overs to other workstreams:**
+- **Writer session** — refine T6.3 colophon copy (currently `TODO Writer` placeholder). Voice-tune summary label and gloss against Phase 3.1 voice profile.
+- **Workstream C** — picks up GuideCard hover refinement (T6.4 PARKED). Treat as a small additional surface inside the broader light-mode + icon sweep.
 
 ---
 
@@ -264,6 +282,17 @@ T5 originally scoped GuideCard hierarchy refinements (pass "e" in Tyrell's plan)
 - Preserve the plan's voice and structure
 - One commit; clean diff
 - After this lands, the mission moves to `vector/missions/archive/` as part of merge cleanup (Director coordinates post-merge)
+
+#### T7 landed — 2026-05-03 (Tyrell)
+
+Plan resync against the post-T6 reality. Highlights:
+
+- **Workstream C posture revised** — was "deferred until B is well underway"; now "runs in parallel with B once B.1's renderer enhancement lands as a discrete sub-pass." The renderer enhancement is the only file collision (`GuideBlockquote.tsx` + parser/types). Sequencing it first as a 1–2 session sub-pass clears the conflict; then C and the rest of B can run truly in parallel.
+- **Workstream C may split into C.1 + C.2** — C.1 is light-mode tokens only (`design-system/lab-tokens.css`, contained), C.2 is icon sweep + lab-component restyling + GuideCard hover (T6.4 carry-over). C.1 can land immediately once B.1 renderer is in.
+- **Suggested sequence rewritten** — A done → B.1 renderer enhancement → B.1 rest + B.2 + C.1 + C.2 in parallel.
+- **Locked decisions table** — three new entries (revised C posture, revised sequence, C.1/C.2 split idea).
+- **T6.3 colophon copy** — added a new "Reminders / pending confirmations" entry pointing at the `TODO Writer` placeholder in `LibraryHeader.tsx`'s `ColophonNote`.
+- **Workstream A entry** — added "Polish landed in flight" subsection referencing this mission's T6 sub-passes and the T6.4 parking.
 
 ---
 

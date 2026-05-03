@@ -1,6 +1,6 @@
 # Perihelion: next steps
 
-> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence.
+> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence; refined again 2026-05-03 (end-of-day) with the C.1-immediate sequencing, multi-agent posture, and the no-emoji authoring rule.
 
 ---
 
@@ -38,7 +38,9 @@
 | Cross-link and paper-reference scans: hybrid (script surfaces, Justin curates)                                                                                                                      | Locked (implementation pending)             |
 | Subdomain: stays at `labs.justinh.design`                                                                                                                                                           | Locked                                      |
 | Design system overhaul (Workstream C): runs in parallel with B once B.1's renderer enhancement lands as a discrete sub-pass (clears the only collision on `GuideBlockquote.tsx`)                    | Locked 2026-05-03 (revised from "deferred") |
-| Sequence: naming (done) → A welcome pass + T6 polish (done) → B.1 renderer enhancement (next) → B + C in parallel                                                                                   | Locked 2026-05-03 (revised)                 |
+| Sequence: A done → small B.1 pieces (DIRD frontmatter / Glossarian / slug migration) + C.1 (light-mode tokens) + Writer micro-task (T6.3 colophon copy) start immediately in parallel → renderer scope confirmation when Justin has bandwidth → B.1 renderer enhancement → per-guide pipeline (B.1 alignment → B.2 voice) + C.2 (icon sweep + restyling + GuideCard hover debug) in parallel | Locked 2026-05-03 (refined end-of-day)      |
+| No emojis in guide markdown; visual icons come from the renderer at the design-system level (Lucide + Phosphor). New guides omit emojis from section headers and callout lines. C.2 sweeps existing guides into compliance. Local mirror `plans/perihelion-format-rules.md` updated; **upstream `~/projects/design-futures/guide-format-rules.md` sync pending** | Locked 2026-05-03                           |
+| Multi-agent parallel execution preferred where the file-collision matrix allows. Each independent track in the sequence above can run as its own agent on its own branch; the per-guide pipeline can pipeline two agents (Tyrell aligning guide N+1 while Writer sweeps guide N) | Posture, attempt where applicable           |
 | Workstream C may split into C.1 (light-mode tokens, contained to `lab-tokens.css`) and C.2 (icon sweep + lab-component restyling) for incremental landing                                           | Locked 2026-05-03                           |
 | Works placeholder: no, ship the surface only when the first piece is ready                                                                                                                          | Locked (Q1 resolved)                        |
 | Constellation node id: migrated `the-lab` → `perihelion`                                                                                                                                            | Locked (Q2 resolved)                        |
@@ -190,17 +192,24 @@ A brand mark for Perihelion. Delayed until the brand has had time to settle.
 
 ## Suggested sequence
 
-1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40. T6 polish PR closes the Impeccable critique follow-on (in flight).
-2. **Workstream B.1 — renderer enhancement first.** Discrete sub-pass: variants on `BlockquoteBlock`, parser updates, per-variant treatment in `GuideBlockquote.tsx`. Lands before C touches `src/lab/components/guide/`. 1–2 sessions.
-3. **Workstream B + Workstream C in parallel** (after step 2 lands):
-  - B.1 rest — schema migration, DIRD frontmatter corrections, callout retrofit, inline definition glosses. Touches `core/lab/guides/*.md`. Tyrell + Glossarian.
-  - B.2 voice sweep — Writer, per guide, on B.1-cleaned structures.
-  - C.1 light-mode tokens — `design-system/lab-tokens.css` only. Tyrell.
-  - C.2 icon sweep + lab-component restyling + GuideCard hover (carry-over from T6.4) — Tyrell + Impeccable.
-4. **Workstream D (logotype).** Can start any time alongside the above. Different hands, different surfaces.
-5. **Workstream E (nested definitions).** Run a Dreamer session whenever Justin wants to explore. Output is a plan, not code yet.
+Refined 2026-05-03 (end-of-day). Earlier draft put renderer enhancement first as the unblocker for C; revised after realizing C.1 (light-mode tokens, contained to `lab-tokens.css`) has zero collision with anything in B.1, and the small B.1 pieces don't touch `GuideBlockquote.tsx` either. Real gating is between B.1 renderer ↔ C.2; everything else runs concurrent from day one.
 
-Workstream B is still the main thing. C runs alongside it once the renderer collision is cleared.
+1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40 + PR #42 (T6 polish).
+2. **Start immediately, in parallel** — each can be its own agent, its own branch, its own small mission file in `vector/missions/`:
+  - **B.1 small pieces** — DIRD frontmatter mechanical pass (years/venues on guides 13/14/15/28); Glossarian skill installation at `.claude/skills/glossarian/`; slug migration (`id:` → `slug:` across 8 guides + parser + types). Touches `core/lab/guides/*.md`, `core/lab/parse-guide.ts`, `core/lab/guide-types.ts`. No collision with C.
+  - **C.1 light-mode tokens** — add a light-mode variable set to `design-system/lab-tokens.css`. Contained, no component file collisions, components inherit through CSS custom properties. Tyrell + `/colorize`.
+  - **Writer micro-task** — refine T6.3 colophon copy in `LibraryHeader.tsx`'s `ColophonNote` (currently `TODO Writer` placeholder). Voice-tune against Phase 3.1.
+3. **Renderer scope confirmation** — when Justin has bandwidth. Open reminder in this plan: variants as tagged union vs. first-line keying vs. another splitting convention. Does not block step 2.
+4. **B.1 renderer enhancement** — discrete mission once scope is locked. Variants on `BlockquoteBlock`, `parseBlockquote` callout/definition detection, per-variant chip + accent treatment in `GuideBlockquote.tsx`. 1–2 sessions, contained scope.
+5. **After renderer lands, in parallel:**
+  - **Per-guide pipeline (B.1 alignment → B.2 voice)** — for each guide: callout retrofit, inline definition glosses, voice sweep. Pipeline two agents — Tyrell aligning guide N+1 while Writer sweeps guide N. Streams don't block.
+  - **C.2 icon sweep + lab-component restyling + GuideCard hover debug** — Tyrell + Impeccable. Picks up the parked T6.4 hover refinement as a debugging task.
+6. **Workstream D (logotype).** Anytime. Different hands, different surfaces.
+7. **Workstream E (nested definitions).** Dreamer session whenever Justin wants to explore. Output is a plan, not code.
+
+**Operating posture:** lean on multi-agent parallel execution wherever the collision matrix allows. The point of the sub-mission scoping is so each track is small, scoped, and hand-offable to its own agent on its own branch. Per-guide pipelining (Tyrell + Writer alternating across adjacent guides) is the highest-leverage form of this.
+
+Workstream B is still the main thing. C runs alongside it from day one (C.1) and unblocks fully once the renderer collision is cleared (C.2).
 
 ---
 
@@ -237,6 +246,7 @@ Surfaced for Justin's review at the appropriate moment in B.1 execution:
 - **`scripts/migrate-jsx-guide.ts`** — JSX→MD conversion is done and dusted. Archive (`scripts/archive/`), delete, or keep as reference for the next migration?
 - **Renderer support for inline-definition variant** — confirmed today the renderer treats all `>` blocks generically. The B.1 renderer enhancement covers both callouts AND first-mention definition glosses; confirm both should get distinct visual treatment, or whether definition glosses should remain plain blockquote.
 - **T6.3 colophon copy** — the new "+ On the source corpus" `<details>` affordance in `LibraryHeader.tsx` (`ColophonNote`) ships with `TODO Writer` placeholder copy that names DIRD once and broadens the corpus picture. Refine summary label and gloss in a Writer session against the Phase 3.1 voice profile.
+- **No-emoji rule sync upstream** — local mirror `plans/perihelion-format-rules.md` updated 2026-05-03 to forbid emojis in guide markdown (visual icons live at the renderer/design-system level). The canonical upstream `~/projects/design-futures/guide-format-rules.md` still recommends emojis on section headers + callout lines. Carry the update upstream so the upstream Claude doesn't keep authoring emoji-laden guides that C.2 has to sweep again. One-shot edit, no architectural change.
 
 ---
 

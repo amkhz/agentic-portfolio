@@ -25,32 +25,34 @@
 
 ## Locked decisions (cumulative)
 
-| Decision | Status |
-|---|---|
-| Brand: **Perihelion** | Locked |
-| Arms: **Archive** (research) + **Works** (applied design), peers not pipeline | Locked |
-| Umbrella tagline: "closest approach to the frontier" | Locked |
-| Archive tagline (preserved): "A reader's notebook. Designed to be prep, not product." | Locked |
-| Voice reference: `core/content/voice-profile.md` (Phase 3.1) | Locked, production-ready |
-| Icon libraries: Lucide + Phosphor as defaults | Locked |
-| Light mode direction: start from portfolio light-mode tokens with justified modifications | Locked (implementation deferred) |
-| Cross-link and paper-reference scans: hybrid (script surfaces, Justin curates) | Locked (implementation pending) |
-| Subdomain: stays at `labs.justinh.design` | Locked |
-| Design system overhaul (Workstream C): runs in parallel with B once B.1's renderer enhancement lands as a discrete sub-pass (clears the only collision on `GuideBlockquote.tsx`) | Locked 2026-05-03 (revised from "deferred") |
-| Sequence: naming (done) → A welcome pass + T6 polish (done) → B.1 renderer enhancement (next) → B + C in parallel | Locked 2026-05-03 (revised) |
-| Workstream C may split into C.1 (light-mode tokens, contained to `lab-tokens.css`) and C.2 (icon sweep + lab-component restyling) for incremental landing | Locked 2026-05-03 |
-| Works placeholder: no, ship the surface only when the first piece is ready | Locked (Q1 resolved) |
-| Constellation node id: migrated `the-lab` → `perihelion` | Locked (Q2 resolved) |
-| Voice work cadence: voice profile is a long-term tool for both portfolio content and personal sense-making on hard topics | Locked (Q3 resolved) |
-| Podcast-numbers source: hand-resolved from Ecosystemic Futures site, only single-digit episodes are wrong | Locked (Q4 resolved) |
-| Writer posture for Workstream B: high-quality wholesale per guide, paced over time alongside other work | Locked (Q5 resolved) |
-| Schema: standardize on `slug:` (migrate existing `id:` usage in 8 guides + parser/types) | Locked 2026-05-03 |
-| Schema: `territory:` and `status:` formally adopted into the canonical frontmatter | Locked 2026-05-03 |
-| Schema: `arxiv:` valid as an optional `source.*` sub-field; coexists with `url:` | Locked 2026-05-03 |
-| Format spec mirrored into the repo at `plans/perihelion-format-rules.md` and `plans/perihelion-format-alignment-brief.md`; canonical lives upstream in `~/projects/design-futures/` | Locked 2026-05-03 |
-| Glossarian installed as a project-level skill at `.claude/skills/glossarian/`; wraps `scripts/report-orphan-terms.ts` and grounds against `core/lab/guides/` + `~/projects/design-futures/sources/` | Locked 2026-05-03 |
-| Workstream B split into two parallel tracks: B.1 format alignment (Tyrell) + B.2 voice sweep (Writer) | Locked 2026-05-03 |
-| Tagline evolution when Works ships | Open (Q6) |
+
+| Decision                                                                                                                                                                                            | Status                                      |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| Brand: **Perihelion**                                                                                                                                                                               | Locked                                      |
+| Arms: **Archive** (research) + **Works** (applied design), peers not pipeline                                                                                                                       | Locked                                      |
+| Umbrella tagline: "closest approach to the frontier"                                                                                                                                                | Locked                                      |
+| Archive tagline (preserved): "A reader's notebook. Designed to be prep, not product."                                                                                                               | Locked                                      |
+| Voice reference: `core/content/voice-profile.md` (Phase 3.1)                                                                                                                                        | Locked, production-ready                    |
+| Icon libraries: Lucide + Phosphor as defaults                                                                                                                                                       | Locked                                      |
+| Light mode direction: start from portfolio light-mode tokens with justified modifications                                                                                                           | Locked (implementation deferred)            |
+| Cross-link and paper-reference scans: hybrid (script surfaces, Justin curates)                                                                                                                      | Locked (implementation pending)             |
+| Subdomain: stays at `labs.justinh.design`                                                                                                                                                           | Locked                                      |
+| Design system overhaul (Workstream C): runs in parallel with B once B.1's renderer enhancement lands as a discrete sub-pass (clears the only collision on `GuideBlockquote.tsx`)                    | Locked 2026-05-03 (revised from "deferred") |
+| Sequence: naming (done) → A welcome pass + T6 polish (done) → B.1 renderer enhancement (next) → B + C in parallel                                                                                   | Locked 2026-05-03 (revised)                 |
+| Workstream C may split into C.1 (light-mode tokens, contained to `lab-tokens.css`) and C.2 (icon sweep + lab-component restyling) for incremental landing                                           | Locked 2026-05-03                           |
+| Works placeholder: no, ship the surface only when the first piece is ready                                                                                                                          | Locked (Q1 resolved)                        |
+| Constellation node id: migrated `the-lab` → `perihelion`                                                                                                                                            | Locked (Q2 resolved)                        |
+| Voice work cadence: voice profile is a long-term tool for both portfolio content and personal sense-making on hard topics                                                                           | Locked (Q3 resolved)                        |
+| Podcast-numbers source: hand-resolved from Ecosystemic Futures site, only single-digit episodes are wrong                                                                                           | Locked (Q4 resolved)                        |
+| Writer posture for Workstream B: high-quality wholesale per guide, paced over time alongside other work                                                                                             | Locked (Q5 resolved)                        |
+| Schema: standardize on `slug:` (migrate existing `id:` usage in 8 guides + parser/types)                                                                                                            | Locked 2026-05-03                           |
+| Schema: `territory:` and `status:` formally adopted into the canonical frontmatter                                                                                                                  | Locked 2026-05-03                           |
+| Schema: `arxiv:` valid as an optional `source.*` sub-field; coexists with `url:`                                                                                                                    | Locked 2026-05-03                           |
+| Format spec mirrored into the repo at `plans/perihelion-format-rules.md` and `plans/perihelion-format-alignment-brief.md`; canonical lives upstream in `~/projects/design-futures/`                 | Locked 2026-05-03                           |
+| Glossarian installed as a project-level skill at `.claude/skills/glossarian/`; wraps `scripts/report-orphan-terms.ts` and grounds against `core/lab/guides/` + `~/projects/design-futures/sources/` | Locked 2026-05-03                           |
+| Workstream B split into two parallel tracks: B.1 format alignment (Tyrell) + B.2 voice sweep (Writer)                                                                                               | Locked 2026-05-03                           |
+| Tagline evolution when Works ships                                                                                                                                                                  | Open (Q6)                                   |
+
 
 ---
 
@@ -75,6 +77,7 @@ This principle is why the naming session rejected obscure-as-flex candidates (Wu
 **Polish landed in flight:** T6 critique + polish on `feat/perihelion-library-t6-polish`. Closes the Impeccable follow-on the welcome pass left open. Sub-passes T6.1–T6.5 as logged in the mission file. T6.4 (GuideCard hover refinement) parked into Workstream C.
 
 **Carry-overs to other workstreams:**
+
 - T6.3's DIRD colophon copy is a `TODO Writer` placeholder — refine in a Writer session.
 - T6.4 GuideCard hover refinement folds into Workstream C alongside light-mode tokens and the icon sweep.
 
@@ -89,6 +92,7 @@ The main thing. Now structured as **two parallel tracks** that operate per guide
 Mechanical work to bring all eight guides up to the canonical spec. The execution spec is `plans/perihelion-format-alignment-brief.md` (mirrored from design-futures); the schema reference is `plans/perihelion-format-rules.md`.
 
 **Covers:**
+
 - **Schema migration** — rename `id:` → `slug:` across all 8 guides; update `core/lab/parse-guide.ts`, `core/lab/guide-types.ts`, and any references in `src/lab/`.
 - **DIRD frontmatter corrections** — DIRD 13/14/15/28 currently show wrong `source.year` (DIRD 15 shows 2026; should be ~2009 AAWSAP era) and inconsistent venues. Tyrell takes a one-shot mechanical pass; Justin spot-checks after.
 - **Callout retrofit** — 7 of 8 guides have zero styled callouts (Design Hook / Territory Bridge / Read Next / Subguide queued). `uap-field-map.md` already has 42 — proves the pattern works at the generic blockquote level. Convert "Design Implications" sections into Design Hook callouts; add Territory Bridge / Read Next where the prose supports them.
@@ -96,6 +100,7 @@ Mechanical work to bring all eight guides up to the canonical spec. The executio
 - **Renderer enhancement** — extend `BlockquoteBlock` to carry a `variant` field; teach `parseBlockquote` to detect callout-type and definition-gloss patterns; render per-variant chip + accent treatment in `GuideBlockquote.tsx`. (Confirm scope with Justin before touching parser — see reminders.)
 
 **Tooling:**
+
 - `scripts/report-orphan-terms.ts` — already built; the orphan scanner B.1 needs.
 - `vector/audits/orphan-terms-2026-04-21.md` — last orphan audit output, useful as a baseline.
 - New: **Glossarian** project-level skill at `.claude/skills/glossarian/`. Adapted from `~/projects/design-futures/Glossarian/SKILL.md`. Wraps `report-orphan-terms.ts`; grounds resolutions against `core/lab/guides/` + `~/projects/design-futures/sources/` (DIRD PDFs, ecosystemic-futures notes, source papers like uap1.pdf, uapx.pdf, wendt-duvall-2008-sovereignty-and-the-ufo.pdf, l8y7-r3rm.pdf).
@@ -132,9 +137,10 @@ Two visual items together — light mode and the icon sweep share touchpoints. P
 - Light mode palette sourced from portfolio light-mode tokens, with justified modifications where the academic-preprint register demands something the portfolio does not offer (warm cream paper backgrounds, warm ink text).
 - Emoji-to-icon pass using Lucide for standard UI affordances and Phosphor where a more opinionated pictorial register is wanted.
 - Subtle personal branding ties to Workstream D.
-- GuideCard hover refinement: keep the three-shift cascade (border + bg + title color) but find a treatment that reads as polished rather than over-keyed. Earlier attempt at staggered durations + accent glow was not perceptibly different live; revisit alongside the broader token / icon work where the change has more company.
+- GuideCard hover refinement: keep the three-shift cascade (border + bg + title color) but find a treatment that reads as polished rather than over-keyed. Earlier attempt at staggered durations + accent glow did not work live; needs debugging and potential new ideas alongside the broader token / icon work where the change has more company.
 
 **Possible sub-split (per locked decision 2026-05-03):**
+
 - **C.1 — Light-mode tokens.** Add a light-mode variable set to `design-system/lab-tokens.css`. Contained scope, no component file collisions, can land immediately once B.1's renderer enhancement is in. Existing components inherit through CSS custom properties.
 - **C.2 — Icon sweep + lab-component restyling + GuideCard hover.** Touches `src/lab/components/guide/*` and `src/lab/components/library/*`. Larger scope; follows C.1.
 
@@ -187,10 +193,10 @@ A brand mark for Perihelion. Delayed until the brand has had time to settle.
 1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40. T6 polish PR closes the Impeccable critique follow-on (in flight).
 2. **Workstream B.1 — renderer enhancement first.** Discrete sub-pass: variants on `BlockquoteBlock`, parser updates, per-variant treatment in `GuideBlockquote.tsx`. Lands before C touches `src/lab/components/guide/`. 1–2 sessions.
 3. **Workstream B + Workstream C in parallel** (after step 2 lands):
-   - B.1 rest — schema migration, DIRD frontmatter corrections, callout retrofit, inline definition glosses. Touches `core/lab/guides/*.md`. Tyrell + Glossarian.
-   - B.2 voice sweep — Writer, per guide, on B.1-cleaned structures.
-   - C.1 light-mode tokens — `design-system/lab-tokens.css` only. Tyrell.
-   - C.2 icon sweep + lab-component restyling + GuideCard hover (carry-over from T6.4) — Tyrell + Impeccable.
+  - B.1 rest — schema migration, DIRD frontmatter corrections, callout retrofit, inline definition glosses. Touches `core/lab/guides/*.md`. Tyrell + Glossarian.
+  - B.2 voice sweep — Writer, per guide, on B.1-cleaned structures.
+  - C.1 light-mode tokens — `design-system/lab-tokens.css` only. Tyrell.
+  - C.2 icon sweep + lab-component restyling + GuideCard hover (carry-over from T6.4) — Tyrell + Impeccable.
 4. **Workstream D (logotype).** Can start any time alongside the above. Different hands, different surfaces.
 5. **Workstream E (nested definitions).** Run a Dreamer session whenever Justin wants to explore. Output is a plan, not code yet.
 

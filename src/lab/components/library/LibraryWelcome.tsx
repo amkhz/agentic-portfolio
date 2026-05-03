@@ -10,7 +10,7 @@ const NOTES: FieldNote[] = [
     numeral: "01",
     kicker: "What this is",
     headline: "A designer's preparation for work that's almost here.",
-    body: "Work like this will need to be designed for all of us. We show up ready to design the future we want.",
+    body: "A world with this technology needs to be designed for all of us. We'll show up ready to design the future we deserve.",
   },
   {
     numeral: "02",

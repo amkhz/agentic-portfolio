@@ -1,5 +1,4 @@
 import { labStats } from "@core/lab/territories";
-import { CommunityStrip } from "./CommunityStrip";
 
 interface LibraryHeaderProps {
   guideCount: number;
@@ -33,7 +32,6 @@ export function LibraryHeader({
         The library grows as I read. New guides land roughly monthly. Five more
         are in the pipeline; check back or follow along.
       </p>
-      <CommunityStrip />
       <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         {counter}
       </p>

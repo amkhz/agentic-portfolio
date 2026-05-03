@@ -54,7 +54,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
   const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
 
   return (
-    <div className="mt-16 space-y-20">
+    <div className="mt-20 space-y-20 md:mt-28">
       {territories.map((territory) => {
         const territoryGuides = grouped[territory.id];
         const territoryUpcoming = groupedUpcoming[territory.id];

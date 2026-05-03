@@ -30,7 +30,7 @@ export function LibraryWelcome() {
   return (
     <section
       aria-labelledby="library-welcome-heading"
-      className="mt-16 md:mt-24"
+      className="mt-20 md:mt-28"
     >
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
         <h2

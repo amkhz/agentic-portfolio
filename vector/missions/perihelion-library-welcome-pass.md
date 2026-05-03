@@ -88,7 +88,7 @@ Notes for downstream:
 
 **Carried into T5 (layout massage) for consideration, not T2.5 scope:**
 - The MANIFESTO renders as a single `<p>`. Justin's draft used paragraph breaks. T5 should decide whether to render as a single paragraph, split into 2-3 paragraphs (would require minor JSX change to map across an array), or keep as one with rhythm carried by sentence cadence alone.
-- Closing line `Pull up a chair.` may want to be dropped or made more concise depending on the layout shape T5 lands. Flag for the layout pass; do not edit copy in T5 without reopening Writer.
+- ~~Closing line `Pull up a chair.` may want to be dropped or made more concise depending on the layout shape T5 lands.~~ **Resolved in T4 (2026-05-03):** the manifesto trim happened during T4 instead of T5. Two sentences removed (`A reader's notebook, prep not product.` and `We learn today to build for tomorrow.`); `Pull up a chair.` retained as the closer.
 
 ---
 
@@ -172,6 +172,10 @@ Three structural directions were proposed and visualized in Paper:
 - Holds the "inviting + inspiring + exciting + a place to learn" posture without crossing into SaaS-cliché territory
 - No em-dashes
 - Word budget: depends on the structural shape T3 lands; aim for whatever the visual design supports cleanly
+
+#### T4 landed — 2026-05-03 (Writer)
+
+Voice pass on the three NOTES strings plus the carried-over manifesto trim, single Writer session. Note 01 body collapses the parenthetical domain list (already named in the manifesto) into `Work like this will need to be designed for all of us.`; closer `We show up ready to design the future we want.` retained as the collective hand-off. Note 02 swaps the passive `Definitions are provided in context` for the active `Definitions live in context`. Note 03 drops the redundant `The library grows roughly monthly` (covered by LibraryHeader's cadence paragraph), preserves `Applied research to come` as the Perihelion Works hook. TODO comment block removed. Manifesto trim shipped in same session — see T2.5 carry-over above.
 
 ---
 

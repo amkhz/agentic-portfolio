@@ -81,14 +81,9 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
                   id={territory.id}
                   isActive={lifecycle === "active"}
                 />
-                <div className="flex flex-col gap-0.5">
-                  <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
-                    Territory
-                  </span>
-                  <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
-                    {LIFECYCLE_LABEL[lifecycle]}
-                  </span>
-                </div>
+                <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
+                  {LIFECYCLE_LABEL[lifecycle]}
+                </span>
               </div>
               <h2
                 id={`territory-${territory.id}-heading`}

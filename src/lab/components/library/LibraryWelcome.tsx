@@ -1,3 +1,5 @@
+import { motion, useReducedMotion } from "motion/react";
+
 interface FieldNote {
   numeral: "01" | "02" | "03";
   kicker: string;
@@ -26,7 +28,13 @@ const NOTES: FieldNote[] = [
   },
 ];
 
+const NOTE_BASE_DELAY = 0.75;
+const NOTE_STAGGER = 0.15;
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
 export function LibraryWelcome() {
+  const shouldReduce = useReducedMotion();
+
   return (
     <section
       aria-labelledby="library-welcome-heading"
@@ -49,27 +57,41 @@ export function LibraryWelcome() {
       </div>
 
       <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {NOTES.map((note) => (
-          <li
-            key={note.numeral}
-            className="flex flex-col gap-4 border-t border-lab-border-subtle bg-lab-bg-surface p-7"
-          >
-            <div className="flex items-baseline gap-3">
-              <span className="font-lab-mono text-xs tracking-wider text-guide-accent">
-                {note.numeral}
-              </span>
-              <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
-                {note.kicker}
-              </span>
-            </div>
-            <h3 className="font-lab-heading text-lg font-semibold leading-snug tracking-tight text-lab-text-primary md:text-xl">
-              {note.headline}
-            </h3>
-            <p className="font-lab-body text-base leading-relaxed text-lab-text-secondary">
-              {note.body}
-            </p>
-          </li>
-        ))}
+        {NOTES.map((note, index) => {
+          const noteMotion = shouldReduce
+            ? {}
+            : {
+                initial: { opacity: 0, y: 12 },
+                animate: { opacity: 1, y: 0 },
+                transition: {
+                  delay: NOTE_BASE_DELAY + index * NOTE_STAGGER,
+                  duration: 0.5,
+                  ease: EASE_OUT,
+                },
+              };
+          return (
+            <motion.li
+              key={note.numeral}
+              className="flex flex-col gap-4 border-t border-lab-border-subtle bg-lab-bg-surface p-7"
+              {...noteMotion}
+            >
+              <div className="flex items-baseline gap-3">
+                <span className="font-lab-mono text-xs tracking-wider text-guide-accent">
+                  {note.numeral}
+                </span>
+                <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
+                  {note.kicker}
+                </span>
+              </div>
+              <h3 className="font-lab-heading text-lg font-semibold leading-snug tracking-tight text-lab-text-primary md:text-xl">
+                {note.headline}
+              </h3>
+              <p className="font-lab-body text-base leading-relaxed text-lab-text-secondary">
+                {note.body}
+              </p>
+            </motion.li>
+          );
+        })}
       </ul>
     </section>
   );

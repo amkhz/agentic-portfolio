@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from "motion/react";
 import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
@@ -49,9 +50,21 @@ const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
   queued: "Queued",
 };
 
+const EASE_OUT = [0.22, 1, 0.36, 1] as const;
+
 export function TerritoryGrid({ guides }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
   const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
+  const shouldReduce = useReducedMotion();
+
+  const sectionMotion = shouldReduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 16 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.15 },
+        transition: { duration: 0.55, ease: EASE_OUT },
+      };
 
   return (
     <div className="mt-20 space-y-20 md:mt-28">
@@ -64,10 +77,11 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
         const isQueued = lifecycle === "queued";
 
         return (
-          <section
+          <motion.section
             key={territory.id}
             aria-labelledby={`territory-${territory.id}-heading`}
             className={`lab-territory-${territory.id.toLowerCase()}`}
+            {...sectionMotion}
           >
             <header
               className={
@@ -140,7 +154,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
                 ) : null}
               </>
             )}
-          </section>
+          </motion.section>
         );
       })}
     </div>

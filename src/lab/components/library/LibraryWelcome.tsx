@@ -5,28 +5,24 @@ interface FieldNote {
   body: string;
 }
 
-// TODO Writer T4 — voice-tune all three notes; final pass owned by Writer.
-// Placeholder copy below was captured from Justin's Paper-mockup edits
-// during the T3 review session (2026-05-02). The Note 01 parenthetical
-// uses parentheses, not em-dashes, per VECTOR.md.
 const NOTES: FieldNote[] = [
   {
     numeral: "01",
     kicker: "What this is",
     headline: "A designer's preparation for work that's almost here.",
-    body: "The frontiers in these guides (vacuum engineering, UAP detection, consciousness as technology) will need to be designed for all of us. We show up ready to design the future we want.",
+    body: "Work like this will need to be designed for all of us. We show up ready to design the future we want.",
   },
   {
     numeral: "02",
     kicker: "How the guides work",
     headline: "Primary sources, walked. Not summarized.",
-    body: "Each guide takes a paper or a brief and walks the reasoning end to end. Citations stay close to the claim. Definitions are provided in context. Follow a footnote, check the work.",
+    body: "Each guide takes a paper or a brief and walks the reasoning end to end. Citations stay close to the claim. Definitions live in context. Follow a footnote, check the work.",
   },
   {
     numeral: "03",
     kicker: "How to read along",
     headline: "No prerequisites. Pick what pulls you in.",
-    body: "The territories aren't sequential. Follow your curiosity, leave when you've had enough. The library grows roughly monthly. Applied research to come.",
+    body: "The territories aren't sequential. Follow your curiosity, leave when you've had enough. Applied research to come.",
   },
 ];
 

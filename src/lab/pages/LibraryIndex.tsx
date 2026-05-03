@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { guides } from "@core/lab/guides";
 import { territories } from "@core/lab/territories";
 import { LibraryHeader } from "@lab/components/library/LibraryHeader";
+import { LibraryWelcome } from "@lab/components/library/LibraryWelcome";
 import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
 
 export function LibraryIndex() {
@@ -25,6 +26,7 @@ export function LibraryIndex() {
           guideCount={guides.length}
           territoryCount={territories.length}
         />
+        <LibraryWelcome />
         <TerritoryGrid guides={guides} />
       </div>
     </>

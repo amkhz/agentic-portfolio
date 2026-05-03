@@ -1,4 +1,6 @@
+import { motion, useReducedMotion } from "motion/react";
 import { labStats } from "@core/lab/territories";
+import { PerihelionSigil } from "./PerihelionSigil";
 
 interface LibraryHeaderProps {
   guideCount: number;
@@ -15,28 +17,46 @@ export function LibraryHeader({
   guideCount,
   territoryCount,
 }: LibraryHeaderProps) {
+  const shouldReduce = useReducedMotion();
   const counter =
     guideCount === 1
       ? `1 guide across ${territoryCount} territories`
       : `${guideCount} guides across ${territoryCount} territories`;
+
+  const manifestoMotion = shouldReduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 8 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as const },
+      };
 
   return (
     <header className="pt-16 md:pt-24">
       <h1 className="font-lab-heading text-4xl font-semibold tracking-tight text-lab-text-primary md:text-6xl md:leading-tight">
         Perihelion Archive
       </h1>
-      {MANIFESTO_PARAGRAPHS.map((paragraph, index) => (
-        <p
-          key={index}
-          className={
+      <motion.div className="mt-8 max-w-3xl" {...manifestoMotion}>
+        {MANIFESTO_PARAGRAPHS.map((paragraph, index) => {
+          const className =
             index === 0
-              ? "mt-8 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl"
-              : "mt-4 max-w-3xl font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl"
+              ? "font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl"
+              : "mt-4 font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl";
+          if (index === 0) {
+            return (
+              <p key={index} className={className}>
+                <PerihelionSigil className="float-left mr-3 -ml-1" />
+                {paragraph}
+              </p>
+            );
           }
-        >
-          {paragraph}
-        </p>
-      ))}
+          return (
+            <p key={index} className={className}>
+              {paragraph}
+            </p>
+          );
+        })}
+      </motion.div>
       <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         {counter}
       </p>

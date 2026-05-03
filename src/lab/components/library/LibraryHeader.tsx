@@ -61,12 +61,39 @@ export function LibraryHeader({
         {counter}
       </p>
       <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-        {labStats.peerReviewedPapersCited} peer-reviewed papers cited ·{" "}
-        {labStats.dirdBriefsWalked} DIRD briefs walked
+        {labStats.peerReviewedPapersCited} peer-reviewed papers cited
       </p>
       <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
         Last updated {import.meta.env.VITE_BUILD_DATE}
       </p>
+      <ColophonNote />
     </header>
+  );
+}
+
+// TODO Writer — this colophon note exists to introduce DIRD (Defense
+// Intelligence Reference Document) once on the homepage in a quiet,
+// scholarly register, replacing the dropped "DIRD briefs walked"
+// metric. Refine summary label and gloss copy in a Writer session.
+function ColophonNote() {
+  return (
+    <details className="group mt-6 max-w-xl [&_summary::-webkit-details-marker]:hidden">
+      <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent">
+        <span
+          aria-hidden
+          className="inline-block w-2 text-center text-[0.85rem] leading-none transition-transform duration-[var(--duration-normal)] group-open:rotate-45"
+        >
+          +
+        </span>
+        On the source corpus
+      </summary>
+      <p className="mt-3 font-lab-body text-sm leading-relaxed text-lab-text-secondary">
+        Many guides walk a <span className="font-lab-mono">DIRD</span> — a
+        Defense Intelligence Reference Document, declassified from the AAWSAP
+        intelligence collection. Other sources include peer-reviewed journal
+        articles, NASA technical reports, and proceedings from contemporary
+        frontier-science gatherings.
+      </p>
+    </details>
   );
 }

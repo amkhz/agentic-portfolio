@@ -22,10 +22,7 @@ export function LibraryHeader({
 
   return (
     <header className="pt-16 md:pt-24">
-      <p className="font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted">
-        labs.justinh.design
-      </p>
-      <h1 className="mt-6 font-lab-heading text-4xl font-semibold tracking-tight text-lab-text-primary md:text-6xl md:leading-tight">
+      <h1 className="font-lab-heading text-4xl font-semibold tracking-tight text-lab-text-primary md:text-6xl md:leading-tight">
         Perihelion Archive
       </h1>
       {MANIFESTO_PARAGRAPHS.map((paragraph, index) => (

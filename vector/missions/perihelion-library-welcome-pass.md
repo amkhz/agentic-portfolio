@@ -75,6 +75,21 @@
 - Voice anchor: Phase 3.1 — problem-first, contractions always, conversational-professional, occasional punchy closer
 - Test against: "would a designer who has never read a frontier-physics paper feel invited or excluded?"
 
+#### T2.5 — MANIFESTO rewrite landed (2026-05-02, Writer)
+
+Quick session with Writer to tighten and harmonize with the welcome's "we" hand-off. Justin took the pen mid-session and finished the rewrite. Two voice fixes applied before commit: hyphen-with-spaces split into a period (em-dash equivalent forbidden by VECTOR.md), `what is` contracted to `what's` in the 4th sentence (contractions-always rule). Final version (~117 words):
+
+> "The future is already here. It's just not very evenly distributed. It's being built and shaped in peer-reviewed papers, NSF-funded labs, and private money think tanks. The kind of work that often happens in the dark, on the cutting edge of what's possible. This library is where I'm learning about it: deep-dive guides on the science behind vacuum engineering, UAP detection, and consciousness as technology. Science fiction becoming engineered reality. Written for designers who haven't found a reason to look here yet, but might. A reader's notebook, prep not product. We learn today to build for tomorrow. Pull up a chair."
+
+Notes for downstream:
+- The collective `We learn today to build for tomorrow` aphorism sets up the welcome's `We show up ready to design the future we want` (Note 01) as a continuation rather than a swerve.
+- `Science fiction becoming engineered reality` is a stakes-landing move (Phase 2 / 3.1). It carries the declarative-clarity beat where the key idea drops.
+- `private money think tanks` widens the funding picture beyond pure academia — adds heat, names a real shape of frontier work.
+
+**Carried into T5 (layout massage) for consideration, not T2.5 scope:**
+- The MANIFESTO renders as a single `<p>`. Justin's draft used paragraph breaks. T5 should decide whether to render as a single paragraph, split into 2-3 paragraphs (would require minor JSX change to map across an array), or keep as one with rhythm carried by sentence cadence alone.
+- Closing line `Pull up a chair.` may want to be dropped or made more concise depending on the layout shape T5 lands. Flag for the layout pass; do not edit copy in T5 without reopening Writer.
+
 ---
 
 ### T3: Scaffold new welcoming component
@@ -98,6 +113,47 @@
 - `prefers-reduced-motion` respected on any entrance animation
 - Heading: h2 only (h1 already taken by LibraryHeader)
 - Placeholder copy: brief, in-register, clearly marked with `// TODO Writer T4` comment so the next task picks it up cleanly
+
+#### Review Notes — 2026-05-02 (direction lock)
+
+Three structural directions were proposed and visualized in Paper:
+- **A — Reading Room** (single curated front-desk card, brass left rule, recommended starter guide with rationale)
+- **B — Field Notes** (orientation triptych: three coequal panels under a "Field Notes" header, mono numerals 01/02/03, Podkova micro-headlines, Georgia body)
+- **C — Working Principle** (atmospheric breath: large italic Georgia statement on lab-textured slab with marginalia column)
+
+**Chosen direction: B — Field Notes triptych.** It does the most welcome-pass work: three concrete entry points, doctrinal posture, hospitable, no "starter pick" lock-in. Reads as an intro plaque, not a CTA.
+
+**Justin's text edits in the Paper mockup (carry into scaffold placeholder):**
+
+| Slot | Mockup default | Justin's edit |
+|---|---|---|
+| Section lede (right of "Field Notes" rule) | Three things to know before you browse | Design Resources for the Frontier |
+| Note 01 kicker | Why I read these | What this is |
+| Note 01 headline | A designer's preparation for work that doesn't exist yet. | A designer's preparation for work that's almost here. |
+| Note 01 body | The frontiers I'm reading toward — vacuum engineering, UAP detection, consciousness as technology — will need designers. I'd rather show up ready than catch up later. | The frontiers in these guides — vacuum engineering, UAP detection, consciousness as technology — will need to be designed for all of us. We show up ready to design the future we want. |
+| Note 02 kicker | How the guides work | (unchanged) |
+| Note 02 headline | A primary source, walked. Not summarized. | Primary sources, walked. Not summarized. |
+| Note 02 body | Each guide takes a paper or a brief and walks the reasoning end to end. Citations stay close to the claim. You can follow a footnote and check my work. | Each guide takes a paper or a brief and walks the reasoning end to end. Citations stay close to the claim. Definitions are provided in context. Follow a footnote, check the work. |
+| Note 03 kicker | How to read along | (unchanged) |
+| Note 03 headline | No prerequisites. Pick anything that pulls you in. | No prerequisites. Pick what pulls you in. |
+| Note 03 body | The territories aren't sequential. Skim a kicker, follow your curiosity, leave when you've had enough. The library grows roughly monthly. | The territories aren't sequential. Follow your curiosity, leave when you've had enough. The library grows roughly monthly. Applied research to come. |
+
+> Mockup typos cleaned up in this table (`contecxt`, `ollow`); the Paper file still shows them. Hyphens in body copy normalized to em-dashes here for readability of the source quote — but T4 must restore them to non-em-dash punctuation per VECTOR.md.
+
+**Posture shifts implied by Justin's edits — guidance for T4:**
+- **Kicker text-only edits**: kickers were rewritten for clarity (`Why I read these → What this is`; the other two unchanged). All three kickers share the same UI treatment (uppercase mono-tracking, brass numeral). No styling difference between Note 01 and the others.
+- **"Design Resources for the Frontier"** as the section lede names the function directly. Reads less like a doctrinal preamble, more like a shelf label.
+- **"We" framing in Note 01 includes Justin** — clarified 2026-05-02. The "we" is not "the author's reading vs. the audience's reading"; it's "designers, with me among them, who want to be ready for the work that's almost here." The library is a shared bench, not a one-way window. T4 should keep that hand-off intact and avoid sliding back into "the author's prep."
+- **Manifesto rewrite scheduled** — confirmed 2026-05-02. The current MANIFESTO reads as rough; opens T2.5 to tighten it and harmonize with the welcome's "we" hand-off (or deliberately let the welcome be the moment the frame opens). See T2.5 below.
+- **"Applied research to come"** at the end of Note 03 quietly hooks Perihelion Works without naming it. Forward-looking; preserves the two-arm story without committing to a date.
+- **"Definitions are provided in context"** in Note 02 lowers the entry bar explicitly. Reinforces the mission test ("opens the door, never gatekeeps").
+
+**Scaffold implications for T3:**
+- Section uses a `Field Notes` mono kicker + hairline rule + lede on the right side; lede sits in mono small caps to balance the kicker's weight.
+- Three coequal panels in a `grid-cols-1 md:grid-cols-3` layout, top-border hairlines on each panel, surface = `var(--lab-bg-surface)`.
+- Each panel: brass mono numeral (`01` / `02` / `03`) + mono kicker label, Podkova h3 micro-headline, Georgia body paragraph.
+- Brass accent on the numerals only — no brass on borders, no brass on links (this is library chrome, not a link surface).
+- Placeholder copy in scaffold uses Justin's edited strings above so T4 starts from a near-final base; `// TODO Writer T4` comment marks the file for the final voice pass.
 
 ---
 

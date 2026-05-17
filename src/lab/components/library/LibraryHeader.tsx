@@ -88,8 +88,7 @@ function ColophonNote() {
         Defense Intelligence Reference Document declassified from the AAWSAP
         intelligence collection. The rest of the corpus is peer-reviewed
         journal articles, NASA technical reports, and proceedings from
-        contemporary frontier-science gatherings. Some of it reads like a
-        textbook, some like a field journal, and both belong here.
+        contemporary frontier-science gatherings.
       </p>
     </details>
   );

@@ -71,10 +71,6 @@ export function LibraryHeader({
   );
 }
 
-// TODO Writer — this colophon note exists to introduce DIRD (Defense
-// Intelligence Reference Document) once on the homepage in a quiet,
-// scholarly register, replacing the dropped "DIRD briefs walked"
-// metric. Refine summary label and gloss copy in a Writer session.
 function ColophonNote() {
   return (
     <details className="group mt-6 max-w-xl [&_summary::-webkit-details-marker]:hidden">
@@ -85,14 +81,14 @@ function ColophonNote() {
         >
           +
         </span>
-        On the source corpus
+        Where this comes from
       </summary>
       <p className="mt-3 font-lab-body text-sm leading-relaxed text-lab-text-secondary">
-        Many guides walk a <span className="font-lab-mono">DIRD</span> — a
-        Defense Intelligence Reference Document, declassified from the AAWSAP
-        intelligence collection. Other sources include peer-reviewed journal
-        articles, NASA technical reports, and proceedings from contemporary
-        frontier-science gatherings.
+        Many guides walk a <span className="font-lab-mono">DIRD</span>, a
+        Defense Intelligence Reference Document declassified from the AAWSAP
+        intelligence collection. The rest of the corpus is peer-reviewed
+        journal articles, NASA technical reports, and proceedings from
+        contemporary frontier-science gatherings.
       </p>
     </details>
   );

@@ -1,5 +1,5 @@
 ---
-id: quantum-gravity
+slug: quantum-gravity
 title: "Two Paths to Quantum Gravity"
 kicker: "Synthesis Guide"
 source:

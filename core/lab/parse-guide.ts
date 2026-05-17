@@ -122,7 +122,7 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
   const figures = (rawFigures as unknown[] | undefined)?.map((f, i) => validateFigure(f, i, slug)) ?? [];
 
   const front: GuideFrontmatter = {
-    id: requireString(data.id, 'id', slug),
+    slug: requireString(data.slug, 'slug', slug),
     title: requireString(data.title, 'title', slug),
     kicker: requireString(data.kicker, 'kicker', slug),
     source: validateSource(data.source, slug),

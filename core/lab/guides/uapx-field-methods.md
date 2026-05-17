@@ -1,5 +1,5 @@
 ---
-id: uapx-field-methods
+slug: uapx-field-methods
 title: "UAPx Field Methods: Instrumented UAP Science from First Principles"
 kicker: "Research Guide Series"
 source:

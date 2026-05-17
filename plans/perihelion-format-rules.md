@@ -107,12 +107,14 @@ glossary:
 
 ## Body conventions
 
+> **Portfolio-side rule (2026-05-03):** **No emojis in guide markdown.** Visual icons come from the renderer at the design-system level (Lucide for standard UI affordances, Phosphor for opinionated pictorial moments — locked icon libraries per the next-steps plan). New guides should omit emojis entirely from section headers and callout lines; the renderer uses the structural pattern (callout label text, section anchor) to know what to draw. Existing guides get swept to icons during Workstream C.2. **This rule needs to be carried back to the upstream `guide-format-rules.md` so the upstream author doesn't keep producing emoji-laden guides.**
+
 ### Section headers
 
-Each top-level section uses `## ` with an optional emoji and a required `{#anchor}` ID:
+Each top-level section uses `## ` with a required `{#anchor}` ID:
 
 ```markdown
-## 🎯 The Forensic Problem {#forensic-problem}
+## The Forensic Problem {#forensic-problem}
 ```
 
 The anchor is what the renderer uses for deep links and the section navigation pills. Anchors are kebab-case, derived from the section title.
@@ -148,7 +150,7 @@ These exist for two reasons: the raw markdown stays readable as a standalone doc
 Callouts are styled blockquotes that mark cross-cutting content. They use the **two-block pattern** so the renderer can style the type label as a chip distinct from the body:
 
 ```markdown
-> 🎯 **Design Hook**
+> **Design Hook**
 >
 > A push-broom satellite UAP detection tool that scans known cluster regions on a fixed cadence, treating UAP as a measurable atmospheric phenomenon rather than an event-driven anomaly.
 ```
@@ -157,14 +159,14 @@ The blank `>` line between label and body is required. Without it the renderer c
 
 **Callout types in active use:**
 
-| Emoji | Label | When to use |
-|-------|-------|-------------|
-| 🎯 | `**Design Hook**` | A concrete product, service, tool, or experience implication that falls out of the source material |
-| 🔗 | `**Territory Bridge**` | A cross-territory connection (T1↔T4, T2↔T3, etc.). The conceptual through-line that ties a guide to the rest of the lab |
-| 📎 | `**Subguide queued**` | Material flagged for its own future guide. Captures the scope hint inline so it doesn't get lost when the parent guide is finished |
-| 📖 | `**Read Next**` | Pointer to a related guide already in the library. Use sparingly — only when the link is genuinely load-bearing |
+| Label | When to use |
+|-------|-------------|
+| `**Design Hook**` | A concrete product, service, tool, or experience implication that falls out of the source material |
+| `**Territory Bridge**` | A cross-territory connection (T1↔T4, T2↔T3, etc.). The conceptual through-line that ties a guide to the rest of the lab |
+| `**Subguide queued**` | Material flagged for its own future guide. Captures the scope hint inline so it doesn't get lost when the parent guide is finished |
+| `**Read Next**` | Pointer to a related guide already in the library. Use sparingly — only when the link is genuinely load-bearing |
 
-Add new callout types only when an existing one doesn't fit. Keep the family small.
+The renderer keys off the bold label text alone — no emoji prefix needed or wanted (per the portfolio-side rule above). Each callout type gets a Lucide or Phosphor icon at render time, picked once in `GuideBlockquote.tsx` per variant. Add new callout types only when an existing one doesn't fit. Keep the family small.
 
 > **Portfolio-side coverage:** as of 2026-05-03, only `uap-field-map.md` carries callouts (42 of them). The other 7 guides have zero. Retrofit is a Workstream B.1 deliverable.
 

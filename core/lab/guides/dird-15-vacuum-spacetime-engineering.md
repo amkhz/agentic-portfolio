@@ -1,5 +1,5 @@
 ---
-id: dird-15-vacuum-spacetime-engineering
+slug: dird-15-vacuum-spacetime-engineering
 title: "DIRD 15: Vacuum Spacetime Engineering"
 kicker: DIRD Guide Series
 source:

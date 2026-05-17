@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { contrastRatio, parseGuide } from './parse-guide';
 
 const VALID_SOURCE = `---
-id: sample-guide
+slug: sample-guide
 title: "Sample Guide"
 kicker: "Research Guide Series"
 source:

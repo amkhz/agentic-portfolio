@@ -1,5 +1,5 @@
 ---
-id: uap-field-map
+slug: uap-field-map
 title: "The New Science of UAP"
 kicker: "Research Guide Series"
 source:

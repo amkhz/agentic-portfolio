@@ -35,7 +35,7 @@ export interface GlossaryEntry {
 
 // Canonical frontmatter shape (validated at parse time).
 export interface GuideFrontmatter {
-  id: string;
+  slug: string;
   title: string;
   kicker: string;
   source: SourceMeta;

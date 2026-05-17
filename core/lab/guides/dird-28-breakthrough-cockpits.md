@@ -1,5 +1,5 @@
 ---
-id: dird-28-breakthrough-cockpits
+slug: dird-28-breakthrough-cockpits
 title: "DIRD 28: Cockpits in the Era of Breakthrough Flight"
 kicker: DIRD Guide Series
 source:

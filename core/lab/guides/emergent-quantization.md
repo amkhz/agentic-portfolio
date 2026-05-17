@@ -1,5 +1,5 @@
 ---
-id: emergent-quantization
+slug: emergent-quantization
 title: Emergent Quantization from a Dynamic Vacuum
 kicker: Research Guide Series
 source:

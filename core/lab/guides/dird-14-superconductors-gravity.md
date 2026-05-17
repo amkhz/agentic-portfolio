@@ -1,5 +1,5 @@
 ---
-id: dird-14-superconductors-gravity
+slug: dird-14-superconductors-gravity
 title: "DIRD 14: The Role of Superconductors in Gravity Research"
 kicker: DIRD Guide Series
 source:

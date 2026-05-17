@@ -1,5 +1,5 @@
 ---
-id: dird-13-warp-drive
+slug: dird-13-warp-drive
 title: "DIRD 13: Warp Drive, Dark Energy, and Extra Dimensions"
 kicker: DIRD Guide Series
 source:

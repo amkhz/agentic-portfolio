@@ -169,4 +169,4 @@ Tyrell's persona, voice, and working style are defined in the sections above. Th
 
 ## Design Context
 
-Full design context (users, brand personality, aesthetic direction, design principles) lives in `.impeccable.md`. That file is the single source of truth for design direction, referenced by the Impeccable skill suite and available to all agents. See also `design-system/tokens.css` for the CSS implementation of all visual decisions.
+Full design context (users, brand personality, aesthetic direction, design principles) lives in `PRODUCT.md`. That file is the single source of truth for design direction, referenced by the Impeccable skill suite and available to all agents. See also `design-system/tokens.css` for the CSS implementation of all visual decisions.

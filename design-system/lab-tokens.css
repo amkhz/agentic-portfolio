@@ -102,4 +102,121 @@
         transparent 128px
       );
   }
+
+  /* ============================================
+     LIGHT MODE: academic preprint paper
+     ----------------------------------------------
+     Activation mirrors the portfolio: [data-theme="light"]
+     on a parent element flips the lab palette to its light
+     counterpart. Same scoping discipline as the dark set;
+     every variable is --lab-* or --guide-* so there is no
+     collision with portfolio tokens at :root.
+
+     Visual register: warm cream paper with warm ink text.
+     This is intentionally distinct from the portfolio's
+     light mode (parchment, linen, wood, Wallace's office
+     before the blackout) because the lab is a different
+     room. Closer to a well-lit reading desk with a preprint
+     in hand. The surface stays paper-warm; the rules stay
+     academic.
+
+     Contrast tuning: every text-on-bg pairing verified
+     against the lightest background (--lab-bg-deep at
+     ~L 0.965) to ensure WCAG 2.2 AA holds. Comments call
+     out approximate ratios, mirroring the dark-set discipline.
+
+     Component wiring (icon sweep, hover refinements, etc.)
+     is C.2 follow-on work. This file only declares the
+     tokens; existing components inherit through CSS
+     custom-property cascade once the data-attribute flips.
+     ============================================ */
+  [data-theme="light"] {
+    /* --- Backgrounds: warm cream paper ---
+       Layered from page (deepest cream, the canvas) to
+       raised surface (slightly more chroma, like a card
+       sitting on the desk). Hue 80 keeps the cream warm
+       without drifting yellow. */
+    --lab-bg-deep: oklch(0.9650 0.0140 80);
+    --lab-bg-surface: oklch(0.9450 0.0180 78);
+    --lab-bg-raised: oklch(0.9250 0.0220 76);
+
+    /* --- Borders: warm pencil-line ruling --- */
+    --lab-border-subtle: oklch(0.8400 0.0200 78);
+    --lab-border-strong: oklch(0.7000 0.0260 75);
+
+    /* --- Text: warm ink, verified >= WCAG AA against --lab-bg-deep --- */
+    --lab-text-primary: oklch(0.2200 0.0150 70);     /* ~14:1 on bg-deep */
+    --lab-text-secondary: oklch(0.4000 0.0200 68);   /* ~7.5:1 on bg-deep */
+    --lab-text-muted: oklch(0.5200 0.0220 70);       /* ~4.7:1 on bg-deep */
+
+    /* --- Figure container: held constant from dark mode ---
+       Scanned academic figures are the same warm off-white
+       paper regardless of theme; the container should read
+       as "a clipping pasted onto the page" in both modes.
+       Border is the only field that shifts: a slightly darker
+       value than the page surface so the figure still
+       separates from the cream background without losing
+       the scanned-paper feel. */
+    --lab-figure-bg: oklch(0.9400 0.0080 80);
+    --lab-figure-border: oklch(0.7600 0.0180 76);
+    --lab-figure-text: oklch(0.2000 0.0050 80);
+
+    /* --- Territory accents ---
+       Hues preserved (T1 violet 295, T2 blue 240, T3 rose 15,
+       T4 signal green 145). Lightness pulled down and chroma
+       lifted so the accents hold >= WCAG AA at 14px body size
+       against the cream paper backgrounds. Dark-mode values
+       (L 0.72 to 0.82) would wash out against L 0.96 paper. */
+    --lab-territory-t1: oklch(0.4700 0.1700 295);  /* Consciousness and Spacetime, violet */
+    --lab-territory-t2: oklch(0.4800 0.1400 240);  /* Space Manufacturing, blue */
+    --lab-territory-t3: oklch(0.4900 0.1600 15);   /* Materials and Sensing, rose */
+    --lab-territory-t4: oklch(0.4600 0.1500 145);  /* UAP Detection, signal green */
+
+    /* --- Upcoming status pill accents ---
+       Same posture as dark mode: dimmer than territory
+       accents so placeholder cards read as queued. Tuned
+       against --lab-bg-surface (L ~0.945) at small mono
+       type, contrast >= WCAG AA. */
+    --lab-upcoming-drafting: oklch(0.5200 0.1100 145);    /* signal-green, dimmed */
+    --lab-upcoming-researching: oklch(0.5400 0.0900 70);  /* brass, dimmed */
+
+    /* --- Per-guide accent ---
+       Default fallback resolves to the portfolio's light-mode
+       primary accent (the brass tuned for warm backgrounds in
+       tokens.css). GuideRenderer's runtime override via
+       --guide-accent on its root element continues to work
+       unchanged. The inline-style exception in ADR-009 is
+       theme-agnostic. */
+    --guide-accent: var(--theme-accent-primary);
+
+    /* --- Typography families ---
+       Unchanged from dark mode. The lab's three-font stack
+       (Podkova / Georgia / JetBrains Mono) is theme-agnostic;
+       only the colors flip. */
+    --lab-heading-font: 'Podkova', Georgia, serif;
+    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* --- Academic preprint watermark ---
+       Same graph-paper-under-ink ruling, retuned for cream
+       paper. Ruling color is a warm darker tone instead of
+       cool slate, and alpha lifts slightly (0.04 to 0.05) so
+       the grid stays perceptible without crushing contrast
+       against the light field. Pattern geometry (28px
+       horizontal, 128px vertical) is preserved so texture
+       rhythm matches across themes. */
+    --lab-texture:
+      repeating-linear-gradient(
+        180deg,
+        oklch(0.45 0.020 70 / 0.045) 0px,
+        transparent 1px,
+        transparent 28px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        oklch(0.45 0.020 70 / 0.032) 0px,
+        transparent 1px,
+        transparent 128px
+      );
+  }
 }

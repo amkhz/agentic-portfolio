@@ -1,6 +1,6 @@
 # Perihelion: next steps
 
-> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence; refined again 2026-05-03 (end-of-day) with the C.1-immediate sequencing, multi-agent posture, and the no-emoji authoring rule.
+> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence; refined again 2026-05-03 (end-of-day) with the C.1-immediate sequencing, multi-agent posture, and the no-emoji authoring rule; resynced 2026-05-17 with the step-2 burndown closed, the B.1 renderer enhancement scope locked, the upstream no-emoji rule sync completed, and the B.1 DIRD frontmatter pass opened as PR #51.
 
 ---
 
@@ -16,10 +16,12 @@
 - **About-page voice and proofread pass** — first content surface refined against the locked profile.
 - **PR #40 — Workstream A: origins intro / library welcome pass.** Welcome triptych, MANIFESTO refinement, T5a–T5f sub-passes; mission log at `vector/missions/perihelion-library-welcome-pass.md`. Merged.
 - **PR #41 — plan resync + format spec mirror + B.1/B.2 split.** Merged.
+- **PRs #42–#50 — step-2 burndown and infrastructure refresh.** T6 polish (PR #42), plan refinement (#44), worktrees gitignore (#45), B.1 schema rename `id:` → `slug:` (#46), C.1 light-mode tokens added to `lab-tokens.css` (#47), Glossarian project skill installed (#48), T6.3 colophon copy refined (#49), Impeccable v3.0.7 upgrade with `PRODUCT.md` rename and VOID.md added (#50). All merged.
+- **Track B — no-emoji upstream sync.** One-shot edit applied 2026-05-17 in a `~/projects/design-futures/` Claude Code session. Removed emoji prefixes from header / callout examples in `guide-format-rules.md` and added the no-emoji rule canonically. Design-futures dir is not a git repo, so no PR or commit record; record lives in the agent's session summary plus this entry.
 
 ### Open / in flight
 
-- **T6 polish PR** — branch `feat/perihelion-library-t6-polish`. Closes Workstream A's Impeccable critique + polish follow-on. Five sub-passes: T6.1 viewport-gated TerritoryBadge pulse with settle, T6.2 perihelion-sigil drop cap + manifesto fade, T6.3 DIRD metric drop + colophon source-corpus affordance (copy placeholder, TODO Writer), T6.4 GuideCard hover refinement (PARKED, deferred to Workstream C), T6.5 entrance fades for welcome triptych + territory sections. Mission log: `vector/missions/perihelion-library-welcome-pass.md`.
+- **PR #51 — B.1 DIRD frontmatter pass.** Mechanical fix to `source.year` (all four were `2026`, corrected to `2010` per the published DIRD cover pages) and `source.venue` (consolidated to `DIA / AAWSAP Program`) on DIRDs 13, 14, 15, 28. Mission log at `vector/missions/perihelion-b1-dird-frontmatter.md`. Awaiting Justin's spot-check before merge. Three follow-up flags surfaced by the pass and worth a note in a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the spec, `source.authors` drift on DIRDs 14 and 28 (carry the venue value in the authors slot), and an ICOD-vs-publication-date typo on the DIRD 14 cover.
 
 ---
 
@@ -53,6 +55,7 @@
 | Format spec mirrored into the repo at `plans/perihelion-format-rules.md` and `plans/perihelion-format-alignment-brief.md`; canonical lives upstream in `~/projects/design-futures/`                 | Locked 2026-05-03                           |
 | Glossarian installed as a project-level skill at `.claude/skills/glossarian/`; wraps `scripts/report-orphan-terms.ts` and grounds against `core/lab/guides/` + `~/projects/design-futures/sources/` | Locked 2026-05-03                           |
 | Workstream B split into two parallel tracks: B.1 format alignment (Tyrell) + B.2 voice sweep (Writer)                                                                                               | Locked 2026-05-03                           |
+| B.1 renderer enhancement scope: `BlockquoteBlock` gets a `variant` discriminator field; detection runs in the parser; six variants (`design-hook`, `territory-bridge`, `read-next`, `subguide-queued`, `definition`, `plain`); definition glosses are first-class with a colon separator; parser carries an emoji-tolerance pass during the C.2 transition. Full spec at `plans/perihelion-b1-renderer-scope.md` | Locked 2026-05-17                           |
 | Tagline evolution when Works ships                                                                                                                                                                  | Open (Q6)                                   |
 
 
@@ -199,8 +202,8 @@ Refined 2026-05-03 (end-of-day). Earlier draft put renderer enhancement first as
   - **B.1 small pieces** — DIRD frontmatter mechanical pass (years/venues on guides 13/14/15/28); Glossarian skill installation at `.claude/skills/glossarian/`; slug migration (`id:` → `slug:` across 8 guides + parser + types). Touches `core/lab/guides/*.md`, `core/lab/parse-guide.ts`, `core/lab/guide-types.ts`. No collision with C.
   - **C.1 light-mode tokens** — add a light-mode variable set to `design-system/lab-tokens.css`. Contained, no component file collisions, components inherit through CSS custom properties. Tyrell + `/colorize`.
   - **Writer micro-task** — refine T6.3 colophon copy in `LibraryHeader.tsx`'s `ColophonNote` (currently `TODO Writer` placeholder). Voice-tune against Phase 3.1.
-3. **Renderer scope confirmation** — when Justin has bandwidth. Open reminder in this plan: variants as tagged union vs. first-line keying vs. another splitting convention. Does not block step 2.
-4. **B.1 renderer enhancement** — discrete mission once scope is locked. Variants on `BlockquoteBlock`, `parseBlockquote` callout/definition detection, per-variant chip + accent treatment in `GuideBlockquote.tsx`. 1–2 sessions, contained scope.
+3. ~~**Renderer scope confirmation.**~~ ✅ locked 2026-05-17. Full spec at `plans/perihelion-b1-renderer-scope.md`. Six variants on `BlockquoteBlock` via a discriminator field, parser-side detection, definition glosses use a colon separator, parser carries an emoji-tolerance pass for `uap-field-map.md` during the C.2 transition.
+4. **B.1 renderer enhancement** — discrete mission, scope is locked. Branch `feat/perihelion-b1-renderer-variants`. Three commits: types + parser, renderer, tests + manual QA. 1–2 sessions per the scope file.
 5. **After renderer lands, in parallel:**
   - **Per-guide pipeline (B.1 alignment → B.2 voice)** — for each guide: callout retrofit, inline definition glosses, voice sweep. Pipeline two agents — Tyrell aligning guide N+1 while Writer sweeps guide N. Streams don't block.
   - **C.2 icon sweep + lab-component restyling + GuideCard hover debug** — Tyrell + Impeccable. Picks up the parked T6.4 hover refinement as a debugging task.
@@ -241,12 +244,10 @@ Guide authoring lives upstream in `~/projects/design-futures/`, where another Cl
 
 Surfaced for Justin's review at the appropriate moment in B.1 execution:
 
-- **DIRD year/venue corrections** — Tyrell to take a one-shot mechanical pass on DIRD 13/14/15/28 frontmatter (`source.year`, `source.venue`). Justin to spot-check after, per guide. (Resolves Q3/Q4 from the alignment brief.)
-- **Renderer chip-per-callout scope** — Confirm before parser/`GuideBlockquote.tsx` are touched: introduce new variants (`design-hook`, `territory-bridge`, `read-next`, `subguide-queued`, `definition`) to `BlockquoteBlock` and key off the first line, OR split into a tagged union, OR a different splitting convention?
+- **DIRD year/venue spot-check** — PR #51 (`chore/perihelion-b1-dird-frontmatter`) is open with the mechanical pass landed. Justin to spot-check the year corrections (all four moved from `2026` to `2010`) and the venue consolidation to `DIA / AAWSAP Program` before merging.
+- **DIRD secondary frontmatter follow-ups** — surfaced by the Track A pass and worth a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the canonical spec; `source.authors` drift on DIRDs 14 and 28 (currently carry the venue value in the authors slot); ICOD-vs-publication-date typo on the DIRD 14 cover.
 - **`scripts/migrate-jsx-guide.ts`** — JSX→MD conversion is done and dusted. Archive (`scripts/archive/`), delete, or keep as reference for the next migration?
-- **Renderer support for inline-definition variant** — confirmed today the renderer treats all `>` blocks generically. The B.1 renderer enhancement covers both callouts AND first-mention definition glosses; confirm both should get distinct visual treatment, or whether definition glosses should remain plain blockquote.
-- **T6.3 colophon copy** — the new "+ On the source corpus" `<details>` affordance in `LibraryHeader.tsx` (`ColophonNote`) ships with `TODO Writer` placeholder copy that names DIRD once and broadens the corpus picture. Refine summary label and gloss in a Writer session against the Phase 3.1 voice profile.
-- **No-emoji rule sync upstream** — local mirror `plans/perihelion-format-rules.md` updated 2026-05-03 to forbid emojis in guide markdown (visual icons live at the renderer/design-system level). The canonical upstream `~/projects/design-futures/guide-format-rules.md` still recommends emojis on section headers + callout lines. Carry the update upstream so the upstream Claude doesn't keep authoring emoji-laden guides that C.2 has to sweep again. One-shot edit, no architectural change.
+- **Upstream sync of the colon-separator convention** — the portfolio-side renderer uses a colon as the inline-definition gloss separator (per `plans/perihelion-b1-renderer-scope.md`), diverging from the upstream spec's em-dash. Carry the change back to `~/projects/design-futures/guide-format-rules.md` on the next sync opportunity. The design-futures dir is not under version control, so the next sync agent will need to make the edit and report back in-session.
 
 ---
 

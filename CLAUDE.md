@@ -91,12 +91,13 @@ After every change, state which files you touched and which layer they belong to
 
 ## Design System Non-Negotiables
 
-- **Visual direction:** "Blade Runner + William Gibson meets Finn Juhl" -- dark mode is primary, warm blacks, dual accent (brass `#C8956A` + dusty magenta `#C278A0`), WCAG 2.2 AA throughout
-- Use **token colors exclusively** -- no default Tailwind colors, no `#000` or `#FFF`
-- **Didact Gothic** only has weight 400 -- do not use other weights
+- **Visual direction:** "Blade Runner + William Gibson meets Finn Juhl, composed like a Pentagram monograph" -- dark mode is primary, warm blacks, dual accent (aged brass + dusty magenta via `--theme-accent-primary` and `--theme-secondary-*` tokens), editorial composition discipline, WCAG 2.2 AA throughout. See PRODUCT.md for the full aesthetic direction and the recalibration brief at `plans/portfolio-visual-recalibration-brief.md` for rationale.
+- **All color is OKLCH via tokens.** No hex, no `rgb()`, no named colors anywhere -- not in components, not in tokens.css, not in doctrine files. Every color is `oklch()` defined in `design-system/tokens.css` and referenced by token name. No default Tailwind colors, no `#000`, no `#FFF`. If you write a literal color value outside `tokens.css`, you've made an error.
+- **Typography:** three-face stack -- display serif (h1/h2/section openers, hero), body sans (prose/UI/navigation), mono kicker (metadata/labels). Variable axes used intentionally for *fit* (weight, optical size, grade), not for animation. Specific face picks live in `design-system/tokens.css` and are validated live before locking. The earlier "Didact Gothic 400 only" constraint is superseded -- see PRODUCT.md.
 - One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels
 - No UI library sprawl -- keep implementation lean
 - Avoid em-dashes in copy
+- **Restraint is not blandness.** Every surface must distinguish itself. If a page reads as "every other thoughtful-portfolio template," it has failed -- regardless of how clean the spacing and tokens look.
 
 ---
 
@@ -169,4 +170,4 @@ Tyrell's persona, voice, and working style are defined in the sections above. Th
 
 ## Design Context
 
-Full design context (users, brand personality, aesthetic direction, design principles) lives in `PRODUCT.md`. That file is the single source of truth for design direction, referenced by the Impeccable skill suite and available to all agents. See also `design-system/tokens.css` for the CSS implementation of all visual decisions.
+Full design context (users, brand personality, aesthetic direction, design principles) lives in `PRODUCT.md`. That file is the single source of truth for design direction, referenced by the Impeccable skill suite and available to all agents. See also `design-system/tokens.css` for the CSS implementation of all visual decisions, and `plans/portfolio-visual-recalibration-brief.md` for the rationale behind the current visual direction.

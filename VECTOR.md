@@ -156,12 +156,12 @@ If you cannot finish a task, leave a clear marker: a TODO comment with context, 
 
 1. **"Blade Runner + William Gibson meets Finn Juhl"** -- Dark, atmospheric, warm. The aesthetic evokes speculative fiction's tension between technology and humanity, grounded by mid-century craft and material honesty. Warm blacks, not cold ones. Brass and dusty magenta as accents, not neon.
 2. **Token colors only** -- Every color in the UI traces back to `design-system/tokens.css`. No default Tailwind colors, no `#000` or `#FFF`. This enforces visual coherence and makes theme changes trivial.
-3. **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels. Three-font system -- Space Grotesk (display, variable weight), Didact Gothic (body, 400 only), Podkova (headings, 400--700). Do not add fonts or use weights outside these ranges.
+3. **Accessibility is non-negotiable** -- WCAG 2.2 AA throughout. One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels. Three-face typographic system -- display serif (h1/h2/section openers/hero), body sans (prose/UI/navigation), mono kicker (metadata/labels). Variable axes used intentionally for *fit* (weight, optical size, grade), not for animation. Specific face picks live in `design-system/tokens.css` and are validated live before locking. No additional faces beyond the three. See ADR-011 and PRODUCT.md for full direction.
 4. **Architecture protects craft** -- The four-layer separation (design-system, core, services, src) exists so that design decisions, business logic, external integrations, and UI never bleed into each other.
 
 ## Constraints
 
-- **Hard:** WCAG 2.2 AA compliance. Token colors only. No em-dashes in copy. Three-font system: Space Grotesk (display, variable weight), Didact Gothic (body, 400 only), Podkova (headings, 400--700). Do not add fonts or use weights outside these ranges.
+- **Hard:** WCAG 2.2 AA compliance. All color is OKLCH via tokens (`design-system/tokens.css`) referenced by name -- no hex, no `rgb()`, no named colors anywhere. No em-dashes in copy. Three-face typographic system (display serif, body sans, mono kicker); specific faces locked in `design-system/tokens.css` per ADR-011. Variable axes used intentionally for fit. No additional faces beyond the three.
 - **Hard:** Four-layer architecture -- every file belongs to exactly one layer.
 - **Hard:** `npm run lint` and `npm run build` must pass before any task is complete.
 - **Soft:** No heavy dependencies -- prefer 20 lines of code over a new npm package.

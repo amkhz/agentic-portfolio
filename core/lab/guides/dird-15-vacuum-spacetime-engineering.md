@@ -4,8 +4,8 @@ title: "DIRD 15: Vacuum Spacetime Engineering"
 kicker: DIRD Guide Series
 source:
   authors: Hal Puthoff
-  year: 2026
-  venue: Institute for Advanced Studies at Austin
+  year: 2010
+  venue: DIA / AAWSAP Program
 accent: "#b48efa"
 territory: T1
 status: draft

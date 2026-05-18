@@ -4,8 +4,8 @@ title: "DIRD 28: Cockpits in the Era of Breakthrough Flight"
 kicker: DIRD Guide Series
 source:
   authors: DIA / AAWSA Program
-  year: 2026
-  venue: Unknown
+  year: 2010
+  venue: DIA / AAWSAP Program
 accent: "#4ecdc4"
 territory: T1
 status: draft

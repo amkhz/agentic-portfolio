@@ -4,8 +4,8 @@ title: "DIRD 13: Warp Drive, Dark Energy, and Extra Dimensions"
 kicker: DIRD Guide Series
 source:
   authors: Puthoff et al.
-  year: 2026
-  venue: EarthTech International
+  year: 2010
+  venue: DIA / AAWSAP Program
 accent: "#f0a050"
 territory: T1
 status: draft

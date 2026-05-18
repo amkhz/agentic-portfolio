@@ -4,8 +4,8 @@ title: "DIRD 14: The Role of Superconductors in Gravity Research"
 kicker: DIRD Guide Series
 source:
   authors: DIA / AAWSA Program
-  year: 2026
-  venue: Unknown
+  year: 2010
+  venue: DIA / AAWSAP Program
 accent: "#e8a849"
 territory: T3
 status: draft

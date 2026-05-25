@@ -24,7 +24,7 @@ export const upcomingGuides: UpcomingGuide[] = [
   {
     id: 'dird-36-quantum-tomography',
     title: 'DIRD 36: Quantum Tomography of Negative Energy States',
-    source: 'DIA / AAWSA Program',
+    source: 'DIA / AAWSAP Program',
     territory: 'T1',
     status: 'planned',
     note: 'The experimental test for the exotic propulsion cluster.',
@@ -41,14 +41,14 @@ export const upcomingGuides: UpcomingGuide[] = [
   {
     id: 'dird-22-metamaterials',
     title: 'DIRD 22: Metamaterials',
-    source: 'DIA / AAWSA Program',
+    source: 'DIA / AAWSAP Program',
     territory: 'T3',
     status: 'planned',
   },
   {
     id: 'dird-31-20-sensing',
     title: 'DIRD 31 + 20: Sensing (combined)',
-    source: 'DIA / AAWSA Program',
+    source: 'DIA / AAWSAP Program',
     territory: 'T3',
     status: 'planned',
   },

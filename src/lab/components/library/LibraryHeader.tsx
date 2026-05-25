@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
+import { Plus } from "lucide-react";
 import { labStats } from "@core/lab/territories";
 import { PerihelionSigil } from "./PerihelionSigil";
 
@@ -75,12 +76,11 @@ function ColophonNote() {
   return (
     <details className="group mt-6 max-w-xl [&_summary::-webkit-details-marker]:hidden">
       <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent">
-        <span
-          aria-hidden
-          className="inline-block w-2 text-center text-[0.85rem] leading-none transition-transform duration-[var(--duration-normal)] group-open:rotate-45"
-        >
-          +
-        </span>
+        <Plus
+          aria-hidden="true"
+          strokeWidth={2}
+          className="h-3.5 w-3.5 text-guide-accent/80 transition-transform duration-[var(--duration-normal)] group-open:rotate-45"
+        />
         Where this comes from
       </summary>
       <p className="mt-3 font-lab-body text-sm leading-relaxed text-lab-text-secondary">

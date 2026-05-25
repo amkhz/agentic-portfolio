@@ -3,6 +3,8 @@ import type {
   BlockquoteVariant,
   ParagraphNode,
 } from "@core/lab/guide-types";
+import { ArrowRight, Bookmark, Link2, Target } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { GuideTerm } from "./GuideTerm";
 
 interface GuideBlockquoteProps {
@@ -10,14 +12,20 @@ interface GuideBlockquoteProps {
   glossary: Record<string, string>;
 }
 
-const CALLOUT_LABELS: Record<
-  Exclude<BlockquoteVariant, "definition" | "plain">,
-  string
-> = {
+type CalloutVariant = Exclude<BlockquoteVariant, "definition" | "plain">;
+
+const CALLOUT_LABELS: Record<CalloutVariant, string> = {
   "design-hook": "Design Hook",
   "territory-bridge": "Territory Bridge",
   "read-next": "Read Next",
   "subguide-queued": "Subguide queued",
+};
+
+const CALLOUT_ICONS: Record<CalloutVariant, LucideIcon> = {
+  "design-hook": Target,
+  "territory-bridge": Link2,
+  "read-next": ArrowRight,
+  "subguide-queued": Bookmark,
 };
 
 function renderNodes(
@@ -112,6 +120,7 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
   }
 
   const calloutLabel = CALLOUT_LABELS[block.variant];
+  const Icon = CALLOUT_ICONS[block.variant];
   return (
     <blockquote
       className="border-l-2 border-guide-accent pl-5 md:pl-6"
@@ -121,7 +130,11 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
         className="mb-3 inline-flex items-center gap-1.5 font-lab-mono text-[0.7rem] font-medium uppercase tracking-[0.12em] text-guide-accent"
         data-callout={block.variant}
       >
-        <span aria-hidden="true" className="h-px w-3 bg-guide-accent/70" />
+        <Icon
+          aria-hidden="true"
+          strokeWidth={2}
+          className="h-3 w-3 text-guide-accent/80"
+        />
         {calloutLabel}
       </div>
       <BlockquoteBody block={block} glossary={glossary} keyPrefix="bq-c" />

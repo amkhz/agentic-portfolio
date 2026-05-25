@@ -72,7 +72,7 @@ export function LibraryWelcome() {
           return (
             <motion.li
               key={note.numeral}
-              className="flex flex-col gap-4 border-t border-lab-border-subtle bg-lab-bg-surface p-7"
+              className="flex flex-col gap-4 rounded-lg border border-lab-border-subtle bg-lab-bg-surface p-7"
               {...noteMotion}
             >
               <div className="flex items-baseline gap-3">

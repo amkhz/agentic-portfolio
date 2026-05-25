@@ -12,8 +12,8 @@ interface TerritoryBadgeProps {
 }
 
 const PULSE_KEYFRAMES = {
-  opacity: [0.2, 0.32, 0.2, 0.32, 0.2, 0.32, 0.2],
-  scale: [1, 1.1, 1, 1.1, 1, 1.1, 1],
+  opacity: [0.32, 0.6, 0.32, 0.6, 0.32, 0.6, 0.32],
+  scale: [1, 1.3, 1, 1.3, 1, 1.3, 1],
 };
 
 const PULSE_DURATION_S = 15;
@@ -36,7 +36,7 @@ export function TerritoryBadge({ id, isActive }: TerritoryBadgeProps) {
         <motion.span
           aria-hidden
           className="absolute inset-0 rounded-full bg-guide-accent"
-          initial={{ opacity: 0.2, scale: 1 }}
+          initial={{ opacity: 0.32, scale: 1 }}
           animate={PULSE_KEYFRAMES}
           transition={{ duration: PULSE_DURATION_S, ease: "easeInOut" }}
           onAnimationComplete={() => setPulseDone(true)}
@@ -44,7 +44,7 @@ export function TerritoryBadge({ id, isActive }: TerritoryBadgeProps) {
       ) : showSettled ? (
         <span
           aria-hidden
-          className="absolute inset-0 rounded-full bg-guide-accent opacity-20"
+          className="absolute inset-0 rounded-full bg-guide-accent opacity-[0.32]"
         />
       ) : null}
       <span className="relative z-10 inline-flex h-full w-full items-center justify-center rounded-full border border-guide-accent bg-lab-bg-surface font-lab-mono text-xs tracking-wide text-guide-accent">

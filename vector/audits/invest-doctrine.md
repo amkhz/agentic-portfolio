@@ -1,63 +1,67 @@
 # Doctrine Audit
 
-**Date:** 2026-05-17
-**Files audited:** VECTOR.md, CLAUDE.md, ARCHITECTURE.md, PRODUCT.md (cross-referenced), ADR-011 (cross-referenced), plans/portfolio-visual-recalibration-brief.md (cross-referenced)
-**Project stage:** development
-**Trigger:** Post-recalibration doctrine review (ADR-011 + Round 1–4 Paper exploration)
+**Files audited:** `VECTOR.md`, `CLAUDE.md`, `ARCHITECTURE.md`
+**Project stage:** `development` (from VECTOR.md)
+**Run date:** 2026-05-25
+**Doctrine timestamps:** ARCHITECTURE.md last updated 2026-03-14 (72 days stale); VECTOR.md and CLAUDE.md carry no `Last Updated` markers.
 
 ---
 
-## Findings
+### Findings
 
-### CONTRADICTION — high
+#### INCOMPLETE — high
 
-- **`ARCHITECTURE.md:Stack` (line 62)** — Stack table lists `Space Grotesk (display), Didact Gothic (body), Podkova (heading)`. Superseded by ADR-011, which locks the spine as `Fraunces (display) + Geist (body) + JetBrains Mono (mono kicker)`. VECTOR.md (line 159, 164), CLAUDE.md, and PRODUCT.md are all updated; ARCHITECTURE.md is the only doctrine file still describing the old system.
-- **`ARCHITECTURE.md:Conventions:Styling` (line 210)** — Says `Didact Gothic at weight 400 only`. This is the exact constraint ADR-011 explicitly supersedes. Direct contradiction with VECTOR.md, CLAUDE.md, PRODUCT.md.
+- `ARCHITECTURE.md:project structure tree` — Tree omits the entire `core/lab/` subdirectory (8 source files: `parse-guide.ts`, `guide-types.ts`, `guides.ts`, `territories.ts`, `upcoming.ts`, parse tests, plus the `guides/` content folder). The lab arm ships per ADR-009 and is actively maintained. invest-architecture cannot reason about layer boundaries here without the doctrine acknowledging the directory.
+- `ARCHITECTURE.md:project structure tree` — Tree omits the entire `src/lab/` subdirectory (29 source files across `layouts/`, `pages/`, `components/guide/`, `components/library/`). Doctrine does not currently declare what UI lives at `labs.justinh.design`.
+- `ARCHITECTURE.md:project structure tree` — Tree omits constellation components in `src/components/content/` (`ConstellationField.tsx`, `ConstellationPage.tsx`, `ConstellationContent.tsx`, `ConstellationNode.tsx`, `ConstellationStrip.tsx`) and `renderSection.tsx`, all of which ship and are referenced by ADR-007.
+- `ARCHITECTURE.md:project structure tree` — Tree omits `design-system/lab-tokens.css` (222 lines, parallel token surface for the lab). The layer rule names only `tokens.css`; lab-tokens.css coexists undeclared.
+- `ARCHITECTURE.md:path aliases` — No path-aliases section exists in ARCHITECTURE.md. CLAUDE.md declares four aliases; `vite.config.ts` actually configures five (`@lab` → `./src/lab`). Aliases belong in the architecture doctrine.
+- `ARCHITECTURE.md:ADR table` — Table stops at ADR-006 (2026-04-11). ADRs 007 (Constellation), 008 (Defer DESIGN.md), 009 (Lab subdomain), 010 (Perihelion rename) exist on disk and are referenced from CLAUDE.md and elsewhere.
 
-### INCOMPLETE — high
+#### CONTRADICTION — high
 
-- **`ARCHITECTURE.md:Decisions` table (lines 241–249)** — Lists ADRs 001, 003, 004, 005, 006. Missing ADRs 007 (constellation-navigation), 008 (defer-design-md), 009 (lab-subdomain-architecture), 010 (perihelion-rename), and 011 (this recalibration). Five missing entries in the decision registry. Downstream skills (invest-architecture, future audits) depend on this table being current.
+- `VECTOR.md:constraints` declares "Three-font system: Space Grotesk (display), Didact Gothic (body, 400 only), Podkova (headings, 400–700). Do not add fonts or use weights outside these ranges." `package.json` ships `@fontsource/jetbrains-mono` and `design-system/lab-tokens.css` declares `--lab-mono-font` consumed by `src/lab/styles/lab.css`. The lab uses a fourth font. Doctrine and reality contradict on a *hard* constraint.
+- `VECTOR.md:constraints` + `CLAUDE.md:Design System Non-Negotiables` declare "Didact Gothic only has weight 400 — do not use other weights." Active in-flight initiative on branch `polish/portfolio-visual-2026-05-17` (plan: `plans/portfolio-visual-recalibration-brief.md`) replaces this with a three-face type stack ("designer-as-craftsperson + editorial discipline"). Doctrine has not been updated to reflect the recalibration direction.
+- `ARCHITECTURE.md:stack` lists `motion/react` as the animation library. `package.json` ships the unified `motion` package (no separate `/react` subpackage). Functionally equivalent but the wording is stale.
+- `ARCHITECTURE.md:layer table` declares `design-system/tokens.css` as *the* location for all visual decisions ("All visual decisions live here"). Reality is two parallel files: `tokens.css` for the portfolio + `lab-tokens.css` for the lab arm. Doctrine treats it as a single file; reality is a coordinated pair.
 
-### STRUCTURE — medium
+#### STRUCTURE — high (declared but missing) / medium (exists but undeclared)
 
-- **`ARCHITECTURE.md:Project Structure` tree (lines 73–183)** — Root files exist but are undeclared: `PRODUCT.md` (added today), `labs.html` (Perihelion entry point per ADR-009), `MANIFEST.md` (Investiture inventory artifact from 2026-04-14), `invest.md`, `AUDIT.md`, `STASH_NOTES.md`, `VOID.md`. README.md is also undeclared but conventionally implicit.
-- **`ARCHITECTURE.md:Project Structure` tree** — Under `/vector/`, declares `/schemas`, `/research`, `/audits`, `/decisions`. Missing `/missions/` (exists with content including an `archive/` subdirectory).
+- `ARCHITECTURE.md` declares `services/api.ts`. File does not exist on disk. Only `services/analytics.ts` and `services/lastfm.ts` are present. **(high)**
+- `core/lab/` exists on disk; not declared in the structure tree. **(medium)**
+- `src/lab/` exists on disk; not declared. **(medium)**
+- `design-system/lab-tokens.css` exists; not declared. **(medium)**
+- `VOID.md` exists at repo root (added by Impeccable v3.0.7 upgrade, PR #50); not referenced in any doctrine file. **(medium)**
+- `core/content/codex.ts` + `core/content/constellation.ts` exist; only `case-studies.ts`, `resume.ts`, `lastfm.ts`, etc. are listed in the structure tree. **(medium)**
 
-### DRIFT — medium
+#### DRIFT — medium
 
-- **`src/styles/globals.css` (lines 6–8) vs. ADR-011** — Declares `--font-display: 'Podkova'`, `--font-heading: 'Space Grotesk'`, `--font-body: 'Didact Gothic'`. Doctrine now says Fraunces / Geist / JetBrains Mono. Codebase has not migrated yet — *expected* per the deferred tokens.css migration plan, but flagging it makes the drift explicit and traceable.
-- **Font token location vs. ARCHITECTURE.md layer rule** — Font tokens live in `src/styles/globals.css`, not `design-system/tokens.css`. ARCHITECTURE.md says "All visual decisions live here" pointing to design-system/. The current arrangement may be intentional (Tailwind v4 `@theme` structure), but if the migration moves fonts into design-system/tokens.css, that's a structural change worth a brief note in the next ADR (tokens migration).
+- `ARCHITECTURE.md:stack` declares Tailwind v4 + CSS variable tokens. Reality includes two token surfaces (`design-system/tokens.css` + `design-system/lab-tokens.css`) plus a TS-side parallel (`core/tokens/index.ts`). Doctrine should describe the actual token topology: which file is the source of truth, how the lab surface relates to the portfolio surface, how the TS exports stay in sync.
+- `ARCHITECTURE.md:project structure tree` describes the project at the moment of writing (2026-03-14). Since then the project has added Perihelion (two-arm house, second Vite entry, lab subdomain rewrite, eight launch guides, guide renderer, lab tokens, voice profile work, motion design system audit). The structure tree should be regenerated.
+- `CLAUDE.md:path aliases` lists four aliases. Reality has five. Add `@lab/* → ./src/lab/*` and confirm CLAUDE.md is the right home for this table — proposing to move to ARCHITECTURE.md per the gap above.
 
-### GAP — low
+#### GAP — low
 
-- **`ARCHITECTURE.md:What Not to Do` (line 38) and `Conventions:Styling` (line 208)** — Both ban hex (`#000`, `#FFF`) and default Tailwind colors but don't explicitly require OKLCH. VECTOR.md and CLAUDE.md now say "all color is OKLCH via tokens." ARCHITECTURE.md should match for consistency.
-- **`ARCHITECTURE.md:Last Updated` (line 3)** — `2026-03-14`. Stale by ~2 months and especially stale after today's changes. Refresh.
+- `ARCHITECTURE.md:conventions` does not declare a convention for JSX-returning utility files. Two examples currently exist (`src/components/content/renderSection.tsx`, `src/lib/parseInline.tsx`) — both `camelCase.tsx` because they export functions that return JSX rather than components. Doctrine has only "Components: PascalCase.tsx" and "Utilities: camelCase.ts" — no rule for the hybrid case.
+- `ARCHITECTURE.md:`design-system` rule" declares "no hardcoded colors, spacing, or font sizes *anywhere else in the project*." Doctrine should explicitly call out the existing exception used in practice — copy-paste effect components (canvas, WebGL, holographic gradients) carry internal color constants. The exception currently lives only in the "What Not to Do" / "Raw color values" sub-bullet; promote it to a first-class rule so it is unambiguous.
+- `CLAUDE.md:When You Commit` declares the trailer as `Claude Opus 4.6`. PR #53 is in flight to bump this to 4.7. Until that merges, both are valid depending on which timestamp the agent reads. Resolve and remove the ambiguity.
 
-### INFO
+#### CROSS-DOC CONSISTENCY — low
 
-- **PRODUCT.md is not in the Reading Order.** VECTOR > CLAUDE > ARCHITECTURE is the declared sequence (VECTOR.md Principle 6, CLAUDE.md Reading Order section). PRODUCT.md is now the operational source of truth for design direction (per CLAUDE.md Design Context section). Worth considering whether PRODUCT.md becomes a fourth doctrine file in the reading order, or whether it remains a /impeccable artifact referenced from CLAUDE.md. Not a defect, but a structural question for clarity.
-- **ADR-011 cross-references are correct.** Related Decisions section properly cites ADRs 005, 008, 009, 010 and the VECTOR.md supersession.
-- **plans/portfolio-visual-recalibration-brief.md is well-formed** — has status, scope, locked decisions section, full discovery summary, and surface-by-surface treatment. No findings.
-
----
-
-## Summary
-
-- **Critical:** 0
-- **High:** 3 (all in ARCHITECTURE.md)
-- **Medium:** 4
-- **Low:** 2
-- **Info:** 3
-- **Doctrine health: GAPS FOUND**
-
-VECTOR.md, CLAUDE.md, PRODUCT.md, and ADR-011 are internally consistent and cross-aligned after today's updates. ARCHITECTURE.md is the lagging file — it still describes the pre-recalibration type system in three places and is missing five ADRs from its registry. Once ARCHITECTURE.md catches up, the doctrine will be SOUND.
-
-The codebase drift (globals.css fonts) is expected and tracked; it is the planned migration that the next ADR will scope.
+- `CLAUDE.md:Design System Non-Negotiables` line 94 references the brass + magenta accents using raw hex literals (`#C8956A`, `#C278A0`). Per the project's standing posture (memory: "OKLCH only, no hex"), doctrine itself should reference these as token names (`--theme-accent-primary`, `--theme-secondary-primary`) or at minimum cite the OKLCH equivalents. Doctrine drift on a stated style rule.
+- `ARCHITECTURE.md:ADR table` line for ADR-008 reads "Defer DESIGN.md adoption" — but DESIGN.md has since been *adopted and renamed* to PRODUCT.md (via the Impeccable v3 upgrade). ADR-008 should either be marked Superseded or have a follow-on ADR (e.g., ADR-011 Adopt PRODUCT.md) added. CLAUDE.md correctly references PRODUCT.md; the ADR ledger lags.
 
 ---
 
-## Recommended Actions
+### Summary
 
-1. **Update ARCHITECTURE.md type system references.** Fix line 62 (Stack table — replace old fonts with new three-face spine and reference ADR-011), fix line 210 (Styling — remove "Didact Gothic at weight 400 only"). Refresh `Last Updated` to today.
-2. **Backfill ARCHITECTURE.md Decisions table.** Add ADRs 007, 008, 009, 010, 011 to the table at lines 241–249. Five missing entries is a significant registry drift.
-3. **Tighten the OKLCH rule in ARCHITECTURE.md** (lines 38 and 208) to match VECTOR.md and CLAUDE.md ("all color is OKLCH via tokens"). Then update the Project Structure tree to add at minimum `PRODUCT.md`, `labs.html`, `MANIFEST.md`, and `/vector/missions/` — or explicitly note them as out-of-scope-for-tree.
+- **Critical:** 0 | **High:** 9 (6 incomplete, 1 structure-declared-missing, 4 contradiction, accounted under categories) | **Medium:** 9 (4 structure-undeclared, 3 drift, 2 other) | **Low:** 6
+- **Doctrine health:** GAPS FOUND
+
+The doctrine is structurally sound — all three files exist, all required sections are present, and the core rules (four layers, import direction, token discipline, naming) are coherent and audit-ready. The damage is in *reality coverage*: the doctrine describes the project as it stood on 2026-03-14 and hasn't kept up with Perihelion (lab arm), the constellation system, the token surface expansion, the four-ADR backlog, or the Portfolio Visual Recalibration that is mid-flight. Two *hard* constraints (three-font system, Didact 400-only) are actively contradicted by code on `main` and by an approved in-flight initiative respectively.
+
+### Recommended Actions
+
+1. **Rebuild `ARCHITECTURE.md`'s project structure tree from disk** and add a section for the multi-entry / two-Vite-build layout (Portfolio + Perihelion). Include `core/lab/`, `src/lab/`, `design-system/lab-tokens.css`, the constellation components, `VOID.md`, and the missing path alias `@lab`. Bump the `Last Updated` line. This single edit unblocks roughly half the findings above.
+2. **Reconcile the three-font / Didact 400-only constraints in `VECTOR.md` and `CLAUDE.md` against reality.** Either accept the four-font lab register (JetBrains Mono) and document it as a lab-side exception, *or* land the Portfolio Visual Recalibration first and then rewrite the typography section to reflect the three-face stack. Pick a direction. The current state is doctrine actively lying about a hard constraint.
+3. **Extend the ADR table in `ARCHITECTURE.md`** to include ADRs 007-010, and add a status note on ADR-008 ("Defer DESIGN.md adoption") to reflect that DESIGN.md was subsequently adopted and renamed to PRODUCT.md.

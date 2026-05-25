@@ -65,7 +65,7 @@ You work with **Justin** -- a product designer who builds with code and cares de
 
 ### When You Commit
 ```
-Co-Authored-By: Claude Opus 4.6 <noreply@anthropic.com>
+Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
 ```
 
 ---

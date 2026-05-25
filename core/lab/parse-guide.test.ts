@@ -226,18 +226,6 @@ describe('parseGuide blockquote variants', () => {
     }
   });
 
-  it('tolerates an emoji prefix on the callout label during transition', () => {
-    const guide = parseGuide(
-      withBlockquote('> 🔗 **Territory Bridge**\n>\n> Body paragraph.'),
-      'emoji-callout',
-    );
-    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
-    expect(bq).toBeDefined();
-    if (!bq || bq.kind !== 'blockquote') return;
-    expect(bq.variant).toBe('territory-bridge');
-    expect(bq.paragraphs).toHaveLength(1);
-  });
-
   it('detects a definition gloss, extracts the term, and strips the colon separator', () => {
     const guide = parseGuide(
       withBlockquote('> **vacuum coherence**: The hypothesized property of the quantum vacuum.'),

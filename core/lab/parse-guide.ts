@@ -289,38 +289,19 @@ const CALLOUT_LABELS: Record<string, BlockquoteVariant> = {
   'Subguide queued': 'subguide-queued',
 };
 
-// Strip a leading emoji + whitespace run from a text node value. uap-field-map.md
-// writes callouts as `> 🔗 **Territory Bridge**` today; C.2 will sweep these out
-// at the source. Until then the parser tolerates the prefix so variant detection
-// works on the production guide. A leading emoji is any whitespace-padded non-ASCII
-// run before the bold node.
-function isWhitespacePaddedEmoji(value: string): boolean {
-  const trimmed = value.trim();
-  return trimmed.length > 0 && /[^ -~]/.test(trimmed);
-}
-
 function detectVariant(paragraphs: Paragraph[]): {
   variant: BlockquoteVariant;
   paragraphs: Paragraph[];
   term?: string;
 } {
-  // Callout: first paragraph is a label (optionally preceded by an emoji prefix),
-  // followed by at least one body paragraph.
+  // Callout: first paragraph is a single bold label, followed by at least one
+  // body paragraph. Per the no-emoji-in-guide-markdown rule (2026-05-03), the
+  // bold label is not preceded by an emoji prefix in any production guide;
+  // icons are added by the renderer at the design-system level.
   if (paragraphs.length >= 2) {
     const first = paragraphs[0].nodes;
-    let boldNode: BoldNode | undefined;
     if (first.length === 1 && first[0].kind === 'bold') {
-      boldNode = first[0];
-    } else if (
-      first.length === 2 &&
-      first[0].kind === 'text' &&
-      isWhitespacePaddedEmoji(first[0].value) &&
-      first[1].kind === 'bold'
-    ) {
-      boldNode = first[1];
-    }
-    if (boldNode) {
-      const variant = CALLOUT_LABELS[boldNode.value.trim()];
+      const variant = CALLOUT_LABELS[first[0].value.trim()];
       if (variant) {
         return { variant, paragraphs: paragraphs.slice(1) };
       }

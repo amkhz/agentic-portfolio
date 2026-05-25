@@ -114,9 +114,19 @@ export interface ListBlock {
   items: ListItem[];
 }
 
+export type BlockquoteVariant =
+  | 'design-hook'
+  | 'territory-bridge'
+  | 'read-next'
+  | 'subguide-queued'
+  | 'definition'
+  | 'plain';
+
 export interface BlockquoteBlock {
   kind: 'blockquote';
+  variant: BlockquoteVariant;
   paragraphs: Paragraph[];
+  term?: string;
 }
 
 export type SectionBlock =

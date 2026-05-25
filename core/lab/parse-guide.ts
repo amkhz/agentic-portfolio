@@ -9,6 +9,7 @@
 import yaml from 'js-yaml';
 import type {
   BlockquoteBlock,
+  BlockquoteVariant,
   BoldNode,
   Figure,
   FigureBackground,
@@ -277,6 +278,77 @@ function parseList(listLines: string[], ordered: boolean): ListBlock {
   return { kind: 'list', ordered, items };
 }
 
+const CALLOUT_LABELS: Record<string, BlockquoteVariant> = {
+  'Design Hook': 'design-hook',
+  'Territory Bridge': 'territory-bridge',
+  'Read Next': 'read-next',
+  'Subguide queued': 'subguide-queued',
+};
+
+// Strip a leading emoji + whitespace run from a text node value. uap-field-map.md
+// writes callouts as `> 🔗 **Territory Bridge**` today; C.2 will sweep these out
+// at the source. Until then the parser tolerates the prefix so variant detection
+// works on the production guide. A leading emoji is any whitespace-padded non-ASCII
+// run before the bold node.
+function isWhitespacePaddedEmoji(value: string): boolean {
+  const trimmed = value.trim();
+  return trimmed.length > 0 && /[^ -~]/.test(trimmed);
+}
+
+function detectVariant(paragraphs: Paragraph[]): {
+  variant: BlockquoteVariant;
+  paragraphs: Paragraph[];
+  term?: string;
+} {
+  // Callout: first paragraph is a label (optionally preceded by an emoji prefix),
+  // followed by at least one body paragraph.
+  if (paragraphs.length >= 2) {
+    const first = paragraphs[0].nodes;
+    let boldNode: BoldNode | undefined;
+    if (first.length === 1 && first[0].kind === 'bold') {
+      boldNode = first[0];
+    } else if (
+      first.length === 2 &&
+      first[0].kind === 'text' &&
+      isWhitespacePaddedEmoji(first[0].value) &&
+      first[1].kind === 'bold'
+    ) {
+      boldNode = first[1];
+    }
+    if (boldNode) {
+      const variant = CALLOUT_LABELS[boldNode.value.trim()];
+      if (variant) {
+        return { variant, paragraphs: paragraphs.slice(1) };
+      }
+    }
+  }
+
+  // Definition gloss: single-paragraph quote starting with `**term**: gloss`.
+  if (paragraphs.length === 1) {
+    const nodes = paragraphs[0].nodes;
+    if (
+      nodes.length >= 2 &&
+      nodes[0].kind === 'bold' &&
+      nodes[1].kind === 'text' &&
+      /^:\s/.test(nodes[1].value)
+    ) {
+      const term = nodes[0].value.trim();
+      const stripped = nodes[1].value.replace(/^:\s+/, '');
+      const remaining: ParagraphNode[] = [
+        { kind: 'text', value: stripped } satisfies TextNode,
+        ...nodes.slice(2),
+      ];
+      return {
+        variant: 'definition',
+        paragraphs: [{ kind: 'paragraph', nodes: remaining }],
+        term,
+      };
+    }
+  }
+
+  return { variant: 'plain', paragraphs };
+}
+
 function parseBlockquote(bqLines: string[]): BlockquoteBlock {
   // Strip the leading `> ` / `>` from each line, then split into paragraphs
   // on blank inner lines. Nested blocks are not supported — blockquote
@@ -284,12 +356,19 @@ function parseBlockquote(bqLines: string[]): BlockquoteBlock {
   const inner = bqLines
     .map((line) => line.replace(BLOCKQUOTE_RE, '$1'))
     .join('\n');
-  const paragraphs: Paragraph[] = inner
+  const rawParagraphs: Paragraph[] = inner
     .split(/\n\s*\n/)
     .map((chunk) => chunk.trim())
     .filter(Boolean)
     .map((chunk) => ({ kind: 'paragraph', nodes: parseInline(chunk) }));
-  return { kind: 'blockquote', paragraphs };
+  const detected = detectVariant(rawParagraphs);
+  const block: BlockquoteBlock = {
+    kind: 'blockquote',
+    variant: detected.variant,
+    paragraphs: detected.paragraphs,
+  };
+  if (detected.term) block.term = detected.term;
+  return block;
 }
 
 function parseBody(body: string, slug: string): GuideSection[] {

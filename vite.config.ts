@@ -43,5 +43,6 @@ export default defineConfig({
       'src/**/*.test.{ts,tsx}',
       'src/lab/**/*.test.{ts,tsx}',
     ],
+    setupFiles: ['./src/test-setup.ts'],
   },
 });

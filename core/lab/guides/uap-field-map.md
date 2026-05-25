@@ -422,7 +422,7 @@ The terminology and the org chart followed the data. Once the Navy's encounters 
 
 Eleven active programs make up the working scientific peer group. Six academic, five private/citizen. Three patterns to watch as we go through them: **multi-modal sensor convergence, statistical-rigor borrowing from particle physics, and a layered ecosystem from university observatories down to YouTube-streamed citizen networks.**
 
-### |Hessdalen| (Norway, 1984–) — Erling Strand, Østfold University College
+### Hessdalen (Norway, 1984–) — Erling Strand, Østfold University College
 
 The longest-running instrumented UAP study on Earth. Hessdalen Valley is the prototype anomaly hotspot — multi-shaped, multicolored balls of light **ranging from half a meter to thirty meters** in size, often preceded by short flashes. Two automatic stations ("Blue Box" and "White Box") provide 24/7 video. The phenomenon has identifiable statistical patterns: **winter peaks, time concentration 10pm–1am, distributed throughout the sky, doesn't follow airways.**
 
@@ -450,7 +450,7 @@ Other known recurrence hotspots worldwide: **Brown Mountain, Cape Fear River, Jo
 >
 > The five Hessdalen open problems map directly onto vacuum/plasma physics — the same framework that DIRDs 14, 15, and the Puthoff/White vacuum-engineering work are exploring. A plasma maintaining itself "without energy losses" is essentially asking for a coherent vacuum coupling. T4 produces the empirical phenomenology that T1 needs to explain.
 
-### |UAlbany-UAPx| Collaboration
+### UAlbany-UAPx Collaboration
 
 The methods are familiar from the lab's existing UAPx Field Methods guide. The conceptual contribution worth restating: the borrowing of |HEP σ thresholds| from high-energy physics, the same statistical framework that confirmed the Higgs boson:
 
@@ -464,7 +464,7 @@ This is a load-bearing innovation. Once you adopt it, the conversation stops bei
 >
 > The σ-threshold framing is portable beyond UAP. It's the kind of analytical move any speculative-design project working with controversial empirical claims should consider. The lab's broader work on consciousness, vacuum engineering, and remote viewing all benefit from explicit statistical-significance frameworks.
 
-### |IFEX| (Würzburg, Germany, 2016–) — Hakan Kayal
+### IFEX (Würzburg, Germany, 2016–) — Hakan Kayal
 
 University-embedded, faculty of mathematics and computer science. Twenty-one associated members. Operates SKY-CAM-5 (since December 2021) and SKY-CAM-6 (since March 2024) ground-based detection systems.
 
@@ -478,7 +478,7 @@ Also notable: **SONATE-2** satellite — currently on-orbit, autonomously traini
 >
 > The Mars-framing strategy is itself a design pattern — *bundle a high-stigma research target with a low-stigma adjacent target that uses the same instrumentation*. The lab can use this pattern explicitly. (Vacuum engineering ≈ "advanced energy storage." Remote viewing instrumentation ≈ "operator cognitive-state monitoring." Etc.)
 
-### |SETI Kingsland| (Lough Key, Ireland, 2000–) — Eamonn Ansbro
+### SETI Kingsland (Lough Key, Ireland, 2000–) — Eamonn Ansbro
 
 Sited deliberately at a documented UAP hotspot based on **150 case studies over a ten-year period** prior to instrumentation. The architecture is the cleanest "trigger + slew" design in the academic peer group:
 
@@ -498,7 +498,7 @@ The most striking specific claim in the entire paper comes from Ansbro's program
 >
 > A 66-minute orbital period at 0–18° inclination is a *testable, falsifiable prediction* about where UAPs should appear and when. If verified by independent observation networks, it would transform UAP study from event-chasing to schedule-driven observing. **The lab's design implications work should treat this as a high-priority hypothesis worthy of dedicated attention.**
 
-### |Galileo Project| (Harvard, 2021–) — Avi Loeb
+### Galileo Project (Harvard, 2021–) — Avi Loeb
 
 The most well-resourced academic effort. Three observatories planned, all targeted operational in 2025. Detailed methodology paper by Watters et al. — includes a full |Science Traceability Matrix| (STM) connecting observations → physical parameters → instrument requirements → instruments built.
 
@@ -520,7 +520,7 @@ Galileo also runs a **satellite-based detection** program using ~4 m resolution 
 >
 > The Science Traceability Matrix is a service-design pattern. Every UAP claim should be reverse-mappable: claim → required parameter measurement → required instrument capability → instrument we have. This is what mature aerospace design looks like, and Galileo is the first to bring it to UAP. **The lab should use the STM pattern when proposing any T4 instrumentation work.**
 
-### |VASCO| (Beatriz Villarroel)
+### VASCO (Beatriz Villarroel)
 
 The most original methodology in the peer group: **search astronomical photographic plates from the past century for transient objects.** The advantage: pre-Sputnik plates (before October 1957) are uncontaminated by artificial satellites. If something appears and vanishes in a 1950 plate, it cannot be a satellite reflection.
 
@@ -628,7 +628,7 @@ The same applies to UAP. Witness reports across decades and regions consistently
 >
 > This is the cleanest articulation of the lab's *epistemological* position in the entire source paper. The lab's "lead with conviction" framing is the working alternative to suspension-of-judgment. Engaging with these technologies as real, while remaining rigorous about evidence, is what unlocks the design questions ("what becomes possible when…") that suspension-of-judgment forecloses.
 
-### The |Wendt-Duvall sovereignty argument|
+### The Wendt-Duvall sovereignty argument
 
 The single most important political-theory reference in the whole paper. **Alexander Wendt** is one of the most cited international relations scholars alive. In 2008, with Raymond Duvall, he published **"Sovereignty and the UFO"** in *Political Theory* — a serious peer-reviewed political-theory article arguing:
 

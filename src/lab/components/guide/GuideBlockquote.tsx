@@ -133,7 +133,7 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
         <Icon
           aria-hidden="true"
           strokeWidth={2}
-          className="h-3 w-3 text-guide-accent/80"
+          className="h-3.5 w-3.5 text-guide-accent/80"
         />
         {calloutLabel}
       </div>

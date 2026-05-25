@@ -186,6 +186,123 @@ describe('parseGuide', () => {
   });
 });
 
+describe('parseGuide blockquote variants', () => {
+  let warn: ReturnType<typeof vi.spyOn>;
+  beforeEach(() => {
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    warn.mockRestore();
+  });
+
+  const withBlockquote = (bq: string) =>
+    VALID_SOURCE.replace(
+      'Paragraph with an |ambiguity| and a **bold phrase**.',
+      bq,
+    );
+
+  it('detects all four callout labels and drops the label paragraph', () => {
+    const labels: Array<[string, string]> = [
+      ['Design Hook', 'design-hook'],
+      ['Territory Bridge', 'territory-bridge'],
+      ['Read Next', 'read-next'],
+      ['Subguide queued', 'subguide-queued'],
+    ];
+    for (const [label, variant] of labels) {
+      const guide = parseGuide(
+        withBlockquote(`> **${label}**\n>\n> Body paragraph.`),
+        'callout-guide',
+      );
+      const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+      expect(bq, label).toBeDefined();
+      if (!bq || bq.kind !== 'blockquote') return;
+      expect(bq.variant).toBe(variant);
+      expect(bq.paragraphs).toHaveLength(1);
+      // Label paragraph dropped — first body paragraph reads as text only.
+      expect(bq.paragraphs[0].nodes[0].kind).toBe('text');
+      expect(
+        bq.paragraphs[0].nodes[0].kind === 'text' && bq.paragraphs[0].nodes[0].value,
+      ).toBe('Body paragraph.');
+    }
+  });
+
+  it('tolerates an emoji prefix on the callout label during transition', () => {
+    const guide = parseGuide(
+      withBlockquote('> 🔗 **Territory Bridge**\n>\n> Body paragraph.'),
+      'emoji-callout',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('territory-bridge');
+    expect(bq.paragraphs).toHaveLength(1);
+  });
+
+  it('detects a definition gloss, extracts the term, and strips the colon separator', () => {
+    const guide = parseGuide(
+      withBlockquote('> **vacuum coherence**: The hypothesized property of the quantum vacuum.'),
+      'definition-guide',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('definition');
+    expect(bq.term).toBe('vacuum coherence');
+    expect(bq.paragraphs).toHaveLength(1);
+    const first = bq.paragraphs[0].nodes[0];
+    expect(first.kind).toBe('text');
+    expect(first.kind === 'text' && first.value).toBe(
+      'The hypothesized property of the quantum vacuum.',
+    );
+  });
+
+  it('keeps italic source quotes as plain blockquotes', () => {
+    const guide = parseGuide(
+      withBlockquote('> *While the U.S. Air Force was studying this, nothing came of it.*'),
+      'italic-quote',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('plain');
+    expect(bq.term).toBeUndefined();
+  });
+
+  it('keeps multi-paragraph plain blockquotes as plain', () => {
+    const guide = parseGuide(
+      withBlockquote('> First paragraph.\n>\n> Second paragraph.'),
+      'multi-plain',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('plain');
+    expect(bq.paragraphs).toHaveLength(2);
+  });
+
+  it('falls through to plain when a callout label has no body paragraph', () => {
+    const guide = parseGuide(
+      withBlockquote('> **Design Hook**'),
+      'orphan-label',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('plain');
+  });
+
+  it('treats callout label matching as case-sensitive', () => {
+    const guide = parseGuide(
+      withBlockquote('> **design hook**\n>\n> Body paragraph.'),
+      'wrong-case',
+    );
+    const bq = guide.sections[0].blocks.find((b) => b.kind === 'blockquote');
+    expect(bq).toBeDefined();
+    if (!bq || bq.kind !== 'blockquote') return;
+    expect(bq.variant).toBe('plain');
+  });
+});
+
 describe('contrastRatio', () => {
   it('is symmetric and scales correctly', () => {
     const light = contrastRatio('#ffffff', '#000000');

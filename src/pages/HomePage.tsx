@@ -23,7 +23,7 @@ export function HomePage() {
         <title>Home | Justin Hernandez</title>
         <meta
           name="description"
-          content="Portfolio of Justin Hernandez. Product design leader for complex, human-centered systems. Currently creating with AI."
+          content="Portfolio of Justin Hernandez. Product design leader for complex, human-centered systems. Augmenting human creativity alongside AI."
         />
         <link rel="canonical" href="https://justinh.design/" />
       </Helmet>

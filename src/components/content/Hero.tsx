@@ -30,7 +30,7 @@ export function Hero() {
 
         <p className="mt-6 max-w-[56ch] font-body text-lg leading-normal text-text-secondary">
           Product design leader who turns messy, complex problems into
-          experiences people can trust. Right now, that means creating with AI.
+          experiences people can trust. Today, that means blending human judgement with AI.
         </p>
 
         <div className="mt-10">

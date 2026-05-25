@@ -2,7 +2,7 @@
 
 **Status:** Working notes, not authoritative.
 **Started:** 2026-05-25
-**Purpose:** Ground the deferred `source.authors` slot fix for DIRDs 14 and 28 (and re-audit DIRDs 13 and 15) in a future B.1 sub-pass.
+**Purpose:** Ground the deferred `source.authors` slot fix for DIRDs 14 and 28 in a future B.1 sub-pass. Audit of DIRDs 13 and 15 included for completeness — DIRD 15 confirmed correct 2026-05-25; DIRD 13's `Puthoff et al.` is a small open question.
 
 ---
 
@@ -24,7 +24,7 @@ Compiled from a mix of FOIA-disclosed authorship, interviews, and secondary repo
 | Traversable Wormholes, Stargates, and Negative Energy | Hal Puthoff | Highly discussed exotic-physics DIRD frequently linked to Puthoff |
 | Aerospace Applications of Quantum Vacuum Fluctuations | Hal Puthoff | Grouped with Puthoff's speculative physics work |
 | Antigravity for Aerospace Applications | Eric Davis / AAWSAP technical contributors | Commonly discussed as a technical DIRD; public attribution less neat than the headline titles |
-| Advanced Space Propulsion Based on Vacuum Fluctuation Energy | Eric Davis / AAWSAP technical contributors | Often referenced in the same cluster of exotic-propulsion studies |
+| Advanced Space Propulsion Based on Vacuum Fluctuation Energy | Eric Davis / AAWSAP technical contributors | Often referenced in the same cluster of exotic-propulsion studies. **Title-cluster note (2026-05-25):** likely refers to DIRD 24 ("Concepts for Extracting Energy from the Quantum Vacuum"), *not* DIRD 15 ("Vacuum Spacetime Metric Engineering"). The two titles cluster around "Vacuum + Energy / Engineering" but the underlying papers are distinct — DIRD 15 is about reshaping spacetime; DIRD 24 is about energy extraction. |
 | Alcubierre Warp Drive and Related Concepts | Hal Puthoff / AAWSAP contributors | Often discussed as part of the broader warp-drive set, not a clean single-author work |
 | Overview of Torsion Fields and Related Phenomena | AAWSAP contributors | Program-era technical paper, no celebrity attribution in UFO discourse |
 
@@ -44,7 +44,7 @@ Cross-referencing the working table against `core/lab/guides/*.md`. Title variat
 | --- | --- | --- | --- | --- |
 | `dird-13-warp-drive` | DIRD 13: Warp Drive, Dark Energy, and the Manipulation of Extra Dimensions | `Puthoff et al.` | Hal Puthoff (Justin's "Warp Drive, Dark Energy..." entry) | **Looks correct.** Possibly tighten to `Hal Puthoff` if the `et al.` is unsourced. |
 | `dird-14-superconductors-gravity` | DIRD 14: The Role of Superconductors in Gravity Research | `DIA / AAWSA Program` | **Unknown.** Not in the working table. | **Open.** Institutional fallback may be the right answer if no personal author surfaces. |
-| `dird-15-vacuum-spacetime-engineering` | DIRD 15: Advanced Space Propulsion Based on Vacuum Spacetime Metric Engineering | `Hal Puthoff` | **Possibly contested.** Justin's table lists "Advanced Space Propulsion Based on Vacuum Fluctuation Energy" → Eric Davis / AAWSAP technical contributors. Titles are close but not identical (Vacuum *Spacetime Metric Engineering* vs. Vacuum *Fluctuation Energy*). | **Open.** Two possibilities: (a) Same DIRD, different working title — our `Hal Puthoff` may be wrong; (b) Different DIRDs entirely (Vacuum Fluctuation Energy might be DIRD 24 "Concepts for Extracting Energy from the Quantum Vacuum"). Needs PDF cover sheet check or further secondary-source check. |
+| `dird-15-vacuum-spacetime-engineering` | DIRD 15: Advanced Space Propulsion Based on Vacuum Spacetime Metric Engineering | `Hal Puthoff` | Hal Puthoff (confirmed). Title-cluster confusion with Justin's "Vacuum Fluctuation Energy" entry resolved 2026-05-25 — that entry maps to a different DIRD. | **Confirmed.** Two independent sources: (1) DIRD 15 body, line 84: "DIRD 15 is the theoretical spine of the entire collection. Written by Hal Puthoff at the Institute for Advanced Studies at Austin (now EarthTech International)." (2) Upstream brief at `dird-technology-briefs.md`: "Author / Institution: Harold 'Hal' Puthoff / Institute for Advanced Studies at Austin." No edit needed. Could optionally tighten to `Hal Puthoff (Institute for Advanced Studies at Austin)` parallel to the `Harold Puthoff (EarthTech International)` formatting on `core/lab/upcoming.ts:35` if institutional context is wanted, but the bare `Hal Puthoff` is canonical and consistent with DIRD 13's `Puthoff et al.`. |
 | `dird-28-breakthrough-cockpits` | DIRD 28: Cockpits in the Era of Breakthrough Flight | `DIA / AAWSA Program` | **Unknown.** Not in the working table. | **Open.** Institutional fallback likely correct — this isn't a physics-heavy DIRD where Puthoff or Davis would be the natural author. |
 | `emergent-quantization` | (non-DIRD) | (varies) | — | Out of scope for this research. |
 | `quantum-gravity` | (non-DIRD) | (varies) | — | Out of scope. |
@@ -55,10 +55,7 @@ Cross-referencing the working table against `core/lab/guides/*.md`. Title variat
 
 ## Open questions for the future fix
 
-1. **DIRD 15 attribution.** Is `Hal Puthoff` (current) correct, or is it actually Eric Davis / AAWSAP technical contributors per the working table? Title similarity suggests this needs grounded confirmation before any edit. Possible angles:
-   - Check the DIRD 15 PDF inside-cover for any non-redacted attribution language.
-   - Cross-reference Davis's published work (Davis has a substantial public catalog around vacuum propulsion; if he wrote DIRD 15, related papers under his name should exist).
-   - Check FOIA-disclosed AAWSAP author lists if any have been published since.
+1. ~~**DIRD 15 attribution.**~~ **Resolved 2026-05-25.** Hal Puthoff confirmed by body text + upstream brief. The working-table entry that looked like a contradiction was about a different DIRD (likely DIRD 24, "Concepts for Extracting Energy from the Quantum Vacuum") — title-cluster confusion between "Vacuum Spacetime Metric Engineering" and "Vacuum Fluctuation Energy."
 
 2. **DIRDs 14 and 28 (the original deferred question).** Neither is in the working table. Decision tree:
    - If research surfaces a personal author → use it.
@@ -67,6 +64,8 @@ Cross-referencing the working table against `core/lab/guides/*.md`. Title variat
 3. **`et al.` vs. specific naming on DIRD 13.** Current `Puthoff et al.` — is the "et al." sourced (i.e., we know there were co-authors), or was it a hedge? If unsourced, tighten to `Hal Puthoff` for consistency with DIRD 15.
 
 4. **Eric Davis institutional affiliation.** If we attribute DIRDs to Davis, do we use just his name or "Eric Davis (EarthTech International)" parallel to the `Harold Puthoff (EarthTech International)` formatting we already use in `core/lab/upcoming.ts:35`? Pick a convention.
+
+5. **DIRD 24 attribution.** Not yet a published portfolio guide, but worth recording: based on the working table + the title-cluster note above, DIRD 24 ("Concepts for Extracting Energy from the Quantum Vacuum") most likely traces to Eric Davis / AAWSAP technical contributors rather than Puthoff. Useful pre-attribution if DIRD 24 ever gets built out as a guide.
 
 ---
 

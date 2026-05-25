@@ -28,12 +28,12 @@ Walks `core/lab/guides/*.md`, parses each through `core/lab/parse-guide.ts`, and
 
 Re-running the script overwrites today's report. Older dated reports stay on disk as a history trail — useful for tracking how quickly authoring cleanup keeps pace with ingestion.
 
-### `migrate-jsx-guide.ts` — one-shot JSX → markdown migration
+### `archive/migrate-jsx-guide.ts` — one-shot JSX → markdown migration (archived)
 
-`npx tsx scripts/migrate-jsx-guide.ts <input.jsx> <output.md> --territory T1|T2|T3|T4 --status draft|in-progress|complete --description "..." [--kicker "..."] [--order N]`
+`npx tsx scripts/archive/migrate-jsx-guide.ts <input.jsx> <output.md> --territory T1|T2|T3|T4 --status draft|in-progress|complete --description "..." [--kicker "..."] [--order N]`
 
 Converts a legacy JSX research guide (`const SECTIONS = [...]` + a React component rendering a header) into a `.md` file matching the schema in `core/lab/parse-guide.ts`. Walks the AST with `@babel/parser`, rebuilds SECTIONS as a JS value, scans the JSX tree for the first `<h1>` and sibling source line, and extracts the first non-neutral hex color as the accent.
 
 Glossary terms dedupe across paragraphs into the frontmatter map; term conflicts log a warning and keep the last occurrence.
 
-One-off tool — not wired to an npm alias. Retain until the legacy JSX guides are fully retired.
+Archived 2026-05-25 — the JSX → MD migration is done. Kept under `scripts/archive/` as historical reference for any future format migration that wants to crib from the AST-walking pattern.

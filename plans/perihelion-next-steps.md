@@ -1,6 +1,6 @@
 # Perihelion: next steps
 
-> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence; refined again 2026-05-03 (end-of-day) with the C.1-immediate sequencing, multi-agent posture, and the no-emoji authoring rule; resynced 2026-05-17 with the step-2 burndown closed, the B.1 renderer enhancement scope locked, the upstream no-emoji rule sync completed, and the B.1 DIRD frontmatter pass opened as PR #51.
+> Living punch list for the lab at `labs.justinh.design`. First written 2026-04-21 during the rename session; resynced 2026-04-30; resynced again 2026-05-03 with the format-alignment workstream split, design-futures schema reconciliation, and Workstream A landing; resynced once more 2026-05-03 (later that day) with T6 polish landing, the C/B.1 collision call, and the C-parallel-with-B-rest sequence; refined again 2026-05-03 (end-of-day) with the C.1-immediate sequencing, multi-agent posture, and the no-emoji authoring rule; resynced 2026-05-17 with the step-2 burndown closed, the B.1 renderer enhancement scope locked, the upstream no-emoji rule sync completed, and the B.1 DIRD frontmatter pass opened as PR #51; resynced 2026-05-25 with PRs #51 and #52 merged, completed mission files archived, and the B.1 renderer enhancement build surfaced as the next open mission.
 
 ---
 
@@ -18,10 +18,12 @@
 - **PR #41 — plan resync + format spec mirror + B.1/B.2 split.** Merged.
 - **PRs #42–#50 — step-2 burndown and infrastructure refresh.** T6 polish (PR #42), plan refinement (#44), worktrees gitignore (#45), B.1 schema rename `id:` → `slug:` (#46), C.1 light-mode tokens added to `lab-tokens.css` (#47), Glossarian project skill installed (#48), T6.3 colophon copy refined (#49), Impeccable v3.0.7 upgrade with `PRODUCT.md` rename and VOID.md added (#50). All merged.
 - **Track B — no-emoji upstream sync.** One-shot edit applied 2026-05-17 in a `~/projects/design-futures/` Claude Code session. Removed emoji prefixes from header / callout examples in `guide-format-rules.md` and added the no-emoji rule canonically. Design-futures dir is not a git repo, so no PR or commit record; record lives in the agent's session summary plus this entry.
+- **PR #51 — B.1 DIRD frontmatter pass.** Mechanical fix to `source.year` (all four were `2026`, corrected to `2010` per the published DIRD cover pages) and `source.venue` (consolidated to `DIA / AAWSAP Program`) on DIRDs 13, 14, 15, 28. Mission log archived to `vector/missions/archive/perihelion-b1-dird-frontmatter.md`. Three follow-up flags surfaced for a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the spec, `source.authors` drift on DIRDs 14 and 28 (carry the venue value in the authors slot), and an ICOD-vs-publication-date typo on the DIRD 14 cover.
+- **PR #52 — B.1 renderer enhancement scope lock.** Codified the variant-discriminator decision for `BlockquoteBlock` and added `plans/perihelion-b1-renderer-scope.md` as the full spec. Unblocks step 4 of the suggested sequence (the renderer build itself).
 
 ### Open / in flight
 
-- **PR #51 — B.1 DIRD frontmatter pass.** Mechanical fix to `source.year` (all four were `2026`, corrected to `2010` per the published DIRD cover pages) and `source.venue` (consolidated to `DIA / AAWSAP Program`) on DIRDs 13, 14, 15, 28. Mission log at `vector/missions/perihelion-b1-dird-frontmatter.md`. Awaiting Justin's spot-check before merge. Three follow-up flags surfaced by the pass and worth a note in a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the spec, `source.authors` drift on DIRDs 14 and 28 (carry the venue value in the authors slot), and an ICOD-vs-publication-date typo on the DIRD 14 cover.
+- **Next mission — B.1 renderer enhancement build.** Scope locked in `plans/perihelion-b1-renderer-scope.md`. Branch `feat/perihelion-b1-renderer-variants`. Three commits per the spec: (1) types + parser detection, (2) renderer per-variant treatment in `GuideBlockquote.tsx`, (3) tests + manual QA. Mission file to be authored at kickoff under `vector/missions/`.
 
 ---
 
@@ -198,12 +200,9 @@ A brand mark for Perihelion. Delayed until the brand has had time to settle.
 Refined 2026-05-03 (end-of-day). Earlier draft put renderer enhancement first as the unblocker for C; revised after realizing C.1 (light-mode tokens, contained to `lab-tokens.css`) has zero collision with anything in B.1, and the small B.1 pieces don't touch `GuideBlockquote.tsx` either. Real gating is between B.1 renderer ↔ C.2; everything else runs concurrent from day one.
 
 1. ~~**Workstream A (origins intro).**~~ ✅ shipped via PR #40 + PR #42 (T6 polish).
-2. **Start immediately, in parallel** — each can be its own agent, its own branch, its own small mission file in `vector/missions/`:
-  - **B.1 small pieces** — DIRD frontmatter mechanical pass (years/venues on guides 13/14/15/28); Glossarian skill installation at `.claude/skills/glossarian/`; slug migration (`id:` → `slug:` across 8 guides + parser + types). Touches `core/lab/guides/*.md`, `core/lab/parse-guide.ts`, `core/lab/guide-types.ts`. No collision with C.
-  - **C.1 light-mode tokens** — add a light-mode variable set to `design-system/lab-tokens.css`. Contained, no component file collisions, components inherit through CSS custom properties. Tyrell + `/colorize`.
-  - **Writer micro-task** — refine T6.3 colophon copy in `LibraryHeader.tsx`'s `ColophonNote` (currently `TODO Writer` placeholder). Voice-tune against Phase 3.1.
-3. ~~**Renderer scope confirmation.**~~ ✅ locked 2026-05-17. Full spec at `plans/perihelion-b1-renderer-scope.md`. Six variants on `BlockquoteBlock` via a discriminator field, parser-side detection, definition glosses use a colon separator, parser carries an emoji-tolerance pass for `uap-field-map.md` during the C.2 transition.
-4. **B.1 renderer enhancement** — discrete mission, scope is locked. Branch `feat/perihelion-b1-renderer-variants`. Three commits: types + parser, renderer, tests + manual QA. 1–2 sessions per the scope file.
+2. ~~**Step-2 parallel burndown.**~~ ✅ shipped 2026-05-17. B.1 small pieces (slug migration #46, Glossarian install #48, DIRD frontmatter #51); C.1 light-mode tokens (#47); Writer micro-task — T6.3 colophon copy (#49). Mission files archived under `vector/missions/archive/` on 2026-05-25.
+3. ~~**Renderer scope confirmation.**~~ ✅ locked 2026-05-17 via PR #52. Full spec at `plans/perihelion-b1-renderer-scope.md`. Six variants on `BlockquoteBlock` via a discriminator field, parser-side detection, definition glosses use a colon separator, parser carries an emoji-tolerance pass for `uap-field-map.md` during the C.2 transition.
+4. **B.1 renderer enhancement** — **next mission.** Scope is locked. Branch `feat/perihelion-b1-renderer-variants`. Three commits: types + parser, renderer, tests + manual QA. 1–2 sessions per the scope file.
 5. **After renderer lands, in parallel:**
   - **Per-guide pipeline (B.1 alignment → B.2 voice)** — for each guide: callout retrofit, inline definition glosses, voice sweep. Pipeline two agents — Tyrell aligning guide N+1 while Writer sweeps guide N. Streams don't block.
   - **C.2 icon sweep + lab-component restyling + GuideCard hover debug** — Tyrell + Impeccable. Picks up the parked T6.4 hover refinement as a debugging task.
@@ -244,8 +243,7 @@ Guide authoring lives upstream in `~/projects/design-futures/`, where another Cl
 
 Surfaced for Justin's review at the appropriate moment in B.1 execution:
 
-- **DIRD year/venue spot-check** — PR #51 (`chore/perihelion-b1-dird-frontmatter`) is open with the mechanical pass landed. Justin to spot-check the year corrections (all four moved from `2026` to `2010`) and the venue consolidation to `DIA / AAWSAP Program` before merging.
-- **DIRD secondary frontmatter follow-ups** — surfaced by the Track A pass and worth a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the canonical spec; `source.authors` drift on DIRDs 14 and 28 (currently carry the venue value in the authors slot); ICOD-vs-publication-date typo on the DIRD 14 cover.
+- **DIRD secondary frontmatter follow-ups** — surfaced by the Track A pass (PR #51, merged) and worth a future B.1 sub-pass: AAWSA-vs-AAWSAP spelling drift between source PDFs and the canonical spec; `source.authors` drift on DIRDs 14 and 28 (currently carry the venue value in the authors slot); ICOD-vs-publication-date typo on the DIRD 14 cover.
 - **`scripts/migrate-jsx-guide.ts`** — JSX→MD conversion is done and dusted. Archive (`scripts/archive/`), delete, or keep as reference for the next migration?
 - **Upstream sync of the colon-separator convention** — the portfolio-side renderer uses a colon as the inline-definition gloss separator (per `plans/perihelion-b1-renderer-scope.md`), diverging from the upstream spec's em-dash. Carry the change back to `~/projects/design-futures/guide-format-rules.md` on the next sync opportunity. The design-futures dir is not under version control, so the next sync agent will need to make the edit and report back in-session.
 

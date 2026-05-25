@@ -32,12 +32,12 @@ export function GuideCard({ guide }: GuideCardProps) {
     <Link
       to={`/g/${guide.slug}`}
       style={accentStyle}
-      className="group flex h-full flex-col gap-4 rounded-lg border border-lab-border-subtle bg-lab-bg-surface p-5 transition-colors duration-[var(--duration-normal)] hover:border-guide-accent hover:bg-lab-bg-raised"
+      className="group flex h-full flex-col gap-4 rounded-lg border border-lab-border-subtle bg-lab-bg-surface p-5 transition duration-[var(--duration-normal)] hover:border-guide-accent hover:bg-lab-bg-raised motion-safe:hover:-translate-y-0.5"
     >
       <div className="flex items-center gap-3">
         <span
           aria-hidden
-          className="h-2.5 w-2.5 rounded-full bg-guide-accent shadow-[0_0_10px_color-mix(in_oklab,var(--guide-accent)_60%,transparent)]"
+          className="h-2.5 w-2.5 rounded-full bg-guide-accent shadow-[0_0_10px_color-mix(in_oklab,var(--guide-accent)_60%,transparent)] transition-[box-shadow] duration-[var(--duration-normal)] group-hover:shadow-[0_0_18px_color-mix(in_oklab,var(--guide-accent)_85%,transparent)]"
         />
         <span className="font-lab-mono text-[0.65rem] uppercase tracking-wider text-lab-text-muted">
           {kicker}

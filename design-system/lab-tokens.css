@@ -26,19 +26,30 @@
 
 @layer theme {
   :root {
-    /* --- Backgrounds: cool near-black, academic --- */
-    --lab-bg-deep: oklch(0.0800 0.0030 270);
-    --lab-bg-surface: oklch(0.1250 0.0060 270);
-    --lab-bg-raised: oklch(0.1650 0.0090 270);
+    /* --- Backgrounds: cool graphite, academic ---
+       Recalibrated 2026-05-25 (C.1.5) away from pure-black for extended
+       reading comfort. The previous stack landed at L 0.08 / 0.125 / 0.165
+       which read as near-pitch and caused OLED halation around the long-form
+       guide body type. Lifted to a graphite register that preserves the
+       Gibson-cool blue-violet character (hue 270) while removing the
+       reading fatigue. Approximate sRGB equivalents: #0e0f13, #15171c,
+       #1d1f26 — same neighborhood as GitHub dark surface. */
+    --lab-bg-deep: oklch(0.1700 0.0080 270);
+    --lab-bg-surface: oklch(0.2050 0.0110 270);
+    --lab-bg-raised: oklch(0.2400 0.0140 270);
 
-    /* --- Borders --- */
-    --lab-border-subtle: oklch(0.2600 0.0100 270);
-    --lab-border-strong: oklch(0.3600 0.0140 270);
+    /* --- Borders: lifted in lockstep with the bg recalibration so the
+       deep/surface/raised/border ladder keeps its rhythm --- */
+    --lab-border-subtle: oklch(0.3200 0.0140 270);
+    --lab-border-strong: oklch(0.4200 0.0170 270);
 
-    /* --- Text: verified ≥ WCAG AA against --lab-bg-deep --- */
-    --lab-text-primary: oklch(0.9500 0.0050 270);     /* ~16:1 on bg-deep */
-    --lab-text-secondary: oklch(0.7500 0.0150 250);   /* ~9:1 on bg-deep */
-    --lab-text-muted: oklch(0.5800 0.0150 250);       /* ~4.8:1 on bg-deep */
+    /* --- Text: verified ≥ WCAG AA against the new --lab-bg-deep ---
+       text-primary is unchanged at L 0.95 (still ~16.5:1). secondary and
+       muted lifted slightly so they retain the original hierarchy gap
+       against the brighter bg and stay safely above AA. */
+    --lab-text-primary: oklch(0.9500 0.0050 270);     /* ~16.5:1 on bg-deep */
+    --lab-text-secondary: oklch(0.7800 0.0150 250);   /* ~9.5:1 on bg-deep */
+    --lab-text-muted: oklch(0.6200 0.0180 250);       /* ~5.2:1 on bg-deep */
 
     /* --- Figure container: warm off-white paper --- */
     /* Scanned academic figures live on white paper; this container
@@ -84,20 +95,23 @@
     /* --- Academic preprint watermark ---
        A graph-paper-under-ink texture: fine horizontal ruling every
        28px plus a sparse vertical margin line every 128px. Alpha is
-       deliberately minimal (~0.02–0.03) so the surface reads as
-       "on paper" rather than decorated. Pattern follows the same
-       CSS-only layered gradient technique as ADR-005's portfolio
-       textures but tuned to the cool lab palette. */
+       deliberately minimal so the surface reads as "on paper" rather
+       than decorated. Pattern follows the same CSS-only layered
+       gradient technique as ADR-005's portfolio textures but tuned
+       to the cool lab palette. Ruling color lifted to L 0.40 and
+       alpha bumped slightly to compensate for the C.1.5 bg lift —
+       the previous L 0.32 / alpha 0.018-0.028 wash disappeared once
+       bg-deep moved from L 0.08 to L 0.17. */
     --lab-texture:
       repeating-linear-gradient(
         180deg,
-        oklch(0.32 0.010 250 / 0.028) 0px,
+        oklch(0.40 0.012 250 / 0.045) 0px,
         transparent 1px,
         transparent 28px
       ),
       repeating-linear-gradient(
         90deg,
-        oklch(0.32 0.010 250 / 0.018) 0px,
+        oklch(0.40 0.012 250 / 0.030) 0px,
         transparent 1px,
         transparent 128px
       );

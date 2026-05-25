@@ -31,7 +31,11 @@ import type {
   TextNode,
 } from './guide-types';
 
-const LAB_BG_HEX = '#0a0a0c';
+// Reference hex of --lab-bg-deep (oklch(0.17 0.008 270)) used for per-guide
+// accent-contrast warnings. Recalibrated 2026-05-25 alongside the C.1.5
+// graphite dark-mode lift; the prior #0a0a0c reference targeted the pre-lift
+// L 0.08 bg.
+const LAB_BG_HEX = '#0e0f13';
 const WCAG_AA_MIN = 4.5;
 const TERRITORIES: readonly Territory[] = ['T1', 'T2', 'T3', 'T4'];
 const STATUSES: readonly GuideStatus[] = ['draft', 'in-progress', 'complete'];

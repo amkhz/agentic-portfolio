@@ -79,7 +79,7 @@ glossary:
   Material hardening and transmedium capability: "A paired prediction from Puthoff's spacetime metric engineering framework: the same blue-shift that pushes thermal radiation up in frequency also strengthens the craft's own material bonds, while the surrounding environment's bonds remain unaffected. From the craft's reference frame, water, rock, and earth offer no more resistance than air — which is why observed transmedium transitions produce no splash, no acoustic signature, and no apparent structural stress. Published in Puthoff 2010, JBIS Vol. 63."
 ---
 
-## 🎯 The Big Picture {#big-picture}
+## The Big Picture {#big-picture}
 
 DIRD 15 is the theoretical spine of the entire collection. Written by Hal Puthoff at the Institute for Advanced Studies at Austin (now EarthTech International), it asks the foundational question: **can spacetime itself be treated as an engineering medium?** Not just described mathematically, not just observed passively — but deliberately shaped, tuned, and manipulated to move a vehicle without any propellant at all.
 
@@ -89,7 +89,7 @@ This is the paper that connects propulsion to consciousness. Puthoff's framework
 
 For the lab, this is the paper where the design questions get their physics foundation. Every question about warp field operator interfaces, transmedium navigation displays, coherence feedback dashboards, and consciousness-driven controls traces back to the framework established here. The other DIRDs describe specific applications — this one describes the substrate they all operate on.
 
-## ⚡ The Speed of Light as Engineering Variable {#speed-of-light}
+## The Speed of Light as Engineering Variable {#speed-of-light}
 
 This is Puthoff's core insight, and it's the single most important conceptual move in the entire DIRD collection. The speed of light has a formula: c = 1/√(|μ₀||ε₀|). It's determined by two quantities — the vacuum's |magnetic permeability| and |electric permittivity|. These aren't mystical constants. They describe how the vacuum responds to electromagnetic fields. They're properties of a medium.
 
@@ -99,7 +99,7 @@ The physics of why this works involves a subtle point about how light actually p
 
 This connects directly to the |Extended Electrodynamics| (EED) work discussed in Episode 2. Louis Dechiaro's research on the |Heaviside equations| suggests there are types of electromagnetic signals that don't interact with the virtual electron-positron plasma at all. If a signal has no EM field components — only vector and scalar potentials — it would pass through the vacuum without the delays that limit light. These signals could propagate faster than c. The controversial claim from |Podkletnov and Modanese| of a gravity pulse at 64c is potentially explicable within this framework.
 
-## 🌀 Gravity as Vacuum Effect {#sakharov-gravity}
+## Gravity as Vacuum Effect {#sakharov-gravity}
 
 Puthoff's framework builds on a proposal by Soviet physicist |Andrei Sakharov| from 1967: gravity might not be a fundamental force at all. Instead, it could be an emergent effect — a side product of the quantum vacuum's interaction with matter. Think of it this way: the vacuum is full of fluctuations. Place a massive object in it, and that object changes the pattern of fluctuations around it. Other objects respond to the changed pattern. We experience that response as gravity.
 
@@ -111,7 +111,7 @@ Puthoff's research arc on this spans decades. He started with the |hydrogen atom
 
 The model has |unresolved sticking points| — Puthoff is the first to acknowledge this. The gravity/inertia derivation works in certain cases but hasn't been made fully general. It hasn't been reconciled with all of general relativity's predictions. But the core idea — that gravity is emergent from vacuum interactions — keeps gaining traction. White's 2026 paper demonstrating that quantization itself emerges from vacuum dispersion properties is a major step in the same direction.
 
-## 👁️ The Observable Consequences {#observables}
+## The Observable Consequences {#observables}
 
 This is where DIRD 15 moves from theoretical framework to testable predictions — and where it connects directly to what military witnesses have reported. Puthoff conducted a systematic comparison: on one side, every reported |UAP observable|. On the other, every prediction from locally engineered general relativity. The result was a |one-to-one correspondence|. Every anomalous behavior matched a predicted consequence of spacetime engineering.
 
@@ -125,7 +125,7 @@ This is where DIRD 15 moves from theoretical framework to testable predictions �
 
 **The |blue-shift experiment|:** This is the most actionable near-term consequence. If UAP propulsion works via spacetime metric engineering, the craft's blue-shifted radiation should excite |nitrogen molecules| in the surrounding atmosphere. These excited nitrogen emission lines can be detected with a broadband optical spectrometer from miles away. As Puthoff noted: one measurement would confirm or deny the spacetime metric engineering hypothesis. It hasn't been done because the spectroscopy community isn't interested in UAP, and the UAP community doesn't have spectroscopy expertise. This gap is a design opportunity.
 
-## 🔬 From Theory to Lab {#lab-experiments}
+## From Theory to Lab {#lab-experiments}
 
 DIRD 15 isn't purely theoretical. It identifies specific laboratory-scale experiments that could test whether vacuum properties are modifiable. The |Casimir effect| is the anchor: it's an experimentally verified demonstration that vacuum energy is real, measurable, and can do work. Two metal plates placed nanometers apart experience a measurable attractive force because the vacuum energy between them is lower than the vacuum energy outside them.
 
@@ -135,7 +135,7 @@ The DIRD also discusses |superconductor-gravity experiments| — the Tajmar expe
 
 Other experimental approaches include |Josephson junction| quantum detectors for measuring vector and scalar potentials without EM fields (the EED signals discussed earlier), |small-scale interferometers| for detecting lab-scale gravitational waves (Chance Glenn's work at Morningbird Space, NSF-funded), and the |Hoverr thruster| (Ankur Bhatt's propellantless device using Rindler horizon manipulation, NSF Phase 1, TRL 4). None of these have produced conclusive evidence of vacuum engineering — but they're all active research programs with real funding.
 
-## 📐 The White Paper Connection {#white-paper}
+## The White Paper Connection {#white-paper}
 
 Harold White's 2026 paper in |Physical Review Research| ('Emergent Quantization from a Dynamic Vacuum') is the most significant development for Puthoff's framework since the original DIRD was written. It provides the first peer-reviewed, mainstream-journal mathematical demonstration that quantum behavior — the quantized energy levels of the hydrogen atom — can |emerge| from the properties of the vacuum treated as a dispersive acoustic medium. No quantum axioms required.
 
@@ -145,7 +145,7 @@ Here's what connects White's paper directly to DIRD 15: if quantization is emerg
 
 The paper extends Puthoff's earlier |Stochastic Electrodynamics| (SED) work. Puthoff showed the vacuum sustains quantum ground states. White shows the vacuum's dispersive properties |generate| the quantized spectrum itself. The quantum potential isn't mysterious — it's a pressure term in a fluid. Quantization isn't axiomatic — it's acoustic resonance. The research lineage is clear: Puthoff → White, SED → dynamic vacuum, the vacuum sustains physics → the vacuum produces physics.
 
-## 🧠 The Consciousness Thread {#consciousness}
+## The Consciousness Thread {#consciousness}
 
 This is where DIRD 15's framework becomes the unified thesis of Territory 1. If gravity is an effect of vacuum fluctuation patterns (Sakharov-Puthoff), and if consciousness can impose coherence on normally random vacuum fluctuations (as the |PEAR lab| data and remote viewing research suggest), then consciousness is doing spacetime engineering at small scales. A remote viewer perceiving a distant target and a craft warping local spacetime may be doing the same thing at different magnitudes.
 
@@ -155,7 +155,7 @@ The unified thesis can be stated precisely: |the vacuum is the common substrate|
 
 Puthoff speculates even further in Ep 86: some recovered craft appear to have |no particular internal technology|. Is it possible that advanced intelligences operate craft via consciousness-driven vacuum coherence — with the shell being merely a container? If so, the 'cockpit' (DIRD 28) doesn't contain instruments and controls — it contains a being in the right consciousness state. For our design work, this means the spectrum of possible control interfaces ranges from traditional displays (showing vacuum energy density, curvature metrics) to pure consciousness-feedback systems (coherence level, intentional alignment, field state).
 
-## 🔒 What's Been Kept From You {#suppression}
+## What's Been Kept From You {#suppression}
 
 DIRD 15 was commissioned as part of a classified DIA program (|AAWSAP/AATIP|) that studied UAP and related phenomena. The 38 DIRDs were posted on JWICs — the classified intelligence community network — and became the most popular report set ever hosted there. Every time administrators tried to remove them, users protested to keep them up. Most are now available through FOIA. But the fact remains: this physics framework was classified, funded with taxpayer money, and kept from the scientific community and public for years.
 
@@ -163,7 +163,7 @@ The pattern is clear and documented in congressional testimony. |Stigma| around 
 
 The lab's position is explicit about this: these technologies are real, they've been |gatekept| by defense contractors and legacy power structures, and they will eventually become publicly accessible. Puthoff's own statement captures the gap perfectly: 'It's not that the science that they may be employing goes beyond ours. It just goes beyond our current engineering.' The physics is known. The engineering pathways are being pursued — by |Hoverr|, by |Morningbird Space|, by |Casimir, Inc.|, by classified programs at Radiance Technologies and others. What's been missing is design — the interfaces, tools, services, and experiences that make these technologies usable by people who aren't defense contractors.
 
-## 🔮 Design Implications for the Lab {#design-implications}
+## Design Implications for the Lab {#design-implications}
 
 DIRD 15 is the paper where the lab's three territories share a common foundation. Every design question about spacetime operator interfaces (T1), orbital manufacturing governance (T2 — energy source implications), and citizen-science detection instruments (T3) connects back to the vacuum engineering framework established here. The design implications cascade across the entire program.
 

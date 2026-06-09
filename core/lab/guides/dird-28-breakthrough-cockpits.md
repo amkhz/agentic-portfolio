@@ -63,7 +63,7 @@ glossary:
   visual motion cues: "Synthetic visual signals — flowing horizon displays, peripheral optical flow fields, drifting starfields — engineered to give the operator a sense of motion that the breakthrough-flight environment no longer provides naturally. In conventional flight, the rate at which terrain or clouds slide past the canopy tells you how fast you're moving and in what direction; inside a warp bubble, that information is absent or distorted by gravitational lensing and frequency shifts. These displays substitute a designed perceptual signal in its place, restoring the visual channel of orientation."
 ---
 
-## 🎯 The Big Picture {#big-picture}
+## The Big Picture {#big-picture}
 
 DIRD 28 is the most directly design-relevant paper in the entire collection. It asks: **if breakthrough propulsion becomes real, how does cockpit design need to change?** Current cockpits are built for pilots who can take ~9G, interpret familiar instruments (airspeed, altitude, heading), and feel aerodynamic feedback through the airframe. Breakthrough flight — spacetime engineering, field-based propulsion, 100+ G apparent acceleration — invalidates every single one of those assumptions.
 
@@ -71,7 +71,7 @@ What makes this paper uniquely valuable is that it's already doing speculative d
 
 The paper identifies four domains where breakthrough flight breaks current cockpit design: |G-force tolerance|, |information architecture|, |control authority|, and |spatial orientation|. Each domain represents a design space where conventional solutions fail and entirely new paradigms are needed. For Territory 1, these four domains map directly onto the design questions in the roadmap.
 
-## 💫 The G-Force Revolution {#g-force-revolution}
+## The G-Force Revolution {#g-force-revolution}
 
 The entire history of cockpit design is shaped by one constraint: the human body breaks under acceleration. Every seat, harness, display position, control layout, and emergency procedure is designed around the fact that pilots experience crushing forces during maneuvers. |Anti-G suits|, |reclined seating|, and flight envelope limits all exist because of this single physiological constraint.
 
@@ -79,7 +79,7 @@ Under spacetime engineering (DIRD 13), this constraint evaporates. Occupants ins
 
 The design implications cascade. |Seating| doesn't need to resist G-forces — it's furniture, not survival equipment. The cockpit can be any orientation — there's no preferred axis defined by acceleration. |Emergency procedures| change fundamentally: the primary risk is no longer G-induced loss of consciousness but rather field failure (what happens if the warp bubble collapses?) and spatial disorientation (how do you maintain awareness in the absence of all kinesthetic cues?).
 
-## 📊 New Information, No Metaphors {#new-information}
+## New Information, No Metaphors {#new-information}
 
 Current cockpit displays work because pilots have |mental models| for what the data means. Airspeed: how fast air flows over the wings (too slow = stall, too fast = structural failure). Altitude: how far from the ground. Heading: which direction. Engine RPM, fuel flow, hydraulic pressure — all of these map to intuitive physical concepts. The pilot doesn't need to understand fluid dynamics to read an airspeed indicator.
 
@@ -87,7 +87,7 @@ Breakthrough flight produces data that has no intuitive physical analog for any 
 
 The DIRD proposes that displays would need fundamental redesign. The paper doesn't prescribe solutions — that's our job — but it identifies the challenge clearly: |sensor fusion| across exotic modalities, real-time visualization of field geometries, and |progressive disclosure| of complexity so operators aren't overwhelmed. The closest existing analogy might be medical imaging (MRI, ultrasound) where invisible internal structures are made visible through computed visualization.
 
-## 🎮 Control Paradigms {#control-paradigms}
+## Control Paradigms {#control-paradigms}
 
 The DIRD identifies a spectrum of control paradigms for breakthrough flight, from near-term adaptations of existing technology to far-future concepts that blur the line between operator and vehicle. The progression goes: |manual controls| → |gesture and eye tracking| → |neural interfaces| → |AI-managed flight| → |consciousness-driven operation|. Each represents a different answer to the question: what is the operator's relationship to the propulsion system?
 
@@ -95,7 +95,7 @@ The DIRD's most design-relevant insight is the concept of |pilot as mission dire
 
 But the DIRD also notes an important counter-argument: the progression toward full autonomy isn't inevitable. |Supervisory control| research (DIRD 34) shows that humans need meaningful engagement to maintain situational awareness. A mission director with nothing to do between setting a destination and arriving becomes complacent, loses the mental model of what the system is doing, and can't respond effectively when something goes wrong. The interface must give the operator |meaningful work| — not just buttons to push, but genuine cognitive engagement with the mission.
 
-## 🌑 The Sensory Void Problem {#sensory-void}
+## The Sensory Void Problem {#sensory-void}
 
 This is the DIRD's most provocative contribution and the design challenge that has no precedent anywhere in human experience. In conventional flight, pilots know what's happening through their bodies: |vestibular cues| (inner ear sensing acceleration and rotation), |proprioceptive cues| (feeling the seat push against you, the controls resist your input), |auditory cues| (engine sound, wind noise), and |visual cues| (the horizon, terrain, other aircraft). In breakthrough flight, *every single one of these disappears*.
 
@@ -103,7 +103,7 @@ The result is |sensory deprivation| at the operational level. The pilot is alert
 
 The DIRD proposes |sensory substitution| systems: artificial feedback that replaces the missing natural cues. Options include |haptic feedback| (vibration or pressure patterns on the skin encoding vehicle state), |spatial audio| (3D sound indicating direction, speed, field geometry), |visual motion cues| (synthetic horizon displays, peripheral flow fields), and potentially |galvanic vestibular stimulation| (electrical signals to the inner ear creating the sensation of motion that matches the vehicle's trajectory).
 
-## 🧠 When the Operator Is the Engine {#consciousness-cockpit}
+## When the Operator Is the Engine {#consciousness-cockpit}
 
 The DIRD doesn't go here, but the lab does. If the unified thesis of T1 is correct — consciousness generates vacuum coherence, and vacuum coherence is the propulsion mechanism — then the most radical cockpit design question isn't about instruments or controls. It's about what happens when the boundary between |operator and propulsion system| dissolves.
 
@@ -111,7 +111,7 @@ Puthoff's speculation (Ep 86) about |craft without technology| — a shell aroun
 
 This creates a spectrum of cockpit paradigms for T1 design work. At one end: the |instrumented cockpit| — exotic physics managed by AI, operator as mission director, displays showing spacetime curvature and field topology. At the other end: the |consciousness cockpit| — minimal technology, operator in a meditative state, the vehicle responds to intention. Between them: |hybrid models| where AI manages the physics while the operator's consciousness state modulates field parameters. The most interesting design space might be right in that hybrid zone.
 
-## ✏️ Design Implications for Territory 1 {#design-implications}
+## Design Implications for Territory 1 {#design-implications}
 
 DIRD 28 converts the speculative physics of DIRD 13 into a structured set of design challenges. Here are the specific implications for the lab's T1 work:
 

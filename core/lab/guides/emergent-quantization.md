@@ -53,19 +53,19 @@ glossary:
   gradient-elastic: "Materials whose elastic energy depends not just on strain but on strain gradients (spatial derivatives of deformation). This introduces length-scale-dependent effects and k⁴ terms in the dispersion — the same mathematical structure as the quantum potential. It's a classical analogue that shows quadratic dispersion isn't exclusively quantum."
 ---
 
-## 🎯 The Big Picture {#big-picture}
+## The Big Picture {#big-picture}
 
 This paper is asking a deceptively simple question: **Why does the hydrogen atom only allow certain energy levels?** In standard quantum mechanics, we just accept this as a rule — energy is quantized, end of story. White and his team are proposing something different: what if quantization isn't a fundamental law, but an emergent consequence of the medium that waves travel through?
 
 Think about a guitar string. Nobody programs it to vibrate at specific frequencies — the length, tension, and boundary conditions (where it's fixed at each end) naturally select which vibrations can exist. All others destructively interfere and die out. The paper argues hydrogen works the same way: the vacuum itself is a physical medium, and the proton shapes that medium so only certain "standing wave" patterns can survive.
 
-## 🌊 What is the "Dynamic Vacuum"? {#vacuum}
+## What is the "Dynamic Vacuum"? {#vacuum}
 
 In everyday language, "vacuum" means empty space. But in modern physics, the vacuum is anything but empty — it has energy, it has fluctuations, and it can exert forces (like the |Casimir effect|). This paper takes that idea further and treats the vacuum like a literal physical medium — like air or water — that has measurable properties like |density| and |elasticity|.
 
 The word "dynamic" is key — this vacuum responds to what's in it. A proton doesn't just sit passively in empty space. It |imprints| a structure onto the vacuum, creating a radially varying medium where the |speed of sound| changes depending on how far you are from the proton.
 
-## 📐 Ingredient #1: Quadratic Dispersion {#ingredient-1}
+## Ingredient #1: Quadratic Dispersion {#ingredient-1}
 
 A |dispersion relation| tells you how waves behave in a medium. In normal air, sound has a linear dispersion: double the |wavenumber| (make the wave more tightly packed), and the frequency doubles. Simple.
 
@@ -73,7 +73,7 @@ But this vacuum model has |quadratic dispersion|: ω = Dq². If you double the w
 
 The key constant is D = ℏ/(2m_eff), where ℏ is the |reduced Planck constant| and m_eff is an effective mass. When they calibrate to real hydrogen data, m_eff turns out to be exactly the |reduced mass| of the electron-proton system. No tuning needed.
 
-## 🧲 Ingredient #2: The Coulombic Profile {#ingredient-2}
+## Ingredient #2: The Coulombic Profile {#ingredient-2}
 
 The second ingredient is how the proton shapes the vacuum around it. The paper models this with a specific |constitutive profile| — a recipe for how the vacuum's properties vary with distance from the proton.
 
@@ -81,7 +81,7 @@ The effective inverse sound speed takes the form: 1/c²(r) = A(ω) + C(ω)/r. Th
 
 The density is modeled as ρ(r) = γ/r⁴, inspired by the |electrostatic energy density| around a point charge. Combined with a specific |bulk modulus| profile, this produces the required Coulombic sound-speed variation.
 
-## ✨ How Quantization Emerges {#emergence}
+## How Quantization Emerges {#emergence}
 
 With both ingredients in place, the paper writes the |Helmholtz equation|: (∇² + k²_eff)p = 0. This is just the wave equation for a single frequency — an acoustic resonance equation. Because the problem is |spherically symmetric|, they can separate it into an angular part and a radial part.
 
@@ -91,7 +91,7 @@ With both ingredients in place, the paper writes the |Helmholtz equation|: (∇�
 
 **Scale → frequency:** Finally, the quadratic dispersion converts each allowed spatial mode into a frequency: ωₙ = ω*/n². This is the |Rydberg formula| — the exact pattern of hydrogen's spectral lines, discovered experimentally in the 1880s. The paper reproduces it with zero free parameters after one calibration to the |reduced-mass Rydberg constant|.
 
-## 💡 So What? Why Does This Matter? {#so-what}
+## So What? Why Does This Matter? {#so-what}
 
 The standard interpretation of QM says quantization is a fundamental axiom — energy comes in discrete chunks, period. This paper offers an alternative reading: quantization is *emergent*. It arises from the physical properties of a medium (the vacuum), just as discrete resonant frequencies arise in any bounded acoustic system.
 
@@ -99,7 +99,7 @@ This matters for several reasons. First, if the vacuum is a real medium with tun
 
 **Important caveat:** The paper reproduces hydrogen's spectrum exactly, but partly by design — the constitutive profile is *chosen* to produce Coulombic structure. The real test will be whether this framework can handle multi-electron atoms, predict new phenomena, or connect to |relativistic corrections| like |fine structure| and |spin-orbit coupling|. That said, as a mathematical demonstration, it's clean and rigorous.
 
-## 📎 The Appendix: Where the Dispersion Comes From {#appendix}
+## The Appendix: Where the Dispersion Comes From {#appendix}
 
 The appendix derives the quadratic dispersion from first principles using the |Madelung transformation|. You start with the Schrödinger equation, write the wavefunction as ψ = √ρ · e^(iS/ℏ), and out fall two fluid equations: a |continuity equation| (conservation of mass) and an |Euler equation| (Newton's second law for fluids).
 

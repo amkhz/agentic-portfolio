@@ -101,7 +101,6 @@ export interface HeadingBlock {
   level: 3;
   id: string;
   text: string;
-  icon?: string;
 }
 
 export interface ListItem {
@@ -140,7 +139,6 @@ export type SectionBlock =
 export interface GuideSection {
   id: string;
   heading: string;
-  icon?: string;
   blocks: SectionBlock[];
 }
 

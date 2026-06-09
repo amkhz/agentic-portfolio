@@ -32,11 +32,6 @@ export function GuideSection({
         id={`${section.id}-heading`}
         className="font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
       >
-        {section.icon ? (
-          <span aria-hidden className="mr-3 inline-block align-[-0.05em]">
-            {section.icon}
-          </span>
-        ) : null}
         {section.heading}
       </h2>
       <div className="mt-6 space-y-6">

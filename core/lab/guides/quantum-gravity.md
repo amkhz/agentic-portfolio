@@ -6,6 +6,9 @@ source:
   authors: "Sridhar et al. (ANU) / White et al. (Casimir, Inc.)"
   year: 2026
   venue: "Nature Communications / Physical Review Research"
+  url: "https://www.nature.com/articles/s41467-026-69070-3"
+  arxiv: "2502.12392"
+  notes: "Synthesis of two papers; url and arxiv carry the lead ANU paper (Sridhar et al., Bell correlations between momentum-entangled pairs of helium-4 atoms). Second paper: White et al., Emergent quantization from a dynamic vacuum, Phys. Rev. Research 8, 013264, https://journals.aps.org/prresearch/abstract/10.1103/l8y7-r3rm. Renderer ignores this field; preserved per the PR #60 precedent."
 accent: "#4ecdc4"
 territory: T1
 status: complete

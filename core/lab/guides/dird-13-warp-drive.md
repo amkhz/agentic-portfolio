@@ -59,7 +59,7 @@ glossary:
   String theory: "A theoretical framework proposing that the fundamental constituents of the universe are not point particles but tiny vibrating strings of energy, with different vibration patterns producing different particles. It is the leading candidate for a theory of quantum gravity and requires extra spatial dimensions — typically 6 or 7 beyond our familiar 3 — to be mathematically consistent. Those extra dimensions are predicted to be compactified at the Planck scale (~10⁻³⁵ meters), too small for direct observation."
 ---
 
-## 🎯 The Big Picture {#big-picture}
+## The Big Picture {#big-picture}
 
 This DIRD asks the most ambitious question in the entire collection: **can we engineer the fabric of spacetime itself to travel faster than light?** Written by Hal Puthoff and collaborators at EarthTech International, it explores the Alcubierre warp drive concept, the role of dark energy, and whether extra spatial dimensions could provide the mechanism. It's the theoretical backbone for every design question in Territory 1 about what a craft operator would experience.
 
@@ -67,7 +67,7 @@ The core insight is deceptively elegant: in |general relativity|, space and time
 
 This matters for Territory 1 because it connects directly to the observables that military pilots have reported: craft performing |high-G maneuvers| without apparent structural stress, transitioning between air and water without splash, hovering in 120-knot winds with no visible propulsion. If spacetime engineering is real, all of these become predicted consequences, not mysteries. The design question shifts from "how would a craft do this?" to "what does the operator's interface look like when it does?"
 
-## 🫧 The Alcubierre Warp Drive {#alcubierre}
+## The Alcubierre Warp Drive {#alcubierre}
 
 In 1994, physicist |Miguel Alcubierre| published a solution to Einstein's field equations describing a geometry where a region of flat spacetime — a |warp bubble| — is carried along by the expansion and contraction of space around it. The math works. General relativity permits this geometry. The vehicle inside the bubble is in |freefall|, experiencing no acceleration whatsoever.
 
@@ -75,7 +75,7 @@ Here's what makes this different from science fiction: the vehicle isn't "going"
 
 The |Alcubierre metric| describes the exact geometry mathematically. You specify a |shape function| that defines the bubble wall — how thick it is, how sharply it transitions from contracted to expanded space. You specify a velocity function for how fast the bubble moves. Plug these into Einstein's equations and solve for the |stress-energy tensor| — and that tells you what kind of matter/energy you need to produce this geometry. This is where the problems start.
 
-## ⚡ The Negative Energy Problem {#negative-energy}
+## The Negative Energy Problem {#negative-energy}
 
 When you plug the Alcubierre metric into Einstein's equations and solve for what energy configuration produces this geometry, the answer is: you need |negative energy density|. Not just a lot of energy — energy that is literally less than zero. Energy that gravitationally repels rather than attracts. This is the central barrier for the warp drive and for most of the exotic propulsion concepts in the DIRD collection.
 
@@ -83,7 +83,7 @@ Alcubierre's original calculation put the energy requirement at roughly |Jupiter
 
 The DIRD collection has a clear dependency structure around this problem. |DIRD 36| (quantum tomography of negative energy states) is the experimental gateway — if negative energy can be reliably detected and characterized at useful scales, the exotic propulsion cluster (DIRDs 13, 15, 18, 19, 29) transitions from mathematical curiosity to engineering challenge. |DIRD 24| (quantum vacuum energy extraction) addresses whether the vacuum itself could be the energy source. Harold White's recent work on |dynamic vacuum| models provides the first peer-reviewed mathematical framework connecting vacuum properties to observable physics.
 
-## 🌌 Dark Energy as Mechanism {#dark-energy}
+## Dark Energy as Mechanism {#dark-energy}
 
 The DIRD identifies a tantalizing possibility: |dark energy| — the mysterious force accelerating the universe's expansion — already acts like negative pressure on cosmological scales. It constitutes roughly 68% of the universe's total energy. If it could be locally concentrated or controlled, it might provide exactly the negative-pressure/negative-energy mechanism the warp drive needs.
 
@@ -91,7 +91,7 @@ The connection works like this: the |cosmological constant| Λ in Einstein's equ
 
 This also connects to the observational evidence discussed in Ep 2. Puthoff's |one-to-one correspondence| between UAP observables and GR predictions shows that every reported anomalous behavior — high-G turns, transmedium transitions, radiation hazards, optical distortion, interior expansion — is a predicted consequence of local spacetime engineering. The question isn't whether the physics allows it. The question is whether the engineering is achievable.
 
-## 🔮 Extra Dimensions and Shortcuts {#extra-dimensions}
+## Extra Dimensions and Shortcuts {#extra-dimensions}
 
 |String theory| predicts that our familiar three spatial dimensions may not be all there is. There could be additional spatial dimensions — curled up at scales too small to observe, or extended but confined to a particular geometry. The DIRD explores whether manipulating these extra dimensions could provide an alternative or complementary mechanism for faster-than-light travel.
 
@@ -99,7 +99,7 @@ The idea is that if space has more dimensions than we can perceive, there may be
 
 The practical engineering implications are even more speculative than the warp drive. We have no experimental evidence for extra dimensions, no demonstrated mechanism for accessing them, and no theoretical framework for how to manipulate their geometry. But the DIRD includes this because: (a) string theory is the leading candidate for a theory of quantum gravity, (b) extra dimensions naturally produce the kinds of exotic effects the other DIRDs require, and (c) if |Kaluza-Klein theory| is correct, then electromagnetism and gravity are already unified through extra dimensions — which would make EM-to-gravitational coupling (exactly what DIRDs 14 and 33 discuss) a natural consequence rather than a speculative leap.
 
-## 👁️ Observable Consequences — What You'd See {#observables}
+## Observable Consequences — What You'd See {#observables}
 
 This is where DIRD 13 meets design. If spacetime engineering works, what are the observable, measurable consequences? Puthoff's work (expanded in Ep 2 and DIRD 15) maps out a detailed set of predictions. These are the sensor readings, visual effects, and physical phenomena that a warp field operator's interface would need to display.
 
@@ -113,7 +113,7 @@ This is where DIRD 13 meets design. If spacetime engineering works, what are the
 
 **|Interior expansion|:** The Alcubierre-type metrics permit interior volumes larger than exterior dimensions suggest. A person approaches a craft of a certain external size, enters, and finds an interior 'as large as a football field.' This is not an illusion — it's a genuine geometric property of the spacetime. The design implication: wayfinding inside a craft doesn't follow from its external dimensions. Interior architecture is decoupled from the shell.
 
-## 📉 Reducing the Energy Requirements {#energy-reduction}
+## Reducing the Energy Requirements {#energy-reduction}
 
 The history of warp drive research is partly a history of making the energy requirements less absurd. Alcubierre's original formulation required Jupiter-mass equivalents. A series of insights has brought this down dramatically. Understanding this trajectory matters for design because it determines how far the technology is from even theoretical feasibility.
 
@@ -121,7 +121,7 @@ The history of warp drive research is partly a history of making the energy requ
 
 Each reduction makes the concept less impossible, but none makes it achievable with current technology. The honest assessment: even milligrams of negative energy have never been produced. But the trajectory — from 'requires the mass of Jupiter' to 'requires a clever metamaterial we don't know how to build yet' — represents a qualitative change in the problem. It's moved from |physically absurd to physically constrained|.
 
-## 🔗 How This Connects to the Lab {#connections}
+## How This Connects to the Lab {#connections}
 
 DIRD 13 is the physics backbone for the spacetime side of Territory 1. Every design question about warp field operator interfaces, transmedium navigation, and interior-expanded wayfinding rests on the concepts in this paper. Here's how it connects to the broader lab structure:
 
@@ -133,7 +133,7 @@ DIRD 13 is the physics backbone for the spacetime side of Territory 1. Every des
 
 **White's dynamic vacuum model (2026):** Provides the first rigorous mathematical framework connecting vacuum properties to observable physics, published in Physical Review Research. It doesn't prove the warp drive is possible, but it moves the vacuum from 'empty background' to 'structured medium with measurable, engineerable properties.' This is exactly what DIRD 13 needs to transition from pure mathematics to a physics program — and it's what makes the lab's design work less speculative with each new paper.
 
-## ✏️ Design Implications for Territory 1 {#design-implications}
+## Design Implications for Territory 1 {#design-implications}
 
 With the physics understood, the design questions sharpen. Here are the specific implications from DIRD 13 for the interfaces, tools, and experiences the lab is building:
 

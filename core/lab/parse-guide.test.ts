@@ -25,13 +25,13 @@ glossary:
   anomaly: "A statistically significant departure from baseline."
 ---
 
-## 🎯 Overview {#overview}
+## Overview {#overview}
 
 Paragraph with an |ambiguity| and a **bold phrase**.
 
 {figure:fig-one}
 
-## 🛰 Hardware
+## Hardware
 
 Second section referencing |anomaly| and |ambiguity|.
 `;
@@ -57,19 +57,20 @@ describe('parseGuide', () => {
     expect(Object.keys(guide.glossary).sort()).toEqual(['ambiguity', 'anomaly']);
   });
 
-  it('splits leading emoji icons out of section headings', () => {
+  it('parses section headings as prose-only text', () => {
     const guide = parseGuide(VALID_SOURCE, 'sample-guide');
     expect(guide.sections).toHaveLength(2);
-    expect(guide.sections[0]).toMatchObject({
-      id: 'overview',
-      heading: 'Overview',
-      icon: '🎯',
-    });
-    expect(guide.sections[1]).toMatchObject({
-      id: 'hardware',
-      heading: 'Hardware',
-      icon: '🛰',
-    });
+    expect(guide.sections[0]).toMatchObject({ id: 'overview', heading: 'Overview' });
+    expect(guide.sections[1]).toMatchObject({ id: 'hardware', heading: 'Hardware' });
+  });
+
+  it('warns on emoji in a heading and keeps the heading text intact', () => {
+    const source = VALID_SOURCE.replace('## Hardware', '## 🛰️ Hardware');
+    const guide = parseGuide(source, 'sample-guide');
+    expect(guide.sections[1].heading).toBe('🛰️ Hardware');
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("heading '🛰️ Hardware' contains an emoji"),
+    );
   });
 
   it('parses inline term and bold markers', () => {

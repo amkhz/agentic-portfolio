@@ -166,13 +166,13 @@ function slugifyHeading(text: string): string {
     .replace(/^-|-$/g, '');
 }
 
-function splitLeadingIcon(heading: string): { icon?: string; title: string } {
-  const match = heading.match(/^(\S+)\s+(.+)$/);
-  if (!match) return { title: heading };
-  const first = match[1];
-  // A leading emoji is any non-printable-ASCII token. Plain ASCII → treat whole heading as title.
-  if (!/[^\u0020-\u007E]/.test(first)) return { title: heading };
-  return { icon: first, title: match[2] };
+// Headings are prose-only per the no-emoji rule (2026-05-03; strip locked
+// 2026-06-09). Section icons, if they return, will come from frontmatter at
+// the design-system level, not from emoji prefixes in heading text.
+function warnIfEmojiHeading(slug: string, heading: string): void {
+  if (/\p{Extended_Pictographic}/u.test(heading)) {
+    console.warn(`Guide '${slug}': heading '${heading}' contains an emoji; headings are prose-only`);
+  }
 }
 
 const TERM_RE = /\|([^|\n]+?)\|/g;
@@ -375,11 +375,10 @@ function parseBody(body: string, slug: string): GuideSection[] {
     const h2 = line.match(HEADING_H2_RE);
     if (h2) {
       flushParagraph();
-      const rawHeading = h2[1].trim();
-      const { icon, title } = splitLeadingIcon(rawHeading);
+      const title = h2[1].trim();
+      warnIfEmojiHeading(slug, title);
       const id = h2[2]?.trim() ?? slugifyHeading(title);
       const section: GuideSection = { id, heading: title, blocks: [] };
-      if (icon) section.icon = icon;
       sections.push(section);
       current = section;
       continue;
@@ -387,11 +386,10 @@ function parseBody(body: string, slug: string): GuideSection[] {
     const h3 = line.match(HEADING_H3_RE);
     if (h3 && current) {
       flushParagraph();
-      const rawHeading = h3[1].trim();
-      const { icon, title } = splitLeadingIcon(rawHeading);
+      const title = h3[1].trim();
+      warnIfEmojiHeading(slug, title);
       const id = h3[2]?.trim() ?? `${current.id}-${slugifyHeading(title)}`;
       const heading: HeadingBlock = { kind: 'heading', level: 3, id, text: title };
-      if (icon) heading.icon = icon;
       current.blocks.push(heading);
       continue;
     }

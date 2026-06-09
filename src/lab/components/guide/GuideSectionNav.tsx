@@ -53,11 +53,6 @@ export function GuideSectionNav({
                     : "inline-flex min-h-11 items-center gap-2 rounded-md border border-lab-border-subtle bg-lab-bg-surface px-3.5 py-2 font-lab-mono text-xs tracking-wide text-lab-text-secondary hover:border-lab-border-strong hover:text-lab-text-primary"
                 }
               >
-                {section.icon ? (
-                  <span aria-hidden className="text-base leading-none">
-                    {section.icon}
-                  </span>
-                ) : null}
                 <span>{section.heading}</span>
               </button>
             </li>

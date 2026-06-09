@@ -73,7 +73,7 @@ glossary:
   Cash–Landrum: "A 1980 close-encounter incident near Huffman, Texas, in which Betty Cash, Vickie Landrum, and Colby Landrum reported a diamond-shaped craft escorted by military helicopters and afterward developed injuries consistent with ionizing radiation and intense UV exposure — burns, hair loss, and acute illness. The UAPx paper cites it (alongside Rendlesham Forest) as one of the strongest historical motivations for adding radiation sensors to a multi-modal UAP detection package."
 ---
 
-## 🔍 The Forensic Problem {#forensic-problem}
+## The Forensic Problem {#forensic-problem}
 
 For seventy years, the study of UAP — what used to be called UFOs — has been almost entirely a |forensic discipline|. Investigators chased witness reports the way detectives chase cold cases: knock on doors, take statements, examine landing sites after the fact, and try to reconstruct what happened from human memory. This produced a vast literature, but it could never break the loop that kept UAP out of mainstream science. UAPs were not taken seriously because they were not studied seriously by trained academic scientists; but they were not studied seriously by academic scientists because they were not considered a serious topic for study. **The forensic posture was the problem.**
 
@@ -83,7 +83,7 @@ UAPx is one of several groups now doing this. The |Galileo Project| at Harvard, 
 
 The pivot to instrumented science isn't just methodological — it changes what UAP research can ask questions about. Witness reports can tell you that something looked weird. Instruments can tell you what its temperature was, what frequencies of light it emitted, whether it produced ionizing radiation, what its angular velocity across the sky was, and whether multiple independent detectors agreed within their respective time resolutions. **The forensic question is "what did you see?" The instrumented question is "what does the data show, and how confident are we?"** This guide is about how UAPx answered the second question on its first real expedition — including what worked, what didn't, and why a single ambiguous dark spot ended up teaching the field more about evidence than any clean detection could have.
 
-## 📡 The Instrument Stack {#instrument-stack}
+## The Instrument Stack {#instrument-stack}
 
 UAPx's first expedition deployed in July 2021 to two locations near Catalina Island, California — chosen because the area had been a reported UAP hotspot since long before the 2004 Nimitz "tic-tac" incident made it famous. The team set up on a flat rooftop in Laguna Beach on the mainland and a second observation post on Catalina itself, communicating between the two by phone. The core sensor stack covered four modalities: visible and near-infrared light, long-wave thermal infrared, ionizing radiation, and direct human observation through night-vision goggles. Each instrument was chosen because it answered a question that historical UAP reports had been asking for decades — and because it could discriminate against a specific class of mundane explanation.
 
@@ -101,7 +101,7 @@ The first expedition is also notable for what it *didn't* have but planned to ad
 
 {figure:fig-1-ufodap-deployment}
 
-## 🧮 C-TAP and the Computer Vision Pipeline {#c-tap}
+## C-TAP and the Computer Vision Pipeline {#c-tap}
 
 Eight FLIR cameras running for a week generates an enormous amount of footage that no human team can review by eye. UAPx's solution was a custom software package called |C-TAP| — Custom Target Analysis Protocol — written by Matthew Szydagis specifically for processing the FLIR recordings. The core idea is borrowed from a surprising place: |bubble chamber image analysis| from direct dark matter searches in particle physics. In a bubble chamber, you're trying to spot the tracks of rare particle interactions in a sea of mostly empty fluid. The technique that works is to subtract one frame from the next, pixel by pixel. Anything that didn't change cancels out. Anything that moved or appeared shows up as a non-zero residual. The same trick works for spotting moving objects across a thermal camera's field of view.
 
@@ -113,7 +113,7 @@ What makes C-TAP design-relevant is that it's the first published example of a U
 
 As a sanity check, the team ran C-TAP on the 1,716 UFODAP videos from the visible-light camera even though the algorithm wasn't designed for them. C-TAP found at least one valid trigger in 85% of those videos. That's a useful cross-validation: the same statistical machinery built for FLIR thermal frames generalizes to color visible light, which suggests the underlying technique is more portable than the specific implementation. After publication, C-TAP will be released as open source on GitHub — making it the first openly available codebase of its kind for instrumented UAP work.
 
-## ☢️ Why Radiation {#radiation}
+## Why Radiation {#radiation}
 
 Radiation detection is the part of the UAPx instrument stack that most clearly distinguishes it from prior generations of UAP research. Witnesses see things, cameras record things, but a Geiger counter clicking is closer to physics than to ufology. The reason it matters so much is what it can rule out. As far as anyone can determine from public sources, **no aircraft, helicopter, drone, balloon, or spacecraft in current operation produces measurable quantities of ionizing radiation at the distances of typical UAP encounters**. If a camera ambiguity is time-coincident with an unusual radiation count, you have either a coincidence between two mundane events (which can be quantified statistically) or something that doesn't fit the conventional aerospace inventory.
 
@@ -125,7 +125,7 @@ The interesting thing about the four high-energy events is not what they look li
 
 {figure:fig-10-energy-spectra}
 
-## 👁️ The Dark Spot — A Forensic Worked Example {#dark-spot}
+## The Dark Spot — A Forensic Worked Example {#dark-spot}
 
 At 3:57:16am on Friday, July 16, 2021, the UFODAP camera on the Laguna Beach rooftop recorded a brief video. In the upper right of the frame, against an overcast pre-dawn sky, there was a diffuse dark patch. It had no well-defined edge. The camera's tracking software then slewed the lens — chasing what appears to have been a separate insect — and during the rotation, white pixel clusters and black streaks appeared, emanating from the dark spot. At 3:59:24am, two minutes later, the camera was stationary again and the dots were visible inside the spot for the entire video's length. Then, in frame 13 of that video, a brand-new white dot appeared in the spot's location, accompanied by a new black dot in a different region. By 4:00:13am, the spot was gone and the camera was recording normally. **No human team member saw any of this in real time.** It was discovered weeks later, during systematic review, only because the Cosmic Watch had logged its highest-energy particle event near the same window.
 
@@ -147,7 +147,7 @@ The most novel methodological contribution of the dark spot analysis was the tea
 
 **None of the ten hypotheses cleanly explains every feature of the dark spot.** The fall-streak hole explains the spot but not the dots. Camera noise explains the dots but not the spot. Combined hypotheses (fly + noise, drop + reflection) explain individual features but introduce contradictions with the time-correlation evidence between videos. The team's honest conclusion is that the most likely explanation is some combination of mundane causes they weren't able to fully reconstruct — but that the proper response is not to declare it solved or to declare it anomalous. The proper response is to quantify the statistical significance of the multi-sensor coincidence and let the math decide.
 
-## 📊 Coincidence, Ambiguity, Anomaly {#statistical-framework}
+## Coincidence, Ambiguity, Anomaly {#statistical-framework}
 
 The dark spot is interesting because it raises a question that no UAP investigation before UAPx had answered with mathematical rigor: **how do you decide whether a multi-sensor coincidence is real or accidental?** Two events can happen at almost the same time for two reasons. They can be causally linked — one phenomenon triggering both detectors. Or they can be statistically unrelated, and you got unlucky. The job of the field's statistical machinery is to put a number on which is more likely. UAPx's central methodological contribution is doing this in a way borrowed directly from particle physics, with three carefully defined terms that the larger field is now adopting as standard.
 
@@ -161,7 +161,7 @@ The lesson here is uncomfortable but essential. The dark spot **looked** anomalo
 
 The team's conclusion offers a recommendation to the entire field. They write that future scientific UAP researchers should adopt the 3σ ambiguity / 5σ anomaly conventions and report all results in terms of expected accidental coincidence rates relative to the null hypothesis. The Knuth review paper that catalogs the new science of UAP — published the same year and including UAPx's authors — formally endorses this framework as standard. **Less than four years after UAPx's first expedition, the 3σ/5σ rule has become the working consensus for instrumented UAP research.** That's the kind of speed at which a field changes when the right methodological intervention arrives at the right time.
 
-## 📋 Lessons from a Real Failure {#lessons-learned}
+## Lessons from a Real Failure {#lessons-learned}
 
 The most candid section of the UAPx paper is its lessons-learned. The expedition was funded by a documentary production company, and the team is unusually frank about how that affected the science. Working with a film crew, they write, "created distractions which led to critical steps being neglected." The resulting catalog of mistakes is more valuable than any clean detection would have been, because it tells future researchers exactly what to design against. Anyone planning citizen-grade UAP instrumentation should read this section twice.
 
@@ -177,7 +177,7 @@ The most candid section of the UAPx paper is its lessons-learned. The expedition
 
 **Working with a film crew was a methodological compromise.** The team needed the film crew's funding to mount the expedition at all, but the requirements of documentary production — moving people around for shots, swapping equipment for visual interest, working around camera angles — pulled attention away from the protocol discipline that the science needed. The lesson is uncomfortable but real: **the funding model shapes the methodology**. Scientific UAP work that depends on entertainment-industry funding will always have to negotiate against the entertainment industry's incentives. The field needs sources of support that don't require showmanship as a precondition.
 
-## 🌅 What This Opens Up {#future}
+## What This Opens Up {#future}
 
 Reading the UAPx paper as a whole, what's striking is how much of it is design infrastructure waiting to be built. The instrument stack is real but rough. The software is custom and unreleased. The statistical framework is correct but exists only in journal articles. The lessons learned have not yet been codified into a deployment playbook. Every section of this guide is, in effect, a blueprint with gaps — and the gaps are exactly the kind of work that makes the difference between a small group of physicists running a careful expedition and a global community capable of producing reproducible results at scale.
 

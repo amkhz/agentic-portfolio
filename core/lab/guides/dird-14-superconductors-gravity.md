@@ -61,7 +61,7 @@ glossary:
   replication crisis as design problem: "The inability to reliably reproduce experimental results isn't just a science problem — it's an information design problem. Researchers need: standardized experiment descriptions (not just prose papers but machine-readable protocols), shared sensor calibration standards, open data repositories with raw data (not just processed results), artifact signature databases (known false positives catalogued for comparison), and collaborative platforms for comparing results across labs. Designing this infrastructure is a concrete, near-term contribution the lab could make to the entire field of frontier physics."
 ---
 
-## 🎯 The Big Picture {#big-picture}
+## The Big Picture {#big-picture}
 
 DIRD 14 asks a deceptively simple question: do superconductors interact with gravity? In conventional physics, the answer is no — superconductors do spectacular things with electromagnetic fields (perfect conductivity, levitation above magnets, quantum vortices), but gravity is a completely separate force that doesn't care about your material's electrical properties. This paper surveys the evidence — contested, inconclusive, but persistent — that conventional physics may be wrong about that.
 
@@ -71,7 +71,7 @@ If even one of the anomalous results described in this paper is real — |Podkle
 
 For the lab's design work, DIRD 14 is the experimental companion to DIRD 15's theoretical framework. If DIRD 15 tells you the vacuum is the substrate and the knobs are permittivity and permeability, DIRD 14 tells you superconductors might be the first tool capable of turning those knobs — and it documents the specific experiments that tried.
 
-## ❄️ What Superconductors Actually Do {#superconductivity-basics}
+## What Superconductors Actually Do {#superconductivity-basics}
 
 Before diving into the speculative gravity coupling, it's worth grounding in what superconductors definitely do — because the confirmed physics is already extraordinary, and the speculative claims are essentially asking 'could these extraordinary properties extend to gravity?'
 
@@ -81,7 +81,7 @@ The key physics: all the electrons in a superconductor condense into a single |m
 
 Superconductors are already commercially ubiquitous: every MRI machine uses superconducting magnets, particle accelerators like the LHC are wound with superconducting wire, and maglev trains use superconducting levitation. The technology is mature. What's speculative is whether the |quantum coherence| that produces these electromagnetic effects might also produce gravitational effects that current theory doesn't predict.
 
-## 🔬 The Podkletnov Experiments {#podkletnov}
+## The Podkletnov Experiments {#podkletnov}
 
 In 1992, |Eugene Podkletnov| at Tampere University of Technology in Finland made an extraordinary claim: a rapidly spinning disc made of |YBCO| (a high-temperature superconductor) appeared to reduce the weight of objects placed above it. The effect was small — initially reported as about 0.05% — but if real, it would be the first demonstration of gravitational shielding by any means. Nothing in known physics predicts that any material, at any temperature, in any configuration, should be able to shield gravity.
 
@@ -93,7 +93,7 @@ Multiple groups attempted replication. NASA's |Ron Koczor and Don Noever| at Mar
 
 Podkletnov's later work went further. With |Giovanni Modanese|, he claimed to generate a |gravity impulse| — a pulse of gravitational force produced by discharging a high-voltage |Marx generator| into a superconducting emitter. They reported the impulse propagated at |64 times the speed of light| (measured with rubidium atomic clocks at kilometer separations). This claim is even more extraordinary than the gravity shielding, and even less confirmed. But it connects directly to the |Extended Electrodynamics| framework discussed in DIRD 15 — non-electromagnetic signals that interact differently with the vacuum could propagate faster than c.
 
-## 🌀 The Tajmar Experiments {#tajmar}
+## The Tajmar Experiments {#tajmar}
 
 While Podkletnov's work is about gravity shielding (reducing gravity above a superconductor), |Martin Tajmar|'s experiments investigate a different phenomenon: whether rotating superconductors produce anomalous |gravitomagnetic| effects. Gravitomagnetism is a real prediction of general relativity — mass in motion creates effects analogous to magnetic fields created by moving charges. But GR predicts these effects are absurdly tiny. Tajmar's measurements suggested they might be billions of times stronger near superconductors than GR predicts.
 
@@ -105,7 +105,7 @@ But subsequent work complicated the picture. Tajmar's own later experiments with
 
 Where does this leave us? Tajmar's experiments don't confirm superconductor-gravity coupling. But they don't definitively rule it out either — they demonstrate how extraordinarily difficult the measurement is. The predicted GR effects are so small that any anomalous coupling, even if it exists, might require precision instruments that haven't been built yet. This is an open question, not a closed one. And it's an open question with direct implications for every design territory in the lab.
 
-## 📐 Why It Might Work: Theoretical Models {#theoretical-models}
+## Why It Might Work: Theoretical Models {#theoretical-models}
 
 The experimental picture is ambiguous. But several theoretical frameworks suggest superconductor-gravity coupling is at least physically plausible. These aren't mainstream physics — but they're not handwaving either. Each connects to the broader vacuum engineering framework of DIRD 15.
 
@@ -117,7 +117,7 @@ The experimental picture is ambiguous. But several theoretical frameworks sugges
 
 **The |coherence amplification| hypothesis:** This is the most speculative but also the most relevant to Territory 1. What if the mechanism isn't a direct superconductor-gravity coupling at all, but rather the macroscopic quantum coherence of the Cooper pair condensate interacting with vacuum fluctuations at a scale where gravitational effects become non-negligible? In this model, it's not that superconductors 'shield gravity' — it's that macroscopic quantum coherence, regardless of the physical substrate, modifies vacuum fluctuation patterns enough to produce measurable gravitational anomalies. If true, superconductors would be just one way to achieve this coherence. Consciousness states achieving sufficient coherence might be another.
 
-## 🛰️ Current Research: Who's Still Working on This {#morningbird}
+## Current Research: Who's Still Working on This {#morningbird}
 
 The contested results of the Podkletnov and Tajmar experiments didn't kill the field — they redirected it. Several active research programs are pursuing related questions with better instruments and clearer theoretical frameworks. The most important for the lab is |Morningbird Space|.
 
@@ -127,7 +127,7 @@ The |Hoverr thruster| (Ankur Bhatt, NSF Phase 1, TRL 4) is also relevant here, t
 
 Other active lines include |superconducting quantum gravity detectors| — using the extreme sensitivity of superconducting circuits (SQUIDs, Josephson junctions) not to generate gravitational effects but to detect them with unprecedented precision. Even if superconductors don't couple to gravity in the dramatic way Podkletnov claimed, they might enable the measurement instruments that detect vacuum engineering effects produced by other means. The |Josephson junction| quantum detectors that Puthoff's group is building with a defense contractor are in this category — superconducting sensors designed to detect the scalar and vector potentials predicted by Extended Electrodynamics.
 
-## 🔮 Design Implications for the Lab {#design-implications}
+## Design Implications for the Lab {#design-implications}
 
 DIRD 14 sits in a unique position in the design program. It doesn't give us the theoretical framework (that's DIRD 15) or the application vision (that's DIRDs 13, 28, 19). What it gives us is the experimental middle ground — the messy reality of trying to confirm or deny whether vacuum engineering is physically possible using materials we already have. The design implications are about that transition zone between theory and confirmed capability.
 

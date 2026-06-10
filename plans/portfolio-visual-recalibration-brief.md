@@ -131,8 +131,17 @@ The current `PRODUCT.md` direction is sound but under-expressed. Specifically:
 
 ## Recommended Impeccable references during implementation
 
-- `reference/brand.md` — portfolio is a brand register (design IS the product)
-- `reference/spatial-design.md` — for the bookish composition work
-- `reference/typography.md` — for the three-face system and variable axis discipline
-- `reference/motion-design.md` — for "restrained but not bland" calibration
-- `reference/color.md` — for confirming Restrained vs. Committed strategy per surface
+> **Addendum 2026-06-10 (Impeccable v3.5.0 revisit).** The v3.5.0 reshape (PR #70) deleted four of the five reference files this section pointed at; their material was folded into SKILL.md's general rules and the per-command references. Current pointers:
+>
+> - `reference/brand.md` — still the register file; portfolio is a brand register (design IS the product)
+> - `reference/layout.md` — the bookish composition work (was `spatial-design.md`)
+> - `reference/typeset.md` — three-face system + variable axis discipline (was `typography.md`)
+> - `reference/animate.md` — "restrained but not bland" motion calibration (was `motion-design.md`)
+> - `reference/colorize.md` — Restrained vs. Committed strategy per surface (was `color.md` / `color-and-contrast.md`)
+>
+> **Two collisions surfaced in the revisit, recorded here so the discovery record stays honest:**
+>
+> 1. The locked opener spec's "pull quote with brass border-left" collides with v3.5.0's absolute side-stripe ban (`border-left` > 1px as colored accent, match-and-refuse). Justin's call pending; the implementation plan v2 carries the options and a recommendation (re-propose via the Fraunces SOFT 80 italic rather than spend a PRODUCT.md exemption).
+> 2. This brief contradicts itself on drop caps: discovery item 6 bans them ("explicitly *not* drop caps/marginalia"), the typographic-discipline section allows them on long-form. Justin's call pending; recorded in the plan's collision list.
+>
+> The brass work-index numerals and the mono kicker system both survive v3.5.0's new bans on those bans' own exemptions (real ordered sequence; one named kicker as deliberate brand system). Sequencing and locked specs otherwise hold; the verification flow moved to the `craft` → `critique` → `polish` snapshot pipeline per the implementation plan v2.

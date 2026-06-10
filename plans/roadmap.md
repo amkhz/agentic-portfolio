@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-06-09
+**Last updated:** 2026-06-10
 
 ---
 
@@ -100,10 +100,10 @@
 
 ### 2. Portfolio visual recalibration polish pass (ADR-011 implementation)
 
-**Status:** Doctrine active on main (PR #68, merged 2026-06-09). Implementation not started. This is a dedicated polish pass waiting to be scheduled; nothing else blocks it.
-**Brief:** `plans/portfolio-visual-recalibration-brief.md` | **Implementation plan:** `plans/portfolio-adr-011-implementation-plan.md` | **ADR:** ADR-011
+**Status:** Doctrine active on main (PR #68, merged 2026-06-09). Implementation not started; plan rewritten 2026-06-10 for Impeccable v3.5.0. Nothing else blocks it.
+**Brief:** `plans/portfolio-visual-recalibration-brief.md` (2026-06-10 addendum) | **Implementation plan:** `plans/portfolio-adr-011-implementation-plan.md` (v2) | **ADR:** ADR-011
 
-The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). Start the session with the implementation plan (scaffolded 2026-05-25, rescued from the abandoned `feat/portfolio-adr-011-implementation` branch); the brief carries the full design spec behind it.
+The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). The plan v2 re-anchors on main (the old PR #68 stack frame is gone), runs each surface through the Impeccable v3.5.0 `craft` → `critique` → `polish` snapshot pipeline, and carries two pending Justin calls (pull-quote border-left vs. the v3.5.0 side-stripe ban; the brief's internal drop-cap contradiction) that must resolve before the case-study-shell PR.
 
 ### 3. Constellation enhancements
 

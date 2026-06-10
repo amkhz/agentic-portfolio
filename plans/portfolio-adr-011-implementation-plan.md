@@ -1,42 +1,55 @@
-# ADR-011 Implementation Plan — Portfolio Visual Recalibration
+# ADR-011 Implementation Plan — Portfolio Visual Recalibration (v2)
 
-> **Branch:** `feat/portfolio-adr-011-implementation` (off `chore/portfolio-adr-011-activation` / PR #68).
-> **Status:** Plan-only scaffold, written 2026-05-25 end-of-day. Implementation starts in a fresh session.
-> **Scope:** Portfolio surface only (`justinh.design`). Perihelion (`labs.justinh.design`) is sibling-but-separate and explicitly out of scope per the brief.
-> **Read first:** `vector/decisions/ADR-011-portfolio-visual-recalibration.md` (the durable decision record) and `plans/portfolio-visual-recalibration-brief.md` (the rationale + locked specs).
+> **Status:** Rewritten 2026-06-10 after the Impeccable v3.5.0 revisit (the rewrite Justin authorized; v1 was scaffolded 2026-05-25 under v3.0.7 and rescued via PR #82 — see git history for the original).
+> **Doctrine state:** ADR-011 is ACTIVE on `main` (PR #68, merged 2026-06-09). The old stacked-branch frame is gone: there is no `feat/portfolio-adr-011-implementation` branch and PR #68 is not "open as head of the stack" anymore. Surfaces now contradict live doctrine on `main`, which is the state the old stack was designed to avoid — mild standing pressure to start, nothing else blocks it.
+> **Scope:** Portfolio surface only (`justinh.design`). Perihelion is sibling-but-separate and explicitly out of scope per the brief.
+> **Read first:** `vector/decisions/ADR-011-portfolio-visual-recalibration.md` (the decision record), `plans/portfolio-visual-recalibration-brief.md` (rationale + locked specs, including the 2026-06-10 addendum), and this plan.
 
 ---
 
-## Why this branch exists
+## What changed in this rewrite
 
-ADR-011 is doctrine. It activates type-system, color, composition, and motion constraints for the portfolio surface — but the actual surfaces (`src/pages/`, `src/components/content/*`, etc.) still consume the OLD type stack and direction. If we merged PR #68 to main first and built surfaces later, main would sit in a state where doctrine and surfaces contradict each other. Instead, this branch builds the surfaces under the new doctrine before merging anything. PR #68 stays open as the head of the stack.
+1. **Re-anchored on `main`.** Each PR below is an ordinary feature branch off `main`, merged in sequence. No stacking.
+2. **The Impeccable v3.5.0 pipeline replaces the hand-rolled verification steps.** v1 hand-rolled "live walkthrough + mobile review + anti-reference check" per surface. v3.5.0 owns that flow end to end: `craft` for the build (compact shape → production bar → visual iteration), `critique` for scored verification (Nielsen 0–4 table, P0–P3 issues, bundled `detect.mjs` slop detector, persisted snapshot), `polish` consuming the critique snapshot as its backlog. The snapshot trend ("re-run critique after fixes, watch the score move") gives each surface a measurable bar v1 never had.
+3. **Doctrine collisions with v3.5.0's absolute bans surfaced and adjudicated** (section below). Two locked specs collide or rub against the new bans; one is the brief's own internal contradiction. Justin's calls recorded in the addendum to the brief.
+4. **Stale facts corrected:** test count 102 (was "101+"), dead reference-file pointers in the brief replaced (addendum), resume instructions rewritten.
 
-**Merge order when ready:** PR #68 first (doctrine), then each implementation PR (A, B, C...) in sequence. Or GitHub auto-retargets implementation PRs to main as #68 lands first.
+What did NOT change: the PR A–E slicing (tokens first, then surfaces ordered by payoff), the locked decisions, the per-PR gates concept, the estimates.
 
 ---
 
 ## Locked decisions to honor
 
-From the brief — these are not up for re-litigation in implementation:
+From the brief — not up for re-litigation in implementation:
 
 - **Type spine:** Fraunces (display) + Geist (body) + JetBrains Mono (kicker). Inter rejected. Bodoni Moda + Crimson Pro tested and not chosen.
 - **Fraunces axis baseline:** `opsz 144, SOFT 30, WONK 0.5, wght 500` for display headlines. Italic with `SOFT 80, WONK 0.5` for pull quotes.
-- **Per-project accent system** — four OKLCH values:
+- **Per-project accent system** — four OKLCH values, each project gets ONE as its Committed accent:
   - Dusty magenta: `oklch(0.42 0.14 346)`
   - Aged brass: `oklch(0.55 0.10 70)`
   - Moss forest: `oklch(0.36 0.08 155)`
   - Deep oxblood: `oklch(0.34 0.13 25)`
-  Each project gets ONE as its Committed accent.
-- **Cover atmosphere:** Not flat color panels (Rosenfeld Media trap, rejected). Radial-light gradient as primary atmospheric move. Grain overlay + shader-feel layered on top.
-- **Case study opener composition:** Full-bleed cover panel left (50%, atmospheric Committed accent) + editorial type spread right (50%, kicker / chapter indicator / headline / body / pull quote with brass border-left / metadata footer).
-- **Project title separator:** Colon. "Vesper: the long road home." Not em-dash.
-- **Work index:** Monograph table of contents. Varying Fraunces scale by recency (most recent biggest), brass numerals left, year + accent swatch right, hairline-divided rows. **Not** a card grid.
-- **Color rule:** All color is OKLCH via tokens referenced by name. No hex anywhere, including doctrine files.
-- **Per-project mark/illustration system:** Each case study earns a bespoke mark/ornament/chapter-opener. System allows for it; specifics emerge per project.
+- **Cover atmosphere:** not flat color panels (Rosenfeld Media trap, rejected). Radial-light gradient primary; grain overlay + shader-feel layered on top.
+- **Case study opener composition:** full-bleed cover panel left (50%, atmospheric Committed accent) + editorial type spread right (50%, kicker / chapter indicator / headline / body / pull quote / metadata footer). Pull-quote accent treatment: see Doctrine collisions below.
+- **Project title separator:** colon. "Vesper: the long road home."
+- **Work index:** monograph table of contents. Varying Fraunces scale by recency, brass numerals left, year + accent swatch right, hairline rows. Not a card grid.
+- **Color rule:** all color OKLCH via tokens referenced by name. No hex anywhere, including doctrine files.
+- **Per-project mark/illustration system:** each case study earns a bespoke mark; system allows for it, specifics emerge per project.
 
 ---
 
-## Current font setup (pre-migration)
+## Doctrine collisions with Impeccable v3.5.0
+
+v3.5.0's SKILL.md carries match-and-refuse **absolute bans** that any Impeccable command will enforce mid-build. Three locked/blessed specs intersect them. Adjudicate BEFORE the build so the skills and the doctrine don't fight each other in-session:
+
+1. **Pull quote `border-left` in brass** (locked opener spec) vs. the **side-stripe ban** ("`border-left` > 1px as a colored accent... never intentional"). Direct collision. The ban targets the SaaS callout stripe; an editorial pull-quote rule is a print convention, but the skill's enforcement is mechanical and will refuse it every time. **Call needed from Justin:** (a) keep the lock and record an explicit doctrine exemption in PRODUCT.md ("editorial pull-quote rule on long-form case studies is exempt from the side-stripe ban") so skills stop fighting it, or (b) let `typeset` re-propose the pull-quote treatment under the new constraint (oversized hanging quotation mark, indent + size shift, Fraunces italic with the SOFT 80 axis doing the work). Recommendation: (b) — the axis-driven italic was always the more Fraunces-native move, and exemptions in PRODUCT.md should be spent sparingly.
+2. **Brass numerals on the work index** vs. the **numbered-section-markers ban**. Survives on the ban's own exemption: the monograph TOC is a real ordered sequence and the numbers carry information. Document the exemption rationale in the PR description so a future audit doesn't flag it.
+3. **Mono kicker system** vs. the **tracked-eyebrow ban**. Survives on the ban's own carve-out ("one named kicker as a deliberate brand system is voice"). Implementation discipline: the kicker appears where metadata genuinely lives (case study openers, work index rows, margin gutters), not as an eyebrow above every section. The ban describes the failure cadence to avoid.
+4. **Drop caps — the brief contradicts itself.** Discovery item 6 says hand moments are "explicitly *not* drop caps/marginalia"; the typographic-discipline section says "drop caps allowed on long-form case studies." v1 of this plan inherited the "allowed" reading. **Call needed from Justin** (recorded in the brief addendum when made): allow on long-form only, or strike entirely. Note Perihelion already ships a sigil drop cap on the lab side; sibling-not-copy cuts both ways.
+
+---
+
+## Current font setup (pre-migration, verified 2026-06-10)
 
 In `src/styles/globals.css` (NOT in `design-system/tokens.css` yet):
 
@@ -46,13 +59,25 @@ In `src/styles/globals.css` (NOT in `design-system/tokens.css` yet):
 --font-body: 'Didact Gothic', sans-serif;
 ```
 
-Installed via `@fontsource`:
-- `@fontsource-variable/space-grotesk`
-- `@fontsource/didact-gothic`
-- `@fontsource/jetbrains-mono` (already present — used by Perihelion)
-- `@fontsource/podkova`
+Installed via `@fontsource`: `@fontsource-variable/space-grotesk`, `@fontsource/didact-gothic`, `@fontsource/jetbrains-mono`, `@fontsource/podkova`.
 
-**Note from ARCHITECTURE.md (polish branch / PR #68):** font token migration from `globals.css` → `design-system/tokens.css` is explicitly planned as part of the next ADR. Do that move as part of PR A.
+Font token migration from `globals.css` → `design-system/tokens.css` happens in PR A.
+
+---
+
+## The Impeccable pipeline per surface
+
+Every surface PR (B–E) runs the same loop:
+
+1. **`/impeccable craft <surface>`** — craft runs a **compact shape** (the brief + ADR-011 + PRODUCT.md already answer scope, content, and visual direction; shape's own rules say a confirmed direction collapses the 10-section brief to 3–5 bullets + confirm). Justin confirms or course-corrects, then craft builds to its production bar and iterates visually (its Step 5 covers the responsive + states inspection v1 hand-rolled).
+2. **`/impeccable critique <surface>`** — scored review: Nielsen table, P0–P3 issues, cognitive load, AI-slop verdict, `detect.mjs` run, snapshot persisted. This **replaces v1's hand-rolled anti-reference check**: the seven banned categories from PRODUCT.md are exactly what Assessment A evaluates, and the detector mechanizes the slop families.
+3. **`/impeccable polish <surface>`** — reads the critique snapshot as its backlog (P0/P1 first), aligns to the design system, closes the gap.
+4. **Re-critique if the first pass scored low** — the snapshot trend is the measurable bar. Most real interfaces score 20–32; a recalibrated portfolio surface should clear the first-run score visibly on the second run.
+5. **The four repo gates** (below) before the PR is review-ready.
+
+`/impeccable live` is the variant tool when a specific element wants in-browser alternatives (wordmark treatment, hover states, accent swatch shape). Dev server must be running.
+
+What stays hand-rolled (skills don't own it): PR A's mechanical token/font work, branch + PR discipline, the repo gates, accessibility verification beyond what critique flags.
 
 ---
 
@@ -60,140 +85,91 @@ Installed via `@fontsource`:
 
 ### PR A — Token + font migration (no surface changes)
 
+Unchanged from v1 in substance; it's mechanical and the skills don't own it.
+
 **Scope:**
-- Install `@fontsource-variable/fraunces` (variable axes: opsz, SOFT, WONK, wght) and `@fontsource-variable/geist` (or `@fontsource/geist` if variable not available).
-- Migrate font tokens from `src/styles/globals.css` to `design-system/tokens.css`. New token names:
+- Install `@fontsource-variable/fraunces` and `@fontsource-variable/geist` (fall back to static `@fontsource/geist` if variable isn't published).
+- Migrate font tokens from `src/styles/globals.css` to `design-system/tokens.css`:
   - `--font-display: 'Fraunces', serif;`
   - `--font-body: 'Geist', sans-serif;`
   - `--font-mono: 'JetBrains Mono', monospace;`
-- **Decide whether to also keep `--font-heading`** or fold it into `--font-display`. Brief implies the display serif handles h1, h2, AND section openers — so probably retire `--font-heading` and let the display serif own all headings.
-- Add a variable-axis exposure utility (e.g., `--fraunces-axis-display: 'opsz' 144, 'SOFT' 30, 'WONK' 0.5;`) so downstream consumers can apply the locked baseline cleanly.
-- OKLCH-only color audit: sweep `tokens.css` and any other doctrine/token files for hex / `rgb()` / named colors. Convert what survives to `oklch()`.
-- Add the per-project accent tokens to `tokens.css`:
-  - `--accent-magenta: oklch(0.42 0.14 346);`
-  - `--accent-brass: oklch(0.55 0.10 70);`
-  - `--accent-forest: oklch(0.36 0.08 155);`
-  - `--accent-oxblood: oklch(0.34 0.13 25);`
-- Wire fontsource imports in `src/main.tsx`.
-- Update Tailwind v4 config to map `font-display`, `font-body`, `font-mono` to the new tokens.
-- **Don't change any surfaces yet.** Verify fonts load in dev (`npm run dev`), that's it.
+- Retire `--font-heading` (display serif owns all headings per the brief) unless a surface PR proves a need.
+- Variable-axis exposure utility (e.g. `--fraunces-axis-display: 'opsz' 144, 'SOFT' 30, 'WONK' 0.5;`) so consumers apply the locked baseline cleanly.
+- OKLCH-only audit of `tokens.css` + doctrine/token files; convert survivors.
+- Add the four per-project accent tokens (`--accent-magenta`, `--accent-brass`, `--accent-forest`, `--accent-oxblood`).
+- Wire fontsource imports; map Tailwind v4 `font-display` / `font-body` / `font-mono` to the new tokens.
+- No surface changes. The migration is invisible until PR B — that's the point.
 
-**Verification:**
-- `npm run lint`, `npm run test`, `npm run build` clean.
-- Open `/` in dev. Type should still render with the OLD families until surfaces are updated (because no surface consumes the new tokens yet — Tailwind classes still resolve to whatever they currently resolve to). The migration is invisible until the next PR. **Acceptable risk:** the new fonts load but nothing uses them. That's the point.
-- Or: change ONE element (e.g., body element default) to consume `var(--font-body)` directly to prove the new Geist loads visibly. Justin live-reviews.
+**Typeface validation gate (before PR A merges):** the brief requires the picks validated live on home + one case study. Run the new fonts behind a scratch toggle (or a one-element override) in dev and do a `/impeccable live` pass with Justin. Don't lock PR A until Fraunces + Geist render the way the Paper rounds suggested.
 
-**Estimated effort:** ~2–3 hours. Bulk of it is the OKLCH sweep + variable-axis token shape decisions.
-
----
+**Estimated effort:** ~2–3 hours.
 
 ### PR B — Home surface
 
-**Scope:**
-- Rewrite `src/pages/HomePage.tsx` (or whatever the home component is — verify in session) under the new doctrine.
-- Bookish opener. Display serif h1 with optical-size attention. Asymmetric composition. **One atmospheric moment.** Refuse the hero-metric template.
-- First visible payoff. Live-review focal point.
+**Build:** `/impeccable craft` per the pipeline. Direction from the brief: bookish opener, display serif h1 with optical-size attention, asymmetric composition, ONE atmospheric moment, refuse the hero-metric template (now also a v3.5.0 absolute ban — the skill enforces what the doctrine demands; the current home leads with a counter/metric and will get flagged by critique on first run).
 
-**Sub-decisions to surface in-session:**
-- What's the "one atmospheric moment"? Radial-light gradient? Subtle grain? Brass refraction on a single anchor?
-- Wordmark / header treatment — the brief flags this as still-open. NOT hand-lettered. Probably a display-serif treatment with optical-size attention. Could pair with `/impeccable shape` or `/impeccable typeset` for the moment.
-- Counter / metric removal? The current home leads with a counter/metric. The brief says refuse the hero-metric template. Replace with something more editorial.
+**Compact-shape questions to settle in-session:** the atmospheric moment (radial-light gradient / grain / brass refraction on a single anchor); wordmark treatment (still open, NOT hand-lettered — sketch via `/impeccable live` variants); what replaces the counter.
 
-**Verification:**
-- Live walkthrough on `localhost:5174/`. Check against the seven banned anti-references from PRODUCT.md.
-- Mobile review (375px). The asymmetric composition must still hold or restructure deliberately for narrow.
-- Lighthouse score 95+ ship criterion per ADR-011.
-
-**Estimated effort:** ~3–4 hours including live iteration.
-
----
+**Estimated effort:** ~3–4 hours including iteration.
 
 ### PR C — Work index
 
-**Scope:**
-- Rewrite the work-index surface (verify component path in session — likely `src/pages/WorkIndex.tsx` or similar).
-- Monograph TOC pattern: varying Fraunces scale by recency, brass numerals left, year + accent swatch right, hairline-divided rows.
-- Not a card grid. Each project is a *piece*, not a card.
-- Project title separator switches to colon.
+**Build:** `/impeccable craft` per the pipeline. Monograph TOC per the locked spec. Document the numbered-sequence ban exemption in the PR description (collision #2 above).
 
-**Sub-decisions to surface in-session:**
-- Recency-driven scale: 5 projects? 8? What scale curve? (e.g., most recent at 96px Fraunces, oldest at 32px, linear or exponential interpolation?)
-- "Accent swatch" on each row — what shape? Color disc? Hairline mark? Tied to the per-project Committed accent.
-- Hover treatment per row — variable-axis weight-shift per the motion vocabulary?
+**Compact-shape questions:** recency scale curve (96px ceiling — at v3.5.0's display max, fine — down to ~32px; linear vs exponential); accent swatch shape; row hover (variable-axis weight-shift per the motion vocabulary).
 
 **Estimated effort:** ~3–4 hours.
 
----
-
 ### PR D — Case study shell
 
-**Scope:**
-- Rewrite the case study page shell (`src/pages/CaseStudy.tsx` or similar — verify).
-- Canonical opener: full-bleed cover panel left (50%, atmospheric Committed accent) + editorial type spread right (50%, kicker / chapter indicator / headline / body / pull quote w/ brass border-left / metadata footer).
-- Per-project accent system in effect. Each case study declares its Committed accent in frontmatter or content data.
-- Drop caps allowed on long-form (case studies are long-form).
-- Per-project mark slot — placeholder for now if no marks designed; mark system itself is its own ADR (per brief Open Question #2).
+**Build:** `/impeccable craft` per the pipeline. Canonical opener per the locked spec, with the pull-quote treatment resolved per collision #1 and drop caps per collision #4 BEFORE this PR starts.
 
-**Sub-decisions to surface in-session:**
-- Where does the per-project accent declaration live? `core/content/case-studies.ts`? Per-case-study YAML? Each case study Markdown frontmatter?
-- Cover atmosphere: radial-light gradient default, grain overlay shader-feel optional. Implementation: CSS gradient + noise texture, or `<canvas>` shader? Lean CSS for ship velocity.
-- Drop-cap implementation — pure CSS `first-letter` or a styled span in the markdown render? CSS is cleaner.
+**Compact-shape questions:** per-project accent declaration site (frontmatter vs `core/content/` registry — also open question 2 below); cover atmosphere implementation (lean CSS gradient + noise; shader only if CSS can't reach the brief's bar); mark slot placeholder shape.
 
-**Estimated effort:** ~4–5 hours. The cover atmosphere + drop-cap work is the new ground.
-
----
+**Estimated effort:** ~4–5 hours. The cover atmosphere is the new ground.
 
 ### PR E — About page
 
-**Scope:**
-- Rewrite the About surface (`src/pages/About.tsx` or similar — verify).
-- Long-form essay treatment. Body sans, generous margin, kicker/metadata in margin gutter.
-- Probably the smallest of the surface PRs.
+**Build:** `/impeccable craft` per the pipeline. Long-form essay treatment: body sans, generous margin, kicker/metadata in the margin gutter. Smallest surface PR. Note the About copy itself was voice-tuned against the Phase 3.1 profile — this PR restyles, it does not rewrite prose.
 
 **Estimated effort:** ~2 hours.
 
----
-
 ### Post-stack work (separate sessions, optional)
 
-- **Light mode treatment.** Brief defers it. Activate when ready.
-- **Per-project mark/illustration system.** Open Question #2 in the brief. Worth its own ADR-012.
-- **Motion choreography.** "One ambitious motion moment per major surface" per the brief. Probably emerges per surface rather than as a separate PR.
+- **Light mode treatment** — deferred by the brief; activate when ready.
+- **Per-project mark/illustration system** — open question; worth its own ADR.
+- **Motion choreography** — "one ambitious motion moment per major surface"; emerges per surface inside craft's motion pass rather than as a separate PR. `/impeccable animate` is the targeted tool if a surface lands flat after the fact.
 
 ---
 
 ## Open implementation questions
 
-These need answers at some point during the build, but don't block PR A:
-
-1. **Variable-axis discipline at the Tailwind level.** Tailwind v4's `font-stretch` + `font-variation-settings` support is limited. Decide whether to use Tailwind utilities or hand-rolled CSS for the Fraunces axis tweaks. Likely some hybrid.
-2. **Per-project accent declaration site.** Frontmatter, content file, or a registry in `core/`?
-3. **Wordmark / header.** "Justin Hernandez" as a display-serif moment. Sketch in `/impeccable shape` before committing.
-4. **Tailwind v4 OKLCH support.** Should be fine but worth a sanity check — `oklch()` works in modern browsers; Tailwind v4 supports CSS custom property color values.
-5. **Lab/portfolio shared elements.** Anything (Layout shell? Footer? Navigation?) shared between portfolio surfaces and Perihelion. Per ADR-009/010 they should look sibling-not-copy. Need to identify shared components and decide which side owns the styling.
+1. **Variable-axis discipline at the Tailwind level.** Tailwind v4 `font-variation-settings` support is limited; likely a hybrid of utilities + hand-rolled CSS. Settle in PR A.
+2. **Per-project accent declaration site.** Frontmatter, content file, or a registry in `core/`. Settle in PR D's compact shape.
+3. **Wordmark / header.** Display-serif moment, not hand-lettered. `/impeccable live` variants in PR B.
+4. **Lab/portfolio shared elements.** Identify components shared with Perihelion (layout shell, footer, nav) and decide which side owns styling. Sibling-not-copy per ADR-009/010.
+5. **Collisions #1 and #4** (pull quote, drop caps) — Justin's calls, needed before PR D.
 
 ---
 
-## Suggested gates per PR
+## Gates per PR
 
-Same as every other PR in this project:
-
-- [ ] `npm run lint` clean
-- [ ] `npm run test` clean (101+ tests pass)
+- [ ] `npm run lint` clean (one pre-existing warning in `renderSection.tsx` is known)
+- [ ] `npm run test` clean (102 tests)
 - [ ] `npm run build` clean
-- [ ] Live walkthrough on dev server, Justin reviews
-- [ ] Mobile review at 375px
-- [ ] Accessibility — WCAG 2.2 AA contrast verified for any new tokens
-- [ ] Anti-reference check — does this surface pass the seven banned categories in PRODUCT.md?
+- [ ] `npm run audit:orphans` clean
+- [ ] `/impeccable critique` snapshot taken; P0 = 0, P1 resolved or explicitly accepted by Justin
+- [ ] Live walkthrough with Justin (craft's Step 5 + presentation)
+- [ ] Mobile review at 375px (inside craft's responsive pass; verify, don't assume)
+- [ ] WCAG 2.2 AA contrast for any new tokens
+- [ ] Lighthouse 95+ (ADR-011 ship criterion; PR B onward)
 
 ---
 
 ## How to resume in a fresh session
 
-1. `git checkout feat/portfolio-adr-011-implementation`
-2. Read this plan + the brief + ADR-011
-3. Confirm PR #68 is still open (it should be — the doctrine waits for the surfaces to be ready)
-4. Start with PR A scope. Ask Justin whether to:
-   - (a) Do the FULL PR A scope as one commit (tokens + fonts + OKLCH sweep + accent system) — clean but a lot to absorb at once
-   - (b) Slice PR A into two commits (font install + token migration first, OKLCH sweep + accents second) for easier review
-5. First decision in-session: **typeface validation.** Brief says picks should be validated live on home + one case study before committing. May want to do a quick `/impeccable live` or browser iteration session first to confirm Fraunces + Geist render the way the Paper rounds suggested. Don't ship PR A until the picks are locked.
+1. Branch off `main` (`git checkout -b feat/portfolio-adr-011-pr-a main`). Verify `pwd` first — agent worktrees drift.
+2. Read this plan + the brief (with addendum) + ADR-011.
+3. Resolve collisions #1 and #4 with Justin if not yet recorded in the brief addendum.
+4. Start with PR A. Ask Justin whether to slice it as one commit (everything) or two (fonts + token migration, then OKLCH sweep + accents) for review ease.
+5. Do not merge PR A until the typeface validation gate passes live.

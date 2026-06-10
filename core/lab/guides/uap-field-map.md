@@ -13,6 +13,16 @@ territory: T4
 status: complete
 order: 8
 description: "A field-state review of UAP science: what's observed, what's been found, who's studying it, and how the field is breaking a 75-year cycle of institutional dismissal."
+sectionIcons:
+  framing: compass
+  framing-scientific-problem: microscope
+  observables: "phosphor:flying-saucer"
+  history-compressed: history
+  evidence: scan-search
+  transmedium: waves
+  field-studies: binoculars
+  orgs-and-stigma: building-2
+  methodology: list-checks
 glossary:
   AARO: "All-Domain Anomaly Resolution Office. The current US Department of Defense office responsible for UAP detection, tracking, analysis, and reporting to Congress, codified at 50 U.S.C. §3373."
   AATIP: "Advanced Aerospace Threat Identification Program. The 2007 to 2012 Pentagon UAP investigation publicly disclosed by the New York Times in December 2017."

@@ -47,6 +47,10 @@ export interface GuideFrontmatter {
   description: string;
   figures: Figure[];
   glossary: Record<string, string>;
+  // Section anchor -> icon name. Bare name = lucide-react;
+  // 'phosphor:' prefix = @phosphor-icons/react. Partial coverage is
+  // legal; a missing entry means the section renders without an icon.
+  sectionIcons?: Record<string, string>;
 }
 
 // --- Body node tree ---
@@ -141,6 +145,9 @@ export interface GuideSection {
   id: string;
   heading: string;
   blocks: SectionBlock[];
+  // Resolved from frontmatter sectionIcons at parse time. Icons are
+  // decorative; the renderer maps the name to a component in src/lab/.
+  icon?: string;
 }
 
 // Fully parsed and validated guide, ready for render.

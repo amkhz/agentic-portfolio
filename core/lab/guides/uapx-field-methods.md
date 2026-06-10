@@ -34,6 +34,15 @@ figures:
     file: fig-10-energy-spectra.jpg
     caption: "Cosmic Watch energy spectra. Pre-expedition control (cyan) vs. Laguna Beach expedition data (red). Four high-energy events α, β, γ, δ above 40 MeV are circled in green. Inset (D): solar activity during the trip."
     alt: "Log-log energy spectrum plots comparing control and expedition radiation data, with four outlier events circled and solar activity photograph inset"
+sectionIcons:
+  forensic-problem: scan-search
+  instrument-stack: radar
+  c-tap: scan-eye
+  radiation: radiation
+  dark-spot: aperture
+  statistical-framework: chart-scatter
+  lessons-learned: notebook-pen
+  future: door-open
 glossary:
   forensic discipline: "A field that reconstructs past events from indirect evidence: witness testimony, physical traces, chance photographs. It is a poor fit for recurring phenomena, which can be caught in the act instead."
   instrumented sensor suites: "Collections of scientific instruments deployed together to record the same event from multiple angles and modalities. Multiple sensors agreeing creates evidence stronger than any one alone."

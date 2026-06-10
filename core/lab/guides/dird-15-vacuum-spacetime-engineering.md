@@ -11,6 +11,16 @@ territory: T1
 status: complete
 order: 3
 description: "Puthoff's vacuum-polarization framework for reshaping the geometry of space: the state-of-the-art view of spacetime as an engineerable medium and the mathematical backbone for every DIRD that follows."
+sectionIcons:
+  big-picture: telescope
+  speed-of-light: gauge
+  sakharov-gravity: arrow-down-to-line
+  observables: eye
+  lab-experiments: flask-conical
+  white-paper: file-text
+  consciousness: brain
+  suppression: eye-off
+  design-implications: pencil-ruler
 glossary:
   Hal Puthoff: "Physicist at the Institute for Advanced Studies at Austin (now EarthTech International) and author of this DIRD. He founded the remote-viewing program at SRI, and his vacuum-engineering framework anchors the spacetime side of Territory 1. His move here is treating the vacuum's permittivity and permeability as engineering variables rather than fixed constants."
   knobs you can turn: "An engineering framing that distinguishes this paper from most theoretical physics. Physicists describe spacetime; engineers manipulate variables. Puthoff's contribution is identifying which variables in the vacuum's description might be manipulable, its electromagnetic permittivity (ε₀) and permeability (μ₀), and what happens when you change them."

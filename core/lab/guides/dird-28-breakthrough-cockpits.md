@@ -11,6 +11,14 @@ territory: T1
 status: complete
 order: 4
 description: "The human-factors implications of warp-class propulsion: what a cockpit looks like when there is no vibration, no G-force, no airspeed, and control shifts from stick-and-throttle to intent-and-destination."
+sectionIcons:
+  big-picture: telescope
+  g-force-revolution: gauge
+  new-information: binary
+  control-paradigms: joystick
+  sensory-void: circle-dashed
+  consciousness-cockpit: brain
+  design-implications: pencil-ruler
 glossary:
   human-factors: "The scientific discipline studying how humans interact with systems, tools, and environments. In aerospace, human factors engineering determines cockpit layout, display design, control interfaces, and crew workload management. Decades of rigorous research sit behind it, and much of that research becomes irrelevant when the underlying physics changes."
   G-force tolerance: "The human body's ability to withstand sustained acceleration: at 1G everything is fine, at 5G moving your arms becomes difficult, at 9G a pressure suit and training keep you conscious for seconds, and above ~15G sustained no current protection works. Inside a warp bubble (DIRD 13), occupants are in freefall, so the G-force problem simply doesn't exist. This is the most dramatic paradigm shift in the paper: the primary physiological constraint of flight disappears entirely."

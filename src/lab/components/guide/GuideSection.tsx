@@ -8,6 +8,11 @@ import { GuideTable } from "./GuideTable";
 import { GuideHeading } from "./GuideHeading";
 import { GuideList } from "./GuideList";
 import { GuideBlockquote } from "./GuideBlockquote";
+import { SectionIcon } from "./SectionIcon";
+
+// Mocked at 26px in the C.2 Paper session; 24 vs 26 gets locked at live
+// review against the type-only baseline.
+const H2_ICON_SIZE = 26;
 
 interface GuideSectionProps {
   section: GuideSectionType;
@@ -30,9 +35,16 @@ export function GuideSection({
     >
       <h2
         id={`${section.id}-heading`}
-        className="font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
+        className="flex items-center gap-3.5 font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
       >
-        {section.heading}
+        {section.icon && (
+          <SectionIcon
+            name={section.icon}
+            size={H2_ICON_SIZE}
+            className="shrink-0 text-guide-accent"
+          />
+        )}
+        <span>{section.heading}</span>
       </h2>
       <div className="mt-6 space-y-6">
         {section.blocks.map((block, index) => {

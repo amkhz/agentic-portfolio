@@ -108,6 +108,17 @@ function validateGlossary(raw: unknown, slug: string): Record<string, string> {
   return out;
 }
 
+function validateSectionIcons(raw: unknown, slug: string): Record<string, string> {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    throw new Error(`Guide '${slug}': frontmatter 'sectionIcons' must be a map of section anchor to icon name`);
+  }
+  const out: Record<string, string> = {};
+  for (const [anchor, icon] of Object.entries(raw as Record<string, unknown>)) {
+    out[anchor] = requireString(icon, `sectionIcons.${anchor}`, slug);
+  }
+  return out;
+}
+
 function validateFrontmatter(data: Record<string, unknown>, slug: string): GuideFrontmatter {
   const territory = requireString(data.territory, 'territory', slug) as Territory;
   if (!TERRITORIES.includes(territory)) {
@@ -140,6 +151,9 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
     glossary: validateGlossary(data.glossary, slug),
   };
   if (data.order !== undefined) front.order = requireNumber(data.order, 'order', slug);
+  if (data.sectionIcons !== undefined) {
+    front.sectionIcons = validateSectionIcons(data.sectionIcons, slug);
+  }
   return front;
 }
 
@@ -521,6 +535,29 @@ export function parseGuide(source: string, slug: string): Guide {
   const parsed = extractFrontmatter(source, slug);
   const frontmatter = validateFrontmatter(parsed.data, slug);
   const sections = parseBody(parsed.body, slug);
+
+  // Resolve sectionIcons onto sections. Both warnings fire only when the
+  // guide declares the field: an entry whose anchor matches no section is
+  // dead weight, and a section without an entry is legal partial coverage
+  // but more likely a typo'd anchor.
+  if (frontmatter.sectionIcons) {
+    const sectionIds = new Set(sections.map((s) => s.id));
+    for (const anchor of Object.keys(frontmatter.sectionIcons)) {
+      if (!sectionIds.has(anchor)) {
+        console.warn(`Guide '${slug}': sectionIcons entry '${anchor}' matches no section anchor`);
+      }
+    }
+    for (const section of sections) {
+      const icon = frontmatter.sectionIcons[section.id];
+      if (icon !== undefined) {
+        section.icon = icon;
+      } else {
+        console.warn(
+          `Guide '${slug}': section '${section.id}' has no sectionIcons entry (partial coverage is legal, but check for a typo'd anchor)`,
+        );
+      }
+    }
+  }
 
   const figures: Record<string, Figure> = {};
   for (const fig of frontmatter.figures) {

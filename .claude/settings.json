@@ -1,5 +1,11 @@
 {
   "permissions": {
-    "allow": []
+    "allow": [
+      "Bash(npm run test)",
+      "Bash(npm run lint)",
+      "Bash(npm run build)",
+      "Bash(npm run audit:orphans)",
+      "mcp__plugin_paper-desktop_paper__get_screenshot"
+    ]
   }
 }

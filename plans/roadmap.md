@@ -101,9 +101,9 @@
 ### 2. Portfolio visual recalibration polish pass (ADR-011 implementation)
 
 **Status:** Doctrine active on main (PR #68, merged 2026-06-09). Implementation not started. This is a dedicated polish pass waiting to be scheduled; nothing else blocks it.
-**Brief:** `plans/portfolio-visual-recalibration-brief.md` | **ADR:** ADR-011
+**Brief:** `plans/portfolio-visual-recalibration-brief.md` | **Implementation plan:** `plans/portfolio-adr-011-implementation-plan.md` | **ADR:** ADR-011
 
-The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). Start the session by reading the brief; it carries the full spec.
+The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). Start the session with the implementation plan (scaffolded 2026-05-25, rescued from the abandoned `feat/portfolio-adr-011-implementation` branch); the brief carries the full design spec behind it.
 
 ### 3. Constellation enhancements
 

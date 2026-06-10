@@ -1,8 +1,10 @@
 import { Outlet } from "react-router";
+import { ScrollToTop } from "@lab/components/ScrollToTop";
 
 export function LabLayout() {
   return (
     <>
+      <ScrollToTop />
       <a href="#main" className="skip-link">
         Skip to content
       </a>

@@ -93,13 +93,13 @@ glossary:
 
 In early 2025, a thirty-author paper led by physicist Kevin Knuth at the University at Albany was submitted to *Progress in Aerospace Sciences*. The paper is titled *The New Science of Unidentified Aerospace-Undersea Phenomena* and runs to roughly 130 pages. It is not a discovery paper. It is a **field-state review** — an attempt to draw a map of the entire UAP science landscape as it stands at the inflection point of its transition into legitimate academic inquiry.
 
-That inflection is recent and specific. The field crossed from suppressed to respectable over a window of about five years — between the 2017 *New York Times* disclosure of AATIP and the 2022 standing-up of AARO under federal statute. Most of the institutions, journals, organizations, and detection programs that now constitute "UAP science" are less than five years old. The intellectual stigma that kept this work out of *Nature* and *Science* for seventy-five years is dissolving in real time, and the people doing the dissolving are documented in this paper.
+That inflection is recent and specific. The field crossed from suppressed to respectable over a window of about five years — between the 2017 *New York Times* disclosure of |AATIP| and the 2022 standing-up of |AARO| under federal statute. Most of the institutions, journals, organizations, and detection programs that now constitute "UAP science" are less than five years old. The intellectual stigma that kept this work out of *Nature* and *Science* for seventy-five years is dissolving in real time, and the people doing the dissolving are documented in this paper.
 
 This guide is the field map. It compresses the Knuth review into eight sections covering what UAP are, what's been observed, who's studying it now, what they've found, and how the modern methodological consensus prescribes doing the work. The history of US institutional suppression — covered in §3 of the source paper at considerable length — is sketched here in compressed form and flagged for a future dedicated subguide; the same is true for the political-theory backbone of the institutional-suppression thesis (Wendt and Duvall, 2008) and for the consciousness-UAP phenomenological bridge work of Diana Pasulka and Jeffrey Kripal.
 
 > **Territory Bridge**
 >
-> The lab treats |T4| (UAP detection) as inseparable from |T1| (Consciousness & Spacetime). The Knuth paper makes this case institutionally: AAWSAP, the Pentagon program that funded the |DIRD| technical briefs in our reference library, officially studied UAP "psychic and paranormal correlates." The same research program produced the vacuum-engineering physics our T1 work is built on and the UAP observation reports our T4 work is built on. T1 and T4 are the same research program viewed from two ends.
+> The lab treats |T4| (UAP detection) as inseparable from |T1| (Consciousness & Spacetime). The Knuth paper makes this case institutionally: |AAWSAP|, the Pentagon program that funded the |DIRD| technical briefs in our reference library, officially studied UAP "psychic and paranormal correlates." The same research program produced the vacuum-engineering physics our T1 work is built on and the UAP observation reports our T4 work is built on. T1 and T4 are the same research program viewed from two ends.
 
 ---
 
@@ -117,9 +117,11 @@ The second is institutional. For more than seventy years the establishment posit
 
 The contemporary scientific reopening has a clear timeline:
 
-**December 2017.** The *New York Times* publishes the article disclosing the existence of |AATIP|, the Pentagon's covert UAP investigation program. Three US Navy FLIR videos are publicly released alongside the article.
+**December 2017.** The *New York Times* publishes the article disclosing the existence of |AATIP|, the Pentagon's covert UAP investigation program. Three US Navy |FLIR| videos are publicly released alongside the article.
 
 **The deeper context.** AATIP operated under the larger |AAWSAP| umbrella program — $22 million secured by Senators Reid, Inouye, and Stevens. At its peak AAWSAP employed 50 full-time investigators and compiled the largest UFO data warehouse on record, with **more than 200,000 cases**. AAWSAP produced over **100 research papers** including a 140-page report on the 2004 |Nimitz / Tic-Tac| encounter alone. **None of these papers have ever been seen by Congress or the public.** The main contractor was |BAASS|, with **Hal Puthoff** as Chief Scientist.
+
+> **BAASS**: Bigelow Aerospace Advanced Space Studies. Main contractor for AATIP, with Hal Puthoff as Chief Scientist. The team that authored the DIRDs.
 
 **2020.** The Pentagon officially releases the FLIR1, Gimbal, and Go Fast videos. The Senate Intelligence Committee creates the UAP Task Force.
 
@@ -133,7 +135,7 @@ The contemporary scientific reopening has a clear timeline:
 
 ### The Sturrock receipt
 
-A useful piece of historical evidence sits inside the framing argument. In 1977, Stanford astrophysicist Peter Sturrock surveyed the membership of the American Astronomical Society about UFOs. Of the **1,356 respondents**:
+A useful piece of historical evidence sits inside the framing argument. In 1977, Stanford astrophysicist Peter |Sturrock| surveyed the membership of the American Astronomical Society about UFOs. Of the **1,356 respondents**:
 
 - **53%** said UFOs should probably or certainly be studied
 - **3%** said certainly not
@@ -141,9 +143,6 @@ A useful piece of historical evidence sits inside the framing argument. In 1977,
 - **63% of those witness-respondents were night-sky observers** — exactly the population most likely to have well-calibrated perceptual baselines
 
 The stereotype that "real scientists don't take this seriously" collapses against half-century-old data from inside the discipline most likely to know.
-
-> **Read Next**
->
 
 ---
 
@@ -160,7 +159,7 @@ The most useful working definition comes from AATIP. UAP are operationally ident
 | 1 | Positive lift without flight surfaces | No wings, no rotor, no visible propulsion — inertial or gravitational lift mechanism |
 | 2 | Sudden / instantaneous acceleration | Hundreds to thousands of g, with no apparent occupant crush effects |
 | 3 | Hypersonic velocity without signatures | Mach 40–60 with **no sonic boom, no thermal plume, no shock wave** |
-| 4 | Trans-medium travel | Air ↔ water without performance penalty |
+| 4 | |Trans-medium travel| | Air ↔ water without performance penalty |
 | 5 | Low observability / cloaking | Intermittent radar and optical returns |
 | 6 | Biological effects on humans and animals | Close-encounter cases — physiological injury patterns, time loss, perceptual anomalies |
 
@@ -254,7 +253,7 @@ One historical artifact deserves mention because it set the methodological agend
 - The **GEPAN/SEPRA model** (now GEIPAN) is the organizational template
 - **Radiation injuries** to witnesses warrant medical investigation
 
-The resulting volume — *The UFO Enigma: A New Review of the Physical Evidence* — covers photographic evidence, luminosity estimates, radar evidence, the Hessdalen Project, vehicle interference, gravitational/inertial effects, ground traces, vegetation injury, physiological effects, debris analysis. It is a foundational reference for the §4 evidence work that follows.
+The resulting volume — *The UFO Enigma: A New Review of the Physical Evidence* — covers photographic evidence, luminosity estimates, radar evidence, the |Hessdalen| Project, vehicle interference, gravitational/inertial effects, ground traces, vegetation injury, physiological effects, debris analysis. It is a foundational reference for the §4 evidence work that follows.
 
 ---
 
@@ -302,6 +301,8 @@ A small group of analysts has done most of this work. **Phyllis Budinger** (Fron
 
 **Ubatuba, Brazil, 1957.** A flying disc exploded over the sea; fragments collected by fishermen were sent to a Rio de Janeiro newspaper. **Pure magnesium.** Studied by twelve or more labs over decades. The most recent work using |HR-ICPMS| found magnesium isotope ratios consistent with terrestrial values, with trace element ratios inconclusive due to lab disagreement. The case's biggest weakness: witness identity is unknown.
 
+> **HR-ICPMS**: High-Resolution Inductively Coupled Plasma Mass Spectrometry. Used for isotope ratio analysis of UAP material samples (e.g., the Powell et al. analysis of Ubatuba magnesium).
+
 **Val Johnson, Minnesota, 1979.** A deputy sheriff's car was physically struck by a UAP. Hood dented, windshield broken, both headlight and dome light shattered. **Antenna bent at a 90° angle.** Both the car clock and the deputy's wristwatch stopped for **14 minutes** simultaneously before restarting. Eye injuries were treated as "welding burns." The car is preserved unrepaired at the Marshall County Historical Society Museum. Hard kinetic evidence is rare in UAP cases; this is the canonical example.
 
 > **Design Hook**
@@ -331,6 +332,8 @@ It's not a single melt of cast iron. It's a heterogeneous mixture deposited befo
 - **32% palmitic acid** (initially higher — some burned off in the descent)
 - ~7% long-chain carboxylic acids
 - Glass fiber matrix with quartz traces
+
+> **FTIR microspectroscopy**: Fourier transform infrared microspectroscopy. The standard analytic technique used by Phyllis Budinger and others for chemical identification of UAP material samples.
 
 Palmitic acid is a known waterproofing agent and — more interestingly — a published **|Phase Change Material|** used in thermal energy storage applications, including in palmitic acid / SiO₂ glass fiber composites. The recovered fragment maps almost perfectly onto a current materials-science thermal storage formulation.
 
@@ -460,6 +463,10 @@ The methods are familiar from the lab's existing UAPx Field Methods guide. The c
 
 This is a load-bearing innovation. Once you adopt it, the conversation stops being "did you see it?" and becomes "what's the σ?"
 
+> **Read Next**
+>
+> UAPx Field Methods (Instrumented UAP Science from First Principles) is in the library and gives this collaboration's methodology the full treatment: the hardware inventory, the C-TAP pixel-subtraction analysis, the Catalina dark-spot ambiguity, the radiation coincidence timing, and the 3–5σ statistical framework now adopted as field standard.
+
 > **Territory Bridge**
 >
 > The σ-threshold framing is portable beyond UAP. It's the kind of analytical move any speculative-design project working with controversial empirical claims should consider. The lab's broader work on consciousness, vacuum engineering, and remote viewing all benefit from explicit statistical-significance frameworks.
@@ -548,7 +555,7 @@ Five efforts at very different scales:
 
 **|UAP Tracker Project| (2021–).** Pure citizen science. **Live-streamed on YouTube.** Five cameras (one fisheye, four directional), HIKVISION thermal/optical, **passive forward-scatter radar**, MADAR-III-B EM sensor, ADS-B for known-aircraft filtering. Off-the-shelf, mostly open-source.
 
-**|UFODAP|** (Olch, Hollenbeck, O'Brien). Low-cost PTZ camera tracking with machine-vision moving-target detection. **Used by UAlbany-UAPx in their 2021 Catalina study.** This is the connective tissue between the citizen and academic layers.
+**|UFODAP|** (Olch, Hollenbeck, O'Brien). Low-cost PTZ camera tracking with machine-vision moving-target detection. **Used by |UAlbany-UAPx| in their 2021 Catalina study.** This is the connective tissue between the citizen and academic layers.
 
 **|Sky360|.** Open-source international sky observation network. AllSkyCam fish-eye + PTZ. Background-subtraction motion detection. The vision: **citizen science globally, 24/7, harmonized data, available to everyone.**
 

@@ -1,6 +1,6 @@
 # Architecture
 
-**Last Updated:** 2026-03-14
+**Last Updated:** 2026-05-17
 
 This file is the technical specification. Layers, stack, conventions, structure, and import rules are defined here.
 
@@ -35,7 +35,7 @@ Follow this order every time:
 - **Business logic in components** -- Move it to `core/`. If it does not touch the DOM, it does not belong in `src/`.
 - **Heavy dependencies** -- Do not install a library when 20 lines of code will do.
 - **Files over 200 lines** -- Split them, with exceptions for self-contained visual/animation components (canvas, WebGL, shaders) where splitting would harm maintainability.
-- **Raw color values** -- No `#000`, `#FFF`, or default Tailwind color palette. Token colors only. Exception: copy-paste effect components (canvas, WebGL, holographic gradients) may contain internal color constants for shader/gradient effects that are not semantic tokens.
+- **Raw color values** -- All color is OKLCH via tokens (`design-system/tokens.css`) referenced by name. No hex (`#000`, `#FFF`), no `rgb()`, no named colors, no default Tailwind color palette anywhere. Exception: copy-paste effect components (canvas, WebGL, holographic gradients) may contain internal color constants for shader/gradient effects that are not semantic tokens.
 
 ### Import Direction
 
@@ -59,7 +59,7 @@ Violations: `core/` importing from `src/`, `services/`, or `design-system/`. `se
 | **Frontend** | React 19 + Vite 6 | Fast builds, hot reload, ES modules native |
 | **Language** | TypeScript (strict mode) | Catch errors at compile time, self-documenting code |
 | **Styling** | Tailwind v4 + CSS variable tokens | Utility-first with design system enforcement via `design-system/tokens.css` |
-| **Typography** | Space Grotesk (display), Didact Gothic (body), Podkova (heading) | Three-font stack with distinct roles |
+| **Typography** | Three-face stack -- display serif (Fraunces), body sans (Geist), mono kicker (JetBrains Mono) per ADR-011 | Variable axes used intentionally for *fit* (weight, opsz, SOFT, WONK), not animation. Currently loaded in `src/styles/globals.css`; migration to `design-system/tokens.css` planned in the next ADR |
 | **Animation** | motion/react | Spring physics animations, gesture support |
 | **Routing** | react-router v7 | Client-side routing with SPA support via `vercel.json` rewrites |
 | **SEO** | react-helmet-async | Per-page `<title>` and meta tags |
@@ -75,7 +75,10 @@ agentic-portfolio/
 ├── VECTOR.md              # Project doctrine (read first)
 ├── CLAUDE.md              # Agent persona (read second)
 ├── ARCHITECTURE.md        # This file (read third)
-├── index.html             # Vite entry point
+├── PRODUCT.md             # Design context, source of truth for the Impeccable skill suite
+├── MANIFEST.md            # Investiture inventory snapshot
+├── index.html             # Vite entry point (justinh.design)
+├── labs.html              # Perihelion entry point (labs.justinh.design) per ADR-009
 ├── vite.config.ts         # Vite + Tailwind + path aliases
 ├── tsconfig.json          # TypeScript strict config
 ├── package.json           # Scripts: dev, build, test, lint
@@ -176,7 +179,8 @@ agentic-portfolio/
 │   ├── /schemas
 │   ├── /research
 │   ├── /audits
-│   └── /decisions         # Architecture Decision Records
+│   ├── /decisions         # Architecture Decision Records
+│   └── /missions          # Active and archived crew missions
 ├── /plans                 # Project planning documents
 │   └── /archive           # Superseded plans
 └── /scripts               # Build and generation scripts
@@ -205,9 +209,9 @@ agentic-portfolio/
 
 ### Styling
 - Tailwind v4 with CSS variable tokens from `design-system/tokens.css`
-- Token colors only -- no default Tailwind palette, no `#000` or `#FFF`
+- All color is OKLCH via tokens, referenced by name -- no default Tailwind palette, no hex (`#000`, `#FFF`), no `rgb()`, no named colors anywhere
 - Dark mode is the default and primary experience
-- Didact Gothic at weight 400 only
+- Typography: three-face stack per ADR-011 (display serif / body sans / mono kicker). Variable axes used intentionally for *fit*, not animation. See VECTOR.md and PRODUCT.md for full direction
 
 ### Routing
 - react-router v7 for client-side navigation
@@ -246,5 +250,10 @@ Architecture Decision Records live in `/vector/decisions/`.
 | 004 | Last.fm integration | 2026-03-07 | Accepted |
 | 005 | CSS-only texture system for themed backgrounds | 2026-04-11 | Accepted |
 | 006 | Systematic audit/polish pass using Impeccable pipeline | 2026-04-11 | Accepted |
+| 007 | Constellation navigation | 2026-04-12 | Accepted |
+| 008 | Defer DESIGN.md | 2026-04-14 | Accepted |
+| 009 | Lab subdomain architecture (Perihelion) | 2026-04-20 | Accepted |
+| 010 | Perihelion rename and IA | 2026-04-21 | Accepted |
+| 011 | Portfolio visual recalibration toward editorial craftsperson register | 2026-05-17 | Accepted |
 
 When you make a significant technical choice, document it as an ADR.

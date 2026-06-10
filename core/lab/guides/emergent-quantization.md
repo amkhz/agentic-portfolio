@@ -6,14 +6,14 @@ source:
   authors: White, Vera, Sylvester & Dudzinski
   year: 2026
   venue: Physical Review Research
+  url: "https://journals.aps.org/prresearch/abstract/10.1103/l8y7-r3rm"
 accent: "#f0a050"
 territory: T1
 status: complete
 order: 1
 description: "A walk through the Madelung-hydrodynamics derivation of hydrogen's energy levels, treating the vacuum as a physical medium shaped by the proton."
-figures: []
 glossary:
-  Casimir effect: "A real, measured force between two very close metal plates caused by vacuum fluctuations. It proves the vacuum has physical properties. White's company is literally named \"Casimir, Inc.\" — this is central to his research program."
+  Casimir effect: "A real, measured force between two very close metal plates caused by vacuum fluctuations. It proves the vacuum has physical properties. White's company is literally named \"Casimir, Inc.\"; this is central to his research program."
   density: "In this context, not mass per volume in the normal sense. It's the vacuum's effective \"inertia\" — how much it resists being disturbed. The paper models this as ρ(r) = γ/r⁴, meaning the vacuum gets dramatically denser close to the proton."
   elasticity: "How \"springy\" the medium is — how strongly it pushes back when compressed. In the paper, this is captured by the bulk modulus B(r). Together with density, it determines the local speed of sound."
   imprints: "The proton's presence physically alters the vacuum's properties around it. Like how a heavy ball on a trampoline deforms the fabric, creating a \"landscape\" that other objects respond to."
@@ -63,6 +63,8 @@ Think about a guitar string. Nobody programs it to vibrate at specific frequenci
 
 In everyday language, "vacuum" means empty space. But in modern physics, the vacuum is anything but empty — it has energy, it has fluctuations, and it can exert forces (like the |Casimir effect|). This paper takes that idea further and treats the vacuum like a literal physical medium — like air or water — that has measurable properties like |density| and |elasticity|.
 
+> **Casimir effect**: A real, measured force between two very close metal plates caused by vacuum fluctuations. It proves the vacuum has physical properties. White's company is literally named "Casimir, Inc."; this is central to his research program.
+
 The word "dynamic" is key — this vacuum responds to what's in it. A proton doesn't just sit passively in empty space. It |imprints| a structure onto the vacuum, creating a radially varying medium where the |speed of sound| changes depending on how far you are from the proton.
 
 ## Ingredient #1: Quadratic Dispersion {#ingredient-1}
@@ -78,6 +80,8 @@ The key constant is D = ℏ/(2m_eff), where ℏ is the |reduced Planck constant|
 The second ingredient is how the proton shapes the vacuum around it. The paper models this with a specific |constitutive profile| — a recipe for how the vacuum's properties vary with distance from the proton.
 
 The effective inverse sound speed takes the form: 1/c²(r) = A(ω) + C(ω)/r. That |1/r term| is the critical piece — it makes the wave equation mathematically identical to the |Coulomb problem|. The constant A(ω) controls whether modes can propagate or are |evanescent| (trapped).
+
+> **Coulomb problem**: The quantum mechanical problem of an electron bound to a proton by the 1/r electric force. Solving it gives you the hydrogen atom's energy levels, orbital shapes, and spectral lines. It's one of the few exactly solvable problems in QM.
 
 The density is modeled as ρ(r) = γ/r⁴, inspired by the |electrostatic energy density| around a point charge. Combined with a specific |bulk modulus| profile, this produces the required Coulombic sound-speed variation.
 
@@ -97,7 +101,13 @@ The standard interpretation of QM says quantization is a fundamental axiom — e
 
 This matters for several reasons. First, if the vacuum is a real medium with tunable properties, that opens the door to engineering applications — modifying vacuum properties could, in principle, affect fundamental physics. This connects to White's broader work at |Casimir, Inc.| on dynamic vacuum engineering. Second, it fits into a long tradition of |pilot-wave| and |stochastic electrodynamics| theories that try to find a physical mechanism underlying quantum behavior, rather than treating it as irreducibly probabilistic.
 
+> **stochastic electrodynamics**: A research program (SED) that tries to derive quantum behavior from classical electrodynamics plus zero-point fluctuations of the electromagnetic field. The idea is that the vacuum's electromagnetic noise is what causes quantum-like behavior. This paper's approach is in a similar spirit but uses acoustic/hydrodynamic analogies instead.
+
 **Important caveat:** The paper reproduces hydrogen's spectrum exactly, but partly by design — the constitutive profile is *chosen* to produce Coulombic structure. The real test will be whether this framework can handle multi-electron atoms, predict new phenomena, or connect to |relativistic corrections| like |fine structure| and |spin-orbit coupling|. That said, as a mathematical demonstration, it's clean and rigorous.
+
+> **Read Next**
+>
+> Two Paths to Quantum Gravity pairs this paper with ANU's momentum-entanglement Bell test, the experiment heading toward the regimes where a framework like this one could be put to the test. That guide is the synthesis view; this one is the engine room.
 
 ## The Appendix: Where the Dispersion Comes From {#appendix}
 

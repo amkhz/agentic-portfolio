@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-05-25
+**Last updated:** 2026-06-09
 
 ---
 
@@ -98,7 +98,14 @@
 - Build-time figure optimization via `vite-imagetools`
 - Full-text search once content volume demands it
 
-### 2. Constellation enhancements
+### 2. Portfolio visual recalibration polish pass (ADR-011 implementation)
+
+**Status:** Doctrine active on main (PR #68, merged 2026-06-09). Implementation not started. This is a dedicated polish pass waiting to be scheduled; nothing else blocks it.
+**Brief:** `plans/portfolio-visual-recalibration-brief.md` | **ADR:** ADR-011
+
+The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). Start the session by reading the brief; it carries the full spec.
+
+### 3. Constellation enhancements
 
 **Status:** V1 shipped and polished. Spatial navigation live on meta case study.
 **Plan:** `plans/archive/meta-case-study-field.md` | **Mission:** `vector/missions/archive/constellation-field.md`
@@ -109,7 +116,7 @@
 - Scroll-driven constellation reveal on page entry
 - Add images for Color Migration and Agentic Workflow chapters
 
-### 3. Music integration (Last.fm + MCP)
+### 4. Music integration (Last.fm + MCP)
 
 **Status:** Tier 1 shipped (NowPlaying widget live in production).
 **Plan:** `plans/archive/lastfm-music-integration.md`
@@ -119,7 +126,7 @@
 - Last.fm MCP server (Tier 2)
 - Listening history visualizations, genre maps, DJ playlist mining
 
-### 4. Crew and skills evolution
+### 5. Crew and skills evolution
 
 **Status:** Builder retired. Roy shipped (post-build reviewer, referenced in CLAUDE.md and ARCHITECTURE.md). Voice calibration shipped through Phase 3.1.
 **Plan:** `plans/archive/skill-refresh-initiative.md`
@@ -128,19 +135,19 @@
 - Add Investiture health check to Director
 - Joi calibration is production-ready; future passes will run on cadence as the corpus grows
 
-### 5. Parked component work
+### 6. Parked component work
 
 **Plans:**
 - `plans/blade-runner-crew-rename.md` — Crew rename to Case/Wintermute/Neuromancer/Stelline. ~206 occurrences across ~35 files. Parked.
 - `plans/button-destructive-variant.md` — Destructive Button variant ready to apply when a real destructive action lands in the UI.
 
-### 6. Figma token sync
+### 7. Figma token sync
 
 **Status:** Advisory written (OKLCH Phase 3). No code yet.
 
 **Path:** Export `core/tokens/index.ts` -> W3C DTCG JSON -> Token Studio -> Figma Variables.
 
-### 7. Design system documentation page
+### 8. Design system documentation page
 
 **Goal:** Auto-generated `/system` or `/tokens` page rendering all token values, component variants, and a11y specs.
 
@@ -171,3 +178,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 008 | Defer DESIGN.md adoption | 2026-04-14 | Accepted |
 | 009 | Lab subdomain architecture (two Vite builds, one repo) | 2026-04-20 | Accepted |
 | 010 | Rename lab to Perihelion (two-arm house: Archive and Works) | 2026-04-21 | Accepted |
+| 011 | Portfolio visual recalibration to editorial-craftsperson register | 2026-05-17 | Accepted, activated on main 2026-06-09 (PR #68) |

@@ -52,4 +52,14 @@ export const upcomingGuides: UpcomingGuide[] = [
     territory: 'T3',
     status: 'planned',
   },
+
+  // T4 — UAP Observables & Field Science
+  {
+    id: 'galileo-project-methods',
+    title: 'The Galileo Project: Instrumented UAP Science at Scale',
+    source: 'Galileo Project (Harvard / Avi Loeb)',
+    territory: 'T4',
+    status: 'planned',
+    note: 'The ground-observatory counterpart to the UAPx field-methods guide.',
+  },
 ];

@@ -14,24 +14,24 @@ status: complete
 order: 7
 description: "Section-by-section walkthrough of UAPx's first field expedition methodology: hardware inventory, C-TAP pixel-subtraction analysis, the Catalina dark-spot ambiguity, radiation coincidence timing, and the 3σ to 5σ statistical framework now adopted as field standard."
 figures:
-  - slug: fig-1-ufodap-deployment
-    file: fig-1-ufodap-deployment.jpg
+  - slug: ufodap-deployment
+    file: ufodap-deployment.jpg
     caption: "UFODAP deployment on a Laguna Beach rooftop. Top row: camera unit, rooftop deployment, internal MSDAU sensor package. Bottom row: daytime Catalina channel view, and the same view at 4am showing the dark spot (green box)."
     alt: "Six-panel composite showing UFODAP camera hardware, rooftop mounting, MSDAU internals, daytime and nighttime Catalina channel views, with dark spot highlighted"
-  - slug: fig-5-dark-spot-frames
-    file: fig-5-dark-spot-frames.jpg
+  - slug: dark-spot-frames
+    file: dark-spot-frames.jpg
     caption: "Sixteen sequential frames of the dark spot from the 3:59:24am video. Green circles mark the appearance of a new white dot between frames 12 and 13. Bottom row: further zoom on frames 12 and 13."
     alt: "Grid of sixteen grayscale video frames showing a diffuse dark patch with pixel clusters, green circles highlighting new dot appearance"
-  - slug: fig-7-geometry-reconstruction
-    file: fig-7-geometry-reconstruction.jpg
+  - slug: geometry-reconstruction
+    file: geometry-reconstruction.jpg
     caption: "Geometric reconstruction of the dark spot scene. Line-of-sight from Laguna Beach across the 56.84 km Catalina channel, with angles showing that white dots, if real objects at the cloud ceiling, would be at least 4 meters wide."
     alt: "Trigonometric diagram showing observer position at Laguna Beach, cloud ceiling angles, and computed object sizes across the Catalina channel"
-  - slug: fig-8-radar-map
-    file: fig-8-radar-map.jpg
+  - slug: radar-map
+    file: radar-map.jpg
     caption: "KSOX Doppler radar clutter reflectivity. Center: detections within the dark-spot angular rays (color) vs. all others (B&W), filtered above 25 dBZ. Three hits at 27 to 29 dBZ appear at 04:03:50 PDT."
     alt: "Two radar scatter plots showing clutter reflectivity hits in the dark-spot angular region, with filtered and unfiltered views"
-  - slug: fig-10-energy-spectra
-    file: fig-10-energy-spectra.jpg
+  - slug: energy-spectra
+    file: energy-spectra.jpg
     caption: "Cosmic Watch energy spectra. Pre-expedition control (cyan) vs. Laguna Beach expedition data (red). Four high-energy events α, β, γ, δ above 40 MeV are circled in green. Inset (D): solar activity during the trip."
     alt: "Log-log energy spectrum plots comparing control and expedition radiation data, with four outlier events circled and solar activity photograph inset"
 sectionIcons:
@@ -90,6 +90,10 @@ The UAlbany-UAPx Collaboration is part of a wave of efforts that, starting aroun
 
 UAPx is one of several groups now doing this. The |Galileo Project| at Harvard, led by Avi Loeb, is building multi-modal observatories on the ground and analyzing commercial satellite imagery for retrospective UAP detection. |IFEX| at the University of Würzburg has built UAP detection into a Mars mission concept and is the first government-funded UAP project in Germany. |VASCO| (Vanishing and Appearing Sources during a Century of Observations) hunts for transient lights in pre-Sputnik photographic plates from old observatories. |Project Hessdalen| in Norway has been instrumenting a single mountain valley for forty years. UAPx's distinctive position in this landscape is being **small, agile, hotspot-focused, and replication-oriented**: willing to deploy on short notice and to define its job not as making discoveries first, but as making other groups' findings reproducible.
 
+> **Subguide queued**
+>
+> A dedicated subguide on the **Galileo Project** is in the queue. Harvard's observatory program is the largest-scale instrumented UAP effort now running, with multi-modal ground stations and roughly 500,000 reconstructed aerial trajectories, and its methodology deserves the same focused treatment this guide gives UAPx.
+
 The pivot to instrumented science isn't just methodological. It changes what UAP research can ask questions about. Witness reports can tell you that something looked weird. Instruments can tell you what its temperature was, what frequencies of light it emitted, whether it produced ionizing radiation, what its angular velocity across the sky was, and whether multiple independent detectors agreed within their respective time resolutions. **The forensic question is "what did you see?" The instrumented question is "what does the data show, and how confident are we?"** This guide is about how UAPx answered the second question on its first real expedition: what worked, what didn't, and why a single ambiguous dark spot ended up teaching the field more about evidence than any clean detection could have.
 
 ## The Instrument Stack {#instrument-stack}
@@ -110,7 +114,7 @@ The motivation for measuring radiation in the first place comes from the histori
 
 The first expedition is also notable for what it *didn't* have but planned to add. **UV cameras** are coming because some witness reports describe blueshifts that imply unusual propulsion. **Electromagnetic field meters and magnetic gradiometers** are planned because UAP reports frequently include vehicle ignition failures and electronic disruption, both well-documented enough to merit instrumentation. **Piezoelectric infrasound sensors** are planned because hypersonic travel without sonic booms would produce specific acoustic signatures, and because infrasound is independently known to induce hallucinations, which makes it a candidate explanation for some of the more unusual eyewitness accounts. **Analog backups** like simple electroscopes are planned alongside the digital radiation detectors specifically to combat the historically reported "instrument incapacitance effect" of UAP encounters: if a real phenomenon disables digital electronics, you want non-digital instruments running in parallel.
 
-{figure:fig-1-ufodap-deployment}
+{figure:ufodap-deployment}
 
 ## C-TAP and the Computer Vision Pipeline {#c-tap}
 
@@ -140,13 +144,13 @@ During UAPx's expedition, the Cosmic Watch ran for 205,920 seconds of livetime (
 
 The interesting thing about the four high-energy events is not what they look like alone but what happened when the team cross-referenced them with the camera data. The α event, the highest-energy of the four, occurred at almost exactly the same time as the most ambiguous UFODAP video sequence of the entire expedition: the dark spot recordings from 3:57 to 3:59am on July 16. **A coincidence between an extreme outlier in one sensor and a qualitatively unusual event in a different sensor is exactly the kind of multi-modal correlation the team was designed to detect.** Whether it actually means anything is the question Section 6 answers, and the answer is more disciplined than the eyewitness-tradition reflex of "it must be something."
 
-{figure:fig-10-energy-spectra}
+{figure:energy-spectra}
 
 ## The Dark Spot: A Forensic Worked Example {#dark-spot}
 
 At 3:57:16am on Friday, July 16, 2021, the UFODAP camera on the Laguna Beach rooftop recorded a brief video. In the upper right of the frame, against an overcast pre-dawn sky, there was a diffuse dark patch. It had no well-defined edge. The camera's tracking software then slewed the lens, chasing what appears to have been a separate insect, and during the rotation, white pixel clusters and black streaks appeared, emanating from the dark spot. At 3:59:24am, two minutes later, the camera was stationary again and the dots were visible inside the spot for the entire video's length. Then, in frame 13 of that video, a brand-new white dot appeared in the spot's location, accompanied by a new black dot in a different region. By 4:00:13am, the spot was gone and the camera was recording normally. **No human team member saw any of this in real time.** It was discovered weeks later, during systematic review, only because the Cosmic Watch had logged its highest-energy particle event near the same window.
 
-{figure:fig-5-dark-spot-frames}
+{figure:dark-spot-frames}
 
 The team's response to the dark spot is the part of the paper most worth studying as a methodology. Rather than declare the event anomalous, they wrote out **ten** prosaic hypotheses and tested each in turn: (1) A |fall-streak hole| in the clouds, with the white dots being either the aircraft that caused it or noise. (2) A natural hole in the clouds revealing a star field or seagull flock. (3) A water droplet on the camera dome, slowly evaporating. (4) A fly on the dome leaving the field of view. (5) A |cosmic ray shower| ionizing CMOS pixel clusters. (6) A meteor breaking up, or a meteor shower. (7) Camera noise combined with a residual algorithmic artifact from the camera rotation. (8) The camera resetting its exposure levels for a lightening pre-dawn sky. (9) Military testing tied to a nearby base, with the white dots being a drone cluster. (10) Reflections of city lights in the camera dome, possibly inside a water droplet.
 
@@ -158,13 +162,13 @@ Real shot noise in a digital camera follows a |Poisson distribution|, which has 
 
 The geometric analysis is equally instructive. *If* the dark spot was a real physical hole in the cloud ceiling and the white dots were real objects at or above that ceiling, what would they have to be? Using the camera's known location in Laguna Beach, the field-of-view angles from the UFODAP optics, and the cloud ceiling altitude estimated from local weather data, the trigonometry gives a clean answer: each white dot would have to be **at least 4 meters wide**. Not a fly. Not a bird. Not even a small drone. A 4-meter-class object would be conventional aircraft or larger, and there were no such aircraft in the area at the time according to ADS-B transponder records.
 
-{figure:fig-7-geometry-reconstruction}
+{figure:geometry-reconstruction}
 
 The most novel methodological contribution of the dark spot analysis was the team's use of |NEXRAD Doppler weather radar| data to look for independent corroboration. NEXRAD is the US National Weather Service's network of WSR-88D radar installations covering the continental United States, and its archived data is publicly available. UAPx is the first group, to the authors' knowledge, to use it for UAP corroboration in a published scientific paper. Three NEXRAD stations had potential coverage of the area: KSOX in the Santa Ana Mountains, KNKX, and KVTX. KSOX did, in fact, log three radar |clutter reflectivity| hits at 27, 29, and 29 dBZ within the angular rays containing the dark spot, at 04:03:50am, about four minutes after the camera event. Background statistical analysis showed these clutter hits were not particularly rare for that location and that time of year. They are, in the team's careful phrasing, "neither corroborating nor contradicting" the camera observation.
 
 > **clutter reflectivity**: The NEXRAD data product that captures non-meteorological radar returns: buildings, aircraft, birds, insects. It gets filtered out of weather products but saved separately.
 
-{figure:fig-8-radar-map}
+{figure:radar-map}
 
 **None of the ten hypotheses cleanly explains every feature of the dark spot.** The fall-streak hole explains the spot but not the dots. Camera noise explains the dots but not the spot. Combined hypotheses (fly + noise, drop + reflection) explain individual features but introduce contradictions with the time-correlation evidence between videos. The team's honest conclusion is that the most likely explanation is some combination of mundane causes they weren't able to fully reconstruct, but that the proper response is not to declare it solved or to declare it anomalous. The proper response is to quantify the statistical significance of the multi-sensor coincidence and let the math decide.
 

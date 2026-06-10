@@ -8,7 +8,7 @@ source:
   venue: DIA / AAWSAP Program
 accent: "#b48efa"
 territory: T1
-status: complete
+status: draft
 order: 3
 description: "Puthoff's vacuum-polarization framework for reshaping the geometry of space — the state-of-the-art view of spacetime as an engineerable medium and the mathematical backbone for every DIRD that follows."
 glossary:

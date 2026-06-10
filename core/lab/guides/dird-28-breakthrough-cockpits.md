@@ -3,7 +3,7 @@ slug: dird-28-breakthrough-cockpits
 title: "DIRD 28: Cockpits in the Era of Breakthrough Flight"
 kicker: DIRD Guide Series
 source:
-  authors: DIA / AAWSA Program
+  authors: DIA / AAWSAP Program
   year: 2010
   venue: DIA / AAWSAP Program
 accent: "#4ecdc4"
@@ -11,7 +11,6 @@ territory: T1
 status: draft
 order: 4
 description: "The human-factors implications of warp-class propulsion: what a cockpit looks like when there is no vibration, no G-force, no airspeed, and control shifts from stick-and-throttle to intent-and-destination."
-figures: []
 glossary:
   human-factors: The scientific discipline studying how humans interact with systems, tools, and environments. In aerospace, human factors engineering determines cockpit layout, display design, control interfaces, and crew workload management. It accounts for human cognitive limits, perceptual capabilities, physiological constraints, and error patterns. The field has decades of rigorous research — much of which becomes irrelevant when the underlying physics changes.
   G-force tolerance: "The human body's ability to withstand sustained acceleration. At 1G (normal gravity), everything is fine. At 5G, moving your arms becomes difficult. At 9G with a pressure suit and training, consciousness is maintainable for seconds. Above ~15G sustained, no current protection works. But inside a warp bubble (DIRD 13), occupants are in freefall — the G-force problem simply doesn't exist. This is the most dramatic paradigm shift: the primary physiological constraint of flight disappears entirely."
@@ -20,7 +19,7 @@ glossary:
   spatial orientation: "The operator's sense of where they are, which way they're going, and which way is 'up.' In conventional flight, this comes from: visual horizon, vestibular system (inner ear), proprioception (feeling the seat, the controls), and aerodynamic cues (wind noise, vibration, G-forces). In breakthrough flight, ALL of these cues disappear. The vehicle doesn't vibrate, doesn't produce wind noise, doesn't generate G-forces. The operator is in a sensory void — and spatial disorientation becomes the primary risk."
   Anti-G suits: "Pressurized garments that squeeze the legs and abdomen during high-G maneuvers, preventing blood from pooling in the lower body and maintaining brain blood flow. Without them, pilots black out above ~5G sustained. Even with the best suits and straining techniques (the 'anti-G straining maneuver' — essentially a whole-body clench), human tolerance peaks around 9G for brief periods and ~4-5G sustained."
   reclined seating: "Tilting the pilot's seat backward changes the G-vector relative to the body's long axis. Instead of blood being pulled from head to feet (worst case), forces distribute more evenly. Some high-G experimental aircraft use seats reclined 60-65°. But this creates new problems: instrument visibility, arm reach, emergency egress. The design is always a compromise between G-tolerance and operability."
-  warp bubble: "The region of flat spacetime inside the curved spacetime shell that enables propulsion (see DIRD 13 guide). Inside the bubble, the normal rules apply — you float, stand, walk. There's no acceleration, no vibration, no aerodynamic noise. The bubble and everything in it is in freefall, being carried by the motion of spacetime itself. The experience is closer to being in a room on the ground than being in any existing vehicle."
+  warp bubble: "The region of flat spacetime inside the curved spacetime shell that enables propulsion (see DIRD 13 guide). Inside the bubble, the normal rules apply: you float, stand, walk. There's no acceleration, no vibration, no aerodynamic noise. The bubble and everything in it is in freefall, being carried by the motion of spacetime itself. The experience is closer to being in a room on the ground than being in any existing vehicle."
   Seating: "In current aircraft, the seat is a survival system: it absorbs impact, positions the pilot for G-tolerance, integrates with the ejection system, and orients the body for instrument visibility under load. In breakthrough flight, seating becomes a comfort and awareness system. It could be a chair, a standing station, a reclining couch, or a free-floating harness. The design is unconstrained by acceleration physics for the first time in aviation history."
   Emergency procedures: "Current emergency procedures assume the pilot is under physical duress: ejection seats, oxygen masks, G-suit inflation, control surface failures. Under breakthrough flight, emergencies are different in kind. Field collapse could expose the craft to external conditions instantaneously — the equivalent of suddenly appearing at Mach 10 without the warp bubble's protection. The interface must communicate field integrity status as the primary safety indicator, replacing airframe stress and engine parameters."
   mental models: "Internal representations of how a system works that allow operators to predict behavior and interpret displays. A pilot's mental model of airspeed connects the number on the gauge to the feeling of the aircraft, the sound of the wind, the responsiveness of controls, and the danger of stalling. These models are built through training and experience. For exotic flight physics, no one has these models — they don't exist yet. Building them is a training design challenge as much as a display design challenge."
@@ -75,7 +74,11 @@ The paper identifies four domains where breakthrough flight breaks current cockp
 
 The entire history of cockpit design is shaped by one constraint: the human body breaks under acceleration. Every seat, harness, display position, control layout, and emergency procedure is designed around the fact that pilots experience crushing forces during maneuvers. |Anti-G suits|, |reclined seating|, and flight envelope limits all exist because of this single physiological constraint.
 
+> **Anti-G suits**: Pressurized garments that squeeze the legs and abdomen during high-G maneuvers, preventing blood from pooling in the lower body and maintaining brain blood flow. Without them, pilots black out above ~5G sustained.
+
 Under spacetime engineering (DIRD 13), this constraint evaporates. Occupants inside a |warp bubble| experience freefall regardless of apparent external acceleration. A 1,000G turn from the outside perspective is a gentle drift from the inside. This isn't hypothetical mitigation — it's a fundamental change in physics. The occupants are not being protected from G-forces; the G-forces don't exist for them.
+
+> **warp bubble**: The region of flat spacetime inside the curved spacetime shell that enables propulsion (see DIRD 13 guide). Inside the bubble, the normal rules apply: you float, stand, walk.
 
 The design implications cascade. |Seating| doesn't need to resist G-forces — it's furniture, not survival equipment. The cockpit can be any orientation — there's no preferred axis defined by acceleration. |Emergency procedures| change fundamentally: the primary risk is no longer G-induced loss of consciousness but rather field failure (what happens if the warp bubble collapses?) and spatial disorientation (how do you maintain awareness in the absence of all kinesthetic cues?).
 
@@ -95,6 +98,10 @@ The DIRD's most design-relevant insight is the concept of |pilot as mission dire
 
 But the DIRD also notes an important counter-argument: the progression toward full autonomy isn't inevitable. |Supervisory control| research (DIRD 34) shows that humans need meaningful engagement to maintain situational awareness. A mission director with nothing to do between setting a destination and arriving becomes complacent, loses the mental model of what the system is doing, and can't respond effectively when something goes wrong. The interface must give the operator |meaningful work| — not just buttons to push, but genuine cognitive engagement with the mission.
 
+> **Subguide queued**
+>
+> DIRD 34 (Cognitive Limits on Simultaneous Control of Multiple Unmanned Spacecraft) carries the supervisory-control research this section leans on. It surfaces here and in the AI-managed flight thread, and it is not in the library or the upcoming queue yet. Flagged so the thread isn't lost.
+
 ## The Sensory Void Problem {#sensory-void}
 
 This is the DIRD's most provocative contribution and the design challenge that has no precedent anywhere in human experience. In conventional flight, pilots know what's happening through their bodies: |vestibular cues| (inner ear sensing acceleration and rotation), |proprioceptive cues| (feeling the seat push against you, the controls resist your input), |auditory cues| (engine sound, wind noise), and |visual cues| (the horizon, terrain, other aircraft). In breakthrough flight, *every single one of these disappears*.
@@ -107,7 +114,13 @@ The DIRD proposes |sensory substitution| systems: artificial feedback that repla
 
 The DIRD doesn't go here, but the lab does. If the unified thesis of T1 is correct — consciousness generates vacuum coherence, and vacuum coherence is the propulsion mechanism — then the most radical cockpit design question isn't about instruments or controls. It's about what happens when the boundary between |operator and propulsion system| dissolves.
 
+> **Read Next**
+>
+> DIRD 15 (Vacuum Spacetime Engineering) is in the library and lays out the framework this section builds on: the vacuum as the engineerable substrate, Puthoff's Ep 86 consciousness-coherence model, and the levitation accounts behind the craft-without-technology speculation. Its closing design hooks (the coherence feedback system, the training continuum) are the propulsion-side counterparts to this cockpit work.
+
 Puthoff's speculation (Ep 86) about |craft without technology| — a shell around an operator in the right consciousness state — suggests a cockpit that's more like a |meditation chamber| than a flight deck. The 'instruments' might be biometric feedback helping the operator maintain coherence: brain wave patterns, heart rate variability, EEG coherence measures. The 'controls' might be intention supported by training protocols derived from practices like |TransDimensional Mapping|.
+
+> **TransDimensional Mapping**: Birdie Jaworski's remote viewing methodology. Uses large-scale visual maps for organizing perceptual data. Structured yet intuitive.
 
 This creates a spectrum of cockpit paradigms for T1 design work. At one end: the |instrumented cockpit| — exotic physics managed by AI, operator as mission director, displays showing spacetime curvature and field topology. At the other end: the |consciousness cockpit| — minimal technology, operator in a meditative state, the vehicle responds to intention. Between them: |hybrid models| where AI manages the physics while the operator's consciousness state modulates field parameters. The most interesting design space might be right in that hybrid zone.
 
@@ -115,12 +128,26 @@ This creates a spectrum of cockpit paradigms for T1 design work. At one end: the
 
 DIRD 28 converts the speculative physics of DIRD 13 into a structured set of design challenges. Here are the specific implications for the lab's T1 work:
 
-**The field health display is the new engine gauge.** In conventional flight, engine instruments tell you if the propulsion system is healthy. In breakthrough flight, the equivalent is |field health|: is the warp bubble stable? Is energy distribution even? Are there stress points developing in the field topology? Is the bubble wall thickness within safe margins? This is the primary safety instrument and should occupy the same visual prominence that engine gauges do in current cockpits.
+> **Read Next**
+>
+> DIRD 13 (Warp Drive, Dark Energy, and the Manipulation of Extra Dimensions) is in the library and covers the propulsion physics this cockpit is designed around: the warp bubble mechanics, the energy requirements, and the observables that follow from spacetime engineering.
 
-**|Synthetic orientation| replaces the natural horizon.** The sensory void problem means the interface must provide continuous, automatic, multi-modal orientation cues. This isn't a 'nice to have' — it's a safety-critical system without which the operator becomes disoriented within minutes. The design should use redundant channels: visual (attitude display), auditory (spatial audio representing direction), and potentially haptic (vibrotactile encoding of motion) and vestibular (galvanic stimulation).
+> **Design Hook**
+>
+> **The field health display is the new engine gauge.** In conventional flight, engine instruments tell you if the propulsion system is healthy. In breakthrough flight, the equivalent is |field health|: is the warp bubble stable? Is energy distribution even? Are there stress points developing in the field topology? Is the bubble wall thickness within safe margins? This is the primary safety instrument and should occupy the same visual prominence that engine gauges do in current cockpits.
 
-**The |intent-to-action gap| is the new control design problem.** In conventional flight, the gap between pilot intent and aircraft response is small and well-understood: move stick right → ailerons deflect → aircraft rolls. In breakthrough flight, especially consciousness-driven models, the gap is enormous: the operator intends to change heading → something must translate that intention into a field geometry modification → the field reshapes → the trajectory changes. Designing the translation layer — whatever mediates between human intent and physical response — is the core control design challenge.
+> **Design Hook**
+>
+> **|Synthetic orientation| replaces the natural horizon.** The sensory void problem means the interface must provide continuous, automatic, multi-modal orientation cues. This isn't a 'nice to have' — it's a safety-critical system without which the operator becomes disoriented within minutes. The design should use redundant channels: visual (attitude display), auditory (spatial audio representing direction), and potentially haptic (vibrotactile encoding of motion) and vestibular (galvanic stimulation).
 
-**|Failure modes| are alien.** In conventional aircraft, failures are familiar: engine out, hydraulic loss, instrument failure, structural damage. The pilot has trained responses for each. In breakthrough flight, failure modes include: warp bubble collapse (instantaneous exposure to extreme conditions), field asymmetry (differential time dilation across the vehicle), vacuum instability (the medium the propulsion relies on behaving unpredictably), and coherence loss (the operator's consciousness state dropping below the threshold for propulsion). Each requires a new warning system, a new mental model, and a new response protocol.
+> **Design Hook**
+>
+> **The |intent-to-action gap| is the new control design problem.** In conventional flight, the gap between pilot intent and aircraft response is small and well-understood: move stick right → ailerons deflect → aircraft rolls. In breakthrough flight, especially consciousness-driven models, the gap is enormous: the operator intends to change heading → something must translate that intention into a field geometry modification → the field reshapes → the trajectory changes. Designing the translation layer — whatever mediates between human intent and physical response — is the core control design challenge.
 
-**The |training environment| is as important as the operational interface.** No human has ever experienced breakthrough flight. Every operator will be a first-generation user with no muscle memory, no intuitive sense for the physics, and no peer community to learn from. The training environment — simulation, graduated exposure, mentored practice — is a critical design deliverable. This connects directly to the RV training framework: both involve building perceptual skills for phenomena that have no everyday analog, using structured practice with feedback.
+> **Design Hook**
+>
+> **|Failure modes| are alien.** In conventional aircraft, failures are familiar: engine out, hydraulic loss, instrument failure, structural damage. The pilot has trained responses for each. In breakthrough flight, failure modes include: warp bubble collapse (instantaneous exposure to extreme conditions), field asymmetry (differential time dilation across the vehicle), vacuum instability (the medium the propulsion relies on behaving unpredictably), and coherence loss (the operator's consciousness state dropping below the threshold for propulsion). Each requires a new warning system, a new mental model, and a new response protocol.
+
+> **Design Hook**
+>
+> **The |training environment| is as important as the operational interface.** No human has ever experienced breakthrough flight. Every operator will be a first-generation user with no muscle memory, no intuitive sense for the physics, and no peer community to learn from. The training environment — simulation, graduated exposure, mentored practice — is a critical design deliverable. This connects directly to the RV training framework: both involve building perceptual skills for phenomena that have no everyday analog, using structured practice with feedback.

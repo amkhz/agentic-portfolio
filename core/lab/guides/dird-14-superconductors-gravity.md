@@ -3,7 +3,7 @@ slug: dird-14-superconductors-gravity
 title: "DIRD 14: The Role of Superconductors in Gravity Research"
 kicker: DIRD Guide Series
 source:
-  authors: DIA / AAWSA Program
+  authors: DIA / AAWSAP Program
   year: 2010
   venue: DIA / AAWSAP Program
   notes: "Source cover lists ICOD as 1 December 2010, dated after the 23 March 2010 publication; appears to be a typo for 1 December 2009 (matches DIRDs 13 and 15). Renderer ignores this field; preserved for future colophon work."
@@ -139,7 +139,7 @@ The |Hoverr thruster| (Ankur Bhatt, NSF Phase 1, TRL 4) is also relevant here, t
 
 > **Rindler horizon**: An event horizon that exists for any accelerating observer. Just as a black hole's event horizon defines a boundary beyond which light can't escape, an accelerating observer has a Rindler horizon behind them, a boundary from which signals can never catch up.
 
-Other active lines include |superconducting quantum gravity detectors|, which use the extreme sensitivity of superconducting circuits (SQUIDs and |Josephson junction| devices) not to generate gravitational effects but to detect them with unprecedented precision. Even if superconductors don't couple to gravity in the dramatic way Podkletnov claimed, they might enable the measurement instruments that detect vacuum engineering effects produced by other means. The |Josephson junction| quantum detectors that Puthoff's group is building with a defense contractor are in this category, superconducting sensors designed to detect the scalar and vector potentials predicted by Extended Electrodynamics.
+Other active lines include |superconducting quantum gravity detectors|, which use the extreme sensitivity of superconducting circuits (SQUIDs and |Josephson junction| devices) not to generate gravitational effects but to detect them with unprecedented precision. Even if superconductors don't couple to gravity in the dramatic way Podkletnov claimed, they might enable the measurement instruments that detect vacuum engineering effects produced by other means. The Josephson junction quantum detectors that Puthoff's group is building with a defense contractor are in this category, superconducting sensors designed to detect the scalar and vector potentials predicted by Extended Electrodynamics.
 
 ## Design Implications for the Lab {#design-implications}
 

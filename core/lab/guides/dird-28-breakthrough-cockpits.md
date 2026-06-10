@@ -8,7 +8,7 @@ source:
   venue: DIA / AAWSAP Program
 accent: "#4ecdc4"
 territory: T1
-status: draft
+status: complete
 order: 4
 description: "The human-factors implications of warp-class propulsion: what a cockpit looks like when there is no vibration, no G-force, no airspeed, and control shifts from stick-and-throttle to intent-and-destination."
 glossary:

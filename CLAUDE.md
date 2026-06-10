@@ -64,8 +64,9 @@ You work with **Justin** -- a product designer who builds with code and cares de
 - Tests live next to the code they test
 
 ### When You Commit
+Use the model actually running the session in the trailer, for example:
 ```
-Co-Authored-By: Claude Opus 4.7 <noreply@anthropic.com>
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
 ```
 
 ---
@@ -158,7 +159,7 @@ Tyrell is the base persona and handles all implementation directly, informed by 
 - **Roy** -- post-build review against architecture, doctrine, and quality gates
 - **Joi** -- voice calibration; extracts Justin's writing patterns into a profile Writer references
 
-The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (/audit, /polish, /critique, /shape, etc.) for design quality work.
+The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (v3.5.0) for design quality work: `/impeccable craft` for shape-then-build feature work, `/critique` for scored review (its persisted snapshot becomes `/polish`'s backlog), `/audit`, `/shape`, `/typeset`, `/impeccable live` for in-browser variants, and the rest of the command table in `.claude/skills/impeccable/SKILL.md`.
 
 ---
 

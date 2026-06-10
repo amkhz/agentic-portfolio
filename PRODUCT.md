@@ -1,5 +1,7 @@
 ## Design Context
 
+register: brand
+
 ### Users
 
 Hiring managers, design leads, and potential collaborators evaluating Justin's design and technical capabilities. They scan portfolios quickly, judge craft quality within seconds, and look for evidence of systematic thinking alongside visual polish. The portfolio must earn trust through its own construction -- every detail is evidence.

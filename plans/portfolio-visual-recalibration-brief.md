@@ -141,7 +141,7 @@ The current `PRODUCT.md` direction is sound but under-expressed. Specifically:
 >
 > **Two collisions surfaced in the revisit, recorded here so the discovery record stays honest:**
 >
-> 1. The locked opener spec's "pull quote with brass border-left" collides with v3.5.0's absolute side-stripe ban (`border-left` > 1px as colored accent, match-and-refuse). Justin's call pending; the implementation plan v2 carries the options and a recommendation (re-propose via the Fraunces SOFT 80 italic rather than spend a PRODUCT.md exemption).
+> 1. The locked opener spec's "pull quote with brass border-left" collides with v3.5.0's absolute side-stripe ban (`border-left` > 1px as colored accent, match-and-refuse). **Resolved 2026-06-10: Justin respects the ban.** The brass border-left is struck; the pull-quote treatment gets re-proposed in the case-study-shell PR (Fraunces SOFT 80 italic the leading candidate). No PRODUCT.md exemption spent. The locked-decisions line above stands as the historical record of what Round 4 confirmed; this entry amends it.
 > 2. This brief contradicts itself on drop caps: discovery item 6 bans them ("explicitly *not* drop caps/marginalia"), the typographic-discipline section allows them on long-form. Justin's call pending; recorded in the plan's collision list.
 >
 > The brass work-index numerals and the mono kicker system both survive v3.5.0's new bans on those bans' own exemptions (real ordered sequence; one named kicker as deliberate brand system). Sequencing and locked specs otherwise hold; the verification flow moved to the `craft` → `critique` → `polish` snapshot pipeline per the implementation plan v2.

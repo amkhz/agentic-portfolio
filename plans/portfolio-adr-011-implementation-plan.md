@@ -30,7 +30,7 @@ From the brief — not up for re-litigation in implementation:
   - Moss forest: `oklch(0.36 0.08 155)`
   - Deep oxblood: `oklch(0.34 0.13 25)`
 - **Cover atmosphere:** not flat color panels (Rosenfeld Media trap, rejected). Radial-light gradient primary; grain overlay + shader-feel layered on top.
-- **Case study opener composition:** full-bleed cover panel left (50%, atmospheric Committed accent) + editorial type spread right (50%, kicker / chapter indicator / headline / body / pull quote / metadata footer). Pull-quote accent treatment: see Doctrine collisions below.
+- **Case study opener composition:** full-bleed cover panel left (50%, atmospheric Committed accent) + editorial type spread right (50%, kicker / chapter indicator / headline / body / pull quote / metadata footer). Pull-quote treatment: the original brass border-left was struck 2026-06-10 (collision #1 below, resolved); re-proposed in PR D under the side-stripe ban.
 - **Project title separator:** colon. "Vesper: the long road home."
 - **Work index:** monograph table of contents. Varying Fraunces scale by recency, brass numerals left, year + accent swatch right, hairline rows. Not a card grid.
 - **Color rule:** all color OKLCH via tokens referenced by name. No hex anywhere, including doctrine files.
@@ -42,7 +42,7 @@ From the brief — not up for re-litigation in implementation:
 
 v3.5.0's SKILL.md carries match-and-refuse **absolute bans** that any Impeccable command will enforce mid-build. Three locked/blessed specs intersect them. Adjudicate BEFORE the build so the skills and the doctrine don't fight each other in-session:
 
-1. **Pull quote `border-left` in brass** (locked opener spec) vs. the **side-stripe ban** ("`border-left` > 1px as a colored accent... never intentional"). Direct collision. The ban targets the SaaS callout stripe; an editorial pull-quote rule is a print convention, but the skill's enforcement is mechanical and will refuse it every time. **Call needed from Justin:** (a) keep the lock and record an explicit doctrine exemption in PRODUCT.md ("editorial pull-quote rule on long-form case studies is exempt from the side-stripe ban") so skills stop fighting it, or (b) let `typeset` re-propose the pull-quote treatment under the new constraint (oversized hanging quotation mark, indent + size shift, Fraunces italic with the SOFT 80 axis doing the work). Recommendation: (b) — the axis-driven italic was always the more Fraunces-native move, and exemptions in PRODUCT.md should be spent sparingly.
+1. **Pull quote `border-left` in brass** (locked opener spec) vs. the **side-stripe ban** ("`border-left` > 1px as a colored accent... never intentional"). **RESOLVED 2026-06-10 — Justin's call: respect the ban.** The brass border-left is struck from the opener spec; no PRODUCT.md exemption is spent. The pull-quote treatment gets re-proposed inside PR D's craft/typeset flow under the new constraint — candidates: Fraunces italic with the SOFT 80 axis doing the work, oversized hanging quotation mark, indent + size shift. Justin's rationale: the whole point of the recalibration is not looking like generic AI output; doctrine exemptions to the slop bans undercut that.
 2. **Brass numerals on the work index** vs. the **numbered-section-markers ban**. Survives on the ban's own exemption: the monograph TOC is a real ordered sequence and the numbers carry information. Document the exemption rationale in the PR description so a future audit doesn't flag it.
 3. **Mono kicker system** vs. the **tracked-eyebrow ban**. Survives on the ban's own carve-out ("one named kicker as a deliberate brand system is voice"). Implementation discipline: the kicker appears where metadata genuinely lives (case study openers, work index rows, margin gutters), not as an eyebrow above every section. The ban describes the failure cadence to avoid.
 4. **Drop caps — the brief contradicts itself.** Discovery item 6 says hand moments are "explicitly *not* drop caps/marginalia"; the typographic-discipline section says "drop caps allowed on long-form case studies." v1 of this plan inherited the "allowed" reading. **Call needed from Justin** (recorded in the brief addendum when made): allow on long-form only, or strike entirely. Note Perihelion already ships a sigil drop cap on the lab side; sibling-not-copy cuts both ways.
@@ -122,7 +122,7 @@ Unchanged from v1 in substance; it's mechanical and the skills don't own it.
 
 ### PR D — Case study shell
 
-**Build:** `/impeccable craft` per the pipeline. Canonical opener per the locked spec, with the pull-quote treatment resolved per collision #1 and drop caps per collision #4 BEFORE this PR starts.
+**Build:** `/impeccable craft` per the pipeline. Canonical opener per the locked spec. Drop caps (collision #4) must be resolved BEFORE this PR starts; the pull-quote re-proposal (collision #1, resolved: ban respected) happens inside this PR's craft/typeset flow.
 
 **Compact-shape questions:** per-project accent declaration site (frontmatter vs `core/content/` registry — also open question 2 below); cover atmosphere implementation (lean CSS gradient + noise; shader only if CSS can't reach the brief's bar); mark slot placeholder shape.
 
@@ -148,7 +148,7 @@ Unchanged from v1 in substance; it's mechanical and the skills don't own it.
 2. **Per-project accent declaration site.** Frontmatter, content file, or a registry in `core/`. Settle in PR D's compact shape.
 3. **Wordmark / header.** Display-serif moment, not hand-lettered. `/impeccable live` variants in PR B.
 4. **Lab/portfolio shared elements.** Identify components shared with Perihelion (layout shell, footer, nav) and decide which side owns styling. Sibling-not-copy per ADR-009/010.
-5. **Collisions #1 and #4** (pull quote, drop caps) — Justin's calls, needed before PR D.
+5. **Collision #4** (drop caps) — Justin's call, needed before PR D. (Collision #1 resolved 2026-06-10: side-stripe ban respected.)
 
 ---
 
@@ -170,6 +170,6 @@ Unchanged from v1 in substance; it's mechanical and the skills don't own it.
 
 1. Branch off `main` (`git checkout -b feat/portfolio-adr-011-pr-a main`). Verify `pwd` first — agent worktrees drift.
 2. Read this plan + the brief (with addendum) + ADR-011.
-3. Resolve collisions #1 and #4 with Justin if not yet recorded in the brief addendum.
+3. Resolve collision #4 (drop caps) with Justin if not yet recorded. Collision #1 is resolved: ban respected, pull quote re-proposed in PR D.
 4. Start with PR A. Ask Justin whether to slice it as one commit (everything) or two (fonts + token migration, then OKLCH sweep + accents) for review ease.
 5. Do not merge PR A until the typeface validation gate passes live.

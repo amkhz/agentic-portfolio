@@ -74,9 +74,10 @@ glossary:
 
 > **Portfolio-side note:** the existing 8 guides currently use `id:` instead of `slug:`. Migration to `slug:` is the first task of Workstream B.1 (see `perihelion-next-steps.md`).
 
-**`kicker`** — the small caps label above the title. Two values in active use:
+**`kicker`** — the small caps label above the title. Three values in active use:
 - `DIRD Guide Series` — for guides built from DIRD source documents
-- `Research Guide Series` — for everything else (papers, syntheses, subguides)
+- `Research Guide Series` — for single-source guides and subguides
+- `Synthesis Guide` — for guides that synthesize multiple primary papers into one argument. Portfolio-side addition, blessed 2026-06-09 (first use: `quantum-gravity`); upstream sync pending.
 
 **`order`** — integer position in the library sequence. Reserve numbers for queued guides if you want a specific slot.
 

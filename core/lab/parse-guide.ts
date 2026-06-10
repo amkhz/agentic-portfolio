@@ -69,6 +69,7 @@ function validateSource(raw: unknown, slug: string): SourceMeta {
     venue: requireString(obj.venue, 'source.venue', slug),
   };
   if (obj.url !== undefined) source.url = requireString(obj.url, 'source.url', slug);
+  if (obj.arxiv !== undefined) source.arxiv = requireString(obj.arxiv, 'source.arxiv', slug);
   return source;
 }
 

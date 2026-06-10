@@ -16,6 +16,7 @@ export interface SourceMeta {
   year: number;
   venue: string;
   url?: string;
+  arxiv?: string;
 }
 
 export type FigureBackground = 'paper' | 'transparent' | 'invert';

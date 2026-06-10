@@ -43,7 +43,7 @@ B.1 found an unused hyphenated `Cash-Landrum` entry near-duplicating the used en
 
 ## Carry-forward flags (orchestrator lane)
 
-- **`source.venue` still holds the arXiv listing string** (`arXiv:2312.00558v4 [astro-ph.IM]`), redundant with `url` + `arxiv`. Finding a journal home requires publication research; per instruction, no web research was done and no venue was invented. Flag carried forward from B.1.
+- **`source.venue` redundancy: RESOLVED post-completion (orchestrator commit).** Justin confirmed on 2026-06-10 that arXiv is the paper's journal home; no published venue exists to research. `venue` trimmed from the full listing string (`arXiv:2312.00558v4 [astro-ph.IM]`) to `arXiv [astro-ph.IM]`, dropping the identifier already carried by `url` + `arxiv`. Closes the flag from B.1. The Writer-lane sweep itself did no venue work, per instruction.
 - **`fig-N-` figure slug prefixes** remain (cosmetic only; renaming assets is out of lane). Flag carried forward.
 
 ## Verification

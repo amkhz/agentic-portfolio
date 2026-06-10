@@ -5,7 +5,7 @@ kicker: "Research Guide Series"
 source:
   authors: "Szydagis, Knuth, Kugielsky, Levy"
   year: 2025
-  venue: "arXiv:2312.00558v4 [astro-ph.IM]"
+  venue: "arXiv [astro-ph.IM]"
   url: "https://arxiv.org/abs/2312.00558"
   arxiv: "2312.00558v4"
 accent: "#4ade80"

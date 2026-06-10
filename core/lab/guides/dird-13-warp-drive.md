@@ -8,7 +8,7 @@ source:
   venue: DIA / AAWSAP Program
 accent: "#f0a050"
 territory: T1
-status: draft
+status: complete
 order: 2
 description: "Puthoff's canonical survey of warp-drive physics: Einstein's field equations, the Alcubierre metric, vacuum energy extraction, and why spacetime engineering is the hardest open problem in theoretical physics."
 glossary:

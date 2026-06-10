@@ -12,6 +12,14 @@ territory: T3
 status: complete
 order: 1
 description: "Li and Podkletnov's gravity-modification claims with rotating superconductors, why the mainstream physics community rejected them, and what the DIA saw in the anomalies anyway."
+sectionIcons:
+  big-picture: telescope
+  superconductivity-basics: magnet
+  podkletnov: disc-3
+  tajmar: circle-gauge
+  theoretical-models: square-function
+  morningbird: activity
+  design-implications: pencil-ruler
 glossary:
   gravity engineering: The deliberate modification of gravitational effects through technology rather than mass. In standard physics, the only way to change gravity is to move mass around, which is why we need rockets. If superconductors (or any material) could modify gravitational interactions directly, it would be new physics beyond general relativity and an engineering pathway to gravity shielding, artificial gravity, and eventually propellantless propulsion.
   Hal Puthoff: "Physicist at EarthTech International and the author of DIRD 15, the vacuum engineering framework this guide leans on for its theory. He founded the remote-viewing program at SRI, and his extension of Sakharov's emergent-gravity proposal anchors the spacetime side of Territory 1. His group is also building the Josephson junction detectors described in the current research section."

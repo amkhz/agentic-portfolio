@@ -14,6 +14,14 @@ territory: T1
 status: complete
 order: 5
 description: "A synthesis of two 2026 papers approaching quantum gravity from opposite ends: ANU's momentum-entanglement Bell test with massive atoms, and White's dynamic-vacuum derivation of hydrogen's spectrum from acoustic resonance. Why the gap between them matters for every speculative design in Territory 01."
+sectionIcons:
+  problem: circle-dot-dashed
+  anu: atom
+  white: waves
+  gap: unfold-horizontal
+  connections: waypoints
+  scope: brackets
+  implications: pencil-ruler
 glossary:
   quantum gravity: "The missing framework that would unify general relativity (gravity as curved spacetime) with quantum mechanics (matter as probability waves). Arguably the biggest open problem in physics. The two papers in this guide approach it from opposite ends."
   general relativity: "Einstein's theory of gravity: massive objects curve spacetime, and everything else follows those curves. Smooth, continuous, and deterministic. Stunningly accurate at planetary and cosmological scales."

@@ -12,6 +12,14 @@ territory: T1
 status: complete
 order: 1
 description: "A walk through the Madelung-hydrodynamics derivation of hydrogen's energy levels, treating the vacuum as a physical medium shaped by the proton."
+sectionIcons:
+  big-picture: telescope
+  vacuum: waves
+  ingredient-1: "phosphor:number-circle-one"
+  ingredient-2: "phosphor:number-circle-two"
+  emergence: sprout
+  so-what: pencil-ruler
+  appendix: radical
 glossary:
   Casimir effect: "A real, measured force between two very close metal plates caused by vacuum fluctuations. It proves the vacuum has physical properties. White's company is literally named \"Casimir, Inc.\"; this is central to his research program."
   density: "In this context, not mass per volume in the normal sense. It's the vacuum's effective \"inertia\": how much it resists being disturbed. The paper models this as ρ(r) = γ/r⁴, meaning the vacuum gets dramatically denser close to the proton."

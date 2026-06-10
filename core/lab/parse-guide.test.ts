@@ -187,6 +187,69 @@ describe('parseGuide', () => {
   });
 });
 
+describe('parseGuide sectionIcons', () => {
+  let warn: ReturnType<typeof vi.spyOn>;
+  beforeEach(() => {
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    warn.mockRestore();
+  });
+
+  const withSectionIcons = (block: string) =>
+    VALID_SOURCE.replace('glossary:', `${block}\nglossary:`);
+
+  it('resolves icon names onto matching sections', () => {
+    const source = withSectionIcons(
+      'sectionIcons:\n  overview: telescope\n  hardware: "phosphor:flying-saucer"',
+    );
+    const guide = parseGuide(source, 'sample-guide');
+    expect(guide.frontmatter.sectionIcons).toEqual({
+      overview: 'telescope',
+      hardware: 'phosphor:flying-saucer',
+    });
+    expect(guide.sections[0].icon).toBe('telescope');
+    expect(guide.sections[1].icon).toBe('phosphor:flying-saucer');
+  });
+
+  it('leaves sections icon-free and warns nothing when the field is absent', () => {
+    const guide = parseGuide(VALID_SOURCE, 'sample-guide');
+    expect(guide.frontmatter.sectionIcons).toBeUndefined();
+    expect(guide.sections[0].icon).toBeUndefined();
+    expect(warn).not.toHaveBeenCalledWith(expect.stringMatching(/sectionIcons|no sectionIcons entry/));
+  });
+
+  it('warns on an entry whose anchor matches no section', () => {
+    const source = withSectionIcons(
+      'sectionIcons:\n  overview: telescope\n  hardware: magnet\n  nonexistent: eye',
+    );
+    parseGuide(source, 'sample-guide');
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("sectionIcons entry 'nonexistent' matches no section anchor"),
+    );
+  });
+
+  it('warns on a section with no entry only when the guide declares the field', () => {
+    const source = withSectionIcons('sectionIcons:\n  overview: telescope');
+    const guide = parseGuide(source, 'sample-guide');
+    expect(guide.sections[0].icon).toBe('telescope');
+    expect(guide.sections[1].icon).toBeUndefined();
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("section 'hardware' has no sectionIcons entry"),
+    );
+  });
+
+  it('throws when sectionIcons is not a map', () => {
+    const source = withSectionIcons('sectionIcons:\n  - telescope');
+    expect(() => parseGuide(source, 'bad-guide')).toThrow(/sectionIcons/);
+  });
+
+  it('throws when an icon name is empty', () => {
+    const source = withSectionIcons('sectionIcons:\n  overview: ""');
+    expect(() => parseGuide(source, 'bad-guide')).toThrow(/sectionIcons\.overview/);
+  });
+});
+
 describe('parseGuide blockquote variants', () => {
   let warn: ReturnType<typeof vi.spyOn>;
   beforeEach(() => {

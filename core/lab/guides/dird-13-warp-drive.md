@@ -11,6 +11,16 @@ territory: T1
 status: complete
 order: 2
 description: "Puthoff's canonical survey of warp-drive physics: Einstein's field equations, the Alcubierre metric, vacuum energy extraction, and why spacetime engineering is the hardest open problem in theoretical physics."
+sectionIcons:
+  big-picture: telescope
+  alcubierre: orbit
+  negative-energy: circle-minus
+  dark-energy: expand
+  extra-dimensions: layers
+  observables: eye
+  energy-reduction: trending-down
+  connections: waypoints
+  design-implications: pencil-ruler
 glossary:
   general relativity: "Einstein's 1915 theory describing gravity not as a force, but as curvature of spacetime caused by mass and energy. Massive objects like stars and planets bend the fabric of space and time around them, and objects in freefall follow those curves; that's what we experience as gravity. GR is one of the most precisely tested theories in physics."
   Hal Puthoff: "Physicist at EarthTech International and lead author of this DIRD. He founded the remote-viewing program at SRI, and his vacuum-engineering framework anchors the spacetime side of Territory 1. His central finding here is the one-to-one correspondence between reported UAP observables and the predictions of engineered general relativity."

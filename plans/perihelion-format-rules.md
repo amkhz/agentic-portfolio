@@ -1,5 +1,5 @@
 > **Mirror — canonical source:** `~/projects/design-futures/guide-format-rules.md`
-> **Snapshot synced:** 2026-06-10 (third sync today: accent census row added for wendt-duvall-sovereignty, guide #10)
+> **Snapshot synced:** 2026-06-11 (callout-gloss rule added: inline glosses live in body prose only, never in or adjacent to callouts; plus 2026-06-10 census row for wendt-duvall-sovereignty)
 > Re-sync on demand when the design-futures upstream evolves the format. Schema ground truth is the parser (`core/lab/parse-guide.ts`, `core/lab/guide-types.ts`); the canonical doc now states this itself.
 
 ---
@@ -151,6 +151,8 @@ In addition to the frontmatter glossary, definitions appear inline as styled blo
 ```
 
 These exist for two reasons: the raw markdown stays readable as a standalone document, and authoring/review happens in the project chat where there's no renderer. The portfolio renderer detects the `> **term** — ...` pattern and styles it as a tinted first-mention gloss, distinct from callouts.
+
+Glosses live in body prose only — never inside or adjacent to a callout. A `|term|` marked in a callout body still gets its click-reveal from the frontmatter glossary, but no inline gloss: a definition blockquote can't nest inside the callout's own blockquote, and one placed next to it reads as a second callout. If a callout-marked term deserves a visible definition, give it a first mention in body prose and gloss it there (field-learned via `agnotology` in `wendt-duvall-sovereignty`, whose only mention originally sat inside a callout).
 
 ### Callouts
 

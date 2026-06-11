@@ -6,7 +6,7 @@ order: 10
 accent: "#96c7ae"
 accentLight: "#2e7050"
 territory: T4
-status: draft
+status: complete
 description: Wendt and Duvall's landmark Political Theory paper argues the UFO taboo isn't a cultural accident, it's a structural requirement of modern rule. A sovereignty built on the assumption that only humans govern can't afford to ask what UFOs are.
 source:
   authors: Wendt & Duvall

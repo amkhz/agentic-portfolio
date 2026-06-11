@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { HelmetProvider } from "react-helmet-async";
 import { Analytics, SpeedInsights } from "@services/analytics";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 import { App } from "./App";
 
 import "@fontsource/podkova/400.css";
@@ -18,7 +19,9 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <ThemeProvider>
+          <App />
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </BrowserRouter>

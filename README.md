@@ -6,7 +6,7 @@ A design portfolio built with intention. Every architectural decision, every col
 
 ## About
 
-This is [Justin Hernandez's](https://justinh.design/) portfolio and playground -- a showcase of product design craft, case studies, and agentic development practice. The visual direction draws from "Blade Runner + William Gibson meets Finn Juhl": dark, atmospheric, warm blacks with brass and dusty magenta accents.
+This is [Justin Hernandez's](https://justinh.design/) portfolio and playground -- a showcase of product design craft, case studies, and agentic development practice. The visual direction draws from "Blade Runner + William Gibson meets Finn Juhl, composed like a Pentagram monograph": dark, atmospheric, warm blacks with brass and dusty magenta accents, executed with editorial discipline. See ADR-011 for the recalibration rationale.
 
 The repo also hosts **Perihelion** at `labs.justinh.design`, a two-arm house with its own dark-academic visual language. **Perihelion Archive** is the research arm (shipped): long-form research guides on frontier science. **Perihelion Works** is the applied-design arm (reserved): systems, interface, human factors, and product design for the same frontier territories. See ADR-010 for the rename rationale.
 
@@ -26,9 +26,11 @@ Built and maintained by Justin and a crew of AI collaborators using Claude Code,
 
 ### Perihelion (`labs.justinh.design`)
 
-- **Perihelion Archive:** Deep-dive research guides on frontier physics, UAP detection methodology, vacuum engineering, and consciousness as technology. Markdown-driven content in `core/lab/guides/`, build-time indexed, rendered as a scholarly preprint viewer.
+- **Perihelion Archive:** Nine deep-dive research guides on frontier physics, UAP detection methodology, vacuum engineering, and consciousness as technology. Markdown-driven content in `core/lab/guides/`, build-time indexed, rendered as a scholarly preprint viewer with per-section icons and a per-guide glossary.
 - **Four territories:** UAP Detection (T4), Consciousness & Spacetime (T1), Materials & Sensing (T3), Space Manufacturing (T2). Each has its own accent color and thematic premise.
-- **Distinct visual identity:** Cool near-black background, Podkova serif for body, JetBrains Mono for labels, per-guide accent colors declared in frontmatter and scoped via CSS custom properties.
+- **Dual themes:** A graphite dark mode and a warm parchment light mode, switched by a floating theme toggle. Each guide declares its accent in frontmatter with a curated light-mode variant, both scoped via CSS custom properties.
+- **Distinct visual identity:** Podkova display serif for headings, Georgia for body text, JetBrains Mono for labels.
+- **Editorial pipeline:** Every guide passes a structured format pass and a voice sweep before it ships, with mission logs archived in `vector/`.
 - **Shared infrastructure:** Same repo, same four-layer architecture, same agent crew. See ADR-009 for the rationale.
 
 ## Architecture
@@ -90,8 +92,9 @@ This project is built with a crew of specialized AI agents, each with a defined 
 | **Writer** | Case study content and portfolio copy. |
 | **Roy** | Post-build review against architecture, doctrine, and quality gates. |
 | **Joi** | Voice calibration; extracts writing patterns for Writer reference. |
+| **Glossarian** | Glossary upkeep for Perihelion Archive guides, with definitions grounded in source material. |
 
-The crew also uses the **Impeccable design skill suite** for systematic design quality work: `/audit`, `/polish`, `/critique`, `/shape`, `/animate`, and more.
+The crew also uses the **Impeccable design skill suite** (v3.5.0) for systematic design quality work: `/audit`, `/polish`, `/critique`, `/shape`, `/animate`, and more.
 
 ## Decisions
 
@@ -105,6 +108,10 @@ Significant choices are documented as Architecture Decision Records in `vector/d
 | 005 | [CSS-only texture system](vector/decisions/ADR-005-css-texture-system.md) | Accepted |
 | 006 | [Systematic audit and polish pass](vector/decisions/ADR-006-audit-polish-pass.md) | Accepted |
 | 007 | [Constellation spatial navigation](vector/decisions/ADR-007-constellation-navigation.md) | Accepted |
+| 008 | [Defer DESIGN.md adoption](vector/decisions/ADR-008-defer-design-md.md) | Accepted |
+| 009 | [Lab subdomain architecture](vector/decisions/ADR-009-lab-subdomain-architecture.md) | Accepted |
+| 010 | [Perihelion rename and two-arm IA](vector/decisions/ADR-010-perihelion-rename.md) | Accepted |
+| 011 | [Portfolio visual recalibration](vector/decisions/ADR-011-portfolio-visual-recalibration.md) | Accepted |
 
 ## Project Structure
 
@@ -139,14 +146,13 @@ Skills pulled from upstream live in `.claude/skills/invest-*/`:
 | `invest-adr` | Generate Architecture Decision Records |
 | `invest-architecture` | Audit project structure against ARCHITECTURE.md |
 | `invest-backfill` | Generate doctrine files for a new project |
-| `invest-brief` | Create design briefs grounded in project research |
-| `invest-changelog` | Write plain-language changelogs from git history |
 | `invest-crew` | Decompose features into scoped agent tasks |
 | `invest-doctrine` | Audit doctrine files for completeness and consistency |
-| `invest-handoff` | Generate onboarding docs by role |
-| `invest-interview` | Build user research discussion guides |
-| `invest-synthesize` | Extract insights from research, propose VECTOR.md patches |
-| `invest-validate` | Prioritize assumptions and generate validation plans |
+| `invest-manifest` | Inventory every file, route, component, and feature of a codebase |
+| `invest-preflight` | Quick reconnaissance pass before running deeper skills |
+| `invest-remediate` | Turn an audit into a phased, agent-executable remediation plan |
+| `invest-repo-audit` | Full quality, stability, and architecture audit of a codebase |
+| `invest-verify-remediation` | Verify remediation resolved findings without regressions |
 
 ## License
 

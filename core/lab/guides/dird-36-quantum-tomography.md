@@ -6,7 +6,7 @@ order: 11
 accent: "#9d84e8"
 accentLight: "#5b3fa8"
 territory: T1
-status: draft
+status: complete
 description: "The DIRD series' measurement program: before anyone produces or controls negative energy, this DIA reference document asks whether we can measure it, and proposes the instrument that could settle the question."
 source:
   authors: "Author redacted"

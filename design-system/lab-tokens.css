@@ -78,12 +78,14 @@
     --lab-upcoming-researching: oklch(0.7800 0.1000 80);  /* brass, dimmed */
 
     /* --- Per-guide accent ---
-       Default fallback resolves to portfolio brass for lab chrome
-       outside of a guide context. GuideRenderer overrides this at
-       runtime by setting --guide-accent on its root element from
-       frontmatter data (the ONE permitted inline-style exception,
-       documented in ADR-009). */
-    --guide-accent: var(--theme-accent-primary);
+       Dual-var contract (C.3): GuideRenderer and GuideCard publish
+       --guide-accent-dark (from frontmatter accent) and, when curated,
+       --guide-accent-light (from accentLight) as inline custom
+       properties on their root elements (the ONE permitted inline-style
+       exception, documented in ADR-009). Each theme scope picks its
+       register here; outside a guide context, or when the guide var is
+       unset, the fallback resolves to portfolio brass. */
+    --guide-accent: var(--guide-accent-dark, var(--theme-accent-primary));
 
     /* --- Typography families ---
        Weights loaded by src/lab/main.tsx. Georgia is a system
@@ -195,13 +197,14 @@
     --lab-upcoming-researching: oklch(0.5400 0.0900 70);  /* brass, dimmed */
 
     /* --- Per-guide accent ---
-       Default fallback resolves to the portfolio's light-mode
-       primary accent (the brass tuned for warm backgrounds in
-       tokens.css). GuideRenderer's runtime override via
-       --guide-accent on its root element continues to work
-       unchanged. The inline-style exception in ADR-009 is
-       theme-agnostic. */
-    --guide-accent: var(--theme-accent-primary);
+       Light side of the dual-var contract (C.3): resolves the
+       curated --guide-accent-light published inline by GuideRenderer
+       and GuideCard from frontmatter accentLight. A guide without
+       accentLight degrades to the portfolio's light-mode primary
+       accent (the brass tuned for warm backgrounds in tokens.css)
+       rather than an illegible dark-tuned hex. The inline-style
+       exception in ADR-009 is theme-agnostic. */
+    --guide-accent: var(--guide-accent-light, var(--theme-accent-primary));
 
     /* --- Typography families ---
        Unchanged from dark mode. The lab's three-font stack

@@ -9,6 +9,7 @@ source:
   arxiv: "2502.06794v2"
   url: "https://arxiv.org/abs/2502.06794"
 accent: "#e4e4e7"
+accentLight: "#686774"
 territory: T4
 status: complete
 order: 8

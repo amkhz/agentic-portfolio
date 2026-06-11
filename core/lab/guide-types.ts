@@ -41,6 +41,11 @@ export interface GuideFrontmatter {
   kicker: string;
   source: SourceMeta;
   accent: string;
+  // Optional curated light-mode counterpart to accent. Same 6-digit hex
+  // contract, tuned to hold >= 4.5:1 against the cream light background.
+  // When absent, light mode falls back to the theme's primary accent
+  // via the --guide-accent-light token fallback in lab-tokens.css.
+  accentLight?: string;
   territory: Territory;
   status: GuideStatus;
   order?: number;

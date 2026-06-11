@@ -8,6 +8,7 @@ source:
   venue: Physical Review Research
   url: "https://journals.aps.org/prresearch/abstract/10.1103/l8y7-r3rm"
 accent: "#f0a050"
+accentLight: "#975705"
 territory: T1
 status: complete
 order: 1

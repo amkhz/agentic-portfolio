@@ -3,11 +3,16 @@
  *
  * ARCHITECTURAL EXCEPTION (per ADR-009):
  * This is the ONE file in src/lab/ permitted to use an inline style,
- * and solely for setting the `--guide-accent` CSS custom property from
- * frontmatter data. The raw hex originates in guide content, flows
- * through as a CSS variable, and is consumed by standard CSS throughout
- * the guide tree. That complies with the four-layer "no raw colors
- * outside design-system/" rule — the value is data, not presentation.
+ * and solely for publishing the per-guide accent custom properties from
+ * frontmatter data: `--guide-accent-dark` (from `accent`) and, when the
+ * guide curates one, `--guide-accent-light` (from `accentLight`). The
+ * theme scopes in lab-tokens.css resolve `--guide-accent` from the pair;
+ * when `accentLight` is absent the property is not set, so the light
+ * scope's brass fallback applies. The raw hex originates in guide
+ * content, flows through as CSS variables, and is consumed by standard
+ * CSS throughout the guide tree. That complies with the four-layer
+ * "no raw colors outside design-system/" rule — the value is data, not
+ * presentation.
  *
  * No other inline styles are permitted anywhere in lab UI code.
  */
@@ -32,10 +37,15 @@ export function GuideRenderer({ guide }: GuideRendererProps) {
     guide.sections[0]?.id ?? "",
   );
 
-  const rootStyle = useMemo<CSSProperties>(
-    () => ({ ["--guide-accent" as string]: guide.frontmatter.accent }),
-    [guide.frontmatter.accent],
-  );
+  const rootStyle = useMemo<CSSProperties>(() => {
+    const style: Record<string, string> = {
+      "--guide-accent-dark": guide.frontmatter.accent,
+    };
+    if (guide.frontmatter.accentLight !== undefined) {
+      style["--guide-accent-light"] = guide.frontmatter.accentLight;
+    }
+    return style as CSSProperties;
+  }, [guide.frontmatter.accent, guide.frontmatter.accentLight]);
 
   useEffect(() => {
     if (mode !== "guide" || guide.sections.length === 0) return;

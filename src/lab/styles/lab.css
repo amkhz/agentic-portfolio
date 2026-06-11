@@ -185,6 +185,15 @@ button:focus-visible,
 .lab-territory-t3 { --guide-accent: var(--lab-territory-t3); }
 .lab-territory-t4 { --guide-accent: var(--lab-territory-t4); }
 
+/* First-paint transition suppression. The early-paint script in labs.html
+   sets [data-no-transition] before the theme attribute resolves;
+   ThemeProvider removes it one frame after mount. Mirrors the portfolio's
+   rule in src/styles/globals.css — neither tokens.css nor lab-tokens.css
+   carries one, so the lab entry declares its own. */
+[data-no-transition] * {
+  transition-duration: 0ms !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

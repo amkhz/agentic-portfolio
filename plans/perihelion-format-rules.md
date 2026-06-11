@@ -48,6 +48,7 @@ title: The New Science of UAP
 kicker: Research Guide Series
 order: 8
 accent: "#e4e4e7"
+accentLight: "#686774"          # optional, portfolio-side addition (C.3)
 description: A field orientation to UAP science — what's observed, what's been found, who's studying it, and how.
 source:
   authors: Knuth et al.
@@ -82,6 +83,8 @@ glossary:
 **`order`** — integer position in the library sequence. Reserve numbers for queued guides if you want a specific slot.
 
 **`accent`** — hex color, quoted. Drives the guide's visual identity (header, callout borders, glossary term color). See the territory accent reference below.
+
+**`accentLight`** — optional hex color, quoted. Curated light-mode counterpart to `accent`; same 6-digit hex contract. Portfolio-side addition (C.3, 2026-06-10). Recipe: hold the dark accent's hue, pull lightness into the OKLCH 0.45 to 0.52 band, lift chroma until the value holds at least 4.5:1 against the light lab background. When absent, light mode falls back to the theme's primary accent and the parser warns once per guide so coverage gaps stay visible. Upstream sync rides the standing Track-B list.
 
 **`description`** — one to two sentences. Used in the library index card; should stand alone without context.
 

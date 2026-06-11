@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,6 +19,16 @@
             var clean = '/' + window.location.search + window.location.hash;
             window.history.replaceState(null, '', clean);
           }
+        } catch(e) {}
+      })();
+    </script>
+    <script>
+      (function(){
+        try {
+          var m = document.cookie.match(/(?:^|;\s*)theme=(dark|light)/);
+          var t = m ? m[1] : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', t);
+          document.documentElement.setAttribute('data-no-transition', '');
         } catch(e) {}
       })();
     </script>

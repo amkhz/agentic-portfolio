@@ -1,10 +1,14 @@
 /**
- * GuideCard carries an inline style that sets the `--guide-accent`
- * CSS custom property from `guide.frontmatter.accent`. This mirrors
- * the GuideRenderer exception: raw values from content can flow
- * through as CSS custom properties because they originate in data,
- * not in UI code. See ADR-009. Do not extend this pattern to other
- * lab UI components — per-guide accent propagates via the cascade.
+ * GuideCard carries an inline style that publishes the per-guide accent
+ * custom properties from frontmatter: `--guide-accent-dark` (from
+ * `accent`) and, when the guide curates one, `--guide-accent-light`
+ * (from `accentLight`; omitted otherwise so the light scope's brass
+ * fallback in lab-tokens.css applies). The theme scopes resolve
+ * `--guide-accent` from the pair. This mirrors the GuideRenderer
+ * exception: raw values from content can flow through as CSS custom
+ * properties because they originate in data, not in UI code. See
+ * ADR-009. Do not extend this pattern to other lab UI components —
+ * per-guide accent propagates via the cascade.
  */
 import type { CSSProperties } from "react";
 import { useMemo } from "react";
@@ -23,10 +27,15 @@ const STATUS_LABEL: Record<GuideStatus, string> = {
 
 export function GuideCard({ guide }: GuideCardProps) {
   const { title, kicker, source, status } = guide.frontmatter;
-  const accentStyle = useMemo<CSSProperties>(
-    () => ({ ["--guide-accent" as string]: guide.frontmatter.accent }),
-    [guide.frontmatter.accent],
-  );
+  const accentStyle = useMemo<CSSProperties>(() => {
+    const style: Record<string, string> = {
+      "--guide-accent-dark": guide.frontmatter.accent,
+    };
+    if (guide.frontmatter.accentLight !== undefined) {
+      style["--guide-accent-light"] = guide.frontmatter.accentLight;
+    }
+    return style as CSSProperties;
+  }, [guide.frontmatter.accent, guide.frontmatter.accentLight]);
 
   return (
     <Link

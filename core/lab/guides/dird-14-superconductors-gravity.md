@@ -8,6 +8,7 @@ source:
   venue: DIA / AAWSAP Program
   notes: "Source cover lists ICOD as 1 December 2010, dated after the 23 March 2010 publication; appears to be a typo for 1 December 2009 (matches DIRDs 13 and 15). Renderer ignores this field; preserved for future colophon work."
 accent: "#e8a849"
+accentLight: "#8e5e02"
 territory: T3
 status: complete
 order: 1

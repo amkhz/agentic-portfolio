@@ -7,6 +7,7 @@ source:
   year: 2010
   venue: DIA / AAWSAP Program
 accent: "#4ecdc4"
+accentLight: "#067973"
 territory: T1
 status: complete
 order: 4

@@ -222,7 +222,7 @@ describe('parseGuide accentLight', () => {
     const guide = parseGuide(VALID_SOURCE, 'no-accent-light');
     expect(guide.frontmatter.accentLight).toBeUndefined();
     const calls = warn.mock.calls.filter(
-      (args) => typeof args[0] === 'string' && /no accentLight in frontmatter/.test(args[0]),
+      (args: unknown[]) => typeof args[0] === 'string' && /no accentLight in frontmatter/.test(args[0]),
     );
     expect(calls).toHaveLength(1);
   });

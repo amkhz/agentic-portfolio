@@ -13,7 +13,7 @@ export function LabLayout() {
       {/* Floating so the theme is reachable mid-scroll on long guides.
           Solid raised surface + pencil-line border, no shadow; sits below
           the skip link (z-100) in the stacking order. */}
-      <LabThemeToggle className="fixed bottom-5 right-5 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
+      <LabThemeToggle className="fixed bottom-3 right-3 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
 
       <header className="border-b border-lab-border-subtle">
         <div className="mx-auto flex max-w-6xl items-baseline justify-between gap-6 px-6 py-6 md:px-10">

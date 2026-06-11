@@ -50,10 +50,11 @@ describe('SectionIcon', () => {
     const iconNames = new Set(
       guides.flatMap((g) => g.sections.flatMap((s) => (s.icon ? [s.icon] : []))),
     );
-    // C.2 spec: 63 anchors across 8 guides, full coverage.
+    // C.2 spec: 63 anchors across 8 guides, plus government-efforts-uap
+    // (7 anchors, locked-vocabulary reuse) added with the guide.
     const sectionCount = guides.reduce((n, g) => n + g.sections.length, 0);
-    expect(guides).toHaveLength(8);
-    expect(sectionCount).toBe(63);
+    expect(guides).toHaveLength(9);
+    expect(sectionCount).toBe(70);
     expect(iconNames.size).toBeGreaterThan(0);
     for (const name of iconNames) {
       const { container, unmount } = render(<SectionIcon name={name} size={26} />);

@@ -159,6 +159,31 @@ sectionIcons:
   future: door-open
 ```
 
+### government-efforts-uap
+
+> Added 2026-06-10 with the guide itself (order 9, the uap-field-map institutional-history
+> subguide). All seven picks reuse the locked vocabulary — no new glyphs, no registry
+> change. Reuse rationale per the system decisions above: `compass` extends the parent's
+> framing register to the subguide's framing section; `history` deliberately links the
+> parent's `#history-compressed` to the subguide that expands it; `eye-off` shares the
+> suppression register with dird-15; `radar` shares the state-detection-network register
+> with uapx `#instrument-stack`; `door-open` shares the opening/archives register with
+> uapx `#future` (France as the open alternative); `sprout` shares the emergence register
+> with emergent-quantization (the reawakening as re-emergence); `square-function` shares
+> the formal-theory register with dird-14 `#theoretical-models` (Wendt-Duvall as the
+> structural diagnosis). Provisional pending Justin's live review.
+
+```yaml
+sectionIcons:
+  why: compass
+  prehistory: history
+  us-suppression: eye-off
+  international: radar
+  france: door-open
+  reawakening: sprout
+  wendt-duvall: square-function
+```
+
 ## Build-mission scope (not this session)
 
 1. `guide-types.ts`: `sectionIcons?: Record<string, string>` on the guide frontmatter

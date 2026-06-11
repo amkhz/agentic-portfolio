@@ -1,7 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { guides } from "@core/lab/guides";
 import { territories } from "@core/lab/territories";
-import { LabThemeToggle } from "@lab/components/LabThemeToggle";
 import { LibraryHeader } from "@lab/components/library/LibraryHeader";
 import { LibraryWelcome } from "@lab/components/library/LibraryWelcome";
 import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
@@ -23,10 +22,6 @@ export function LibraryIndex() {
         <meta property="og:type" content="website" />
       </Helmet>
       <div className="mx-auto max-w-6xl px-6 pb-32 md:px-10">
-        {/* Slim utility row; the masthead's editorial composition leads. */}
-        <div className="flex items-center justify-end pt-6">
-          <LabThemeToggle />
-        </div>
         <LibraryHeader
           guideCount={guides.length}
           territoryCount={territories.length}

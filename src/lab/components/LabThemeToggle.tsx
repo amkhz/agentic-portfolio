@@ -7,6 +7,12 @@
  * ring-accent-primary) are not generated in the lab bundle because lab.css
  * owns its own @theme. Focus styling comes from the lab's global
  * button:focus-visible rule in lab.css.
+ *
+ * Mounted once by LabLayout as a floating control (fixed, bottom right) so
+ * the theme stays reachable mid-scroll on long guides. Justin's live-review
+ * call (2026-06-10), superseding the spec's in-flow placement. The floating
+ * chrome (position, pill surface, border) is passed in by the layout;
+ * this component owns only the glyph and the interaction.
  */
 import { useTheme } from "@/lib/useTheme";
 import { cn } from "@core/utils";

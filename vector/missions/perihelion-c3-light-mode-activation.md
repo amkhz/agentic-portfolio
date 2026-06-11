@@ -15,7 +15,7 @@
 | 1 | Token cascade + types + parser | Shipped | Dual-var contract in `lab-tokens.css`; `accentLight` on `GuideFrontmatter`; `LAB_BG_LIGHT_HEX` + two warnings in `parse-guide.ts`; 4 new parser tests |
 | 2 | Dual-var publication | Shipped | `GuideRenderer` and `GuideCard` publish `--guide-accent-dark` always, `--guide-accent-light` only when curated; header comments updated; 6 new component tests |
 | 3 | Theme plumbing | Shipped | Early-paint script in `labs.html` (after the path-rewrite script), `ThemeProvider` wrap in `src/lab/main.tsx`, `[data-no-transition]` rule in `lab.css` |
-| 4 | Toggle UI | Shipped | `LabThemeToggle` in guide top bar (right slot, opposite back link) and a slim utility row above the library masthead; 44px targets; baseline treatment only |
+| 4 | Toggle UI | Shipped, then revised at live review | `LabThemeToggle` initially in-flow per the spec (guide top bar + library utility row); Justin's live-review call (2026-06-10) moved it to a single floating control mounted by `LabLayout` (fixed bottom right, pill surface, pencil-line border, 44px target) so the theme stays reachable mid-scroll on long guides |
 | 5 | Eight accentLight values + format rules | Shipped | Proposals below; guide diffs are one `accentLight` line each; `perihelion-format-rules.md` documents the field |
 | 6 | Mission log + gates + PR | Shipped | This file; four gates green; PR open |
 
@@ -47,6 +47,7 @@ All eight proposals clear 4.5:1 against the light background (`#f8f3e9`). The tw
 - **Toggle adapted, not reused directly.** The portfolio `ThemeToggle` styles itself with portfolio token utilities (`text-text-secondary`, `bg-bg-subtle`, `ring-accent-primary`) that the lab bundle never generates, because `lab.css` owns its own Tailwind theme. `LabThemeToggle` keeps the same candle-to-sun glyph and `useTheme` contract and restyles the chrome with lab tokens. The spec's "prefer reuse" was conditional on fit; it did not fit.
 - **`labs.html` also gains the static `data-theme="dark"` attribute** on the html element, mirroring `index.html`. Not named in the scope text, but it is the portfolio's no-JS default and keeps graphite the fallback register.
 - **One-line test annotation** (`args: unknown[]`) added during the build gate to satisfy strict TS in the new absent-field-warning test.
+- **Toggle placement superseded at live review.** The spec's locked in-flow placement (top bar right slot + library utility row) shipped first, then Justin asked for a sticky control during the review pass. The toggle now floats once at the layout level: `fixed bottom-5 right-5` (bottom-8/right-8 from md up), `z-50` below the skip link, raised lab surface with a subtle border, no shadow, glyph unchanged. The in-flow mounts were removed so there is a single control per page. This is exactly the live-refinement lane the spec reserved ("final treatment refined live during the build").
 
 ## Exit flags
 

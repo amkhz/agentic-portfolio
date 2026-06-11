@@ -2,7 +2,6 @@ import { Helmet } from "react-helmet-async";
 import { Link, useParams } from "react-router";
 import { guidesBySlug } from "@core/lab/guides";
 import { GuideRenderer } from "@lab/components/guide/GuideRenderer";
-import { LabThemeToggle } from "@lab/components/LabThemeToggle";
 import { NotFoundPage } from "./NotFoundPage";
 
 export function GuideView() {
@@ -28,7 +27,7 @@ export function GuideView() {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
       </Helmet>
-      <div className="mx-auto flex max-w-4xl items-center justify-between px-6 pt-8 md:px-10">
+      <div className="mx-auto max-w-4xl px-6 pt-8 md:px-10">
         <Link
           to="/"
           className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
@@ -36,7 +35,6 @@ export function GuideView() {
           <span aria-hidden>←</span>
           Library
         </Link>
-        <LabThemeToggle />
       </div>
       <GuideRenderer guide={guide} />
       <div className="mx-auto max-w-4xl px-6 pb-16 pt-4 text-center md:px-10">

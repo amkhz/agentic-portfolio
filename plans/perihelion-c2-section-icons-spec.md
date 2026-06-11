@@ -214,6 +214,34 @@ sectionIcons:
   design-implications: pencil-ruler
 ```
 
+### dird-36-quantum-tomography
+
+> Added 2026-06-11 with the guide itself (order 11, the experimental test of the
+> negative-energy gateway, T1). All eight picks reuse the locked vocabulary — no new
+> glyphs, no registry change. Reuse rationale: `telescope` and `pencil-ruler` follow the
+> structural-spine conventions; `circle-minus` deliberately links dird-13
+> `#negative-energy` — same anchor, same concept, the resource that guide spends and
+> this guide measures; `waves` extends the vacuum-identity register
+> (emergent-quantization `#vacuum`, quantum-gravity `#white`) to the two lab sources of
+> sub-vacuum energy; `scan-eye` shares the seeing-the-hidden register with uapx `#c-tap`
+> (tomography as reconstruction of what can't be viewed directly); `aperture` shares the
+> precision-optics register with uapx `#dark-spot` (the instrument chapter is optical
+> bench anatomy); `flask-conical` shares the lab-experiments register with dird-15
+> `#lab-experiments`; `waypoints` follows the connections-family spine. Provisional
+> pending Justin's live review.
+
+```yaml
+sectionIcons:
+  big-picture: telescope
+  negative-energy: circle-minus
+  two-lab-doors: waves
+  wigner-tomography: scan-eye
+  balanced-homodyne: aperture
+  two-experiments: flask-conical
+  connections: waypoints
+  design-implications: pencil-ruler
+```
+
 ## Build-mission scope (not this session)
 
 1. `guide-types.ts`: `sectionIcons?: Record<string, string>` on the guide frontmatter

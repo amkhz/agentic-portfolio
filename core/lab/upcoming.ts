@@ -22,14 +22,6 @@ export interface UpcomingGuide {
 export const upcomingGuides: UpcomingGuide[] = [
   // T1 — Consciousness & Spacetime
   {
-    id: 'dird-36-quantum-tomography',
-    title: 'DIRD 36: Quantum Tomography of Negative Energy States',
-    source: 'DIA / AAWSAP Program',
-    territory: 'T1',
-    status: 'planned',
-    note: 'The experimental test for the exotic propulsion cluster.',
-  },
-  {
     id: 'puthoff-sed-synthesis',
     title: 'Puthoff SED Framework — Synthesis',
     source: 'Harold Puthoff (EarthTech International)',

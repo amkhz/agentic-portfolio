@@ -1,5 +1,5 @@
 > **Mirror — canonical source:** `~/projects/design-futures/guide-format-rules.md`
-> **Snapshot synced:** 2026-06-11 (callout-gloss rule added: inline glosses live in body prose only, never in or adjacent to callouts; plus 2026-06-10 census row for wendt-duvall-sovereignty)
+> **Snapshot synced:** 2026-06-11 (accent census row added for dird-36-quantum-tomography, guide #11; prior sync added the callout-gloss rule)
 > Re-sync on demand when the design-futures upstream evolves the format. Schema ground truth is the parser (`core/lab/parse-guide.ts`, `core/lab/guide-types.ts`); the canonical doc now states this itself.
 
 ---
@@ -256,6 +256,7 @@ Current library census:
 | uapx-field-methods | `#4ade80` | `#0d7e3f` | T4 |
 | government-efforts-uap | `#7ca982` | `#44734c` | T4 |
 | wendt-duvall-sovereignty | `#96c7ae` | `#2e7050` | T4 |
+| dird-36-quantum-tomography | `#9d84e8` | `#5b3fa8` | T1 |
 
 Pair accents thematically with their territory or paper family. New T4 guides should pair visually with signal green (sage, muted greens, warm whites). New T1 guides should pair with purple (violets, warm grays).
 

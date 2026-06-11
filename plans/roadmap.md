@@ -50,7 +50,7 @@
 - Constellation node id migrated from `the-lab` to `perihelion`
 - **B.1 schema migration** (PR #46): `id:` → `slug:` across all 8 Archive guides, parser, types, tests
 - **B.1 DIRD frontmatter corrections** (PR #51): `source.year` and `source.venue` aligned to source PDFs on DIRDs 13/14/15/28
-- **B.1 renderer enhancement scope locked** (PR #52): `BlockquoteBlock` variant discriminator with six values, parser-side detection, definition glosses as first-class with colon separator. Full spec at `plans/perihelion-b1-renderer-scope.md`. Build is the next open mission.
+- **B.1 renderer enhancement scope locked** (PR #52): `BlockquoteBlock` variant discriminator with six values, parser-side detection, definition glosses as first-class with colon separator. Full spec at `plans/archive/perihelion-b1-renderer-scope.md`. Build is the next open mission.
 - **C.1 light-mode tokens** (PR #47): full `[data-theme="light"]` set added to `design-system/lab-tokens.css`. Cream paper + warm ink palette, WCAG 2.2 AA across every pairing, dark stays the default until C.2 wires the attribute.
 - **T6.3 colophon copy refinement** (PR #49): voice-tuned against the Phase 3.1 voice profile
 
@@ -80,7 +80,7 @@
 ### 1. Perihelion content sweep and growth
 
 **Status:** Archive shipped + welcome wave landed. Voice locked at Phase 3.1. B.1 small pieces and C.1 done. B.1 renderer enhancement build is the next open mission.
-**Plan:** `plans/perihelion-next-steps.md` | **Renderer scope:** `plans/perihelion-b1-renderer-scope.md` | **Launch mission (archived):** `vector/missions/archive/speculative-lab-library.md` | **ADRs:** ADR-009, ADR-010
+**Plan:** `plans/perihelion-next-steps.md` | **Renderer scope:** `plans/archive/perihelion-b1-renderer-scope.md` | **Launch mission (archived):** `vector/missions/archive/speculative-lab-library.md` | **ADRs:** ADR-009, ADR-010
 
 **Workstreams (see plan for detail):**
 - A — Origins intro ✅ shipped (PR #40 + T6 polish PR #42)

@@ -2,7 +2,7 @@
 
 **Feature:** Wire the lab's dormant light palette (C.1, PR #47) to a user-facing theme: early-paint plumbing, ThemeProvider reuse, toggle UI on both surfaces, the accentLight frontmatter field, and curated light accents for all eight guides.
 **Date:** 2026-06-10
-**Spec:** `plans/perihelion-c3-light-mode-activation.md` (locked 2026-06-10, PR #116)
+**Spec:** `plans/archive/perihelion-c3-light-mode-activation.md` (locked 2026-06-10, PR #116)
 **Branch:** `feat/perihelion-c3-light-mode`
 **Review path:** PR stays in review. Live verification pass happens with Justin, then Roy. Component changes never merge at the builder's call.
 

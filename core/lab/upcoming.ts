@@ -55,14 +55,6 @@ export const upcomingGuides: UpcomingGuide[] = [
 
   // T4 — UAP Observables & Field Science
   {
-    id: 'wendt-duvall-sovereignty',
-    title: 'Sovereignty and the UFO — Wendt & Duvall',
-    source: 'Political Theory (2008)',
-    territory: 'T4',
-    status: 'planned',
-    note: 'The political-theory companion to the government-efforts guide.',
-  },
-  {
     id: 'galileo-project-methods',
     title: 'The Galileo Project: Instrumented UAP Science at Scale',
     source: 'Galileo Project (Harvard / Avi Loeb)',

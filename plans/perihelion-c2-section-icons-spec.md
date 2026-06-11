@@ -184,6 +184,36 @@ sectionIcons:
   wendt-duvall: square-function
 ```
 
+### wendt-duvall-sovereignty
+
+> Added 2026-06-10 with the guide itself (order 10, the political-theory companion to
+> government-efforts-uap). All eight picks reuse the locked vocabulary — no new glyphs,
+> no registry change. Reuse rationale: `telescope` and `pencil-ruler` follow the
+> structural-spine conventions for `#big-picture` and `#design-implications`; `eye-off`
+> shares the suppression register with dird-15 and government-efforts (here, the taboo
+> itself); `compass` extends the framing register (uap-field-map `#framing`,
+> government-efforts `#why`) to the paper's epistemic ground rules; `scan-search` shares
+> the evidence-sweep register with uap-field-map `#evidence` and uapx `#forensic-problem`
+> (the skeptics' evidence claims examined); `square-function` deliberately completes the
+> link begun by government-efforts `#wendt-duvall` — the parent section points at this
+> paper, this guide's theory core answers it in the same formal-theory register;
+> `building-2` shares the institutions register with uap-field-map `#orgs-and-stigma`
+> (the machinery of ignorance as institutional architecture); `door-open` shares the
+> opening/disclosure register with uapx `#future` and government-efforts `#france`
+> (resistance and the GEIPAN disclosures). Provisional pending Justin's live review.
+
+```yaml
+sectionIcons:
+  big-picture: telescope
+  puzzling-taboo: eye-off
+  rules-of-the-game: compass
+  it-cant-be-true: scan-search
+  sovereigns-bind: square-function
+  machinery-of-ignorance: building-2
+  resistance: door-open
+  design-implications: pencil-ruler
+```
+
 ## Build-mission scope (not this session)
 
 1. `guide-types.ts`: `sectionIcons?: Record<string, string>` on the guide frontmatter

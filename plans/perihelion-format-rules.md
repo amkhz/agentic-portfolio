@@ -1,5 +1,5 @@
 > **Mirror — canonical source:** `~/projects/design-futures/guide-format-rules.md`
-> **Snapshot synced:** 2026-06-10 (full upstream refresh — all portfolio-side decisions absorbed canonically; the inline deviation notes this mirror used to carry are gone because the gap they marked is gone)
+> **Snapshot synced:** 2026-06-10 (third sync today: accent census row added for wendt-duvall-sovereignty, guide #10)
 > Re-sync on demand when the design-futures upstream evolves the format. Schema ground truth is the parser (`core/lab/parse-guide.ts`, `core/lab/guide-types.ts`); the canonical doc now states this itself.
 
 ---
@@ -26,12 +26,11 @@ A direct consequence, and the rule most worth internalizing: **no emojis in guid
 
 ```
 learning-guides/
-  uap-field-map.md
-  government-efforts-to-study-uap.md
+  <slug>.md          # in-progress drafts only
   ...
 ```
 
-Flat `<slug>.md` files in `learning-guides/` is the standard layout. One-folder-per-guide (with the markdown plus cropped figure files inside) is reserved for the first figure-bearing guide — figures aren't wired into the renderer yet, and text-only guides document figure candidates in a separate watchlist file instead (see `uap-field-map-figure-watchlist.md`).
+Flat `<slug>.md` files in `learning-guides/` is the standard layout — **for drafts in progress only**. Once a guide is delivered, the portfolio copy (`~/projects/agentic-portfolio/core/lab/guides/<slug>.md`) is canonical and the local draft is removed or moved to `archive/`. Don't edit a delivered guide here; edit it on the portfolio where the parser gates run. One-folder-per-guide (with the markdown plus cropped figure files inside) is reserved for the first figure-bearing guide — figures aren't wired into the renderer yet, and text-only guides document figure candidates in a separate watchlist file instead (see `uap-field-map-figure-watchlist.md`).
 
 On the portfolio side, a delivered guide lands at `core/lab/guides/<slug>.md` and is auto-registered by a build-time glob — no registry edits, no routing steps. The guide is immediately available at `/g/<slug>`.
 
@@ -254,6 +253,7 @@ Current library census:
 | uap-field-map | `#e4e4e7` | `#686774` | T4 |
 | uapx-field-methods | `#4ade80` | `#0d7e3f` | T4 |
 | government-efforts-uap | `#7ca982` | `#44734c` | T4 |
+| wendt-duvall-sovereignty | `#96c7ae` | `#2e7050` | T4 |
 
 Pair accents thematically with their territory or paper family. New T4 guides should pair visually with signal green (sage, muted greens, warm whites). New T1 guides should pair with purple (violets, warm grays).
 
@@ -350,5 +350,5 @@ When the format evolves — new callout type, new frontmatter field, renamed con
 
 - **Canonical home:** this file. The portfolio carries a snapshot mirror at `~/projects/agentic-portfolio/plans/perihelion-format-rules.md` with a synced-date header; re-sync the mirror whenever this file changes.
 - **Ground truth for the schema** is the portfolio parser: `~/projects/agentic-portfolio/core/lab/parse-guide.ts` and `core/lab/guide-types.ts`. If this document and the parser disagree, the parser wins and this document has a bug — fix it here.
-- **Last aligned:** 2026-06-10, against parser state as of the government-efforts-uap delivery (9 guides, full accentLight and sectionIcons coverage).
-- **Why this footer exists:** the no-emoji rule was first synced into this file on 2026-05-17 and was later lost to an upstream rewrite that worked from an older copy. This directory has no version control, so this footer is the only continuity record. Before rewriting this file wholesale, check the last-aligned date against the portfolio mirror.
+- **Last aligned:** 2026-06-10, against parser state as of the government-efforts-uap delivery (9 guides, full accentLight and sectionIcons coverage). Same-day follow-up: draft-lifecycle note added to File layout (delivered guides live on the portfolio only).
+- **Why this footer exists:** the no-emoji rule was first synced into this file on 2026-05-17 and was later lost to an upstream rewrite that worked from an older copy. As of 2026-06-10 this directory is under git, so history is recoverable — but the footer remains the quick continuity check. Before rewriting this file wholesale, check the last-aligned date against the portfolio mirror.

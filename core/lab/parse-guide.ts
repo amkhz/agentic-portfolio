@@ -37,6 +37,11 @@ import type {
 // graphite dark-mode lift; the prior #0a0a0c reference targeted the pre-lift
 // L 0.08 bg.
 const LAB_BG_HEX = '#0e0f13';
+// Reference hex of the light-mode --lab-bg-deep (oklch(0.965 0.014 80)) used
+// for per-guide accentLight contrast warnings. Derived 2026-06-10 via the
+// reference OKLCH -> OKLab -> linear sRGB conversion (Ottosson matrices):
+// oklch(0.965 0.014 80) -> sRGB (248, 243, 233) -> #f8f3e9.
+const LAB_BG_LIGHT_HEX = '#f8f3e9';
 const WCAG_AA_MIN = 4.5;
 const TERRITORIES: readonly Territory[] = ['T1', 'T2', 'T3', 'T4'];
 const STATUSES: readonly GuideStatus[] = ['draft', 'in-progress', 'complete'];
@@ -132,6 +137,13 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
   if (!/^#[0-9a-f]{6}$/i.test(accent)) {
     throw new Error(`Guide '${slug}': accent must be a 6-digit hex color like #4ade80`);
   }
+  let accentLight: string | undefined;
+  if (data.accentLight !== undefined) {
+    accentLight = requireString(data.accentLight, 'accentLight', slug);
+    if (!/^#[0-9a-f]{6}$/i.test(accentLight)) {
+      throw new Error(`Guide '${slug}': accentLight must be a 6-digit hex color like #6d28d9`);
+    }
+  }
   const rawFigures = data.figures;
   if (rawFigures !== undefined && !Array.isArray(rawFigures)) {
     throw new Error(`Guide '${slug}': frontmatter 'figures' must be an array`);
@@ -150,6 +162,7 @@ function validateFrontmatter(data: Record<string, unknown>, slug: string): Guide
     figures,
     glossary: validateGlossary(data.glossary, slug),
   };
+  if (accentLight !== undefined) front.accentLight = accentLight;
   if (data.order !== undefined) front.order = requireNumber(data.order, 'order', slug);
   if (data.sectionIcons !== undefined) {
     front.sectionIcons = validateSectionIcons(data.sectionIcons, slug);
@@ -643,6 +656,24 @@ export function parseGuide(source: string, slug: string): Guide {
   if (ratio < WCAG_AA_MIN) {
     console.warn(
       `Guide '${slug}': accent ${frontmatter.accent} has ${ratio.toFixed(2)}:1 contrast against lab background (below ${WCAG_AA_MIN}:1)`,
+    );
+  }
+
+  // accentLight coverage warnings (C.3). Both are warnings, never errors:
+  // an absent field degrades to the brass fallback in light mode, and a
+  // low-contrast value is a curation problem, not a parse failure. The
+  // absent-field warning fires once per guide at parse time so coverage
+  // gaps stay visible across full-library parses.
+  if (frontmatter.accentLight !== undefined) {
+    const lightRatio = contrastRatio(frontmatter.accentLight, LAB_BG_LIGHT_HEX);
+    if (lightRatio < WCAG_AA_MIN) {
+      console.warn(
+        `Guide '${slug}': accentLight ${frontmatter.accentLight} has ${lightRatio.toFixed(2)}:1 contrast against light lab background (below ${WCAG_AA_MIN}:1)`,
+      );
+    }
+  } else {
+    console.warn(
+      `Guide '${slug}': no accentLight in frontmatter; light mode will fall back to the theme primary accent`,
     );
   }
 

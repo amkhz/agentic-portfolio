@@ -187,6 +187,47 @@ describe('parseGuide', () => {
   });
 });
 
+describe('parseGuide accentLight', () => {
+  let warn: ReturnType<typeof vi.spyOn>;
+  beforeEach(() => {
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  });
+  afterEach(() => {
+    warn.mockRestore();
+  });
+
+  const withAccentLight = (value: string) =>
+    VALID_SOURCE.replace('accent: "#4ade80"', `accent: "#4ade80"\naccentLight: "${value}"`);
+
+  it('resolves a valid accentLight onto the frontmatter', () => {
+    const guide = parseGuide(withAccentLight('#6d28d9'), 'sample-guide');
+    expect(guide.frontmatter.accentLight).toBe('#6d28d9');
+    expect(warn).not.toHaveBeenCalledWith(expect.stringMatching(/accentLight/));
+  });
+
+  it('throws when accentLight is not a 6-digit hex', () => {
+    expect(() => parseGuide(withAccentLight('violet'), 'bad-guide')).toThrow(/accentLight/);
+    expect(() => parseGuide(withAccentLight('#6d2'), 'bad-guide')).toThrow(/accentLight/);
+  });
+
+  it('warns when accentLight contrast falls below 4.5:1 on the light lab background', () => {
+    const guide = parseGuide(withAccentLight('#e4e4e7'), 'low-light-contrast');
+    expect(guide.frontmatter.accentLight).toBe('#e4e4e7');
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringMatching(/accentLight #e4e4e7 has .* against light lab background/),
+    );
+  });
+
+  it('warns once when accentLight is absent so coverage gaps stay visible', () => {
+    const guide = parseGuide(VALID_SOURCE, 'no-accent-light');
+    expect(guide.frontmatter.accentLight).toBeUndefined();
+    const calls = warn.mock.calls.filter(
+      (args) => typeof args[0] === 'string' && /no accentLight in frontmatter/.test(args[0]),
+    );
+    expect(calls).toHaveLength(1);
+  });
+});
+
 describe('parseGuide sectionIcons', () => {
   let warn: ReturnType<typeof vi.spyOn>;
   beforeEach(() => {

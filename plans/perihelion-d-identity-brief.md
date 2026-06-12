@@ -61,6 +61,24 @@ The orbit draws in theme ink (lab text tones). Only the periapsis dot takes colo
 Every dot/background pairing requires a recorded 3:1 minimum check as a graphical object.
 The C.3 mission log's accentLight table is the precedent for how to record the matrix.
 
+**Recorded matrix (2026-06-12, house surfaces against `--lab-bg-deep`, WCAG ratios
+computed OKLCH to sRGB):**
+
+| Element | Graphite | Cream | Notes |
+|---|---|---|---|
+| Perihelion dot | 7.25:1 | 4.34:1 | accent / light accent |
+| Orbit at brightest (stop-peri) | 7.25:1 | 8.35:1 | cream orbit is solid text-secondary ink |
+| Orbit mid stop | 4.11:1 | n/a | muted at 0.85 stop-opacity |
+| Orbit dim tail (stop-dim) | 1.39:1 | n/a | deliberate: the falloff IS the construction; identification is carried by the >=3:1 segments |
+| Aphelion micro-dot | 1.81:1 | 4.99:1 | graphite ember is deliberately subliminal; cream inks it fully |
+| Transit spark at peak | 6.06:1 | 6.65:1 | cream uses --lab-mark-spark (ink-depth brass), peak opacity 1 |
+
+The mark passes as a graphical object on both registers: every element that carries
+identification (dot, orbit body, spark) clears 3:1 with margin. The two sub-3:1 values
+are the emission register's intentional falloff toward aphelion, recorded here as a
+decision, not an oversight. Per-guide OG accent pairings remain to be recorded with the
+OG work (open question, section 11).
+
 ### Scene sentences (theme)
 
 - Graphite: a reader at night, the mark is the one instrument light on the desk.
@@ -99,6 +117,25 @@ The lockup replaces the text-only wordmark in the house bar: sigil at left, Podk
 "Perihelion" with locked kerning, arm descriptor ("ARCHIVE") in JetBrains Mono as the
 subordinate line. The existing tagline line stays as-is. Clearspace and a minimum-size
 floor are defined during exploration and recorded here, not improvised per surface.
+
+**Recorded (2026-06-12, after the cant was baked into the geometry so the SVG box
+bounds the visual mark):**
+
+- **Construction:** viewBox `6.5 -7.5 49 49` (square); the 45deg cant is a rotate
+  transform on the inner group, computed so the rotated orbit, dot, and aphelion all
+  sit inside the box. Only the halo bleeds past it (overflow visible). Clearspace is
+  therefore measurable from the layout box edge.
+- **Clearspace:** one orbit semi-minor axis (14 geometry units, ~0.29x the rendered
+  width) on all sides. At the masthead's 44px render that is ~13px; the lockup's 18px
+  gap and the header's 20px vertical padding both clear it.
+- **Minimum-size floor:** 32px rendered width. Below the floor, use the favicon
+  re-derivation (dot plus arc fragment), never a scaled-down sigil. At 32px the
+  aphelion micro-dot is sub-pixel and reads as texture; acceptable. Below 32px the
+  orbit stroke aliases and the construction stops being perihelial.
+- **Masthead lockup as built:** colophon rule arrangement (mark, wordmark/kicker
+  stack, hairline rule, tagline), 18px gaps, mark at 44px. Rule and tagline drop
+  below md; the tagline moves to its own line under the lockup, as a sibling (Q6
+  stays open).
 
 The favicon is a re-derived construction, not a scaled-down sigil. The current 64x36
 ellipse with a 3px dot cannot survive 16px. Expect dot-plus-arc-fragment geometry that

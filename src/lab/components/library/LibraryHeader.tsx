@@ -46,7 +46,7 @@ export function LibraryHeader({
           if (index === 0) {
             return (
               <p key={index} className={className}>
-                <PerihelionSigil className="float-left mr-3 -ml-1" />
+                <PerihelionSigil className="float-left mr-4 -ml-2" />
                 {paragraph}
               </p>
             );

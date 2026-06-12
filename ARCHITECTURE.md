@@ -255,5 +255,6 @@ Architecture Decision Records live in `/vector/decisions/`.
 | 009 | Lab subdomain architecture (Perihelion) | 2026-04-20 | Accepted |
 | 010 | Perihelion rename and IA | 2026-04-21 | Accepted |
 | 011 | Portfolio visual recalibration toward editorial craftsperson register | 2026-05-17 | Accepted |
+| 012 | Perihelion house identity locks to the Instrument mark | 2026-06-12 | Accepted |
 
 When you make a significant technical choice, document it as an ADR.

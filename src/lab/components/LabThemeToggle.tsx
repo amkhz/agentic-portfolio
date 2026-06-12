@@ -28,7 +28,11 @@ export function LabThemeToggle({ className }: { className?: string }) {
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       className={cn(
         "relative inline-flex h-11 w-11 items-center justify-center rounded-md",
-        "text-lab-text-muted",
+        // text-secondary, not muted: the glyph dims its strokes to draw the
+        // candle/sun, so the resting base must start high enough that the
+        // dimmest stroke (0.4 opacity) still clears 3:1 on bg-raised
+        // (Roy C.3 flag, fixed with the D identity PR).
+        "text-lab-text-secondary",
         "transition-colors duration-[var(--duration-fast)] hover:text-guide-accent",
         className,
       )}
@@ -46,25 +50,29 @@ export function LabThemeToggle({ className }: { className?: string }) {
         aria-hidden="true"
         className="motion-reduce:transition-none"
       >
+        {/* Dark-mode dimming ladder sits on text-secondary so every
+            at-rest stroke clears the 3:1 non-text minimum on bg-raised:
+            wick 0.55 (3.46:1), base lines 0.6 (3.86:1), bowl 0.7
+            (4.75:1). Measured 2026-06-12, closing the Roy C.3 flag. */}
         <path
           d="M9 18h6"
           className={cn(
             "transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none",
-            isDark ? "opacity-50" : "opacity-100",
+            isDark ? "opacity-60" : "opacity-100",
           )}
         />
         <path
           d="M10 22h4"
           className={cn(
             "transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none",
-            isDark ? "opacity-50" : "opacity-100",
+            isDark ? "opacity-60" : "opacity-100",
           )}
         />
         <path
           d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"
           className={cn(
             "transition-[opacity,stroke-width] duration-[var(--duration-normal)] motion-reduce:transition-none",
-            isDark ? "opacity-60" : "opacity-100",
+            isDark ? "opacity-70" : "opacity-100",
           )}
         />
         <path
@@ -72,7 +80,7 @@ export function LabThemeToggle({ className }: { className?: string }) {
           className={cn(
             "transition-[opacity,stroke-width] duration-[var(--duration-normal)] motion-reduce:transition-none",
             isDark
-              ? "opacity-40 [stroke-width:1.5]"
+              ? "opacity-55 [stroke-width:1.5]"
               : "opacity-100 [stroke-width:2]",
           )}
         />

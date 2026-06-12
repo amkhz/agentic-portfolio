@@ -87,6 +87,11 @@
        unset, the fallback resolves to portfolio brass. */
     --guide-accent: var(--guide-accent-dark, var(--theme-accent-primary));
 
+    /* --- House mark transit spark ---
+       On graphite the spark is the accent itself (emission register).
+       The light scope deepens it; see that block for rationale. */
+    --lab-mark-spark: var(--guide-accent);
+
     /* --- Typography families ---
        Weights loaded by src/lab/main.tsx. Georgia is a system
        font (no network request). */
@@ -205,6 +210,13 @@
        rather than an illegible dark-tuned hex. The inline-style
        exception in ADR-009 is theme-agnostic. */
     --guide-accent: var(--guide-accent-light, var(--theme-accent-primary));
+
+    /* --- House mark transit spark ---
+       The light-mode portfolio brass (L 0.56) washes out as a 2px moving
+       object on cream paper (Justin's live call, 2026-06-11). Same brass
+       hue pulled down to ink depth so the transit reads as press ink in
+       motion, ~6.5:1 against --lab-bg-deep. */
+    --lab-mark-spark: oklch(0.4600 0.1150 60.96);
 
     /* --- Typography families ---
        Unchanged from dark mode. The lab's three-font stack

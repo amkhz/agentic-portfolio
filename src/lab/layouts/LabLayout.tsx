@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { ScrollToTop } from "@lab/components/ScrollToTop";
 import { LabThemeToggle } from "@lab/components/LabThemeToggle";
+import { PerihelionMark } from "@lab/components/PerihelionMark";
 
 export function LabLayout() {
   return (
@@ -16,16 +17,35 @@ export function LabLayout() {
       <LabThemeToggle className="fixed bottom-3 right-3 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
 
       <header className="border-b border-lab-border-subtle">
-        <div className="mx-auto flex max-w-6xl items-baseline justify-between gap-6 px-6 py-6 md:px-10">
-          <a
-            href="/"
-            className="group inline-flex flex-col gap-1"
-            aria-label="Perihelion — return to the archive"
-          >
-            <span className="font-lab-heading text-xl font-medium tracking-tight text-lab-text-primary md:text-2xl">
-              Perihelion
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5 md:px-10">
+          {/* Masthead lockup (Workstream D, live-accepted "colophon rule"):
+              mark + wordmark/kicker stack, then the tagline set off behind
+              a hairline rule. Rule and tagline drop on mobile; the tagline
+              gets its own line below the lockup instead (the mission test:
+              mobile is where most first visits meet the obscure name, so
+              its one translation can't be desktop-only). It stays a
+              sibling of the lockup, not part of it, so Q6 in the identity
+              brief (tagline placement when Works ships) remains open. */}
+          {/* No aria-label: the structured content names the link, so
+              screen readers receive the tagline (the name's one
+              translation) on md+ where it lives inside the link. */}
+          <a href="/" className="group inline-flex items-center gap-4.5">
+            <span aria-hidden className="flex shrink-0 items-center justify-center">
+              <PerihelionMark width={44} animated />
             </span>
-            <span className="font-lab-mono text-xs tracking-wide text-lab-text-muted">
+            <span className="flex flex-col gap-[3px]">
+              <span className="font-lab-heading text-[28px] font-medium leading-[1.1] tracking-[0.01em] text-lab-text-primary">
+                Perihelion
+              </span>
+              <span className="font-lab-mono text-[11px] font-medium tracking-[0.22em] text-lab-text-muted">
+                ARCHIVE
+              </span>
+            </span>
+            <span
+              aria-hidden
+              className="my-[5px] hidden w-px self-stretch bg-lab-border-subtle md:block"
+            />
+            <span className="hidden max-w-[18ch] font-lab-mono text-xs leading-[1.55] tracking-[0.025em] text-lab-text-muted md:block">
               closest approach to the frontier
             </span>
           </a>
@@ -37,6 +57,11 @@ export function LabLayout() {
             <span aria-hidden>←</span>
             justinh.design
           </a>
+        </div>
+        <div className="mx-auto max-w-6xl px-6 pb-4 md:hidden">
+          <span className="font-lab-mono text-xs tracking-[0.025em] text-lab-text-muted">
+            closest approach to the frontier
+          </span>
         </div>
       </header>
 

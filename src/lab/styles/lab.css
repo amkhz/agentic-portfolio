@@ -215,9 +215,18 @@ button:focus-visible,
   fill: var(--guide-accent);
 }
 
+/* The punch circle lives inside the mark's <mask> def, so white/black
+   here are mask luminance values (keep/punch), not colors: the mask is
+   a no-op on graphite and breaks the orbit at periapsis on cream. */
+.peri-mark__punch {
+  fill: white;
+}
+[data-theme="light"] .peri-mark__punch {
+  fill: black;
+}
+
 [data-theme="light"] .peri-mark__orbit {
   stroke-width: 1.5;
-  mask: var(--peri-mark-punch);
 }
 [data-theme="light"] .peri-mark__stop-dim,
 [data-theme="light"] .peri-mark__stop-mid,
@@ -233,9 +242,10 @@ button:focus-visible,
   filter: none;
 }
 
-/* Transit delight (live-accepted): hovering the mark sends a brass
-   spark once around the orbit; the dot flares as it arrives at
-   periapsis. The 2.5s transit and spark size were tuned live (2s
+/* Transit delight (live-accepted): a brass spark orbits once and the
+   dot flares as it arrives at periapsis. Runs on pointerenter, on
+   keyboard focus of the wrapping link, and once as the draw-in's
+   final beat. The 2.5s transit and spark size were tuned live (2s
    lengthened at Justin's 2026-06-11 call; flare delay tracks 82% of
    the transit, the spark's arrival fade). On the ink register the
    spark deepens (--lab-mark-spark), grows a step, and peaks at full
@@ -252,10 +262,16 @@ button:focus-visible,
   offset-path: path("M 58 18 a 28 14 0 1 0 -56 0 a 28 14 0 1 0 56 0");
   offset-rotate: 0deg;
 }
-.peri-mark:hover .peri-mark__spark {
+/* The transit runs on the --transit class (set on pointerenter or as
+   the draw-in's final beat, cleared only on animationend so a started
+   orbit always completes) and on keyboard focus of the wrapping link,
+   which holds the end state until blur. */
+.peri-mark--transit .peri-mark__spark,
+a:focus-visible .peri-mark__spark {
   animation: peri-mark-transit 2.5s cubic-bezier(0.45, 0, 0.4, 1) forwards;
 }
-.peri-mark:hover .peri-mark__dot {
+.peri-mark--transit .peri-mark__dot,
+a:focus-visible .peri-mark__dot {
   animation: peri-mark-flare 0.5s ease-out 2.05s;
 }
 [data-theme="light"] .peri-mark__spark {

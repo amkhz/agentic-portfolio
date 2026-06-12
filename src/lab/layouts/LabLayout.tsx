@@ -20,14 +20,19 @@ export function LabLayout() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5 md:px-10">
           {/* Masthead lockup (Workstream D, live-accepted "colophon rule"):
               mark + wordmark/kicker stack, then the tagline set off behind
-              a hairline rule. Rule and tagline drop on mobile. */}
+              a hairline rule. Rule and tagline drop on mobile; the tagline
+              gets its own line below the lockup instead (the mission test:
+              mobile is where most first visits meet the obscure name, so
+              its one translation can't be desktop-only). It stays a
+              sibling of the lockup, not part of it, so Q6 in the identity
+              brief (tagline placement when Works ships) remains open. */}
           <a
             href="/"
             className="group inline-flex items-center gap-4.5"
             aria-label="Perihelion, return to the archive"
           >
             <span aria-hidden className="flex shrink-0 items-center justify-center">
-              <PerihelionMark width={58} animated />
+              <PerihelionMark width={44} animated />
             </span>
             <span className="flex flex-col gap-[3px]">
               <span className="font-lab-heading text-[28px] font-medium leading-[1.1] tracking-[0.01em] text-lab-text-primary">
@@ -53,6 +58,11 @@ export function LabLayout() {
             <span aria-hidden>←</span>
             justinh.design
           </a>
+        </div>
+        <div className="mx-auto max-w-6xl px-6 pb-4 md:hidden">
+          <span className="font-lab-mono text-xs tracking-[0.025em] text-lab-text-muted">
+            closest approach to the frontier
+          </span>
         </div>
       </header>
 

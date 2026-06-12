@@ -8,3 +8,4 @@ dist/
 
 # Agent harness worktrees (transient, per-agent git worktrees).
 .claude/worktrees/
+.impeccable/

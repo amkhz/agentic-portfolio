@@ -12,7 +12,29 @@ export default defineConfig({
       new Date().toISOString().split('T')[0],
     ),
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      // Dev mirror of the production host rewrite: labs.justinh.design
+      // serves labs.html. Visit http://labs.localhost:5173/ and the lab
+      // owns "/" directly — no index.html bounce, no replaceState swap,
+      // so full reloads land back on the lab instead of the portfolio.
+      name: 'lab-subdomain-rewrite',
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          const host = req.headers.host ?? '';
+          const url = req.url ?? '/';
+          const isInternal =
+            url.includes('.') || url.startsWith('/@') || url.startsWith('/node_modules');
+          if (host.startsWith('labs.') && !isInternal) {
+            req.url = '/labs.html';
+          }
+          next();
+        });
+      },
+    },
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -35,6 +57,11 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+    watch: {
+      // Live-iteration session journals; watching them causes a full
+      // page reload on every checkpoint the browser saves.
+      ignored: ['**/.impeccable/**'],
+    },
   },
   test: {
     include: [

@@ -17,7 +17,7 @@ export function LabLayout() {
       <LabThemeToggle className="fixed bottom-3 right-3 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
 
       <header className="border-b border-lab-border-subtle">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-6xl items-center px-6 py-5 md:px-10">
           {/* Masthead lockup (Workstream D, live-accepted "colophon rule"):
               mark + wordmark/kicker stack, then the tagline set off behind
               a hairline rule. Rule and tagline drop on mobile; the tagline
@@ -48,14 +48,6 @@ export function LabLayout() {
             <span className="hidden max-w-[18ch] font-lab-mono text-xs leading-[1.55] tracking-[0.025em] text-lab-text-muted md:block">
               closest approach to the frontier
             </span>
-          </a>
-
-          <a
-            href="https://justinh.design"
-            className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-secondary hover:text-guide-accent"
-          >
-            <span aria-hidden>←</span>
-            justinh.design
           </a>
         </div>
         <div className="mx-auto max-w-6xl px-6 pb-4 md:hidden">

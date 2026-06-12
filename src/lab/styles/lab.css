@@ -185,6 +185,177 @@ button:focus-visible,
 .lab-territory-t3 { --guide-accent: var(--lab-territory-t3); }
 .lab-territory-t4 { --guide-accent: var(--lab-territory-t4); }
 
+/* Perihelion house mark, dual drawing register (Workstream D).
+   Emission on graphite (default): luminance-gradient stroke dim at
+   aphelion to brass at periapsis, halo'd dot. Ink on cream: solid
+   stroke at press weight, halo off, dot up a step, orbit broken at
+   periapsis via the clearspace mask the component passes through
+   --peri-mark-punch. The register swap lives entirely here so a theme
+   flip repaints the mark without remounting it. */
+.peri-mark__orbit {
+  stroke-width: 1.25;
+}
+.peri-mark__stop-dim {
+  stop-color: var(--lab-text-muted);
+  stop-opacity: 0.25;
+}
+.peri-mark__stop-mid {
+  stop-color: var(--lab-text-muted);
+  stop-opacity: 0.85;
+}
+.peri-mark__stop-peri {
+  stop-color: var(--guide-accent);
+  stop-opacity: 1;
+}
+.peri-mark__aphelion {
+  fill: var(--lab-text-muted);
+  opacity: 0.4;
+}
+.peri-mark__dot {
+  fill: var(--guide-accent);
+}
+
+[data-theme="light"] .peri-mark__orbit {
+  stroke-width: 1.5;
+  mask: var(--peri-mark-punch);
+}
+[data-theme="light"] .peri-mark__stop-dim,
+[data-theme="light"] .peri-mark__stop-mid,
+[data-theme="light"] .peri-mark__stop-peri {
+  stop-color: var(--lab-text-secondary);
+  stop-opacity: 1;
+}
+[data-theme="light"] .peri-mark__aphelion {
+  opacity: 1;
+}
+[data-theme="light"] .peri-mark__dot {
+  r: 3.2px;
+  filter: none;
+}
+
+/* Transit delight (live-accepted): hovering the mark sends a brass
+   spark once around the orbit; the dot flares as it arrives at
+   periapsis. The 2.5s transit and spark size were tuned live (2s
+   lengthened at Justin's 2026-06-11 call; flare delay tracks 82% of
+   the transit, the spark's arrival fade). On the ink register the
+   spark deepens (--lab-mark-spark), grows a step, and peaks at full
+   opacity so it pops against cream the way emission does against
+   graphite. The hit rect gives the hover a solid target; the global
+   reduced-motion kill below collapses the transit to its invisible
+   end state. */
+.peri-mark__hit {
+  fill: transparent;
+}
+.peri-mark__spark {
+  fill: var(--lab-mark-spark, var(--guide-accent));
+  opacity: 0;
+  offset-path: path("M 58 18 a 28 14 0 1 0 -56 0 a 28 14 0 1 0 56 0");
+  offset-rotate: 0deg;
+}
+.peri-mark:hover .peri-mark__spark {
+  animation: peri-mark-transit 2.5s cubic-bezier(0.45, 0, 0.4, 1) forwards;
+}
+.peri-mark:hover .peri-mark__dot {
+  animation: peri-mark-flare 0.5s ease-out 2.05s;
+}
+[data-theme="light"] .peri-mark__spark {
+  r: 2.1px;
+  --peri-spark-peak: 1;
+}
+@keyframes peri-mark-transit {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: var(--peri-spark-peak, 0.9);
+  }
+  82% {
+    opacity: var(--peri-spark-peak, 0.9);
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+@keyframes peri-mark-flare {
+  0% {
+    transform: scale(1);
+  }
+  55% {
+    transform: scale(1.22);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Library ornament (PerihelionSigil): confocal orbital system. Inner
+   rings sit at the live-accepted ink weight; each ring's body drifts
+   along its ellipse on its own period, inner rings faster. Reduced
+   motion: the global animation kill below finishes the drift instantly,
+   leaving each body at its static offset-distance scatter position. */
+@keyframes peri-sigil-drift {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+.peri-sigil__ring {
+  stroke-opacity: 0.5;
+}
+.peri-sigil__body {
+  fill: var(--lab-text-muted);
+  offset-rotate: 0deg;
+  animation: peri-sigil-drift var(--peri-sigil-period, 44s) linear infinite;
+}
+.peri-sigil__body--outer {
+  offset-path: path("M 2 18 a 28 14 0 1 0 56 0 a 28 14 0 1 0 -56 0");
+  --peri-sigil-period: 64s;
+  offset-distance: 58%;
+  animation-delay: -37s;
+  opacity: 0.7;
+}
+.peri-sigil__body--mid {
+  offset-path: path("M 16 18 a 21 10 0 1 0 42 0 a 21 10 0 1 0 -42 0");
+  --peri-sigil-period: 40s;
+  offset-distance: 20%;
+  animation-delay: -13s;
+  opacity: 0.55;
+}
+.peri-sigil__body--inner {
+  offset-path: path("M 30 18 a 14 6.5 0 1 0 28 0 a 14 6.5 0 1 0 -28 0");
+  --peri-sigil-period: 24s;
+  offset-distance: 80%;
+  animation-delay: -6s;
+  opacity: 0.45;
+}
+@keyframes peri-sigil-pulse {
+  0% {
+    r: 3px;
+    opacity: 0.55;
+  }
+  12% {
+    r: 9.5px;
+    opacity: 0;
+  }
+  100% {
+    r: 9.5px;
+    opacity: 0;
+  }
+}
+/* Live-accepted pulse strength 0.95. Base opacity 0 so reduced motion
+   (which finishes the animation instantly) leaves no stray ring. The
+   24s period and -18s phase track the inner body's closest approach. */
+.peri-sigil__pulse {
+  opacity: 0;
+  stroke-opacity: 0.95;
+  animation: peri-sigil-pulse 24s linear infinite;
+  animation-delay: -18s;
+}
+
 /* First-paint transition suppression. The early-paint script in labs.html
    sets [data-no-transition] before the theme attribute resolves;
    ThemeProvider removes it one frame after mount. Mirrors the portfolio's

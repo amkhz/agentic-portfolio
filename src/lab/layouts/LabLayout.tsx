@@ -26,11 +26,10 @@ export function LabLayout() {
               its one translation can't be desktop-only). It stays a
               sibling of the lockup, not part of it, so Q6 in the identity
               brief (tagline placement when Works ships) remains open. */}
-          <a
-            href="/"
-            className="group inline-flex items-center gap-4.5"
-            aria-label="Perihelion, return to the archive"
-          >
+          {/* No aria-label: the structured content names the link, so
+              screen readers receive the tagline (the name's one
+              translation) on md+ where it lives inside the link. */}
+          <a href="/" className="group inline-flex items-center gap-4.5">
             <span aria-hidden className="flex shrink-0 items-center justify-center">
               <PerihelionMark width={44} animated />
             </span>

@@ -9,3 +9,6 @@ dist/
 # Agent harness worktrees (transient, per-agent git worktrees).
 .claude/worktrees/
 .impeccable/
+
+# Wallace render output (local image generation; self-ignored, kept out of the repo).
+/mocks/

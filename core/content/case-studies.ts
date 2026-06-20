@@ -57,11 +57,11 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: 'instant-doc-review',
     title: 'Instant Document Review',
-    subtitle: 'Transparent, auditable AI for loan document processing.',
-    tags: ['Product Design', 'HITL', 'Enterprise', 'AI Ops'],
+    subtitle: 'A shipped AI review product, with hard metrics and a way of working.',
+    tags: ['Design Leadership', 'AI Ops', 'Prototype to Production', 'Metrics'],
     heroMetric: {
-      value: '75%',
-      label: 'reduction in document review time',
+      value: '50%',
+      label: 'reduction in PSA review time',
     },
     heroImage: {
       src: '/images/idr-hifi.png',

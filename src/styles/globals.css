@@ -28,6 +28,11 @@
   --color-secondary-muted: var(--theme-secondary-muted);
   --color-secondary-glow: var(--theme-secondary-glow);
 
+  --color-signal-primary: var(--theme-signal-primary);
+  --color-signal-hover: var(--theme-signal-hover);
+  --color-signal-muted: var(--theme-signal-muted);
+  --color-signal-glow: var(--theme-signal-glow);
+
   --color-border-subtle: var(--theme-border-subtle);
   --color-border-strong: var(--theme-border-strong);
 
@@ -94,6 +99,7 @@
   --shadow-lg: var(--theme-shadow-lg);
   --shadow-xl: var(--theme-shadow-xl);
   --shadow-glow-brass: var(--theme-shadow-glow-brass);
+  --shadow-glow-green: var(--theme-shadow-glow-green);
   --shadow-glow-magenta: var(--theme-shadow-glow-magenta);
 
   /* --- Motion / Transitions --- */

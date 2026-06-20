@@ -57,6 +57,13 @@ export default defineConfig({
   server: {
     port: 5173,
     open: true,
+    // Allow Paper Snapshot (app.paper.design) to fetch assets from this dev
+    // server across origins. Vite 6 restricts dev-server CORS by default, so
+    // Paper can't capture a rendered component's images without this allow.
+    // Note: Vite 6 still blocks cross-origin /@fs/ subresource fetches even
+    // with CORS on, so serve Snapshot-bound assets (e.g. Wallace renders)
+    // from public/ rather than importing them through the @ aliases.
+    cors: { origin: 'https://app.paper.design' },
     watch: {
       // Live-iteration session journals; watching them causes a full
       // page reload on every checkpoint the browser saves.

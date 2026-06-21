@@ -42,7 +42,8 @@
 
     /* Borders */
     --theme-border-subtle: oklch(0.3000 0.0120 90);
-    --theme-border-strong: oklch(0.3700 0.0150 90);
+    /* border-strong meets WCAG 1.4.11 non-text 3:1 on bg-base (scripts/wcag-check.py) */
+    --theme-border-strong: oklch(0.5000 0.0150 90);
 
     /* Semantic */
     --theme-success: oklch(0.7400 0.1100 150);
@@ -185,7 +186,8 @@
 
     /* Borders — warm, visible but soft */
     --theme-border-subtle: oklch(0.8400 0.0180 76);
-    --theme-border-strong: oklch(0.7600 0.0220 72);
+    /* border-strong meets WCAG 1.4.11 non-text 3:1 on bg-base (scripts/wcag-check.py) */
+    --theme-border-strong: oklch(0.5800 0.0220 72);
 
     --theme-success: oklch(0.4800 0.1000 150);
     --theme-warning: oklch(0.5200 0.1200 80);

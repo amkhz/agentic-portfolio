@@ -61,7 +61,7 @@ export function ImageBlock({
             aria-label={canExpand ? `View full size: ${alt}` : undefined}
             className={cn(
               "relative overflow-hidden bg-bg-elevated",
-              !bare && "rounded-lg border border-border-subtle",
+              !bare && "border border-border-subtle",
               aspectMap[aspect],
               canExpand && !bare && "cursor-zoom-in transition-[border-color,box-shadow] duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
               canExpand && bare && "cursor-zoom-in",
@@ -81,7 +81,7 @@ export function ImageBlock({
             aria-label={alt}
             className={cn(
               "flex flex-col items-center justify-center bg-bg-elevated",
-              !bare && "rounded-lg border border-border-subtle",
+              !bare && "border border-border-subtle",
               aspectMap[aspect]
             )}
           >

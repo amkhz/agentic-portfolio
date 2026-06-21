@@ -96,6 +96,14 @@ This mission is complete when:
 
 ## Open punch list (session TODO)
 
+- **Type lock — PRIORITIZED (Justin, 2026-06-21):** pull this forward; do it
+  sooner rather than later (it's the biggest unbuilt lever — site still runs
+  Podkova/Space Grotesk/Didact). Procedure unchanged: Tyrell proposes 2-3
+  candidate trios (warm humanist body + refined display + structural mono) per
+  DESIGN.md, validates the lead trio **via `/impeccable live` or in Paper**, on
+  Home + one case study, Justin approves the lock, then `--font-*` tokens swap.
+  Do NOT pick faces without checking with Justin.
+
 - **Cover plate framing — DONE (2026-06-21).** Reverted the flush+cover
   treatment everywhere (case-study shell, work-index featured entry, home
   featured spread). Covers now use a PADDED DossierFrame + `ImageBlock bare`

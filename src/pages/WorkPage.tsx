@@ -12,18 +12,18 @@ import {
 } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
-const tocItems: TocItem[] = caseStudies.map((study, i) => {
-  const index = String(i + 1).padStart(2, "0");
-  return {
-    id: study.slug,
-    label: study.title,
-    to: `/work/${study.slug}`,
-    index,
-    thumbnail: { alt: `${study.title} project mark`, placeholder: `Fig.${index}` },
-    description: study.subtitle,
-    trailing: study.tags[0],
-  };
-});
+const tocItems: TocItem[] = caseStudies.map((study, i) => ({
+  id: study.slug,
+  label: study.title,
+  to: `/work/${study.slug}`,
+  // No leading number — the thumbnail carries the visual index.
+  thumbnail: {
+    alt: `${study.title} project mark`,
+    placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
+  },
+  description: study.subtitle,
+  trailing: study.tags[0],
+}));
 
 /** Featured meta case study as a dossier entry: flush cover plate + type spread. */
 function FeaturedEntry() {

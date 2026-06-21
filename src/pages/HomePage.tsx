@@ -12,15 +12,19 @@ import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 export function HomePage() {
   const featured = metaCaseStudy;
 
-  // Selected work as a Field Notebook ledger, not a card grid. Each row is a
-  // registration line: index, title, discipline kicker, trailing metric.
-  const selected: TocItem[] = caseStudies.map((study, index) => ({
+  // Selected work as a Field Notebook ledger, not a card grid. Matches the work
+  // index: a specimen thumbnail, title, subtitle, and trailing discipline. The
+  // thumbnail carries the visual index, so no leading number.
+  const selected: TocItem[] = caseStudies.map((study, i) => ({
     id: study.slug,
     to: `/work/${study.slug}`,
-    index: String(index + 1).padStart(2, "0"),
     label: study.title,
-    kicker: study.tags.slice(0, 2).join(" / "),
-    trailing: study.heroMetric?.value,
+    thumbnail: {
+      alt: `${study.title} project mark`,
+      placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
+    },
+    description: study.subtitle,
+    trailing: study.tags[0],
   }));
 
   return (

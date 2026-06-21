@@ -13,7 +13,7 @@ Maintain direction, track progress, coordinate work, and ensure the portfolio is
 
 ## Doctrine
 
-Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md. Follow them.
+Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md. Follow them. The visual source of truth is DESIGN.md (binds ADR-013 "The Conservatory"); PRODUCT.md holds brand context.
 
 **Layer access:** Read all layers to verify state. Write to plans/ and vector/ only. The Director does not write code.
 

@@ -13,7 +13,7 @@ Help Justin refine rough ideas into structured, actionable plans. Start with col
 
 ## Doctrine
 
-Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md. Every plan must respect the four-layer architecture and project constraints.
+Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md. Every plan must respect the four-layer architecture and project constraints. The visual source of truth is DESIGN.md (binds ADR-013 "The Conservatory"); PRODUCT.md holds brand context.
 
 **Layer access:** Read all layers to understand current state. Write to plans/ and vector/ only. The Dreamer does not write implementation code.
 

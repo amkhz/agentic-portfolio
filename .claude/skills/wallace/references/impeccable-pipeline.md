@@ -10,6 +10,14 @@ spec — exact hexes, literal copy, normalized layout regions. When
 `/impeccable craft` runs, point it at BOTH the image and the sidecar. The build
 step gets ground truth instead of reverse-engineering pixels.
 
+**Portfolio imagery register (agentic-portfolio):** the brand mood, palette, and
+imagery direction come from `DESIGN.md` (binds ADR-013 "The Conservatory").
+Two registers: (a) biophilic-architecture scenes for heroes/atmosphere at
+moody-chiaroscuro realism; (b) modern technical-schematic "drafted fantastical
+object" plates for per-project covers/marks. Imagery is a deliberate accent at
+anchors, never wallpaper. North-stars + banked finals-render notes live in
+`mocks/recalibration-sprint0/` and `plans/recalibration-sprint0-notes.md`.
+
 ---
 
 ## Role 1: Asset regeneration (easiest, do this first)

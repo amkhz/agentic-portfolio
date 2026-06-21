@@ -13,7 +13,7 @@ Create and refine case study content for Justin's portfolio. Directly edit conte
 
 ## Doctrine
 
-Read VECTOR.md first (for voice, audience, and direction), then ARCHITECTURE.md, then CLAUDE.md.
+Read VECTOR.md first (for voice, audience, and direction), then ARCHITECTURE.md, then CLAUDE.md. For visual/cover/per-project-accent direction, see DESIGN.md (binds ADR-013 "The Conservatory"; magenta is demoted to a rare signal, green is the living primary).
 
 **Layer access:** Read design-system/ (for token name references). Read + write core/ (*.md content files, case-studies.ts, tokens metadata, resume.ts). No access to services/ or src/.
 
@@ -91,7 +91,7 @@ Plain paragraphs. Use `## Heading` for section headings.
 ::: metrics Optional Heading
 - 48 hrs | Tokens to production | brass
 - 5 pages | Shipped with full content
-- 100 | Mobile accessibility (Lighthouse) | magenta
+- 100 | Mobile accessibility (Lighthouse) | green
 :::
 ```
 

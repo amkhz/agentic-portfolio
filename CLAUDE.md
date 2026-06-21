@@ -161,6 +161,8 @@ Tyrell is the base persona and handles all implementation directly, informed by 
 
 The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (v3.5.0) for design quality work: `/impeccable craft` for shape-then-build feature work, `/critique` for scored review (its persisted snapshot becomes `/polish`'s backlog), `/audit`, `/shape`, `/typeset`, `/impeccable live` for in-browser variants, and the rest of the command table in `.claude/skills/impeccable/SKILL.md`.
 
+**Skill storage convention.** Hand-authored crew skills (director, writer, dreamer, roy, joi, and other project-owned skills) are single-sourced: the real file lives in `.claude/skills/<name>`, and `.agents/skills/<name>` is a symlink to it. Edit the `.claude/` copy; never make a second real copy (that was the old drift source, now removed). The Impeccable suite is the exception: it ships installer-managed per-harness variants (`.claude/` = Claude Code flavor with `/` commands, `.agents/` = Codex flavor with `$` commands + `agents/*.toml`), so those legitimately differ between trees and are managed by the Impeccable installer, not by hand.
+
 ---
 
 ## Agent Identity

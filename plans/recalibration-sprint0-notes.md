@@ -52,3 +52,18 @@ Direction locked; these are cosmetic/refinement notes to fold in when regenerati
 - **Atrium embedded screens** read too "cafe" (green/cream menu-board feel). Make them **informational / data / art / interactive tech surfaces** — purposeful displays, not signage.
 - **Seamless tech detail**: extend the glow-from-within-material idea **beyond wood — into glass, metal, stone, etc.** A device family across substrates, tech indistinguishable from each material.
 - **Drafted-object schematic**: push **more tech/computer feeling** (digital/CAD/modern-computer schematic), less archival-paper warmth. Keep it modern, not steampunk.
+
+## Session checkpoint — 2026-06-20 (handoff)
+**Branch `feat/conservatory-tokens`** (not merged to main). Build + 130 tests green.
+
+**Shipped:** ADR-013 lock + Sprint 0 north-stars; token spine (Conservatory palette both modes, WCAG-verified via `scripts/wcag-check.py`, magenta→signal, green=living primary, brass=tech/light, all old token names kept); tokens synced to Paper (`Conservatory Tokens — ADR-013`, id 01KVKPX1G2AARYWXJSXQBWAR56); Home biophilic hero (placeholder `public/images/conservatory-hero.png`); all 5 case studies drafted + consolidated (IDR rewrite 50% hero; Wallace new; Pioneering AI Adoption refresh; Doctrine Not Prompts new; SOW refresh + Draws figure).
+
+**Reverted:** brass/green duotone (green-active clashed with brass-hover; against craft). **Green's UI role is UNRESOLVED** — needs a considered, non-clashing home (likely atmospheric/content, not dueling interaction states).
+
+**Locked decisions:** two-door = "The Fork" (split-screen day/night origin→evolution entry). Full motion+interaction pass approved; update doctrine to make tasteful motion a pillar.
+
+**Remaining work order (Justin-approved):** 1) surfaces — Work index (Field Notebook TOC) + case-study shell (editorial), incl. **Home rebalance** (busy/unbalanced now with 5 works + featured). 2) The Fork. 3) Motion+interaction pass (+ doctrine motion update). 4) Imagery finals (V4_QUALITY_48, real crops, apply banked notes above). 5) Type validation (still on OLD faces Podkova/Space Grotesk/Didact). 6) Housekeeping: sync PRODUCT.md+VECTOR.md to ADR-013; prune stale agent branches; PR to main.
+
+**Justin-driven (tomorrow):** read-through + de-AI voice pass on every case study (reads AI in places); then a HARD conciseness pass (hiring audience won't read long-form — optimize length).
+
+**Content branches merged in:** `feat/idr-case-study-rewrite`, `feat/doctrine-not-prompts-case-study`, `feat/instant-sow-refresh-draws-figure`, `worktree-agent-adf066f1629feaa5a` (Wallace). Stale/empty agent branches to prune: `feat/doctrine-not-prompts`, `feat/wallace-case-study`, `worktree-agent-*`.

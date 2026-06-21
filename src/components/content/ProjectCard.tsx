@@ -1,98 +1,113 @@
 import { Link } from "react-router";
 import type { CaseStudy } from "@core/content/case-studies";
-import { Tag } from "@/components/interactive/Tag";
-import { SpotlightCard } from "@/components/effects/SpotlightCard";
+import { Container } from "@/components/layout/Container";
+import { GlowEffect } from "@/components/effects/GlowEffect";
+import { DossierFrame, DossierTags } from "@/components/fieldnotebook";
 
+/**
+ * ProjectCard - repurposed as the Home "featured dossier" spread (ADR-013 /
+ * DESIGN.md). De-carded: no rounded SpotlightCard, no pill tags. An asymmetric
+ * editorial spread that echoes the case-study hero (T4) - a flush cover plate
+ * inside a registration frame on one side, a mono-kicked type spread on the
+ * other. This is the page's one ambitious composed moment.
+ *
+ * Brass owns every interaction (kicker, title warm-on-hover, link affordance,
+ * focus ring, frame). Green stays out of the chrome entirely.
+ */
 interface ProjectCardProps {
   study: CaseStudy;
+  /** Mono kicker above the title, e.g. "Featured case file". */
+  kicker?: string;
 }
 
-function ImageIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <circle cx="9" cy="9" r="2" />
-      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-    </svg>
-  );
-}
-
-export function ProjectCard({ study }: ProjectCardProps) {
+export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCardProps) {
   const hasRealImage =
     typeof study.heroImage.src === "string" &&
     study.heroImage.src.length > 0 &&
     !study.heroImage.src.includes("placeholder-");
 
   return (
-    <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
+    <Container as="section">
       <Link
         to={`/work/${study.slug}`}
-        className="group block overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+        aria-label={`View case study: ${study.title}`}
+        className="group block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-8 focus-visible:ring-offset-bg-deep"
       >
-          {hasRealImage ? (
-        <div className="relative aspect-video overflow-hidden border-b border-border-subtle bg-bg-elevated">
-          <img
-            src={study.heroImage.src}
-            alt={study.heroImage.alt}
-            loading="lazy"
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-        </div>
-      ) : (
-        <div
-          className="relative flex aspect-video items-center justify-center border-b border-border-subtle bg-bg-elevated"
-          role="img"
-          aria-label={study.heroImage.alt}
-        >
-          <div className="flex flex-col items-center gap-2 px-6">
-            <span className="text-text-muted">
-              <ImageIcon />
-            </span>
-            <span className="text-center font-body text-sm leading-normal text-text-muted">
-              {study.heroImage.placeholder}
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Cover plate - flush inside the registration frame */}
+          <div className="lg:col-span-7">
+            <DossierFrame
+              flush
+              className="bg-bg-base transition-[border-color] duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)]"
+            >
+              {hasRealImage ? (
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={study.heroImage.src}
+                    alt={study.heroImage.alt}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
+                  />
+                </div>
+              ) : (
+                <div
+                  role="img"
+                  aria-label={study.heroImage.alt}
+                  className="flex aspect-[16/10] items-center justify-center px-8 text-center"
+                >
+                  <span className="font-mono text-xs uppercase tracking-wider text-text-muted">
+                    {study.heroImage.placeholder}
+                  </span>
+                </div>
+              )}
+            </DossierFrame>
+          </div>
+
+          {/* Type spread */}
+          <div className="relative flex flex-col justify-center lg:col-span-5">
+            <GlowEffect
+              color="brass"
+              size="md"
+              className="-left-16 -top-12 opacity-50"
+            />
+
+            <p className="relative font-mono text-xs uppercase tracking-wider text-accent-primary">
+              {kicker}
+            </p>
+
+            <h2 className="relative mt-4 max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary sm:text-4xl">
+              {study.title}
+            </h2>
+
+            <p className="relative mt-4 max-w-[48ch] font-body text-lg leading-normal text-text-secondary">
+              {study.subtitle}
+            </p>
+
+            {study.heroMetric && (
+              <div className="relative mt-6 flex items-baseline gap-3">
+                <span className="font-display text-3xl leading-tight tracking-tight text-accent-primary sm:text-4xl">
+                  {study.heroMetric.value}
+                </span>
+                <span className="font-mono text-xs uppercase tracking-wider text-text-secondary">
+                  {study.heroMetric.label}
+                </span>
+              </div>
+            )}
+
+            <DossierTags tags={study.tags} className="relative mt-8" />
+
+            <span className="relative mt-8 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-accent-primary">
+              Read the case study
+              <span
+                aria-hidden="true"
+                className="transition-transform duration-normal motion-safe:group-hover:translate-x-1"
+              >
+                &rarr;
+              </span>
             </span>
           </div>
         </div>
-      )}
-
-      <div className="p-4">
-        <h3 className="font-heading text-xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary">
-          {study.title}
-        </h3>
-
-        <p className="mt-2 line-clamp-2 font-body text-base leading-normal text-text-secondary">
-          {study.subtitle}
-        </p>
-
-        {study.heroMetric && (
-          <p className="mt-2 font-heading text-sm tracking-wide text-text-muted">
-            {study.heroMetric.value} - {study.heroMetric.label}
-          </p>
-        )}
-
-        <div className="mt-3 flex flex-wrap gap-2">
-          {study.tags.map((tag) => (
-            <Tag
-              key={tag}
-              className="bg-bg-subtle transition-colors duration-normal group-hover:border-border-strong"
-            >
-              {tag}
-            </Tag>
-          ))}
-        </div>
-      </div>
       </Link>
-    </SpotlightCard>
+    </Container>
   );
 }

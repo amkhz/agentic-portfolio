@@ -40,6 +40,21 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    slug: 'doctrine-not-prompts',
+    title: 'Doctrine, Not Prompts',
+    subtitle: 'An AI-as-teammate operating model for a small design team.',
+    tags: ['Design Leadership', 'AI Workflow', 'Operating Model', 'Org Change'],
+    heroMetric: {
+      value: '100%',
+      label: 'token pairs accessibility-verified',
+    },
+    heroImage: {
+      src: '/images/doctrine-reads-doctrine.png',
+      alt: 'Team agent answering a project-specific question by reading version-controlled doctrine files',
+      placeholder: 'Split view: a prompt to the team agent on the left, its project-specific answer on the right, with VECTOR.md, CLAUDE.md, and ARCHITECTURE.md labeled as the doctrine it read',
+    },
+  },
+  {
     slug: 'instant-sow',
     title: 'Instant Scope of Work',
     subtitle: 'AI-augmented scope of work for renovation projects.',
@@ -168,6 +183,7 @@ export type CaseStudySection =
 // --- Markdown file imports ---
 
 import aiLeadershipMd from './ai-leadership.md?raw';
+import doctrineNotPromptsMd from './doctrine-not-prompts.md?raw';
 import instantSowMd from './instant-sow.md?raw';
 import instantDocReviewMd from './instant-doc-review.md?raw';
 import wallaceMd from './wallace.md?raw';
@@ -181,6 +197,7 @@ import { parseCaseStudyMarkdown, parseConstellationContent } from './parse-case-
 
 export const caseStudyContent: Record<string, CaseStudySection[]> = {
   'ai-leadership': parseCaseStudyMarkdown(aiLeadershipMd),
+  'doctrine-not-prompts': parseCaseStudyMarkdown(doctrineNotPromptsMd),
   'instant-sow': parseCaseStudyMarkdown(instantSowMd),
   'instant-doc-review': parseCaseStudyMarkdown(instantDocReviewMd),
   'wallace': parseCaseStudyMarkdown(wallaceMd),

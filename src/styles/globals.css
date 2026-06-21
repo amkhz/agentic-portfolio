@@ -6,6 +6,7 @@
   --font-display: 'Podkova', serif;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Didact Gothic', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* --- Colors: resolve from theme layer --- */
   --color-bg-deep: var(--theme-bg-deep);

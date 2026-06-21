@@ -137,6 +137,19 @@
     --constellation-peek-border: var(--theme-border-subtle);
     --constellation-sidebar-width: 320px;
     --constellation-strip-height: 44px;
+
+    /* Field Notebook grammar (ADR-013 / DESIGN.md) — registration marks,
+       dossier framing, TOC leader rules. Structural measures; colors reference
+       theme tokens so both day/night modes adapt with no overrides.
+       Brass is the instrument frame; hairlines are the page rules. */
+    --fieldnote-mark-size: 0.875rem;        /* registration L-bracket arm length */
+    --fieldnote-mark-stroke: 1px;           /* hairline weight: marks, rules, leaders */
+    --fieldnote-mark-inset: 0.625rem;       /* bracket offset from the corner */
+    --fieldnote-mark-color: var(--theme-accent-primary);    /* brass = the frame */
+    --fieldnote-rule-color: var(--theme-border-subtle);     /* hairline rules + leaders */
+    --fieldnote-rule-strong: var(--theme-border-strong);    /* active/hover rule */
+    --fieldnote-frame-pad: 1.5rem;          /* dossier interior padding */
+    --fieldnote-leader-gap: 0.75rem;        /* gap flanking a TOC leader rule */
   }
 
   [data-theme="light"] {

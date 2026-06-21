@@ -34,10 +34,9 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
         className="group block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-8 focus-visible:ring-offset-bg-deep"
       >
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
-          {/* Cover plate - flush inside the registration frame */}
+          {/* Cover plate - image lives within the padded registration frame */}
           <div className="lg:col-span-7">
             <DossierFrame
-              flush
               className="bg-bg-base transition-[border-color] duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)]"
             >
               {hasRealImage ? (
@@ -46,7 +45,7 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
                     src={study.heroImage.src}
                     alt={study.heroImage.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
+                    className="absolute inset-0 h-full w-full object-contain motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
                   />
                 </div>
               ) : (

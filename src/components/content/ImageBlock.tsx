@@ -72,10 +72,7 @@ export function ImageBlock({
               src={src}
               alt={alt}
               loading="lazy"
-              className={cn(
-                "absolute inset-0 h-full w-full",
-                bare ? "object-cover" : "object-contain"
-              )}
+              className="absolute inset-0 h-full w-full object-contain"
             />
           </div>
         ) : (

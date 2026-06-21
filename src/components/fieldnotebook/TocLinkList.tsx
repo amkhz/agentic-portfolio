@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
+import { RegistrationMark } from "./RegistrationMark";
 
 /**
  * TocLinkList — the Field Notebook table-of-contents grammar (ADR-013 /
@@ -26,6 +27,10 @@ export interface TocItem {
   swatchColor?: string;
   /** Small mono sub-label under the primary label. */
   kicker?: string;
+  /** Body subtitle under the label (e.g. a one-line case-study description). */
+  description?: ReactNode;
+  /** Leading square specimen thumbnail (Wallace mark; placeholder-aware). */
+  thumbnail?: { src?: string; alt: string; placeholder?: string };
   /** Trailing metadata — year, metric, or marker. */
   trailing?: ReactNode;
 }
@@ -49,44 +54,78 @@ const swatchStyle = (color: string): CSSProperties => ({
   height: "0.625rem",
 });
 
+/** Square specimen thumbnail with brass registration ticks; placeholder-aware. */
+function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) {
+  const real =
+    typeof thumbnail.src === "string" &&
+    thumbnail.src.length > 0 &&
+    !thumbnail.src.includes("placeholder-");
+
+  return (
+    <span className="relative block h-16 w-16 shrink-0 overflow-hidden border border-border-strong bg-bg-elevated">
+      {real ? (
+        <img
+          src={thumbnail.src}
+          alt={thumbnail.alt}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <span
+          role="img"
+          aria-label={thumbnail.alt}
+          className="absolute inset-0 flex items-center justify-center font-mono text-[0.5625rem] uppercase tracking-wider text-text-muted"
+        >
+          {thumbnail.placeholder ?? "Fig"}
+        </span>
+      )}
+      <RegistrationMark corners={["tl", "br"]} />
+    </span>
+  );
+}
+
 function RowBody({ item }: { item: TocItem }) {
   return (
     <span
-      className="flex w-full items-baseline"
+      className="flex w-full items-center"
       style={{ columnGap: "var(--fieldnote-leader-gap)" }}
     >
+      {item.thumbnail && <Thumb thumbnail={item.thumbnail} />}
+
       {item.index && (
         <span className="shrink-0 font-mono text-xs tabular-nums text-text-muted transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary">
           {item.index}
         </span>
       )}
       {item.swatchColor && (
-        <span
-          aria-hidden="true"
-          className="shrink-0 translate-y-[-0.1em]"
-          style={swatchStyle(item.swatchColor)}
-        />
+        <span aria-hidden="true" className="shrink-0" style={swatchStyle(item.swatchColor)} />
       )}
 
-      <span className="flex min-w-0 flex-col">
-        <span className="font-heading text-xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
+      <span className="flex min-w-0 flex-col gap-1.5">
+        <span className="font-display text-xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
           {item.label}
         </span>
-        {item.kicker && (
-          <span className="mt-1 font-mono text-xs uppercase tracking-wider text-text-muted">
-            {item.kicker}
+        {item.description ? (
+          <span className="max-w-[52ch] font-body text-sm leading-normal text-text-secondary sm:text-base">
+            {item.description}
           </span>
+        ) : (
+          item.kicker && (
+            <span className="font-mono text-xs uppercase tracking-wider text-text-muted">
+              {item.kicker}
+            </span>
+          )
         )}
       </span>
 
       <span
         aria-hidden="true"
-        className="mb-[0.35em] min-w-6 flex-1 self-end transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]"
+        className="min-w-6 flex-1 self-center transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]"
         style={leaderStyle}
       />
 
       {item.trailing && (
-        <span className="shrink-0 self-end font-mono text-xs tabular-nums text-text-muted">
+        <span className="shrink-0 self-center font-mono text-xs uppercase tracking-wider tabular-nums text-text-muted">
           {item.trailing}
         </span>
       )}

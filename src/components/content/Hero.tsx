@@ -37,8 +37,9 @@ export function Hero() {
 
       <Container className="relative z-10 pb-16 pt-32 sm:pb-24 sm:pt-44">
         {/* Type column framed as an instrument plate - registration marks in
-            the margin, no panel fill, so the atrium reads through. */}
-        <div className="relative max-w-[60ch] pl-5 sm:pl-7">
+            the margin, no panel fill, so the atrium reads through. Generous
+            inset keeps the marks framing the copy, not crowding it. */}
+        <div className="relative max-w-[60ch] py-8 pl-9 sm:py-12 sm:pl-14">
           <RegistrationMark corners={["tl", "bl"]} />
 
           <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">

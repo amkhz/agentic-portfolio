@@ -11,21 +11,19 @@ import {
   type TocItem,
 } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
-import type { CaseStudy } from "@core/content/case-studies";
 
-/** Trailing metadata for a TOC row: prefer the hero metric, fall back to a tag. */
-function trailingMeta(study: CaseStudy): string {
-  return study.heroMetric?.value ?? study.tags[0] ?? "";
-}
-
-const tocItems: TocItem[] = caseStudies.map((study, i) => ({
-  id: study.slug,
-  label: study.title,
-  to: `/work/${study.slug}`,
-  index: String(i + 1).padStart(2, "0"),
-  kicker: study.tags[0],
-  trailing: trailingMeta(study),
-}));
+const tocItems: TocItem[] = caseStudies.map((study, i) => {
+  const index = String(i + 1).padStart(2, "0");
+  return {
+    id: study.slug,
+    label: study.title,
+    to: `/work/${study.slug}`,
+    index,
+    thumbnail: { alt: `${study.title} project mark`, placeholder: `Fig.${index}` },
+    description: study.subtitle,
+    trailing: study.tags[0],
+  };
+});
 
 /** Featured meta case study as a dossier entry: flush cover plate + type spread. */
 function FeaturedEntry() {
@@ -41,7 +39,7 @@ function FeaturedEntry() {
       >
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
           <div className="lg:order-1 lg:col-span-5">
-            <DossierFrame flush marked={false} className="bg-bg-base">
+            <DossierFrame marked={false} className="bg-bg-base">
               <ImageBlock
                 bare
                 expandable={false}

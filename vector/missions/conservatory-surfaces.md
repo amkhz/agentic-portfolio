@@ -96,10 +96,21 @@ This mission is complete when:
 
 ## Open punch list (session TODO)
 
-- **Cover plate framing (T4):** the flush + object-cover treatment lets the
-  image bleed to the frame edge and swallow the registration marks. Fix: keep
-  `ImageBlock bare` (no double border) but put it back in a PADDED DossierFrame
-  (not `flush`) so the marks sit in the margin and frame the image; the image
-  should live *within* the frame. Decide cover vs contain for screenshot-type
-  heroes vs atmospheric finals. (Flagged by Justin 2026-06-21.)
+- **Cover plate framing — DONE (2026-06-21).** Reverted the flush+cover
+  treatment everywhere (case-study shell, work-index featured entry, home
+  featured spread). Covers now use a PADDED DossierFrame + `ImageBlock bare`
+  with `object-contain`, so the image lives within the frame and the marks
+  frame it from the margin. Home hero type column got a generous inset so the
+  marks stop crowding the headline. Revisit cover (fill) vs contain when the
+  Phase 3 atmospheric finals replace the screenshot placeholders.
+- **Work-list rows → Option 3 (DONE):** thumbnail + title + subtitle +
+  discipline trailing. Square specimen thumbnails are placeholder-aware; Wallace
+  fills them in the Phase 3 imagery pass (need a `markImage`/thumb field on
+  CaseStudy, or reuse the drafted-object mark renders).
+- **Strengthen heroMetrics (Plan B / Writer):** current metrics are weak (two
+  100%s, two 50%s). The IDR source has punchier numbers (82% of AI output
+  shipped with zero analyst edits, 27% auto-complete, underwriter kickback
+  40-45%→~30%). Once per-study `heroMetric` is sharpened, reconsider promoting
+  Option 1 (metric-forward) rows, or swap the work-row trailing discipline for
+  a strong metric. (Justin: would prefer metric-forward if metrics were stronger.)
 </content>

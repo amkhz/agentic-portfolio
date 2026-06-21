@@ -74,9 +74,10 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-            {/* Cover plate — image mounted flush to the registration frame */}
+            {/* Cover plate — image lives within the padded frame; the
+                registration marks sit in the margin and frame it. */}
             <div className="lg:order-1 lg:col-span-5">
-              <DossierFrame flush className="bg-bg-base">
+              <DossierFrame className="bg-bg-base">
                 <ImageBlock
                   bare
                   src={study.heroImage.src}

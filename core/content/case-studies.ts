@@ -69,6 +69,21 @@ export const caseStudies: CaseStudy[] = [
       placeholder: 'High-fidelity mockup of the Property Admin Page with document viewer panel, extracted data fields, and rule override controls',
     },
   },
+  {
+    slug: 'wallace',
+    title: 'Wallace',
+    subtitle: 'A compiler that turns a raw image model into a directed design instrument.',
+    tags: ['AI Tooling', 'Design Systems', 'Creative Direction', 'GenAI'],
+    heroMetric: {
+      value: '1 spec',
+      label: 'behind every render',
+    },
+    heroImage: {
+      src: '/images/wallace-hero.png',
+      alt: 'Cinematic north-star render: a designer atelier at night in warm brass light with a Finn Juhl chair silhouette',
+      placeholder: 'Wallace north-star hero: dark atmospheric atelier interior, volumetric warm-brass light through haze, a Finn Juhl lounge chair in shadow, a single dusty-magenta glow, with the structured JSON caption that produced it shown alongside',
+    },
+  },
 ];
 
 export const metaCaseStudy: CaseStudy = {
@@ -155,6 +170,7 @@ export type CaseStudySection =
 import aiLeadershipMd from './ai-leadership.md?raw';
 import instantSowMd from './instant-sow.md?raw';
 import instantDocReviewMd from './instant-doc-review.md?raw';
+import wallaceMd from './wallace.md?raw';
 import buildingThisPortfolioMd from './building-this-portfolio.md?raw';
 import theCraftMd from './the-craft.md?raw';
 import theSoundMd from './the-sound.md?raw';
@@ -167,6 +183,7 @@ export const caseStudyContent: Record<string, CaseStudySection[]> = {
   'ai-leadership': parseCaseStudyMarkdown(aiLeadershipMd),
   'instant-sow': parseCaseStudyMarkdown(instantSowMd),
   'instant-doc-review': parseCaseStudyMarkdown(instantDocReviewMd),
+  'wallace': parseCaseStudyMarkdown(wallaceMd),
   'building-this-portfolio': parseCaseStudyMarkdown(buildingThisPortfolioMd),
 };
 

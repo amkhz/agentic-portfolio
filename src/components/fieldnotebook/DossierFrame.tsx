@@ -12,11 +12,10 @@ import { RegistrationMark } from "./RegistrationMark";
  * behind a hairline rule, echoing the north-star's "INSTRUMENT REFERENCE" band.
  */
 
-const frameStyle: CSSProperties = {
+const frameBorder: CSSProperties = {
   borderWidth: "var(--fieldnote-mark-stroke)",
   borderStyle: "solid",
   borderColor: "var(--fieldnote-rule-color)",
-  padding: "var(--fieldnote-frame-pad)",
 };
 
 const ruleStyle: CSSProperties = {
@@ -31,12 +30,22 @@ interface DossierFrameProps {
   kicker?: string;
   /** Show registration marks at the corners. Default true. */
   marked?: boolean;
+  /** Drop interior padding and clip content to the frame — for full-bleed
+   *  image plates that should meet the registration frame on every edge. */
+  flush?: boolean;
   className?: string;
 }
 
-export function DossierFrame({ children, kicker, marked = true, className }: DossierFrameProps) {
+export function DossierFrame({ children, kicker, marked = true, flush = false, className }: DossierFrameProps) {
+  const style: CSSProperties = flush
+    ? frameBorder
+    : { ...frameBorder, padding: "var(--fieldnote-frame-pad)" };
+
   return (
-    <div className={`relative ${className ?? ""}`} style={frameStyle}>
+    <div
+      className={`relative ${flush ? "overflow-hidden" : ""} ${className ?? ""}`}
+      style={style}
+    >
       {kicker && (
         <header
           className="mb-5 flex items-center gap-3 pb-3 font-mono text-xs uppercase tracking-wider text-text-muted"

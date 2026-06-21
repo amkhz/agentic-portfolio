@@ -74,10 +74,11 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
           </nav>
 
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-            {/* Cover plate */}
+            {/* Cover plate — image mounted flush to the registration frame */}
             <div className="lg:order-1 lg:col-span-5">
-              <DossierFrame kicker={kicker} className="bg-bg-base">
+              <DossierFrame flush className="bg-bg-base">
                 <ImageBlock
+                  bare
                   src={study.heroImage.src}
                   alt={study.heroImage.alt}
                   placeholder={study.heroImage.placeholder}

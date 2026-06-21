@@ -9,7 +9,7 @@ import {
 import { cn } from "@core/utils";
 import { Container } from "@/components/layout/Container";
 import { TextBlock } from "./TextBlock";
-import { Tag } from "@/components/interactive/Tag";
+import { DossierTags } from "@/components/fieldnotebook";
 import { ConstellationField } from "./ConstellationField";
 import { ConstellationStrip } from "./ConstellationStrip";
 import { ConstellationContent } from "./ConstellationContent";
@@ -111,17 +111,20 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         )}
       >
         <Container>
-          <nav aria-label="Breadcrumb" className="mb-8">
+          <nav aria-label="Breadcrumb" className="mb-10">
             <Link
               to="/work"
-              className="inline-flex items-center gap-1.5 font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               <span aria-hidden="true">&larr;</span>
-              All Work
+              All work
             </Link>
           </nav>
 
-          <h1 className="max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
+          <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+            {study.tags[0] ?? "Case file"}
+          </p>
+          <h1 className="mt-4 max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
             {study.title}
           </h1>
 
@@ -184,13 +187,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
             </div>
 
             {/* Tags below field in hero state */}
-            {!isReading && (
-              <div className="mt-6 flex flex-wrap gap-2 px-2">
-                {study.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </div>
-            )}
+            {!isReading && <DossierTags tags={study.tags} className="mt-6 px-2" />}
           </div>
 
           {/* Column 2: Content (collapsed in hero, expands in reading) */}
@@ -239,7 +236,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
           <div className="border-t border-border-subtle pt-10">
             <Link
               to="/work"
-              className="inline-flex items-center gap-1.5 font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               <span aria-hidden="true">&larr;</span>
               Back to all work

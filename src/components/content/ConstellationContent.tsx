@@ -62,7 +62,7 @@ function renderConstellationSection(
     case "metrics":
       return (
         <RevealOnScroll key={index}>
-          <div className="-mx-6 rounded-lg bg-bg-elevated/50 px-6 py-8 sm:-mx-8 sm:px-8">
+          <div className="-mx-6 bg-bg-elevated/40 px-6 py-10 sm:-mx-8 sm:px-8">
             {section.heading && (
               <SectionHeading as="h3">{section.heading}</SectionHeading>
             )}
@@ -149,8 +149,8 @@ export function ConstellationContent({
           type="button"
           onClick={onBack}
           className={cn(
-            "mb-8 inline-flex items-center gap-1.5",
-            "font-heading text-sm font-medium text-text-secondary",
+            "mb-8 inline-flex items-center gap-2",
+            "font-mono text-xs uppercase tracking-wider text-text-secondary",
             "transition-colors duration-normal hover:text-accent-primary",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
           )}
@@ -183,7 +183,7 @@ export function ConstellationContent({
           aria-label="Related topics"
           className="mt-12 flex max-w-[65ch] flex-wrap items-center gap-2 border-t border-border-subtle pt-6"
         >
-          <span className="font-heading text-[11px] font-medium uppercase tracking-wider text-text-muted">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
             Related
           </span>
           {node.connections.map((connId) => {
@@ -195,14 +195,16 @@ export function ConstellationContent({
                 type="button"
                 onClick={() => onNavigate(connId)}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full border border-border-subtle px-3 py-1",
-                  "font-heading text-xs font-medium text-text-secondary",
-                  "transition-[border-color,color,box-shadow] duration-normal",
-                  "hover:border-accent-muted hover:text-accent-primary hover:shadow-[0_0_12px_var(--constellation-glow-shipped)]",
+                  "group/peek inline-flex items-center gap-2",
+                  "font-mono text-xs uppercase tracking-wider text-text-secondary",
+                  "transition-colors duration-normal hover:text-accent-primary",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 )}
               >
-                <div className="h-1.5 w-1.5 rounded-full bg-accent-primary opacity-60" />
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-accent-primary opacity-60 transition-opacity duration-normal group-hover/peek:opacity-100"
+                />
                 {connNode.title}
               </button>
             );

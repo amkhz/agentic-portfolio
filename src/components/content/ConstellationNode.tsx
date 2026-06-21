@@ -113,7 +113,7 @@ export function ConstellationNode({
       >
         <span
           className={cn(
-            "whitespace-nowrap font-heading font-medium tracking-wide",
+            "whitespace-nowrap font-mono uppercase tracking-wider",
             compact ? "text-[10px]" : "text-xs",
             isSelected ? "text-accent-primary" : "text-text-primary"
           )}

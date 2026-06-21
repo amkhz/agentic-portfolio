@@ -14,7 +14,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
       type="button"
       onClick={() => onNavigate(targetNode.id)}
       className={cn(
-        "group relative my-6 flex w-full items-start gap-4 rounded-lg p-4 text-left",
+        "group relative my-6 flex w-full items-start gap-4 p-4 text-left",
         "border border-[var(--constellation-peek-border)]",
         "bg-[var(--constellation-peek-bg)]",
         "transition-[border-color,box-shadow] duration-normal",
@@ -38,10 +38,10 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <span className="block font-heading text-sm font-medium tracking-wide text-text-secondary transition-colors duration-normal group-hover:text-accent-primary">
+        <span className="block font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal group-hover:text-accent-primary">
           {targetNode.title}
         </span>
-        <span className="mt-0.5 block font-body text-sm leading-normal text-text-muted">
+        <span className="mt-1.5 block font-body text-sm leading-normal text-text-muted">
           {tease}
         </span>
       </div>

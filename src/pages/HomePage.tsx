@@ -5,17 +5,23 @@ import { Hero } from "@/components/content/Hero";
 import { ProjectCard } from "@/components/content/ProjectCard";
 import { AboutSnippet } from "@/components/content/AboutSnippet";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
-import { SpotlightCard } from "@/components/effects/SpotlightCard";
 import { GlowEffect } from "@/components/effects/GlowEffect";
-import { Tag } from "@/components/interactive/Tag";
+import { TocLinkList, type TocItem } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
 export function HomePage() {
-  const meta = metaCaseStudy;
-  const hasMetaImage =
-    typeof meta.heroImage.src === "string" &&
-    meta.heroImage.src.length > 0 &&
-    !meta.heroImage.src.includes("placeholder-");
+  const featured = metaCaseStudy;
+
+  // Selected work as a Field Notebook ledger, not a card grid. Each row is a
+  // registration line: index, title, discipline kicker, trailing metric.
+  const selected: TocItem[] = caseStudies.map((study, index) => ({
+    id: study.slug,
+    to: `/work/${study.slug}`,
+    index: String(index + 1).padStart(2, "0"),
+    label: study.title,
+    kicker: study.tags.slice(0, 2).join(" / "),
+    trailing: study.heroMetric?.value,
+  }));
 
   return (
     <>
@@ -30,125 +36,61 @@ export function HomePage() {
 
       <Hero />
 
-      {/* Featured: Meta case study — full-width spotlight */}
-      <section className="border-t border-border-subtle pt-24 pb-16 sm:pt-32 sm:pb-20">
-        <Container>
-          <RevealOnScroll>
-            <Link
-              to={`/work/${meta.slug}`}
-              className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-4 focus-visible:ring-offset-bg-deep rounded-lg"
-              aria-label={`View case study: ${meta.title}`}
-            >
-              <SpotlightCard className="relative overflow-hidden p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
-                <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-0">
-                  {/* Content side */}
-                  <div className="relative flex flex-col justify-center p-8 sm:p-10 md:p-12">
-                    <GlowEffect
-                      color="brass"
-                      size="md"
-                      className="-left-20 -top-20 opacity-60"
-                    />
-
-                    <span className="relative font-heading text-xs uppercase tracking-wider text-accent-primary">
-                      Featured
-                    </span>
-
-                    <h2 className="relative mt-4 font-display text-2xl leading-snug tracking-tight text-text-primary sm:text-3xl">
-                      {meta.title}
-                    </h2>
-
-                    <p className="relative mt-3 max-w-[50ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
-                      {meta.subtitle}
-                    </p>
-
-                    {meta.heroMetric && (
-                      <div className="relative mt-6 flex items-baseline gap-3">
-                        <span className="font-display text-3xl leading-tight tracking-tight text-accent-primary sm:text-4xl">
-                          {meta.heroMetric.value}
-                        </span>
-                        <span className="font-heading text-sm font-medium uppercase tracking-wide text-text-secondary">
-                          {meta.heroMetric.label}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="relative mt-6 flex flex-wrap gap-2">
-                      {meta.tags.map((tag) => (
-                        <Tag
-                          key={tag}
-                          className="transition-colors duration-normal group-hover:border-border-strong"
-                        >
-                          {tag}
-                        </Tag>
-                      ))}
-                    </div>
-
-                    <span className="relative mt-8 inline-flex items-center gap-1.5 font-heading text-sm font-medium text-accent-primary transition-colors duration-normal group-hover:text-accent-hover">
-                      Read the case study
-                      <span aria-hidden="true" className="transition-transform duration-normal motion-safe:group-hover:translate-x-1">&rarr;</span>
-                    </span>
-                  </div>
-
-                  {/* Image side */}
-                  <div className="relative overflow-hidden border-t border-border-subtle md:border-l md:border-t-0">
-                    {hasMetaImage ? (
-                      <img
-                        src={meta.heroImage.src}
-                        alt={meta.heroImage.alt}
-                        loading="lazy"
-                        className="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
-                        style={{ minHeight: "280px" }}
-                      />
-                    ) : (
-                      <div
-                        className="flex min-h-[280px] items-center justify-center bg-bg-elevated p-8"
-                        role="img"
-                        aria-label={meta.heroImage.alt}
-                      >
-                        <span className="text-center font-body text-sm text-text-muted">
-                          {meta.heroImage.placeholder}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </SpotlightCard>
-            </Link>
-          </RevealOnScroll>
-        </Container>
+      {/* Featured - the one ambitious composed moment: an editorial spread that
+          echoes the case-study hero, not a glossy card. */}
+      <section className="border-t border-border-subtle pt-24 pb-20 sm:pt-32 sm:pb-24">
+        <RevealOnScroll>
+          <ProjectCard study={featured} />
+        </RevealOnScroll>
       </section>
 
-      {/* Selected Work — 3-column grid */}
-      <section id="work" className="py-16 sm:py-20">
+      {/* Selected work - Field Notebook ledger in an asymmetric two-column
+          spread: the index heading and dossier metadata live in the margin,
+          the registration-line list carries the weight. */}
+      <section id="work" className="border-t border-border-subtle py-20 sm:py-24">
         <Container>
-          <RevealOnScroll>
-            <div className="flex items-baseline justify-between">
-              <h2 className="font-heading text-2xl font-semibold tracking-tight text-text-primary">
-                Selected Work
-              </h2>
-              <Link
-                to="/work"
-                className="font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-              >
-                View all &rarr;
-              </Link>
-            </div>
-          </RevealOnScroll>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {caseStudies.map((study, index) => (
-              <RevealOnScroll key={study.slug} delay={index * 100}>
-                <ProjectCard study={study} />
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+            {/* Margin column - kicker, heading, dossier note */}
+            <div className="lg:col-span-4">
+              <RevealOnScroll>
+                <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+                  Index
+                </p>
+                <h2 className="mt-4 font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
+                  Selected work
+                </h2>
+                <p className="mt-5 max-w-[34ch] font-body text-base leading-normal text-text-secondary">
+                  A short ledger of recent case files. Each entry opens the full
+                  spread.
+                </p>
+                <Link
+                  to="/work"
+                  className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                >
+                  View all work
+                  <span aria-hidden="true">&rarr;</span>
+                </Link>
               </RevealOnScroll>
-            ))}
+            </div>
+
+            {/* Ledger column */}
+            <div className="lg:col-span-7 lg:col-start-6">
+              <RevealOnScroll delay={100}>
+                <TocLinkList items={selected} ariaLabel="Selected work" />
+              </RevealOnScroll>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Atmospheric break — accent line with ambient glow */}
+      {/* Atmospheric break - accent hairline with ambient brass glow */}
       <div className="relative py-8" aria-hidden="true">
         <Container className="relative">
-          <GlowEffect color="brass" size="sm" className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+          <GlowEffect
+            color="brass"
+            size="sm"
+            className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+          />
           <div className="relative mx-auto h-px w-24 bg-accent-primary opacity-50" />
         </Container>
       </div>

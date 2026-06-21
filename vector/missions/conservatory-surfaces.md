@@ -113,4 +113,12 @@ This mission is complete when:
   40-45%→~30%). Once per-study `heroMetric` is sharpened, reconsider promoting
   Option 1 (metric-forward) rows, or swap the work-row trailing discipline for
   a strong metric. (Justin: would prefer metric-forward if metrics were stronger.)
+- **Building This Portfolio — content rewrite (Writer task, needs Justin):**
+  visual re-skin DONE (constellation now on the Conservatory register). But the
+  content (`building-this-portfolio.md` + the-craft / the-sound / the-system,
+  all Apr 12-13) is stale — it predates the Conservatory overhaul, Wallace, the
+  lab, the agentic-crew workflow, the Field Notebook system. It's the meta case
+  study about THIS work and is the most out-of-date page about the most current
+  thing. Needs Justin's narrative direction + a Writer pass to grow the living
+  case study. Keep the constellation node structure; refresh/expand the nodes.
 </content>

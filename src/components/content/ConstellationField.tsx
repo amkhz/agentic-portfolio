@@ -210,7 +210,7 @@ export function ConstellationField({
             <button
               type="button"
               onClick={copyPositions}
-              className="rounded bg-accent-primary px-3 py-1.5 font-heading text-xs font-medium text-bg-base shadow-lg transition-opacity hover:opacity-80"
+              className="rounded bg-accent-primary px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-bg-base shadow-lg transition-opacity hover:opacity-80"
             >
               Copy positions
             </button>
@@ -258,7 +258,7 @@ export function ConstellationField({
               <div className="min-w-0">
                 <span
                   className={cn(
-                    "block font-heading text-sm font-medium tracking-wide",
+                    "block font-mono text-sm uppercase tracking-wider",
                     node.id === selectedId ? "text-accent-primary" : "text-text-primary"
                   )}
                 >

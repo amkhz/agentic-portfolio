@@ -11,6 +11,9 @@ interface ImageBlockProps {
   aspect?: "16:9" | "4:3" | "auto";
   /** Allow click-to-expand lightbox. Default: true for real images. */
   expandable?: boolean;
+  /** Flush plate mode: no figure margin, no rounded border of its own, and the
+   *  image fills (object-cover). For mounting inside a DossierFrame cover. */
+  bare?: boolean;
 }
 
 const aspectMap = {
@@ -26,6 +29,7 @@ export function ImageBlock({
   caption,
   aspect = "16:9",
   expandable,
+  bare = false,
 }: ImageBlockProps) {
   const displayText = placeholder || alt;
   const hasRealImage =
@@ -38,7 +42,7 @@ export function ImageBlock({
 
   return (
     <>
-      <figure className="my-8">
+      <figure className={bare ? "" : "my-8"}>
         {hasRealImage ? (
           <div
             role={canExpand ? "button" : undefined}
@@ -56,9 +60,11 @@ export function ImageBlock({
             }
             aria-label={canExpand ? `View full size: ${alt}` : undefined}
             className={cn(
-              "relative overflow-hidden rounded-lg border border-border-subtle bg-bg-elevated",
+              "relative overflow-hidden bg-bg-elevated",
+              !bare && "border border-border-subtle",
               aspectMap[aspect],
-              canExpand && "cursor-zoom-in transition-[border-color,box-shadow] duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
+              canExpand && !bare && "cursor-zoom-in transition-[border-color,box-shadow] duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
+              canExpand && bare && "cursor-zoom-in",
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             )}
           >
@@ -74,7 +80,8 @@ export function ImageBlock({
             role="img"
             aria-label={alt}
             className={cn(
-              "flex flex-col items-center justify-center rounded-lg border border-border-subtle bg-bg-elevated",
+              "flex flex-col items-center justify-center bg-bg-elevated",
+              !bare && "border border-border-subtle",
               aspectMap[aspect]
             )}
           >

@@ -72,7 +72,7 @@ export function ConstellationStrip({
               />
               <span
                 className={cn(
-                  "max-w-[48px] truncate font-heading text-[9px] font-medium leading-none tracking-wide",
+                  "max-w-[48px] truncate font-mono text-[9px] uppercase leading-none tracking-wider",
                   isSelected
                     ? "text-accent-primary"
                     : isConnected

@@ -6,6 +6,7 @@
   --font-display: 'Podkova', serif;
   --font-heading: 'Space Grotesk', sans-serif;
   --font-body: 'Didact Gothic', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* --- Colors: resolve from theme layer --- */
   --color-bg-deep: var(--theme-bg-deep);
@@ -118,7 +119,9 @@
 
 body {
   background-color: var(--color-bg-deep);
-  background-image: var(--texture-linen);
+  /* Material texture comes from the global GrainOverlay (film grain), not a
+     line-based gradient. The old circuit-trace texture read as banding/bug
+     lines and did not fit the biophilic register. */
   color: var(--color-text-primary);
   font-family: var(--font-body), sans-serif;
   line-height: var(--leading-normal);

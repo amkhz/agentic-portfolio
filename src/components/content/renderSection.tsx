@@ -80,7 +80,7 @@ export function renderSection(
         <RevealOnScroll key={index}>
           <div
             id={chapterId}
-            className={anchorClass("-mx-6 rounded-lg bg-bg-elevated/50 px-6 py-8 sm:-mx-8 sm:px-8")}
+            className={anchorClass("-mx-6 bg-bg-elevated/40 px-6 py-10 sm:-mx-8 sm:px-8")}
           >
             {section.heading && headingAs && (
               <SectionHeading as={headingAs}>{section.heading}</SectionHeading>

@@ -4,10 +4,10 @@ import { caseStudyContent } from "@core/content/case-studies";
 import { slugify } from "@core/utils/format";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
-import { Tag } from "@/components/interactive/Tag";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import {
   DossierFrame,
+  DossierTags,
   DraftedObjectMark,
   TocLinkList,
   type TocItem,
@@ -112,11 +112,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                 </div>
               )}
 
-              <div className="mt-8 flex flex-wrap gap-2">
-                {study.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
-                ))}
-              </div>
+              <DossierTags tags={study.tags} className="mt-8" />
             </div>
           </div>
         </Container>

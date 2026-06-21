@@ -93,4 +93,13 @@ This mission is complete when:
 - `npm run lint`, `npm run build`, `npm run test` all green.
 - Each surface passed Impeccable `critique`/`polish` and a Roy review before merge.
 - All branches merged into `feat/conservatory-tokens` (NOT main).
+
+## Open punch list (session TODO)
+
+- **Cover plate framing (T4):** the flush + object-cover treatment lets the
+  image bleed to the frame edge and swallow the registration marks. Fix: keep
+  `ImageBlock bare` (no double border) but put it back in a PADDED DossierFrame
+  (not `flush`) so the marks sit in the margin and frame the image; the image
+  should live *within* the frame. Decide cover vs contain for screenshot-type
+  heroes vs atmospheric finals. (Flagged by Justin 2026-06-21.)
 </content>

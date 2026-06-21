@@ -107,7 +107,13 @@ export function TocLinkList({ items, ariaLabel, className }: TocLinkListProps) {
               <RowBody item={item} />
             </Link>
           ) : item.href ? (
-            <a href={item.href} className={rowClass} target="_blank" rel="noreferrer">
+            <a
+              href={item.href}
+              className={rowClass}
+              {...(item.href.startsWith("#")
+                ? {}
+                : { target: "_blank", rel: "noreferrer" })}
+            >
               <RowBody item={item} />
             </a>
           ) : (

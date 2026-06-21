@@ -121,4 +121,12 @@ This mission is complete when:
   study about THIS work and is the most out-of-date page about the most current
   thing. Needs Justin's narrative direction + a Writer pass to grow the living
   case study. Keep the constellation node structure; refresh/expand the nodes.
+- **Wire the Perihelion node to the lab (not yet tracked anywhere):** the
+  constellation has a `the-lab` node titled "Perihelion" (`constellation.ts:120`)
+  but it's `status: 'planned'` and dead. It should link out to
+  `labs.justinh.design`. Needs: an external `href` on the node model (nodes have
+  no link field today), the Field/Node/Strip/Content click handlers to render an
+  href node as an external `<a>` instead of a select button, and a status that
+  makes it clickable. Small feature, several constellation touch points. (Flagged
+  by Justin 2026-06-21.)
 </content>

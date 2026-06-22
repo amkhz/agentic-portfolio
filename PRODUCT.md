@@ -22,7 +22,7 @@ Voice is direct, warm, and witty -- like a skilled friend who builds amazing thi
 
 **Theme:** Dual mode is literal, humus-dark night and golden-hour day, the same world twelve hours apart. Warm humus-black base (never cold, never pure black). Aged brass/amber is technology-and-light and owns all interaction; soft sage/moss green is the living primary expressed as atmosphere and material only (never an interaction color); dusty magenta is demoted to a rare signal. All OKLCH via named tokens. See DESIGN.md for the full color doctrine.
 
-**Typography:** Warm humanist body sans + refined display + structural mono, three-face spirit. Faces are not yet locked (site still runs the superseded Podkova/Space Grotesk/Didact stack); they validate live before locking. See DESIGN.md.
+**Typography:** Warm humanist body sans + refined display + structural mono, three-face spirit. Faces LOCKED (2026-06-21): Fraunces (display) / Source Sans 3 (body + UI) / JetBrains Mono (kicker), validated live and Justin-approved. See DESIGN.md.
 
 **Composition:** Field Notebook grammar, editorial spreads composed individually, never poured into a template grid. Work index as table-of-contents/links, not a card grid; case studies as hero + TOC with a per-project drafted-object mark. See DESIGN.md.
 

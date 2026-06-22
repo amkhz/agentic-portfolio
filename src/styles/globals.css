@@ -2,10 +2,12 @@
 @import "../../design-system/tokens.css";
 
 @theme inline {
-  /* --- Fonts --- */
-  --font-display: 'Podkova', serif;
-  --font-heading: 'Space Grotesk', sans-serif;
-  --font-body: 'Didact Gothic', sans-serif;
+  /* --- Fonts (locked: "The Conservatory", ADR-013) ---
+     Three-face stack: display + humanist body sans (covers UI/nav via --font-heading) + mono kicker.
+     --font-heading retained as an alias of the body sans for existing call sites. */
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-heading: 'Source Sans 3 Variable', system-ui, sans-serif;
+  --font-body: 'Source Sans 3 Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* --- Colors: resolve from theme layer --- */
@@ -45,7 +47,7 @@
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
+  --text-lg: 1.2rem; /* widened from 1.125 (base->lg ~1.2x) for clearer reading-range hierarchy */
   --text-xl: 1.375rem;
   --text-2xl: 1.75rem;
   --text-3xl: 2.5rem;
@@ -55,7 +57,8 @@
   /* --- Typography: Line heights --- */
   --leading-tight: 1.1;
   --leading-snug: 1.3;
-  --leading-normal: 1.65;
+  --leading-mid: 1.45;    /* mid-size multi-line text: intros, subheads, pull quotes */
+  --leading-normal: 1.55; /* long-form body: tightened from 1.65 for editorial crispness */
   --leading-loose: 1.8;
 
   /* --- Typography: Letter spacing --- */
@@ -124,7 +127,42 @@ body {
      lines and did not fit the biophilic register. */
   color: var(--color-text-primary);
   font-family: var(--font-body), sans-serif;
+  /* Body weight is tunable per mode: light-on-dark text optically blooms and
+     reads heavier, so night trims the weight slightly to keep prose crisp.
+     Day (golden hour) keeps full regular weight. */
+  font-weight: var(--body-weight, var(--font-weight-regular));
   line-height: var(--leading-normal);
+}
+
+/* Night mode: counter dark-mode bloom on body prose. Display headings are
+   pinned to regular weight in @layer base below, so they hold their gravity
+   and do not thin along with the prose. */
+[data-theme="dark"] {
+  --body-weight: 350;
+}
+
+/* Fraunces display-axis tuning ("The Conservatory", ADR-013).
+   opsz tracks size via font-optical-sizing: auto; wght stays per-element via
+   font-weight. SOFT adds wabi-sabi warmth at the terminals; WONK (eccentric
+   alternate glyphs) on for characterful imperfection. Tunable via the
+   custom properties below. */
+:root {
+  --display-soft: 45; /* 0 hard ... 100 soft */
+  --display-wonk: 1;  /* 0 normal ... 1 wonky */
+}
+
+.font-display {
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" var(--display-soft), "WONK" var(--display-wonk);
+}
+
+/* Pin display headings to regular weight so they keep their weight independent
+   of the night-mode body trim. Lives in @layer base so explicit weight
+   utilities (font-medium, font-bold) still override it. */
+@layer base {
+  .font-display {
+    font-weight: var(--font-weight-regular);
+  }
 }
 
 a:focus-visible,

@@ -51,11 +51,11 @@ Per-project accent mapping under the biophilic palette is an open item resolved 
 
 Three-face *spirit* holds: **warm humanist body sans + refined display + structural mono.** Variable axes used intentionally for *fit* (weight, optical size, grade), never for animation.
 
-- **Display** — h1, h2, section openers, hero. Editorial gravity, should feel *set*, not typed.
-- **Body sans** — long-form prose, UI, navigation. Humanist warmth across weights.
-- **Mono kicker** — metadata, labels, captions, project numbering. Carries the epistemic-honesty voice.
+- **Display** — h1, h2, section openers, hero. Editorial gravity, should feel *set*, not typed. **Fraunces** (variable; opsz + SOFT + WONK axes available for fit and wabi-sabi warmth).
+- **Body sans** — long-form prose, UI, navigation. Humanist warmth across weights. **Source Sans 3** (variable; true humanist, old-style skeleton shared with Fraunces).
+- **Mono kicker** — metadata, labels, captions, project numbering. Carries the epistemic-honesty voice. **JetBrains Mono**.
 
-**Faces are not yet locked.** The site currently runs the superseded stack (Podkova / Space Grotesk / Didact Gothic). ADR-011's Fraunces/Geist/JetBrains is a *candidate to test, not a binding constraint*. The lock procedure: Tyrell proposes 2-3 candidate trios grounded in the Conservatory register, validates the lead trio live (`/impeccable live`) on Home + one case study, Justin approves the lock, then `--font-*` tokens and variable-axis exposure are added. Justin reviews face picks before they lock.
+**Faces are LOCKED (2026-06-21).** Fraunces / Source Sans 3 / JetBrains Mono, validated live (`/impeccable live`) on Home + a case study, both modes, Justin-approved. Trio A "Atelier" from the candidate set; IBM Plex Sans was rejected as the body (read too Inter-adjacent), Source Sans 3 chosen for humanist warmth. The three-face spirit collapses UI/nav into the body sans: `--font-heading` is retained as an alias of `--font-body` (both Source Sans 3) for existing call sites. Tokens live in `src/styles/globals.css` `@theme`. Open follow-up: variable-axis exposure (a tasteful default Fraunces SOFT/WONK/opsz instance) is not yet dialed in; faces render at default instance, validated separately before any axis lock.
 
 Details: body line length capped 65-75ch; hierarchy through scale + weight contrast (≥1.25 ratio between steps); tabular numerals for metadata, proportional for prose; drop caps allowed on long-form case studies, not on home cards; pull quotes sparingly with intentional kerning. **No Inter as the portfolio body** (`feedback_no_inter_for_portfolio`): reads SaaS-default; propose editorial-grade sans (Geist validated; GT America, ABC Diatype) before any workhorse.
 

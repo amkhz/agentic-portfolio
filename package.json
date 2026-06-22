@@ -16,8 +16,8 @@
     "audit:orphans": "tsx scripts/report-orphan-terms.ts"
   },
   "dependencies": {
-    "@fontsource-variable/space-grotesk": "^5.1.2",
-    "@fontsource/didact-gothic": "^5.1.1",
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource-variable/source-sans-3": "^5.2.9",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/podkova": "^5.1.1",
     "@phosphor-icons/react": "^2.1.10",

@@ -96,13 +96,18 @@ This mission is complete when:
 
 ## Open punch list (session TODO)
 
-- **Type lock — PRIORITIZED (Justin, 2026-06-21):** pull this forward; do it
-  sooner rather than later (it's the biggest unbuilt lever — site still runs
-  Podkova/Space Grotesk/Didact). Procedure unchanged: Tyrell proposes 2-3
-  candidate trios (warm humanist body + refined display + structural mono) per
-  DESIGN.md, validates the lead trio **via `/impeccable live` or in Paper**, on
-  Home + one case study, Justin approves the lock, then `--font-*` tokens swap.
-  Do NOT pick faces without checking with Justin.
+- **Type lock — DONE (2026-06-21).** Locked to Trio A "Atelier": **Fraunces**
+  (display, full axis opsz+SOFT+WONK) / **Source Sans 3** (body + UI/nav) /
+  **JetBrains Mono** (kicker). Validated live via `/impeccable live` on Home + a
+  case study, both modes; Justin-approved. IBM Plex Sans was the first body
+  candidate but read too Inter-adjacent; swapped to Source Sans 3 for humanist
+  warmth. `--font-*` tokens swapped in `src/styles/globals.css` `@theme`
+  (`--font-heading` aliased to the body sans, three-face spirit); dead faces
+  (Space Grotesk, Didact Gothic) uninstalled; Podkova kept for the lab stack.
+  Doctrine synced (DESIGN.md / PRODUCT.md / CLAUDE.md). Remaining: a tasteful
+  Fraunces variable-axis instance (SOFT/WONK/opsz) is not yet dialed in —
+  faces render at default instance, to be validated separately before any axis
+  lock.
 
 - **Cover plate framing — DONE (2026-06-21).** Reverted the flush+cover
   treatment everywhere (case-study shell, work-index featured entry, home

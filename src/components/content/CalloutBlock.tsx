@@ -19,7 +19,7 @@ export function CalloutBlock({ label, body }: CalloutBlockProps) {
       {paragraphs.map((paragraph, i) => (
         <p
           key={i}
-          className="mb-3 font-body text-base leading-relaxed text-text-secondary last:mb-0"
+          className="mb-3 font-body text-base leading-normal text-text-secondary last:mb-0"
         >
           {parseInline(paragraph)}
         </p>

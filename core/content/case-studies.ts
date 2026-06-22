@@ -45,8 +45,8 @@ export const caseStudies: CaseStudy[] = [
     subtitle: 'An AI-as-teammate operating model for a small design team.',
     tags: ['Design Leadership', 'AI Workflow', 'Operating Model', 'Org Change'],
     heroMetric: {
-      value: '100%',
-      label: 'token pairs accessibility-verified',
+      value: '2 days',
+      label: 'brand refresh, doctrine to shipped',
     },
     heroImage: {
       src: '/images/doctrine-reads-doctrine.png',
@@ -60,8 +60,8 @@ export const caseStudies: CaseStudy[] = [
     subtitle: 'AI-augmented scope of work for renovation projects.',
     tags: ['Product Design', 'GenAI', 'Efficiency', 'B2B'],
     heroMetric: {
-      value: '50%',
-      label: 'target reduction in SOW completion time',
+      value: '20 → 2 min',
+      label: 'per SOW, observed',
     },
     heroImage: {
       src: '/images/sow-toolbox.png',
@@ -75,8 +75,8 @@ export const caseStudies: CaseStudy[] = [
     subtitle: 'A shipped AI review product, with hard metrics and a way of working.',
     tags: ['Design Leadership', 'AI Ops', 'Prototype to Production', 'Metrics'],
     heroMetric: {
-      value: '50%',
-      label: 'reduction in PSA review time',
+      value: '82%',
+      label: 'loans shipped with zero analyst edits',
     },
     heroImage: {
       src: '/images/idr-hifi.png',

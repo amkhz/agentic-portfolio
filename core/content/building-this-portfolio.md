@@ -1,4 +1,4 @@
-AI gives you the power to build anything. Design the world you want. But you need guidelines, frameworks, and your own willingness to think before you commit. You need to understand what you want and who is using what you build. Because without that you get slop. You get people thinking designers aren't needed anymore, and that is not the case. What these tools actually do is give designers superpowers. People with design minds can now move at the speed of their ideas. And we can design the world we want.
+AI gives you the power to build anything. The hard part was never building. It's knowing what to build, why it matters, and who it's for. Left to its defaults, the machine produces slop: fluent, generic, the average of everything it has seen. Worse, it will accelerate you in the wrong direction just as fast as the right one. That is why product designers matter more now, not less. The job is judgment: holding a point of view, naming the real problem, helping a team see what's worth building before everyone races to build the wrong thing. This portfolio is my running experiment in exactly that. Move at the speed of a crew of agents, and keep the intent, and the judgment behind it, unmistakably mine.
 
 This is a living case study. It grows as the portfolio evolves. Each node is a transformation. A moment where the system changed shape.
 
@@ -88,6 +88,10 @@ The design context formalization was the final piece. The aesthetic direction ("
 
 ::: peek the-structure
 The material layer could evolve freely because the architecture kept it isolated.
+:::
+
+::: peek the-recalibration
+This palette worked. It just did not yet look like anyone.
 :::
 
 <!-- node:the-structure -->
@@ -184,7 +188,9 @@ This is the part that felt worth writing about. Most conversations about AI coll
 
 The answer, at least for this project: you write it down. Doctrine files, skill definitions, architecture rules. The same things that make human teams effective. Clear roles, defined scope, shared context, documented decisions. When the structure is strong enough, roles can change shape. That's not a failure of the original design. It's proof it worked.
 
-The crew today is leaner. Writer, Dreamer, Director, plus the Impeccable skill suite and the Investiture pipeline. No dedicated Builder. And the portfolio keeps shipping. The constellation keeps growing. The system is doing exactly what it was designed to do: evolve.
+The honest version is simpler than it sounds. The Builder became redundant as I got more fluent at agentic building. The more I learned about directing a crew, the less I needed a generalist holding it all together, and the more its job belonged to the doctrine and the tooling. That is not a failure. It is what learning looks like.
+
+The crew today looks different again. There is no standalone Builder, but there is Tyrell, the base persona who builds directly, carrying the doctrine the old Builder used to hold in its head. Around it: the Director tracking what ships, the Dreamer turning ideas into plans, the Writer owning the words, Roy reviewing every build against the architecture, and Joi keeping my voice honest in the content. Wallace joined too, a compiler that turns a raw image model into a directed instrument for the portfolio's imagery. The crew keeps changing shape as I learn. That is the point. The portfolio keeps shipping, the constellation keeps growing, and the system does exactly what it was built to do: evolve.
 
 ::: peek the-process
 The crew structure and how it coordinates day to day.
@@ -192,4 +198,68 @@ The crew structure and how it coordinates day to day.
 
 ::: peek the-structure
 The four-layer architecture that made role separation possible.
+:::
+
+::: peek the-recalibration
+The crew was ready. The next thing to change was the worldview itself.
+:::
+
+<!-- node:the-recalibration -->
+
+## The Recalibration
+
+The first version of this portfolio looked good. It did not look like anyone.
+
+I had a clean token system, a tidy dark mode, and a brass and magenta palette that worked on paper. But when I stepped back with the eyes of someone who hires designers, it read like a thoughtful template. Competent, generic, the exact slop I keep warning about with better spacing. So I stopped and asked the harder question. Not is this nice, but what is this, and is it mine.
+
+The answer became a worldview I could name. The Conservatory: an inhabited biophilic future, technology and nature in long settled commune, wabi-sabi and Danish mid-century craft, warm and lived-in instead of chrome and cold. Once the worldview was explicit, every decision had something to answer to.
+
+The palette inverted. Green stopped being a loud accent and became the living primary, expressed as atmosphere and material: foliage, glow from within, the texture of a tended place. Aged brass took over interaction, the technology and the light. The old circuit-trace texture, the one meant to feel like infrastructure under glass, came out entirely. Grain and warm light carry the atmosphere now.
+
+::: callout The shift in one line
+Version one asked is this clean. Version two asks does this read like a person with a worldview and the craft to execute it. That is the only test that matters to the people I want to reach.
+:::
+
+This is the chapter where the basic idea grew up. Same crew, same architecture, pointed at a much bigger target: a portfolio that is itself the argument.
+
+::: peek the-field-notebook
+A worldview needs a grammar to compose in.
+:::
+
+<!-- node:the-field-notebook -->
+
+## The Field Notebook
+
+A worldview is only as good as your ability to compose in it. So the design system got its own language.
+
+I call it the Field Notebook. Instead of pouring every page into the same centered column and the same three-card grid, each surface is composed like a spread in a researcher's notebook. Registration marks, dossier framing, a table of contents with real hierarchy, metadata living in the margins. The grid stays visible enough that when it breaks, the break reads as a decision and not an accident.
+
+It is built as real primitives, not one-off styling. A registration mark, a dossier frame, a table-of-contents list, a drafted-object mark for each project. The work index stopped being a card grid and became a proper index. Case studies became editorial spreads.
+
+::: callout Why a system, not a layout
+A single nice page is a screenshot. A grammar is something the crew can keep composing in, on every future surface, without losing the thread. That is the difference between decorating a page and building a place.
+:::
+
+::: peek the-lab
+The same way of working, pointed at something I am personally obsessed with.
+:::
+
+<!-- node:the-lab -->
+
+## The Lab
+
+Somewhere in the middle of all this, the workflow outgrew the portfolio.
+
+I had a crew, a doctrine, and a way of working that took me from idea to shipped with the intent intact. And I had an itch. What if I pointed all of it at something I am genuinely obsessed with, instead of at the portfolio itself.
+
+That became Perihelion. A reader's notebook for frontier science: warp drives, consciousness, the physics at the edge of what we understand. I am not a physicist. I am a designer who finds this stuff endlessly fascinating, and I wanted to use everything I had been building to actually learn it, and maybe pull a few other curious people in with me.
+
+The lab runs on the same bones as this portfolio. Same four-layer architecture, same agentic crew, same insistence that the design serve the content instead of showing off. But it is a sibling, not a copy. Where the portfolio is a specific evening, the lab is the morning after. Quieter, more contemplative, built to hold ideas that deserve room to breathe.
+
+The bar I hold it to is one question. Does this open the door for someone who has never thought seriously about this stuff, or does it gatekeep. Every choice answers to that. No credentials required. Just curiosity.
+
+It is the clearest proof I have that this way of working travels. The skills, the doctrine, the crew, none of it is specific to a portfolio. Point it at something you love and it holds.
+
+::: callout Step into the lab
+Perihelion is live and growing at labs.justinh.design.
 :::

@@ -120,29 +120,30 @@ This mission is complete when:
   discipline trailing. Square specimen thumbnails are placeholder-aware; Wallace
   fills them in the Phase 3 imagery pass (need a `markImage`/thumb field on
   CaseStudy, or reuse the drafted-object mark renders).
-- **Strengthen heroMetrics (Plan B / Writer):** current metrics are weak (two
-  100%s, two 50%s). The IDR source has punchier numbers (82% of AI output
-  shipped with zero analyst edits, 27% auto-complete, underwriter kickback
-  40-45%→~30%). Once per-study `heroMetric` is sharpened, reconsider promoting
-  Option 1 (metric-forward) rows, or swap the work-row trailing discipline for
-  a strong metric. (Justin: would prefer metric-forward if metrics were stronger.)
-- **Building This Portfolio — content rewrite (Writer task, needs Justin):**
-  visual re-skin DONE (constellation now on the Conservatory register). But the
-  content (`building-this-portfolio.md` + the-craft / the-sound / the-system,
-  all Apr 12-13) is stale — it predates the Conservatory overhaul, Wallace, the
-  lab, the agentic-crew workflow, the Field Notebook system. It's the meta case
-  study about THIS work and is the most out-of-date page about the most current
-  thing. Needs Justin's narrative direction + a Writer pass to grow the living
-  case study. Keep the constellation node structure; refresh/expand the nodes.
-- **Perihelion story + lab link (two-hop, Writer + Tyrell):** Justin's intent
-  (2026-06-21) is a *story*, not a bare external link. The constellation
-  `the-lab`/"Perihelion" node (`constellation.ts:120`, currently `status:
-  'planned'` and dead) should become a real story node telling the Perihelion
-  story *inside the portfolio*, and that story in turn links out to the lab
-  (`labs.justinh.design`). So: constellation node → Perihelion story (portfolio
-  content) → lab. Needs (a) Writer: the Perihelion story content (a new node
-  content file, narrative direction from Justin); (b) Tyrell: activate the node
-  (status), and a lab-link affordance at the end of the story (a CTA / link
-  section, or an external `href` on the node model). Folds into the Building
-  This Portfolio content rewrite but is its own beat.
+- **Strengthen heroMetrics — DONE (heroMetric), partial (callouts) (2026-06-21).**
+  Per-study `heroMetric` sharpened in `case-studies.ts`: instant-doc-review
+  82% (zero analyst edits), instant-sow 20 → 2 min (observed), doctrine 2 days
+  (brand refresh, doctrine to shipped); ai-leadership keeps 100% adoption,
+  Wallace keeps "1 spec". Justin confirmed the IDR numbers real/shareable.
+  REMAINING: weave the per-study Option-B numbers into body callouts during the
+  conciseness pass (IDR kickback 40-45%→~30%, SOW 54%→45% error rate, doctrine
+  2 contrast bugs, Wallace $0/render). Then promote metric-forward work-rows
+  now that the numbers are strong.
+- **Building This Portfolio — DRAFTED, awaiting Justin's edit pass (2026-06-21).**
+  Justin gave narrative direction; Tyrell drafted into `building-this-portfolio.md`:
+  opener evolved (product-judgment turn, "Option A"); three new chapters added
+  (**The Recalibration** = tidy idea to Conservatory worldview + green inversion +
+  circuit-texture removal; **The Field Notebook** = composition grammar, brief;
+  **The Lab** = Perihelion, mission-first); crew-evolution node rewritten with the
+  honest Builder-to-Tyrell story + Roy/Joi/Wallace named; peek bridges wired. The
+  Sprint/Material left true-to-their-moment. NEXT: Justin edits the drafts, then
+  Tyrell does voice-absorb (Joi) plus the conciseness pass.
+- **Perihelion story + lab link (two-hop) — node DONE, lab link PENDING (2026-06-21).**
+  The `the-lab`/"Perihelion" node is activated (`constellation.ts`, `status:
+  'active'`, size md, wired into the graph) and now has a real story node (`The
+  Lab` in `building-this-portfolio.md`, mission-first, Justin to refine). So the
+  constellation node → Perihelion story hop is live. REMAINING (Tyrell): the
+  lab-link affordance is currently a plain-text callout ("Step into the lab",
+  `labs.justinh.design`); wire it as a real clickable CTA / external href once
+  Justin settles the copy. That closes story → lab.
 </content>

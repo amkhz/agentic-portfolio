@@ -4,6 +4,7 @@ import {
   constellationNodes,
   getNode,
 } from './constellation';
+import type { ConstellationNode } from './constellation';
 
 describe('buildConstellationLayout', () => {
   const positioned = buildConstellationLayout(constellationNodes);
@@ -46,9 +47,19 @@ describe('buildConstellationLayout', () => {
   });
 
   it('places planned nodes further from center than shipped nodes', () => {
-    const center = positioned.find((n) => n.id === 'the-sprint')!.position;
-    const shipped = positioned.filter((n) => n.status === 'shipped' && n.size !== 'lg');
-    const planned = positioned.filter((n) => n.status === 'planned');
+    // Exercise the ring algorithm directly with synthetic nodes (no fixedPosition)
+    // so the assertion stays valid as the live constellation data evolves.
+    const synthetic: ConstellationNode[] = [
+      { id: 'c', title: 'C', inscription: '', size: 'lg', status: 'shipped', connections: [] },
+      { id: 's1', title: 'S1', inscription: '', size: 'md', status: 'shipped', connections: [] },
+      { id: 's2', title: 'S2', inscription: '', size: 'md', status: 'shipped', connections: [] },
+      { id: 'p1', title: 'P1', inscription: '', size: 'sm', status: 'planned', connections: [] },
+      { id: 'p2', title: 'P2', inscription: '', size: 'sm', status: 'planned', connections: [] },
+    ];
+    const laid = buildConstellationLayout(synthetic);
+    const center = laid.find((n) => n.id === 'c')!.position;
+    const shipped = laid.filter((n) => n.status === 'shipped' && n.size !== 'lg');
+    const planned = laid.filter((n) => n.status === 'planned');
 
     const avgShippedDist =
       shipped.reduce((sum, n) => {

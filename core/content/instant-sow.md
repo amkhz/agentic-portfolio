@@ -1,4 +1,4 @@
-I redesigned the scope of work experience for our loan origination flow, replacing a painful 42-field manual form with an AI-powered toolbox that lets borrowers upload documents, describe their project in natural language, or recycle previous submissions.
+I enhanced the scope of work experience for our loan origination flow, replacing a painful 42-field manual form with an AI-powered toolbox that lets borrowers upload documents, describe their project in natural language, or recycle previous submissions.
 
 ## The Problem
 
@@ -52,7 +52,7 @@ Every AI-generated SOW is flagged in the operations system, so the internal team
 
 ::: quote
 A task that used to take 20 minutes now takes about 2 minutes.
--- Tyler, Kiavi Borrower
+-- Tyler, Kiavi Experience Manager
 :::
 
 ::: metrics Results

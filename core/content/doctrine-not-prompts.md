@@ -4,19 +4,19 @@ How a small design team started shipping closer to engineering grade by treating
 
 ## The Problem
 
-AI usually shows up in design as a tool. You point it at a task, it spits out a mockup or some code a little faster, and everyone moves on. The catch is that generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate. That's a very fast intern with amnesia.
+AI usually shows up in design as a tool. Point it at a task, it spits out a mockup or some code a little faster, and everyone moves on. The catch is that generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate. That's a try hard intern with amnesia.
 
-I wanted something different. Over about a year at Kiavi, I built an operating model where AI works as an actual teammate for a small design team: a force multiplier that makes good designers better, not a stand-in that replaces them.
+I wanted something different. Over ~4 months at Kiavi, I built an operating model where AI works as an actual teammate for a small design team: a force multiplier that makes good designers better, not a stand-in that replaces them.
 
 ## The Reframe
 
-What makes "teammate" real instead of aspirational is doctrine. When the team's intent, architecture, design system, and the agent's own personality all live in version-controlled files the AI reads on every session, you stop coaching it per task. It already knows the domain, the standards, and the working agreements. That's the line between AI-as-waste and AI-as-teammate.
+What makes a "teammate" real instead of aspirational is doctrine. Capture the team's intent, architecture, design system, and the agent's own personality in version-controlled files the AI reads on every session, and you stop coaching it per task. It already knows the domain, the standards, and the working agreements. That's the line between AI-as-waste and AI-as-teammate.
 
 Three beliefs hold the whole thing together:
 
 1. **Doctrine over prompts.** Encode intent, architecture, design system, and agent identity into files the AI reads every session, so you stop re-explaining yourself.
 2. **The human keeps it honest.** AI makes *making* trivial. Doctrine keeps it in line. What's left is the work human brains are best at: reading output critically, pushing back on what's wrong, verifying what's true. That discipline is real, and that's the point, not a downside.
-3. **Opinionated doctrine is the unlock.** Generic doctrine gets generic results. The pattern only works when the doctrine takes positions. Specific design taste, encoded as constraints the AI has to honor, is what makes the work feel like *Kiavi* instead of like nothing in particular.
+3. **Opinionated doctrine is the key.** Generic doctrine gets generic results. The pattern only works when the doctrine takes positions. Specific design taste, encoded as constraints the AI has to honor, is what makes the work feel like *Kiavi* instead of like nothing in particular and everything else at the same time.
 
 ![The team agent answering a project-specific question by reading doctrine files](/images/doctrine-reads-doctrine.png)
 *"Doctrine reads doctrine": a live prompt to the team agent ("what design decisions am I committed to on this project?") returns project-specific opinions, not generic LLM output. You can see it reach into VECTOR.md (why), CLAUDE.md (how), and ARCHITECTURE.md (where).*
@@ -26,9 +26,9 @@ Three beliefs hold the whole thing together:
 
 Kiavi World is the team's home base: a dashboard, a reference library, and a prototype launcher, all in one place. It's also itself a prototype, built on the team's standard architecture, so it practices what it preaches. Every component is a reference implementation of the design quality the team is aiming for.
 
-It runs on the same four-layer architecture every prototype follows: design tokens, then pure business logic, then external comms, then render-only UI. The point isn't tidiness for its own sake. It's that prototypes built on the patterns engineering already ships translate to production with a lot less rework.
+It runs on the same four-layer architecture every prototype follows and that this portfolio is built on: design tokens, then pure business logic, then external comms, then render-only UI. The point isn't tidiness for its own sake. It's that prototypes built on the patterns engineering can ship translate to production with a lot less rework.
 
-Four views, four jobs. Home is an editorial, magazine-cover landing, deliberately not a dense dashboard. Learn is an interactive onboarding guide to the lending domain that new designers (and increasingly PMs) read on day one, which happens to be what the AI reads too. Research holds the personas, jobs-to-be-done, and decision records. Prototypes is the gallery, and the talk deck itself lives there as a live prototype. The medium is the message.
+Four views, four jobs. Home is an editorial, magazine-cover landing, deliberately not a dense dashboard. Learn is an interactive onboarding guide to the lending domain that new designers (and increasingly PMs and all new hires) read on day one, which happens to be what the AI reads too. Research holds the personas, jobs-to-be-done, and decision records. Prototypes is the gallery, and the talk deck I shared with my team lives there as a live slide deck. The medium is the message.
 
 ![Kiavi World home view, editorial landing](/images/kiavi-world-home.png)
 *Kiavi World's Home view. Modern editorial meets design tool: dark-first, typographically rich, generous whitespace. The deliberate opposite of utilitarian dashboard gray.*
@@ -44,7 +44,7 @@ None of this is theoretical. Four real artifacts, each built the doctrine-driven
 *Snapshot's dashboard. Task-first: passing states compress, failing states expand. The Action Center leads with what needs attention across Member, Project, and Property Asset, with one-click jumps to the rule and the evidence behind it.*
 <!-- aspect:16:9 placeholder:Snapshot dashboard, file header, Action Center surfacing cross-domain failures, three domain health cards, cross-domain rule list with provenance panel expanded. -->
 
-**The Operations Design System, the inversion.** Here's the memorable part: the design system was authored *from* Snapshot, not before it. The working, used prototype dictated what the system needed, instead of a research-only set of assumptions guessing at it. It went v1.0 to v1.3 as it earned each addition. The belief in flight: design systems should emerge from working prototypes that have been used, not from assumptions written down before anything shipped.
+**The Operations Design System, the inversion.** Here's something cool: the new Operations design system was authored *from* Snapshot, not before it. The working, used prototype dictated what the system needed, instead of a research-only set of assumptions guessing at it. It went v1.0 to v1.3 as it earned each addition. The belief in practice: design systems should emerge from working prototypes that have been used, not from assumptions written down before anything shipped.
 
 ![Operations design system token reference with WCAG AA chips](/images/operations-ds-tokens.png)
 *The Operations design system, extracted from Snapshot. Live pass/fail contrast chips on every token pair make accessibility something a designer can verify at the prototype layer, not something an audit team bolts on later.*
@@ -56,7 +56,7 @@ None of this is theoretical. Four real artifacts, each built the doctrine-driven
 *The side-by-side comparison page that drove the brand landing. Old versus refreshed, in context, so the decision could be made by looking instead of arguing.*
 <!-- aspect:16:9 placeholder:Brand comparison, current brand on the left, refreshed brand on the right, same components, so the visual delta is obvious at a glance. -->
 
-There's also an experimental spike driving design tooling directly through an MCP server. That one's still workshop material, not a finished proof point, and I'd frame it that way.
+There's also an experimental spike driving design tooling directly through an MCP server. That one's still workshop material, not a finished proof point, and that's okay. We're constantly experimenting and learning.
 
 ## Results
 
@@ -66,18 +66,18 @@ Leading with the hard, verifiable one.
 - Real, today | Accessibility verified across every token pair on the refreshed brand. Two genuine contrast bugs caught and fixed inside the workflow before any user saw them. | brass
 - Real, today | Snapshot sketch to interactive in 2 days. Operations design system authored from the prototype in ~2 weeks. Brand refresh in 2 days. App shell in 1 day.
 - Bet in flight | Prototype-to-production cycle time. Snapshot was handed to engineering in May, on patterns chosen so the handoff isn't a rebuild. | magenta
-- Too early to claim | Designer ramp time. New hires read what the AI reads. One contributed to Snapshot about 30 days after joining. Promising, not proven.
+- Too early to claim | Designer ramp time. New hires read what the AI reads. One contributed to Snapshot about 30 days after joining. Another is starting a new project in the Product-Design repo. Promising, not proven.
 :::
 
-That accessibility number is the one I'd stake the whole thing on. It's hard, it's measurable, and it's verifiable: two real bugs, caught by the system, before a single user hit them. The speed numbers are supporting evidence. The cycle-time and ramp claims are honest bets, and I label them that way on purpose. Converting a bet into a claimed result would misrepresent the work, and that honesty is part of what makes the rest credible.
+That accessibility number is something I'm proud of. It's hard, it's measurable, and it's verifiable: two real bugs, caught by the system, before a single user hit them. The speed numbers are supporting evidence. The cycle-time and ramp claims are honest bets, and they're labeled that way on purpose. Converting a bet into a claimed result would misrepresent the work, and that honesty is part of what makes the rest credible. 
 
 ## Bringing the Org Along
 
 A system nobody adopts is a hobby. So the work also had to travel.
 
-I built it into a 45-minute talk for an internal Tech Summit, to a mixed room of product, engineering, and leadership. The deck ran as a live React prototype inside Kiavi World, not slides in a slideware tool, because the whole argument is that the medium is the message. A content partner demoed her own brand-voice doctrine live, generic copy versus our voice depending on whether the doctrine was loaded, which made the cross-role point land: doctrine authorship isn't designer-only. Anyone with a stake in a surface can author what the AI reads.
+I built it into a 45-minute talk for our annual internal Tech Summit, to a mixed room of product, engineering, and leadership. The deck ran as a live React prototype inside Kiavi World, not slides in a slideware tool, because the whole argument is that the medium is the message. Our Director of Product Management demoed her own brand-voice doctrine live, generic copy versus our voice depending on whether the doctrine was loaded, which made my cross-role point land: doctrine authorship isn't designer-only. Anyone with a stake in a surface can author what the AI reads.
 
-I also said the quiet part out loud, on stage: we haven't been running fully on this yet. I've been doing the building and the prep first, teaching myself the tools, setting up the foundation, slowly bringing the team on. The next few months are about validating the bet. False maturity is more corrosive than admitting the bet isn't proven, so I'd rather name it.
+I also said the quiet part out loud, on stage: we haven't been running fully on this yet. I've been doing the building and the prep first, teaching myself the tools, setting up the foundation, slowly bringing the team on. The next few months are about validating the bet. False maturity is more corrosive than admitting the bet isn't proven, so I called it out.
 
 ![The talk running as a live prototype inside Kiavi World](/images/talk-as-prototype.png)
 *The talk deck itself, running as a live prototype inside Kiavi World. The thing demonstrating the pattern is built on the pattern.*
@@ -85,8 +85,8 @@ I also said the quiet part out loud, on stage: we haven't been running fully on 
 
 ## What's Still Open
 
-I offered these to the room as invitations, not settled positions, and I'd keep them that way here. How should the path from prototype to production actually work, and who decides when something's ready to graduate? How much front-end should design own, now that designers can author production-grade component code and not just specs? And who owns which doctrine surfaces, so we find the gaps before they cost us? Good questions to walk into a conversation with, which is sort of the point of a portfolio anyway.
+I offered these to the room as invitations, not settled positions, and I'd keep them that way here. How should the path from prototype to production actually work, and who decides when something's ready to graduate? How much front-end should design own, now that designers can author production-grade component code and not just specs? And who owns which doctrine surfaces, so we find the gaps before they cost us? Good questions to walk into a conversation with, which is sort of the point of a portfolio anyway. Since I gave my talk, we've already made big strides when it comes to graduation and front-end ownership.
 
 ## What I'd Want You to Take From This
 
-I didn't ship a feature. I shipped a way for a small design team to work with AI, built the proof to back it, and brought engineering, product, and leadership along instead of declaring victory from a deck. Whether you're a designer wondering where this goes, an engineer wondering what's about to land in your queue, a PM wondering where you fit, or a leader weighing whether to bet on it, I'd love to walk you through it.
+I didn't ship a feature. I shipped a way for a small design team to work with AI, built the proof to back it, and brought engineering, product, and leadership along instead of declaring victory from a deck. Whether you're a designer wondering where this goes, an engineer wondering what's about to land in your queue, a PM wondering where you fit, or a leader weighing whether to bet on it, I'd love to talk to you about it.

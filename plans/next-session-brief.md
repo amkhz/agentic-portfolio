@@ -1,56 +1,33 @@
-# Next-Session Planning Brief — Post-Plan-B Recalibration
+# Pickup Brief — Post-M1 (Type Stack v2 shipped)
 
-Handoff from the 2026-06-24 session (Gaff + content concision + Design
-Infrastructure hub all shipped in commit `225ad9f` on `feat/conservatory-tokens`).
-This brief seeds a fresh planning session: audit outstanding work, fold in three
-new threads, then use **invest-crew** to scope missions.
+Updated end of 2026-06-24. Branch **`feat/type-v2`** (off `feat/conservatory-tokens`).
+Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest — read it first).
 
-## 1. Plans / missions status (audited 2026-06-24)
+## Where we left off
 
-| Doc | Status | Action |
-|-----|--------|--------|
-| `vector/missions/case-study-content-refresh.md` | DONE | Close out. Shipped in 225ad9f. |
-| `vector/missions/conservatory-surfaces.md` | ~done | Lab CTA now wired; Building-This drafted + concised. Remaining folds into below. |
-| `vector/missions/conservatory-visual-build.md` | ACTIVE | Carries the real outstanding items (below). |
-| `plans/portfolio-visual-recalibration-brief.md` | SUPERSEDED by ADR-013 | Archive / mark historical. |
-| `plans/portfolio-adr-011-implementation-plan.md` | SUPERSEDED by ADR-013 | Archive / mark historical. |
+**M1 — Type Stack v2: DONE + committed (`5ef5591`).** Faces re-locked from Fraunces/Source Sans to **Stack E — Hedvig Letters Serif (display) / Figtree (body) / JetBrains Mono (kicker)**. Shipped in one commit:
+- `@fontsource` swap (Figtree variable + Hedvig 400; Fraunces + Source Sans uninstalled); `@theme` tokens swapped; Fraunces axis tuning retired.
+- Dark-mode body weight trimmed (`--body-weight: 350`) to counter Figtree bloom on humus-black.
+- **#5 side-stripe fixed:** QuoteBlock + CalloutBlock dropped the `border-l-[6px]` brass/green stripes; pull-quote re-treated as a hanging brass quotation mark.
+- Dev font-preview harness removed.
+- Doctrine synced: DESIGN.md type lock + ADR-013 type-v2 amendment; **drop caps struck**.
+- lint/build/test green (139 tests).
 
-### Outstanding items still worth doing
-- **Wallace imagery finals** (M/L) — 12 missing images + 8 low-res to replace. See `image-punchlist.md`. Several are screenshots Justin captures; `wallace-hero.png` + `design-infrastructure.png` (hub cover) are Wallace-generatable.
-- **Doctrine sync: PRODUCT.md + VECTOR.md to ADR-013** (S) — flagged required in ADR-013, NOT yet done. Conservatory lives in DESIGN.md but isn't synced to the principle files. Real gap.
-- **Roy final review** of all surfaces vs ADR-013 (M) — last review was "SHIP WITH NOTES" (2026-06-21); confirm notes actioned.
-- **Font axis tuning** (S) — NOW SUPERSEDED by the font reconsideration (thread 2). Don't tune Fraunces; re-evaluate the stack first.
+Decisions banked: **drop-caps struck · instant-dscr OUT (revisit later) · PR/ADR citations confirmed.**
 
-## 2. NEW THREAD — Type stack reconsideration (Justin, 2026-06-24)
+## Open before M1 fully closes (start here tomorrow)
 
-Justin has second thoughts on the locked faces; **Fraunces (display serif) reads as an AI tell**. He likes **Albert Sans** (geometric-humanist sans) but Impeccable uses it and he doesn't want to copy. Wants to SEE fonts similar to Albert Sans + a few pairings that fit the Conservatory.
+1. **`/impeccable typeset` pass (T1c)** — the one M1 task left, deliberately held for a live eye. Hedvig+Figtree are in; tune hierarchy/sizing/leading both modes (Hedvig is single-weight — tune size/leading, not weight). Confirm the `--body-weight: 350` value suits Figtree (nudge 350–380 if needed). Walk Home + a case study, night + day.
+2. **Eyeball the new pull-quote/callout** on a real case study (e.g. instant-doc-review) — confirm the hanging-mark quote and bordered callout read right in both modes.
 
-**Candidates similar to Albert Sans (geometric-humanist, clean, warm):**
-- Google Fonts: **Onest**, **Figtree** (closest DNA), **Hanken Grotesk**, **Schibsted Grotesk**, **Familjen Grotesk**, Instrument Sans.
-- Free non-Google (Fontshare/GitHub): **Mona Sans** + Hubot Sans, **General Sans**, **Switzer**, Satoshi.
-- AVOID (overused / AI-tell): Inter, Plus Jakarta Sans, Poppins, Montserrat, Geist (getting common), Fraunces.
+## Then the rest of the batch (manifest has full scope, owners, collisions)
 
-**Display question (the fork):** keep a serif but swap Fraunces for something less ubiquitous (**Newsreader**, **Spectral**, **Hedvig Letters Serif**, **Instrument Serif**), OR drop the serif and go display-sans (a characterful grotesque like **Schibsted Grotesk** / **Bricolage Grotesque** paired with an Albert-adjacent body). Mono kicker (JetBrains) can stay or swap.
+- **T-L4 doctrine sync** (after typeset) — PRODUCT.md + VECTOR.md (P3 "faces not yet locked") + **ARCHITECTURE.md (Stack L62 + Styling L214, stale "Fraunces/Geist")** → new lock.
+- **M2 Imagery finals** — Wallace renders (`wallace-hero.png`, `design-infrastructure.png`) can start anytime; Justin's screenshot captures are the external dependency. Punch list: `image-punchlist.md`.
+- **M3 Notes/posts + folds** — new content type (needs a quick content-type ADR) → manifesto/Five-Ways/retro posts + About-Kiavi section + About/Resume register pass + verified citations.
+- **M4 Motion** (fast-follow, LAST) — via interface-craft (Storyboard + DialKit) + `/impeccable animate` backup.
+- **Loose ends:** wordmark/header in Hedvig (`/impeccable live`); per-project mark SYSTEM ADR (Dreamer).
+- **Gates:** Lighthouse 95+ per surface; **Roy final review** before `feat/conservatory-tokens` → main.
 
-**Recommended next step:** build a live HTML specimen (like the hub mock) with 3-4 complete stacks on real Conservatory copy, both modes, so Justin can shape — or run `/typeset` + `/impeccable live`. This is a real direction change: it touches DESIGN.md's type lock, `design-system/tokens.css` font tokens, and warrants an ADR amendment. Faces were "locked + Justin-approved 2026-06-21" — reopening that is deliberate.
-
-## 3. NEW THREAD — Integrate practice.md + wins.md
-
-Source (Justin's work-Claude): `~/projects/port-sources/practice.md` ("how Justin works") + `wins.md` (dated wins log). Assessed 2026-06-24.
-
-**Recommendations (highest ROI):**
-1. **New "notes/posts" content type** (portfolio has none today) — unlocks short standalone pieces: the "design infrastructure, not just designs" manifesto, "Five Ways I Work", a "2026 retrospective" from wins.md. Needs a parser/registry decision (Tyrell).
-2. **About-page addition:** a "What I've built at Kiavi" subsection (~200-300 words) from practice.md's eight deliverables.
-3. **Possible new case study:** the instant-dscr screen-polish harness ("build the workflow, then run it") — distinctive, meaty enough for its own study.
-4. **Add PR/ADR citations** to doctrine-not-prompts / instant-doc-review where wins.md supplies them.
-
-**Guardrails:** anonymize internal team names (Matt/Caro/Brenno) and generalize internal product names before publishing; PR/ADR numbers are from working memory — verify before any public citation. Kiavi World system description is already covered in doctrine-not-prompts (don't duplicate).
-
-## 4. Suggested plan shape (for invest-crew)
-Three candidate missions to scope:
-- **Mission: Type stack v2** — specimen → pick → DESIGN.md + tokens + ADR amendment → live re-validation.
-- **Mission: Imagery finals** — punch list → Wallace renders + Justin captures → wire + WCAG alt audit.
-- **Mission: Notes/posts + content folds** — new content type + manifesto/retro posts + About addition + (maybe) instant-dscr study + citations.
-- Plus a small **doctrine-sync** task (PRODUCT.md/VECTOR.md → ADR-013) and a **Roy final review** gate.
-
-Start the fresh session by reading this brief + `image-punchlist.md`, then run invest-crew.
+## Critical path
+type (done) → `/impeccable typeset` → surfaces on new faces (wordmark, About/Resume) → motion → Roy → main.

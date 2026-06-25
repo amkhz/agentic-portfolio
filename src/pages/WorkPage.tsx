@@ -12,7 +12,10 @@ import {
 } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
-const tocItems: TocItem[] = caseStudies.map((study, i) => ({
+// Studies folded behind a hub are reached through it, not listed here.
+const indexedStudies = caseStudies.filter((study) => !study.parentHub);
+
+const tocItems: TocItem[] = indexedStudies.map((study, i) => ({
   id: study.slug,
   label: study.title,
   to: `/work/${study.slug}`,
@@ -85,7 +88,7 @@ export function WorkPage() {
     <>
       <Helmet>
         <title>Work | Justin Hernandez</title>
-        <meta name="description" content="Case studies in AI-powered enterprise product design." />
+        <meta name="description" content="Case studies in AI-driven enterprise product design." />
         <link rel="canonical" href="https://justinh.design/work" />
       </Helmet>
 
@@ -99,7 +102,7 @@ export function WorkPage() {
           </h1>
           <p className="mt-5 max-w-[65ch] font-body text-lg leading-normal text-text-secondary">
             A working index of case files spanning AI strategy, enterprise UX, and
-            design systems. Each entry opens to the full study.
+            design systems. 
           </p>
 
           <RevealOnScroll className="mt-14">

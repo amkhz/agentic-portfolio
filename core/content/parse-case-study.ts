@@ -117,6 +117,24 @@ function parseQuote(lines: string[]): { text: string; attribution: string; role?
   return { text: textLines.join('\n'), attribution, ...(role ? { role } : {}) };
 }
 
+function parseCta(lines: string[]): { href: string; action: string; body: string } {
+  let href = '';
+  let action = '';
+  const bodyLines: string[] = [];
+
+  for (const line of lines) {
+    if (line.startsWith('href:')) {
+      href = line.replace('href:', '').trim();
+    } else if (line.startsWith('action:')) {
+      action = line.replace('action:', '').trim();
+    } else {
+      bodyLines.push(line);
+    }
+  }
+
+  return { href, action, body: bodyLines.join('\n').trim() };
+}
+
 export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
   const lines = markdown.split(/\r?\n/);
   const sections: CaseStudySection[] = [];
@@ -200,6 +218,15 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
             tease: fenceLines.join('\n').trim(),
           });
           break;
+        case 'cta': {
+          const cta = parseCta(fenceLines);
+          sections.push({
+            type: 'cta' as const,
+            ...(fenceHeading ? { kicker: fenceHeading } : {}),
+            ...cta,
+          });
+          break;
+        }
       }
       continue;
     }

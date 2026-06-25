@@ -4,18 +4,18 @@ How a small design team started shipping closer to engineering grade by treating
 
 ## The Problem
 
-AI usually shows up in design as a tool. Point it at a task, it spits out a mockup or some code a little faster, and everyone moves on. The catch is that generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate. That's a try hard intern with amnesia.
+AI usually shows up in design as a tool. Point it at a task, it spits out a mockup or some code a little faster. But, generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate. That's a try hard intern with amnesia.
 
 I wanted something different. Over ~4 months at Kiavi, I built an operating model where AI works as an actual teammate for a small design team: a force multiplier that makes good designers better, not a stand-in that replaces them.
 
 ## The Reframe
 
-What makes a "teammate" real instead of aspirational is doctrine. Capture the team's intent, architecture, design system, and the agent's own personality in version-controlled files the AI reads on every session, and you stop coaching it per task. It already knows the domain, the standards, and the working agreements. That's the line between AI-as-waste and AI-as-teammate.
+What makes a "teammate" real instead of aspirational is doctrine: the team's intent, architecture, design system, and the agent's own personality, captured in version-controlled files the AI reads on every session. That's the line between AI-as-waste and AI-as-teammate.
 
 Three beliefs hold the whole thing together:
 
-1. **Doctrine over prompts.** Encode intent, architecture, design system, and agent identity into files the AI reads every session, so you stop re-explaining yourself.
-2. **The human keeps it honest.** AI makes *making* trivial. Doctrine keeps it in line. What's left is the work human brains are best at: reading output critically, pushing back on what's wrong, verifying what's true. That discipline is real, and that's the point, not a downside.
+1. **Doctrine over prompts.** Encode the team's intent and identity once, in files, instead of re-explaining yourself every session.
+2. **The human keeps it honest.** AI makes *making* trivial. Doctrine keeps it in line. What's left is the work human brains are best at: reading output critically, pushing back on what's wrong, verifying what's true. That discipline is the point, not a downside.
 3. **Opinionated doctrine is the key.** Generic doctrine gets generic results. The pattern only works when the doctrine takes positions. Specific design taste, encoded as constraints the AI has to honor, is what makes the work feel like *Kiavi* instead of like nothing in particular and everything else at the same time.
 
 ![The team agent answering a project-specific question by reading doctrine files](/images/doctrine-reads-doctrine.png)
@@ -24,7 +24,7 @@ Three beliefs hold the whole thing together:
 
 ## The System: Kiavi World
 
-Kiavi World is the team's home base: a dashboard, a reference library, and a prototype launcher, all in one place. It's also itself a prototype, built on the team's standard architecture, so it practices what it preaches. Every component is a reference implementation of the design quality the team is aiming for.
+Kiavi World is the team's home base: a dashboard, a reference library, and a prototype launcher, all in one place. It's also itself a prototype, built on the team's standard architecture: every component is a reference implementation of the design quality the team is aiming for.
 
 It runs on the same four-layer architecture every prototype follows and that this portfolio is built on: design tokens, then pure business logic, then external comms, then render-only UI. The point isn't tidiness for its own sake. It's that prototypes built on the patterns engineering can ship translate to production with a lot less rework.
 
@@ -36,7 +36,7 @@ Four views, four jobs. Home is an editorial, magazine-cover landing, deliberatel
 
 ## The Proof Points
 
-None of this is theoretical. Four real artifacts, each built the doctrine-driven way, each with its own decision trail.
+Four real artifacts, each derived from doctrine.
 
 **Snapshot, the flagship.** A net-new origination-file admin tool for loan analysts and underwriters: a domain-unified, automation-first view that replaces a stack of siloed legacy tools. The core hypothesis is that in the happy path, ops never has to come here at all. When they do, the interface leads with what needs attention and shows how the decision was reached. No black boxes, no hunting. It went from a Magic Patterns export to a forked, four-layer, shadcn-and-OKLCH prototype across three rounds of design-system conformance, with the engineering decisions baked into the plan from the start. The prototype talks engineering's language because engineering helped author it.
 
@@ -47,7 +47,7 @@ None of this is theoretical. Four real artifacts, each built the doctrine-driven
 **The Operations Design System, the inversion.** Here's something cool: the new Operations design system was authored *from* Snapshot, not before it. The working, used prototype dictated what the system needed, instead of a research-only set of assumptions guessing at it. It went v1.0 to v1.3 as it earned each addition. The belief in practice: design systems should emerge from working prototypes that have been used, not from assumptions written down before anything shipped.
 
 ![Operations design system token reference with WCAG AA chips](/images/operations-ds-tokens.png)
-*The Operations design system, extracted from Snapshot. Live pass/fail contrast chips on every token pair make accessibility something a designer can verify at the prototype layer, not something an audit team bolts on later.*
+*The Operations design system, extracted from Snapshot. Live pass/fail contrast chips on every token pair let a designer verify accessibility at the prototype layer, not after an audit.*
 <!-- aspect:16:9 placeholder:Token reference page, OKLCH semantic tokens, color accessibility matrix, live WCAG AA pass/fail chips across every pair. -->
 
 **The borrower-facing brand refresh.** Brand doctrine got grounded in the spring, then a two-day push where the team absorbed discovery work from Marketing partners, rewrote the strategic doctrine into a clean Brand / System / Products architecture, built a side-by-side comparison page to land the visual direction, got the greenlight, and shipped the refreshed brand the same day. From doctrine to a shipped brand version in two days against real Marketing inputs, not weeks. A standalone borrower app shell got rebuilt from the team's starter template in a single day on top of it.
@@ -56,7 +56,7 @@ None of this is theoretical. Four real artifacts, each built the doctrine-driven
 *The side-by-side comparison page that drove the brand landing. Old versus refreshed, in context, so the decision could be made by looking instead of arguing.*
 <!-- aspect:16:9 placeholder:Brand comparison, current brand on the left, refreshed brand on the right, same components, so the visual delta is obvious at a glance. -->
 
-There's also an experimental spike driving design tooling directly through an MCP server. That one's still workshop material, not a finished proof point, and that's okay. We're constantly experimenting and learning.
+There's also an experimental spike driving design tooling directly through an MCP server. That one's still workshop material, not a finished proof point yet.
 
 ## Results
 
@@ -69,7 +69,7 @@ Leading with the hard, verifiable one.
 - Too early to claim | Designer ramp time. New hires read what the AI reads. One contributed to Snapshot about 30 days after joining. Another is starting a new project in the Product-Design repo. Promising, not proven.
 :::
 
-That accessibility number is something I'm proud of. It's hard, it's measurable, and it's verifiable: two real bugs, caught by the system, before a single user hit them. The speed numbers are supporting evidence. The cycle-time and ramp claims are honest bets, and they're labeled that way on purpose. Converting a bet into a claimed result would misrepresent the work, and that honesty is part of what makes the rest credible. 
+That accessibility number is the one I'm proud of: two real bugs, caught by the system, before a single user hit them. The cycle-time and ramp claims are honest bets, labeled that way on purpose. Converting a bet into a claimed result would misrepresent the work, and that honesty is part of what makes the rest credible. 
 
 ## Bringing the Org Along
 
@@ -89,4 +89,4 @@ I offered these to the room as invitations, not settled positions, and I'd keep 
 
 ## What I'd Want You to Take From This
 
-I didn't ship a feature. I shipped a way for a small design team to work with AI, built the proof to back it, and brought engineering, product, and leadership along instead of declaring victory from a deck. Whether you're a designer wondering where this goes, an engineer wondering what's about to land in your queue, a PM wondering where you fit, or a leader weighing whether to bet on it, I'd love to talk to you about it.
+I didn't ship a feature. I shipped a way for a small design team to work with AI, and brought engineering, product, and leadership along instead of declaring victory from a deck. Whether you're a designer wondering where this goes, an engineer wondering what's about to land in your queue, a PM wondering where you fit, or a leader weighing whether to bet on it, I'd love to talk to you about it.

@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 import { CaseStudyPageTemplate } from "@/components/content/CaseStudyPageTemplate";
 import { ConstellationPageTemplate } from "@/components/content/ConstellationPage";
+import { HubPageTemplate } from "@/components/content/HubPageTemplate";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -21,6 +22,8 @@ export function CaseStudyPage() {
       )}
       {study?.template === "constellation" ? (
         <ConstellationPageTemplate slug={slug!} />
+      ) : study?.template === "hub" ? (
+        <HubPageTemplate slug={slug!} />
       ) : (
         <CaseStudyPageTemplate slug={slug!} />
       )}

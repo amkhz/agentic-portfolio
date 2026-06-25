@@ -10,7 +10,7 @@ export function AboutPage() {
         <title>About | Justin Hernandez</title>
         <meta
           name="description"
-          content="Product design leader specializing in complex, human-centered systems. Currently focused on AI."
+          content="Design leader at Kiavi working on AI-augmented lending tools. Lead of AI adoption across design and product."
         />
         <link rel="canonical" href="https://justinh.design/about" />
       </Helmet>
@@ -52,24 +52,22 @@ export function AboutPage() {
                 Today I lead a small team of designers at Kiavi, a hard money
                 lender helping to revitalize thousands of aged homes across the
                 United States. We make complex things efficient and satisfying to
-                use, which is an interesting challenge in an equally challenging
-                industry. Recently, I&apos;ve been designing AI-augmented lending
+                use. Recently, I&apos;ve been designing AI-augmented lending
                 tools, the kind of products where a bad interaction isn&apos;t
                 just frustrating, it&apos;s a compliance risk or a delayed
                 closing.
               </p>
               <p>
-                I helped lead the AI adoption initiative across our design and product
-                organization, building the training, the prototyping workflow,
-                and the strategic framework for how design operates when the
-                interface starts thinking for itself. The work I&apos;ve been doing at Kiavi reflects that: embedding principles like decision
+                I helped lead AI adoption across our design and product org: the
+                training, the prototyping workflow, and the framework for how
+                design operates when the interface starts thinking for itself. The work I&apos;ve been doing at Kiavi reflects that: embedding principles like decision
                 versioning, human-in-the-loop review, and auditable AI directly
                 into our products. I love to observe and listen, to
                 question and hypothesize, to learn, and to iterate.
               </p>
               <p>
-                In the future I&apos;d like to see a world seamlessly
-                integrating technology, privacy, and nature. But NOT Skynet. Far
+                In the future I&apos;d like to see a world that integrates
+                technology, privacy, and nature. But NOT Skynet. Far
                 out, right? Maybe, but maybe not.
               </p>
             </div>
@@ -87,7 +85,7 @@ export function AboutPage() {
             <p>
               I live in Michigan in a 1950s ranch house with my wonderful
               wife. We&apos;re both fortunate to work from home, which makes it
-              easier to keep finding new projects to work on together. Right now
+              easier to take on projects together. Right now
               we&apos;re renovating the house and cultivating our backyard into
               a place we can grow food and flowers and watch our animals run
               around. Our rascally dog Carlos and our cats Pistachio and Larry
@@ -167,9 +165,9 @@ export function AboutPage() {
             >
               Perihelion
             </a>
-            , a two-arm house for frontier science. The Archive is a growing
-            library of deep-dive research guides on frontier physics, UAP
-            detection, and consciousness as technology. Works is the
+            , a two-arm house for frontier science. The Archive is a library
+            of research guides on frontier physics, UAP detection, and
+            consciousness as technology. Works is the
             applied-design practice that comes with it. Both are prep and
             practice for a world already being built in peer-reviewed papers
             and NSF-funded labs.

@@ -4,7 +4,7 @@ I led the internal push to standardize AI tools across a design and product org 
 
 The company had two problems at once. Tactically, leadership saw the upside of AI for internal efficiency, but there was no standard way to use generative AI to prototype and ship faster without trading away quality or piling up design debt. Strategically, nobody shared an understanding of how design's role changes when the AI drives the interaction instead of the user.
 
-I framed both as a single initiative. Adoption needs hands-on enablement and alignment on principles at the same time: trust, transparency, and human oversight aren't a later phase, they're the foundation.
+I framed both as one initiative: adoption needs hands-on enablement and alignment on principles at the same time. Trust, transparency, and human oversight aren't a later phase, they're the foundation.
 
 ![Diagram showing the dual challenge: tactical tooling gap and strategic design control shift](/images/diagram.png)
 *Two problems, one initiative: closing the tactical tooling gap while redefining design's strategic role in AI-driven products.*
@@ -24,7 +24,7 @@ I built a repeatable 6-step workflow, Define, Scope, Plan, Build, Test, Iterate,
 
 ## Demonstrating Output
 
-These workshops produced real prototypes. It wasn't just me talking at people for an hour. Attendees built working apps (habit trackers, Kanban tools, snake games) using Gemini and Replit and Subframe, proving that AI-assisted prototyping could compress weeks of concept creation into hours. That momentum fed straight into a later winning AI Hackathon project built on Replit.
+These workshops produced real prototypes, not just me talking at people for an hour. Attendees built working apps (habit trackers, Kanban tools, snake games) using Gemini and Replit and Subframe, compressing weeks of concept work into an afternoon. That momentum fed straight into a later winning AI Hackathon project built on Replit.
 
 ![Grid of prototype screenshots built during AI workshops: habit tracker, Pomodoro timer with Kanban](/images/outcomes.png)
 *Prototyping exercises built by workshop attendees in under an hour, from habit trackers to Kanban tools.*
@@ -32,7 +32,7 @@ These workshops produced real prototypes. It wasn't just me talking at people fo
 
 ## Strategic Vision: The Big Flip
 
-Beyond tooling, I shared a critique of how the industry was approaching AI product design. The gist: most enterprise AI products are "draping a modern brain in an 80s UI," wrapping powerful models in menus and buttons designed for the pre-AI era. The flip is the shift away from designers sweating pixels and components toward AI-driven interactions, where the designer's real job becomes defining guardrails and contextual patterns, not layouts.
+I also shared a critique of how the industry approaches AI product design. The gist: most enterprise AI products are "draping a modern brain in an 80s UI," wrapping powerful models in menus and buttons designed for the pre-AI era. The flip is the shift away from designers sweating pixels and components toward AI-driven interactions, where the designer's real job becomes defining guardrails and contextual patterns, not layouts.
 
 That framework shaped product requirements for our AI lending tools directly, baking in principles like decision versioning, escape hatches, and transparent confidence scoring.
 
@@ -46,4 +46,4 @@ That framework shaped product requirements for our AI lending tools directly, ba
 - #1 | AI Design & Engineer nerd | magenta
 :::
 
-The work turned into business action fast: permanent AI tool subscriptions (Magic Patterns, Cursor, Subframe), a repeatable prototyping process now living inside the team's workflow, and a strategic framework that informed product requirements for our two flagship AI products. I became a go-to resource for AI strategy across design, product, and engineering. It's a great start, and it keeps evolving as the technology accelerates around us. At the pace this stuff is moving, keeping up is the fun part.
+The work turned into business action quickly: subscriptions to Magic Patterns, Cursor, and Subframe, and a prototyping process now living inside the team's workflow. I became a go-to resource for AI strategy across design, product, and engineering. At the pace this stuff is moving, keeping up is the fun part.

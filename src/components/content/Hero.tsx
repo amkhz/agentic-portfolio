@@ -53,8 +53,8 @@ export function Hero() {
             Making complex things clear, useful, and human
           </h1>
           <p className="mt-6 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
-            Product design leader turning complex problems into trusted
-            experiences, blending human judgment with AI.
+            Fifteen years turning complex systems into experiences people
+            trust.
           </p>
           <div className="mt-10">
             <Button variant="primary" href="#work">

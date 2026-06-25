@@ -13,6 +13,7 @@ import {
   type TocItem,
 } from "@/components/fieldnotebook";
 import { renderSection } from "./renderSection";
+import { RelatedStudyBanner } from "./RelatedStudyBanner";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -147,6 +148,12 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
       <section className="py-16 sm:py-20">
         <Container>
           <div className="flex flex-col gap-10 sm:gap-14">{sectionNodes}</div>
+
+          {study.relatedStudy && (
+            <div className="mt-16 border-t border-border-subtle pt-10">
+              <RelatedStudyBanner related={study.relatedStudy} />
+            </div>
+          )}
 
           <div className="mt-16 border-t border-border-subtle pt-10">
             <BackLink label="Back to all work" />

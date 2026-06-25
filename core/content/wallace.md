@@ -2,13 +2,13 @@ Most image models key off a sentence. You type "moody designer's studio at night
 
 ## The Problem
 
-Raster models are powerful and dumb in the same breath. They can render gorgeous surfaces, but they take a paragraph of prose and quietly fill in every gap with their own defaults if you struggle to express your design intent. Thus, composition drifts. Palette drifts. The thing you actually care about, where the headline sits, which chair grounds the frame, what color the light is, gets averaged into the model's idea of "nice." For a portfolio whose whole pitch is that I direct the work, "I described it and hoped" is the wrong story. I needed an instrument, not a vending machine.
+Raster models are powerful and dumb in the same breath. They render gorgeous surfaces, then quietly fill every gap with their own defaults. Composition drifts. Palette drifts. The thing you actually care about, where the headline sits, what color the light is, gets averaged into the model's idea of "nice." For a portfolio whose whole pitch is that I direct the work, "I described it and hoped" is the wrong story. I needed an instrument, not a vending machine.
 
-There was a practical layer too. Hosted image tools might be powerful and effective but they meter you, train on you, and decide for you. The reference workflows from Impeccable leaned on GPT Image 2, which costs money per render and ships your intent to someone else's server. I wanted to test the loop on my own hardware, free to iterate as many times as the work needed.
+Hosted image tools meter you, train on you, and decide for you. The reference workflows from Impeccable leaned on GPT Image 2, which costs money per render and ships your intent to someone else's server. I wanted to test the loop on my own hardware, free to iterate as many times as the work needed.
 
 ## What Wallace Actually Is
 
-Ideogram 4 has a quiet detail in its docs: the model was trained on captions in one exact shape, a structured JSON schema with a style block, a palette, and a compositional breakdown where every element carries a bounding box. Feed it a plain sentence and you're sampling out of distribution. It runs, just worse. Feed it the schema and you're speaking the language it actually learned.
+Ideogram 4 has a quiet detail in its docs: the model was trained on captions in one exact shape, a structured JSON schema with a style block, a palette, and a compositional breakdown where every element carries a bounding box. Feed it a plain sentence and you're sampling out of distribution; it runs, just worse. Feed it the schema and you're speaking the language it actually learned.
 
 So Wallace is a compiler. It takes the way I already talk about design, composition, hierarchy, palette, mood, typography, and translates that into the schema the model expects. Background before elements. Palette as literal hex values, pulled straight from the design tokens when the work is for this repo. Every object is placed with a normalized bounding box, origin top-left, y before x. The model's hosted "magic prompt" expander gets replaced by something grounded in my vocabulary and my tokens instead of a generic house style.
 
@@ -16,7 +16,7 @@ The judgment is in the constraints, not the cleverness. Lock the composition and
 
 ## The Caption Is the Spec
 
-Every render Wallace produces saves its caption next to the image as a sidecar. But, the picture isn't the source of truth, the spec is. Things like the palette hexes, the literal headline copy, the layout regions all live in a file that the next step in the pipeline reads rather than reverse-engineering pixels.
+Every render saves its caption beside the image as a sidecar, so the next step in the pipeline reads the spec (palette hexes, headline copy, layout regions) instead of reverse-engineering pixels.
 
 That's important because Wallace doesn't work alone. It sits inside my Impeccable design loop as the free local stand-in for the hosted tools: north-star mockups, brand plates, asset regeneration. One locked style block runs across a whole set so the images read as one designed system rather than a pile of pretty one-offs. The compiler enforces the thing a brand needs most and a raster model respects least: consistency.
 
@@ -25,10 +25,6 @@ That's important because Wallace doesn't work alone. It sits inside my Impeccabl
 I didn't build Wallace to talk about it. I built it to make a decision. When this portfolio needed a new visual direction, I used Wallace to render four full north-star directions, monograph, atelier, field notebook, and a tech-and-nature conservatory, as finished hero images rather than mood boards. Eight heroes, fixed seeds, captions saved per image, about seven minutes per render on my M5 Max.
 
 Seeing the directions fully realized gave me the power to speak my intent into existence. The conservatory thesis got rejected in its first cut because the renders read as post-apocalyptic instead of inhabited, and I could see that precisely because the image was specific enough to be wrong and I understood what I needed to change. I re-cut the caption, demoted the green to a sage accent, brought the warmth up, put the instrument back in active use, and the direction landed. That whole conversation happened in the schema, one variable at a time. Renders fed straight into the visual-direction decision record. My tools authored the evidence the call was made on.
-
-::: callout The shift
-A raster model gives you surfaces. A compiler around it gives you direction. It's not just that images can look good, it's that I can say why this one and not that one, and prove it with the spec that produced it.
-:::
 
 ## Results
 

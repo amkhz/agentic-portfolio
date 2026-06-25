@@ -4,7 +4,7 @@ I turned a POC black-box AI extraction system into a transparent, auditable revi
 
 The proof of concept worked. AI could extract and validate data from purchase sale agreements (PSAs) and the title and property documents that decide whether a loan can close. But the implementation was scrappy, bolted into a monolith, with no way for Operations to see what the AI did or why it flagged something. It didn't talk to the system that delivers issues back to borrowers either.
 
-So a single PSA still took 20 minutes to review. Analysts bounced between the AI's output, a separate document viewer, and the feedback system, cross-referencing by hand the whole way. The MVP was a black box. Analysts either trusted it blindly or treated it as a hassle. Neither one is ideal in regulated financial operations.
+So a single PSA still took 20 minutes to review. Analysts bounced between the AI's output, a separate document viewer, and the feedback system, cross-referencing by hand the whole way. The MVP was a black box. Analysts either trusted it blindly or treated it as a hassle. In regulated financial ops, neither is acceptable.
 
 ![Diagram showing the fragmented before-state workflow for document review](/images/before-flow.png)
 *The before state: analysts bouncing between AI output, a separate document viewer, and the feedback system to review a single PSA.*
@@ -24,19 +24,19 @@ Three important things shipped first. **Extracted data view**, so analysts scan 
 
 V2 took work that used to belong to analysts and handed it to borrowers. AI now generated actionable tasks, starting with borrower name and entity corrections, and delivered them to the borrower automatically. The borrower uploads a corrected document, gets immediate feedback, resubmits if needed, and moves forward. No analyst in the middle. It's a loop: AI reviews, borrower acts, AI confirms.
 
-These are the first task types, but the pattern is built to expand. Anything an analyst does that's routine, repeatable, within risk limits, and document-driven is a candidate. Each new task type compounds the gains on both sides.
+These are the first task types, but the pattern is built to expand. Anything an analyst does that's routine, repeatable, within risk limits, and document-driven is a candidate.
 
 ![Borrower self-service task flow: AI generates task, borrower uploads corrected document, AI confirms](/images/borrower-flow.png)
 *V2 self-service loop: AI generates a task, the borrower acts on it, and AI confirms the fix. No analyst needed.*
 <!-- aspect:16:9 placeholder:V2 self-service loop: AI generates a task, the borrower acts on it, and AI confirms the fix. -->
 
-V1 and V2 proved the pattern. They also showed where the ceiling was. A great PSA review experience is still just a PSA review experience. The real loan file pulls from member data, project data, property data, title, valuation, and a stack of cross-domain rules that decide whether the pieces actually agree. Optimizing one domain at a time was always going to leave the analyst stitching things together manually. That's the problem Snapshot solves.
+V1 and V2 also showed where the ceiling was. A great PSA review experience is still just a PSA review experience. The real loan file pulls from member data, project data, property data, title, valuation, and a stack of cross-domain rules that decide whether the pieces actually agree. Optimizing one domain at a time was always going to leave the analyst stitching things together manually. That's the problem Snapshot solves.
 
 ## Snapshot: One View Across the Loan Origination File
 
 Snapshot is a view of the unified origination file. One interface across Member, Project, and Property Asset, plus the cross-domain rules that sit above them. It takes what V1 and V2 proved and applies the same review-and-task pattern to every domain at once.
 
-The hypothesis behind it is small but mighty: **in the happy path, ops should never have to come here.** When they do, they have a specific reason. Figure out what stopped automation, understand a decision, or verify data. So the UI should already know why they're here.
+The hypothesis behind it is simple: **in the happy path, ops should never have to come here.** When they do, they have a specific reason. Figure out what stopped automation, understand a decision, or verify data. So the UI should already know why they're here.
 
 ![Snapshot dashboard showing Action Center with cross-domain failures and three domain health cards](/images/snapshot-dashboard-action-required.png)
 *The "are we good?" view. The Action Center surfaces what needs attention first. Domain health cards show the rest of the file at a glance.*
@@ -68,7 +68,7 @@ The whole thing is built on Sentient Design principles, especially "deferential,
 
 ## From Prototype to Production
 
-Here's the part I'm most proud of. Snapshot didn't get handed off. It graduated.
+Snapshot didn't get handed off. It graduated.
 
 Engineering didn't take screenshots and rebuild it in the legacy stack. They took the codebase itself, forked it, and turned it into the foundation for the Origination File experience in production. Snapshot now ships as its own versioned package that the Ops platform consumes as a normal dependency. The legacy frontend runs React 16, jQuery, and a webpack pipeline shared across hundreds of screens, where upgrading anything means regression-testing everything. Snapshot runs its own modern stack (React 18, Vite, Tailwind 4, Apollo) in isolation. A release can't silently break an Ops screen, and a rollback is just pinning the previous version.
 
@@ -80,35 +80,29 @@ Engineering presented this integration model to the company's architecture guild
 
 This is the first project where I really ran with an AI-assisted design process. Not just generating wireframes and assets, but using AI throughout the loop: ideating, prototyping, writing code, structuring decisions, navigating the data model.
 
-Some key insights so far:
-
-**Magic Patterns for fast variants.** When I needed to compare layouts for the V1 admin page or the Snapshot dashboard, I spun up working prototypes instead of static mocks. Stakeholders clicked through real interactions, something critical for such a nuanced problem space. Feedback came in hours, not weeks. When something didn't work, I threw it out without sunk-cost guilt.
+**Magic Patterns for fast variants.** When I needed to compare layouts for the V1 admin page or the Snapshot dashboard, I spun up working prototypes instead of static mocks. Stakeholders clicked through real interactions, not static mocks. Feedback came in hours, not weeks. When something didn't work, I threw it out without sunk-cost guilt.
 
 **Claude Code for the codebase.** Snapshot is a real React + TypeScript + Tailwind v4 + shadcn/ui prototype, not a Figma file. Claude Code let me work in the actual codebase, refactor components, write ADRs, and keep the design system consistent across dozens of components. The OKLCH operations palette, the evidence-grouped accordion pattern, the cross-domain provenance panel, all of it lives in code I can hand to engineering.
 
-**Tapping the real data schema.** This was probably the best part. As Engineering refined the GraphQL schema (PSA review fields, evidence enums, rule result types, source attributions), I pulled those exact types into the prototype. Mock data shaped by the real schema. When PM, Engineering, and I sat down, we were all looking at the same nouns. The conversations got specific fast. "Should this be Source or Evidence?" became a real architectural question with a real answer, captured in an ADR, and reflected in the UI the next day.
+**Tapping the real data schema.** As Engineering refined the GraphQL schema (PSA review fields, evidence enums, rule result types, source attributions), I pulled those exact types into the prototype. Mock data shaped by the real schema. When PM, Engineering, and I sat down, we were all looking at the same nouns. The conversations got specific fast. "Should this be Source or Evidence?" became a real architectural question with a real answer, captured in an ADR, and reflected in the UI the next day.
 
-Human oversight is non-negotiable. AI sped up the process. It didn't make the decisions. The tradeoffs, like when to compress passing states, when set containment needs its own rendering, where Source of Truth should live, what the escape hatch asks the analyst to write down, were all judgment calls. The tools just gave me the language to speak to my teammates at a level we couldn't reach before.
+Human oversight is non-negotiable. AI sped up the process. It didn't make the decisions. The tools just gave me the language to speak to my teammates at a level we couldn't reach before.
 
 The real test of whether this is a *way of working* and not just my personal workflow came when I hired a senior designer partway through. Onboarding her meant teaching two things at once: the domain (private lending is dense, and the origination file is the dense part of the dense part) and the method (design, AI, and engineering in one loop without trading away quality, speed, or actually putting work in front of users). The prototype lives in code, on the real schema, with its decisions captured in ADRs, so it turned out to be the onboarding material. She wasn't reading a deck about how we work. She was reading the work itself. She contributed to Snapshot inside her first 2 months. That's the strongest signal I have that the approach is teachable, not just personal.
 
 ::: metrics Results
 - 50% | Reduction in PSA review time | brass
-- 82% | Loans shipping AI output with zero analyst edits | magenta
-- 27% | Loans auto-completing PSA review in Processing
+- 39% | PSA toolkits needing zero field edits | magenta
+- 17% | Loans auto-completing PSA review in Processing
 - 33% | Reduction in Prelim Title review time
 - 100% | Borrowers get automated feedback the moment they upload
 - 7% | Borrowers resolving PSA issues before Processing starts
 :::
 
-Instant Doc Review V1 and V2 are in production. Snapshot will replace them by the end of July. The numbers tell two stories.
+Instant Doc Review V1 and V2 are in production. Snapshot is planned to ship by July. The numbers tell two stories. The speed story is in the percentages above. The honest part: on 39% of loans the analyst changes nothing and just verifies, but the other 61% still get at least one correction. That's today's state, and the number we're working to move.
 
-The speed story: PSA review time is down 50%, Prelim Title review down 33%. More than a quarter of loans now auto-complete the PSA review entirely while still in Processing, before an analyst is even assigned. And on 82% of loans, the analyst doesn't change a thing in the AI's output. They verify, they don't redo.
-
-The quality story is one to watch closer. Speed is easy to claim and easy to fake, so we tracked what happens downstream where Underwriting checks the work. For years, underwriters kicked the PSA back to the analyst on roughly 40 to 45% of loans. After the Property Asset Processing rollouts in spring 2026, that rate fell to around 30%. And when we compared conditions on autocompleted loans against analyst-worked loans, the substantive defect mix (missing signatures, addenda, name mismatches) was nearly identical. Automation isn't creating a new class of error. It's running the same review, faster, with a cleaner handoff.
+The quality story matters more. Speed is easy to fake, so we tracked what happens downstream where Underwriting checks the work. For years, underwriters kicked the PSA back to the analyst on roughly 40 to 45% of loans. After the Property Asset Processing rollouts in spring 2026, that rate fell to around 30%. And when we compared conditions on autocompleted loans against analyst-worked loans, the substantive defect mix (missing signatures, addenda, name mismatches) was nearly identical. Automation isn't creating a new class of error. It's running the same review, faster, with a cleaner handoff.
 
 On the borrower side, every PSA upload gets immediate automated feedback, and 7% of borrowers now fix their own document issues before the loan even reaches Processing. That's work that never lands on an analyst's desk. That number should grow as we surface more opportunities for the borrower to make corrections.
-
-Snapshot is the next chapter, and it's already moving. The prototype graduated into a versioned production package, it's the foundation for the unified Origination File in Ops, and the first user acceptance testing has been completed. The review-and-task pattern V1 and V2 proved now has a path to every domain in the loan file at once. And the way it got there, designer-built code forked by engineering and shipped with a clear ownership contract, is being held up internally as the model for how design and engineering build together.
 
 One pattern. Applied everywhere. And now it ships.

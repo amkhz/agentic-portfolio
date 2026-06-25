@@ -5,7 +5,6 @@ import { Hero } from "@/components/content/Hero";
 import { ProjectCard } from "@/components/content/ProjectCard";
 import { AboutSnippet } from "@/components/content/AboutSnippet";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { TocLinkList, type TocItem } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
@@ -17,7 +16,9 @@ export function HomePage() {
   // secondary line is just the discipline, so the narrow column stays clean and
   // the two surfaces read distinct rather than identical. Thumbnail carries the
   // visual index, so no leading number.
-  const selected: TocItem[] = caseStudies.map((study, i) => ({
+  const selected: TocItem[] = caseStudies
+    .filter((study) => !study.parentHub)
+    .map((study, i) => ({
     id: study.slug,
     to: `/work/${study.slug}`,
     label: study.title,
@@ -65,8 +66,7 @@ export function HomePage() {
                   Selected work
                 </h2>
                 <p className="mt-5 max-w-[34ch] font-body text-base leading-normal text-text-secondary">
-                  A short ledger of recent case files. Each entry opens the full
-                  spread.
+                  A short ledger of recent case files.
                 </p>
                 <Link
                   to="/work"
@@ -87,18 +87,6 @@ export function HomePage() {
           </div>
         </Container>
       </section>
-
-      {/* Atmospheric break - accent hairline with ambient brass glow */}
-      <div className="relative py-8" aria-hidden="true">
-        <Container className="relative">
-          <GlowEffect
-            color="brass"
-            size="sm"
-            className="left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-          />
-          <div className="relative mx-auto h-px w-24 bg-accent-primary opacity-50" />
-        </Container>
-      </div>
 
       <RevealOnScroll>
         <AboutSnippet />

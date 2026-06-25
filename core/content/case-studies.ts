@@ -11,10 +11,27 @@ export interface CaseStudy {
   title: string;
   subtitle: string;
   tags: string[];
-  template?: 'standard' | 'constellation';
+  template?: 'standard' | 'constellation' | 'hub';
   heroMetric?: {
     value: string;
     label: string;
+  };
+  /** Cross-link to a paired study (origin <-> evolution). Renders as an
+   *  end-of-study banner. `kicker` names the relationship direction. */
+  relatedStudy?: {
+    slug: string;
+    kicker: string;
+    direction: 'forward' | 'back';
+  };
+  /** Folds this study behind a hub page. Studies with a parentHub are
+   *  reached through the hub (and each other's banner), not the work index. */
+  parentHub?: string;
+  /** Hub-page content (template: 'hub'): an opinionated thesis and the
+   *  doors into the studies it introduces. */
+  hub?: {
+    headline: string;
+    body: string;
+    doors: { slug: string; label: string; line: string }[];
   };
   heroImage: {
     src: string;
@@ -25,13 +42,47 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: 'design-infrastructure',
+    title: 'Design Infrastructure',
+    subtitle: 'Where an AI-native way of working started, and where it is now.',
+    tags: ['Design Leadership', 'AI Workflow', 'Operating Model'],
+    template: 'hub',
+    heroImage: {
+      src: '/images/design-infrastructure.png',
+      alt: 'Design Infrastructure: the origin and the current state of an AI-native design practice',
+      placeholder: 'Design Infrastructure hub cover (Wallace render pending)',
+    },
+    hub: {
+      headline: 'I build design infrastructure, not just designs.',
+      body: 'I saw an opportunity, and taught myself and an organization the tools to chase it. Then we made it operational and built something a private-lending company actually runs in production. Not a faster way to make mockups, but something a team works in every day.',
+      doors: [
+        {
+          slug: 'ai-leadership',
+          label: 'The origin story',
+          line: 'Workshops, a 6-step playbook, and 100% tool adoption across a skeptical org.',
+        },
+        {
+          slug: 'doctrine-not-prompts',
+          label: 'The story today',
+          line: 'An AI-as-teammate operating model: version-controlled doctrine, four proof points, shipped.',
+        },
+      ],
+    },
+  },
+  {
     slug: 'ai-leadership',
     title: 'Pioneering AI Adoption',
     subtitle: 'Strategy, tooling, and the future of design control.',
     tags: ['Strategy', 'AI/ML', 'Design Leadership', 'Organizational Change'],
+    parentHub: 'design-infrastructure',
     heroMetric: {
       value: '100%',
       label: 'team AI tool adoption',
+    },
+    relatedStudy: {
+      slug: 'doctrine-not-prompts',
+      kicker: 'Where this went',
+      direction: 'forward',
     },
     heroImage: {
       src: '/images/intro.png',
@@ -44,9 +95,15 @@ export const caseStudies: CaseStudy[] = [
     title: 'Doctrine, Not Prompts',
     subtitle: 'An AI-as-teammate operating model for a small design team.',
     tags: ['Design Leadership', 'AI Workflow', 'Operating Model', 'Org Change'],
+    parentHub: 'design-infrastructure',
     heroMetric: {
       value: '2 days',
       label: 'brand refresh, doctrine to shipped',
+    },
+    relatedStudy: {
+      slug: 'ai-leadership',
+      kicker: 'The origin',
+      direction: 'back',
     },
     heroImage: {
       src: '/images/doctrine-reads-doctrine.png',
@@ -75,8 +132,8 @@ export const caseStudies: CaseStudy[] = [
     subtitle: 'A shipped AI review product, with hard metrics and a way of working.',
     tags: ['Design Leadership', 'AI Ops', 'Prototype to Production', 'Metrics'],
     heroMetric: {
-      value: '82%',
-      label: 'loans shipped with zero analyst edits',
+      value: '50%',
+      label: 'less PSA review time per loan',
     },
     heroImage: {
       src: '/images/idr-hifi.png',
@@ -171,6 +228,16 @@ export type PeekSection = {
   tease: string;
 };
 
+/** An external call-to-action: a clickable link out of the portfolio
+ *  (e.g. to the Perihelion lab). Brass owns the interaction. */
+export type CtaSection = {
+  type: 'cta';
+  kicker?: string;
+  href: string;
+  action: string;
+  body: string;
+};
+
 export type CaseStudySection =
   | TextSection
   | ImageSection
@@ -178,7 +245,8 @@ export type CaseStudySection =
   | ComparisonSection
   | QuoteSection
   | CalloutSection
-  | PeekSection;
+  | PeekSection
+  | CtaSection;
 
 // --- Markdown file imports ---
 

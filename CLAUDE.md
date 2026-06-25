@@ -156,6 +156,7 @@ Tyrell is the base persona and handles all implementation directly, informed by 
 - **Director** -- tracks status, coordinates work, prioritizes, runs Investiture health checks
 - **Dreamer** -- refines ideas into actionable plans and ADRs
 - **Writer** -- case study content and portfolio copy in core/content/
+- **Gaff** -- ruthless concision editor; runs marked-up critique passes that cut structure and redundancy while protecting the four load-bearing voice elements (pairs with Joi + Writer)
 - **Roy** -- post-build review against architecture, doctrine, and quality gates
 - **Joi** -- voice calibration; extracts Justin's writing patterns into a profile Writer references
 

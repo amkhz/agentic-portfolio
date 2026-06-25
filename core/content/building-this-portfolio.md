@@ -8,7 +8,7 @@ This is a living case study. It grows as the portfolio evolves. Each node is a t
 
 Before I opened Cursor or Claude, I had been collecting material for months. Case study metrics in NotebookLM. Font and color inspiration bookmarked but not decided. An existing portfolio with voice and tone I could riff on. And the big one, an idea I could articulate: a 48-hour portfolio sprint, tokens first, AI augmented, built as a beta test for a larger workflow presentation at work.
 
-Friday afternoon I sat down with Claude and started planning. My process is messy: I dictate, ramble, type, refine, and iterate until the shape is something I'm happy with. Over about two hours, I had a structured plan, a set of strong starting prompts, and a context file guardrail for every agent assisted prompt going forward. Two hours sounds like a lot for "just planning." But plans are where it all starts. If you're not planning, you're going to end up with slop you're going to hate to clean up later.
+Friday afternoon I sat down with Claude and started planning. My process is messy: I dictate, ramble, type, refine, and iterate until the shape is something I'm happy with. Over about two hours, I had a structured plan, a set of strong starting prompts, and a context file guardrail for every agent assisted prompt going forward. Two hours sounds like a lot for "just planning." But skip it and you end up with slop you'll hate to clean up later.
 
 ![Claude conversation showing the iterative planning session with structured plan output](/images/meta-planning.png)
 *The plan emerged from a messy conversation. Rambling in, structured plan out.*
@@ -38,7 +38,7 @@ The first real point of friction: Saturday afternoon, I realized my case study c
 *Talking through the architecture change in plain English before touching any code.*
 <!-- aspect:16:9 placeholder:Screenshot of the conversation where the content/token separation was planned and refined -->
 
-The accessibility work grounded everything. What the token system gave us for free was impressive: contrast ratios, semantic heading hierarchy, focus ring styles. What had to be enforced through human review was subtler: reading order, link target clarity, making sure nothing important was expressed through color alone. Automated audits give you a score. The real work is in the judgment calls.
+What the token system gave us for free was impressive: contrast ratios, semantic heading hierarchy, focus ring styles. What had to be enforced through human review was subtler: reading order, link target clarity, making sure nothing important was expressed through color alone.
 
 ![Accessibility testing results showing Lighthouse audit scores](/images/meta-a11y.png)
 *The a11y pass: automated audits for the numbers, manual review for the nuance.*
@@ -65,7 +65,7 @@ Within days, the framework that launched this portfolio would be replaced entire
 
 ## The Material
 
-The original token system used hex values. `#C8956A` for brass. `#C278A0` for magenta. `#0A0A0B` for the deep background. They worked. But they only made sense if you already knew what they were supposed to look like.
+The original token system used hex values. `#C8956A` for brass. `#C278A0` for magenta. `#0A0A0B` for the deep background. They did the job.
 
 The shift to OKLCH happened when I started planning the light mode palette. With OKLCH, the dark background is `oklch(0.1452 0.0021 286.13)` and the light background is `oklch(0.9350 0.0280 62)`. Same chroma, same hue family, inverted lightness. The relationship is visible in the numbers. Brass went from `#C8956A` to `oklch(0.7087 0.0845 60.96)`. Magenta went from `#C278A0` to `oklch(0.6634 0.1052 346.74)`. Now you can see the structural balance: similar lightness (0.70 vs 0.66), similar chroma (0.08 vs 0.10), separated by hue (60 vs 346 degrees).
 
@@ -138,13 +138,9 @@ The four-layer architecture became the foundation for something bigger: a crew o
 
 This portfolio is built by a crew. Not just me prompting an AI all willy nilly. A crew of specialized agents, each with a defined role and clear boundaries, all working within the same four-layer architecture.
 
-The crew started with the Builder. It was the first skill I wrote, the engineering expert that turned plans into working code across all four layers. The Builder enforced token discipline, held the line on accessibility, and shipped every major feature from the Vite migration through the constellation navigation you are reading right now. For weeks, it was the crew's backbone.
+The crew is lean and focused. The Writer creates and refines content, operating exclusively in the core layer. The Dreamer takes rough ideas from my ramblings and produces structured plans. The Director tracks what shipped and what's next. Each one has a skill file that defines what it can and can't touch.
 
-Then the ecosystem grew up around it. CLAUDE.md and ARCHITECTURE.md absorbed the execution context the Builder used to carry alone. invest-crew took over pre-flight decomposition. A review pipeline caught layer violations and token drift automatically. One by one, the Builder's responsibilities migrated into doctrine and tooling until its generalist role was no longer necessary. The Builder was retired, not replaced. Its knowledge lives on in every quality gate and architecture rule the system enforces today.
-
-The crew that remains is leaner and more focused. The Writer creates and refines content, operating exclusively in the core layer. The Dreamer takes rough ideas from my ramblings and produces structured plans. The Director tracks what shipped and what's next. Each one has a skill file that defines what it can and can't touch.
-
-This is what makes this all more than a prompting strategy. The Writer can't touch UI components. The Dreamer can't write implementation code. The constraints are creative boundaries that prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
+The Writer can't touch UI components. The Dreamer can't write implementation code. The constraints are creative boundaries that prevent the kind of drift that happens when an AI agent has access to everything and tries to "help" by changing things outside its scope.
 
 ::: callout How The Crew Coordinates
 I have an idea. I talk to the Dreamer. The Dreamer researches feasibility, maps it to architecture layers, and writes a plan. Implementation follows in layer order: tokens first, then core logic, then services, then UI. The Writer drafts any content the feature needs. The Director updates the roadmap and flags anything pitch-worthy. The doctrine and review pipeline enforce quality throughout.
@@ -152,7 +148,7 @@ I have an idea. I talk to the Dreamer. The Dreamer researches feasibility, maps 
 
 Beyond the crew, the Investiture framework brings its own pipeline: doctrine audits for drift, architecture checks against its own rules, decision records, design briefs from research. Each tool reads from the same doctrine files and respects the same layer boundaries.
 
-This is where it gets meta: this portfolio demonstrates the workflow it documents. The case study you're reading was written by the Writer skill and edited by me. The interactive constellation you're navigating was planned by the Dreamer and built through the same pipeline that now runs without a dedicated Builder. The color migration, the framework migration, all of it went through this process. The fact that the system matured enough to retire its first crew member is itself proof the approach works.
+This is where it gets meta: this portfolio demonstrates the workflow it documents. The case study you're reading was written by the Writer skill and edited by me. The interactive constellation you're navigating was planned by the Dreamer and built through the same pipeline that now runs without a dedicated Builder. The color migration, the framework migration, all of it went through this process.
 
 This isn't about replacing designers or developers. It's about giving AI agents the same structure that makes human teams effective: clear roles, defined scope, shared context, and documented decisions. Crew members with skill sets, not magic text boxes you throw prompts at and cross your fingers. When the structure is strong enough, roles can evolve.
 
@@ -170,11 +166,9 @@ The crew that built itself out of a job.
 
 The crew didn't start as a crew. It started as one skill file and a bet.
 
-When I kicked off this portfolio, I wrote a single agent definition: the Builder. It was the engineering expert, the one that turned plans into working code across all four architecture layers. Token discipline, semantic HTML, accessibility scores, lint gates. The Builder held the line on all of it. From the Vite migration through the OKLCH color system, the textures, the case studies, the constellation navigation for this case study. Builder's digital hands were on every feature that shipped, he was a real one.
+When I kicked off this portfolio, I wrote a single agent definition: the Builder. It was the engineering expert, the one that turned plans into working code across all four architecture layers. Token discipline, semantic HTML, accessibility scores, lint gates. The Builder held the line on all of it. From the Vite migration through the OKLCH color system, the textures, the case studies, the constellation navigation you're reading right now. Builder's digital hands were on every feature that shipped, he was a real one.
 
 And for a while, that was enough. One agent with a strong context file and clear constraints. But with my growing ambition, so grew the complexity. Content needed its own voice. Planning needed space to breathe before code started flying. Status tracking needed someone paying attention to the bigger picture. It's easy to get lost in the sauce. So a crew formed around the Builder: the Writer for content, the Dreamer for planning, the Director for coordination. Each with a skill file defining what they could and couldn't touch.
-
-That separation of powers was important. The Writer operates exclusively in the core layer. The Dreamer produces plans but never writes implementation code. The Director tracks status but doesn't ship features. These aren't arbitrary limits. They're the same kind of creative constraints that make design systems work. You restrict scope so quality stays high within it.
 
 ::: callout The Builder's Highlight Reel
 First skill in the crew. Shipped before Director, Dreamer, or Writer existed. Enforced the Vite migration across every component. Built the three-font typography system. Implemented the NowPlaying Last.fm integration end-to-end. Maintained Lighthouse accessibility scores above 96 throughout. Never once silently broke the architecture.
@@ -186,11 +180,11 @@ So we retired it. Not replaced. Retired. Threw it a party and everything. The Bu
 
 This is what felt worth writing about. Most conversations I was reading about AI collaboration at the time focused on the prompting, the outputs, the speed. But the real interesting stuff is in the organizational design. How do you structure agents so they complement each other? How do you know when a role has been absorbed by the system it helped create? How do you let a crew evolve without losing what made it work in the first place? How do you make sure your personal intent stays in the loop?
 
-The answer, at least for this project: you write it down. Doctrine files, skill definitions, architecture rules. The same things that make human teams effective. Clear roles, defined scope, shared context, documented decisions. When the structure is strong enough, roles can change shape. That's not a failure of the original design. It's proof it worked.
+The answer, at least for this project: you write it down. Doctrine files, skill definitions, architecture rules. The same things that make human teams effective. Clear roles, defined scope, shared context, documented decisions.
 
 The honest version is simpler than it sounds. The Builder became redundant as I got more fluent at agentic building. The more I learned about directing a crew, the less I needed a generalist holding it all together, and the more its job belonged to the doctrine and the tooling. That's not a failure. That's learning.
 
-The crew today looks different once more. There's no standalone Builder, but there is Tyrell, the base persona who builds directly, carrying the doctrine the old Builder used to hold in its head. Around it: the Director tracking what ships, the Dreamer turning ideas into plans, the Writer owning the words, Roy reviewing every build against the architecture, and Joi keeping my voice honest in the content. Wallace joined too, a compiler that turns a raw image model into a directed instrument for the portfolio's imagery. The crew keeps changing shape as I learn. That's the point. The portfolio keeps shipping, the constellation keeps growing, and the system does exactly what it was built to do: evolve.
+The crew today looks different once more. There's no standalone Builder, but there is Tyrell, the base persona who builds directly, carrying the doctrine the old Builder used to hold in its head. Around it, Roy reviews every build against the architecture, Joi keeps my voice honest in the content, and Wallace turns a raw image model into a directed instrument for the portfolio's imagery. The crew keeps changing shape as I learn. That's the point. The portfolio keeps shipping, the constellation keeps growing, and the system does exactly what it was built to do: evolve.
 
 ::: peek the-process
 The crew structure and how it coordinates day to day.
@@ -248,18 +242,18 @@ The same way of working, pointed at something I am personally obsessed with.
 
 ## The Lab
 
-Somewhere in the middle of all this, the workflow outgrew the portfolio.
-
-I had a crew, a doctrine, and a way of working that took me from idea to shipped with the intent intact. And I had an itch. What if I pointed all of it at something I am genuinely obsessed with, instead of at the portfolio itself.
+Somewhere in the middle of all this, the workflow outgrew the portfolio. I had an itch to point all of it at something I'm genuinely obsessed with, instead of the portfolio itself.
 
 Enter Perihelion. A reader's notebook for frontier science: warp drives, consciousness, the physics at the edge of what we understand. I'm not a physicist. I'm a designer who finds this stuff endlessly fascinating, and I wanted to use everything I had been building to actually learn it beyond simply reading research papers, articles, and books. And, maybe I could pull a few other curious people in with me.
 
 The lab runs on the same bones as this portfolio. Same four-layer architecture, same agentic crew, same insistence that the design serve the content instead of showing off. But it is a sibling, not a copy. Where the portfolio is a specific evening, the lab is the morning after. Quieter, more contemplative, built to hold ideas that deserve room to breathe.
 
-The acceptance criteria: Does this open the door for someone who has never thought seriously about this stuff, or does it gatekeep? Every choice considers that criteria. No credentials required. Just curiosity.
+The acceptance criteria: Does this open the door for someone who has never thought seriously about this stuff, or does it leave them out? Every choice considers that criteria. No background needed. Just curiosity.
 
 It's the clearest proof I have that this way of working travels. The skills, the doctrine, the crew, none of it is specific to a portfolio. Point it at something you love and it holds.
 
-::: callout Step into the lab
-Perihelion is live and growing at labs.justinh.design.
+::: cta The way of working, elsewhere
+href: https://labs.justinh.design
+action: See the lab
+Perihelion points the same crew and doctrine at frontier science.
 :::

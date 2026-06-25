@@ -8,6 +8,7 @@ import { MetricGrid } from "./MetricGrid";
 import { ComparisonBlock } from "./ComparisonBlock";
 import { QuoteBlock } from "./QuoteBlock";
 import { CalloutBlock } from "./CalloutBlock";
+import { CtaBlock } from "./CtaBlock";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 
@@ -133,6 +134,18 @@ export function renderSection(
       return (
         <RevealOnScroll key={index}>
           <CalloutBlock label={section.label} body={section.body} />
+        </RevealOnScroll>
+      );
+
+    case "cta":
+      return (
+        <RevealOnScroll key={index}>
+          <CtaBlock
+            kicker={section.kicker}
+            href={section.href}
+            action={section.action}
+            body={section.body}
+          />
         </RevealOnScroll>
       );
 

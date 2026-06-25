@@ -23,11 +23,11 @@ Decisions banked: **drop-caps struck · instant-dscr OUT (revisit later) · PR/A
 ## Then the rest of the batch (manifest has full scope, owners, collisions)
 
 - **T-L4 doctrine sync** (after typeset) — PRODUCT.md + VECTOR.md (P3 "faces not yet locked") + **ARCHITECTURE.md (Stack L62 + Styling L214, stale "Fraunces/Geist")** → new lock.
-- **M2 Imagery finals** — Wallace renders (`wallace-hero.png`, `design-infrastructure.png`) can start anytime; Justin's screenshot captures are the external dependency. Punch list: `image-punchlist.md`.
+- **M2 Imagery finals** — Wallace renders (`wallace-hero.png`, `design-infrastructure.png`) can start anytime; Justin's screenshot captures are the external dependency. Punch list: `image-punchlist.md`. **+ per-project mark SET (T2e/T2f):** the FIG.0X work-index squares + case-study plates are Wallace "drafted-object" marks (decided 2026-06-24) — render as a family, then wire a `mark` field on `CaseStudy`. Needs the per-project object list first.
 - **M3 Notes/posts + folds** — new content type (needs a quick content-type ADR) → manifesto/Five-Ways/retro posts + About-Kiavi section + About/Resume register pass + verified citations.
 - **M4 Motion** (fast-follow, LAST) — via interface-craft (Storyboard + DialKit) + `/impeccable animate` backup.
-- **Loose ends:** wordmark/header in Hedvig (`/impeccable live`); per-project mark SYSTEM ADR (Dreamer).
-- **Gates:** Lighthouse 95+ per surface; **Roy final review** before `feat/conservatory-tokens` → main.
+- **Loose ends:** wordmark/header in Hedvig (`/impeccable live`); mark decision-record ADR (Dreamer, lightweight — the call's made).
+- **Gates:** Lighthouse 95+ per surface; then **Impeccable `/critique` + `/polish`** (final design QA); then **Roy final review** before `feat/conservatory-tokens` → main.
 
 ## Critical path
 type (done) → `/impeccable typeset` → surfaces on new faces (wordmark, About/Resume) → motion → Roy → main.

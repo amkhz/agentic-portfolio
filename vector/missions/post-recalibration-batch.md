@@ -102,7 +102,24 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Owner:** Roy (or Tyrell)  **Branch:** `chore/imagery-a11y`  **Commit prefix:** `fix(a11y):`
 **Inputs:** T2c.
 **Outputs:** Every new image has descriptive, non-redundant alt text; WCAG 1.1.1 pass.
-**Scope boundary:** Alt-text fields only. ⚠ **COLLISION: `case-studies.ts` + case-study `.md` also edited by M3 (T3f citations).** Sequence T2d AFTER T3f, or coordinate — never parallel worktrees on those files.
+**Scope boundary:** Alt-text fields only. ⚠ **COLLISION: `case-studies.ts` + case-study `.md` also edited by M3 (T3f citations) and T2f (mark wiring).** Sequence T2d AFTER T3f + T2f, or coordinate — never parallel worktrees on those files.
+
+### T2e: Per-project drafted-object mark SET
+
+**Layer:** Assets (`public/images/`)
+**Owner:** Wallace (skill)  **Branch:** `feat/imagery-marks`  **Commit prefix:** `feat(assets):`
+**Inputs:** the per-project **object identity** per study (Justin provides, or Wallace proposes a candidate object per project for approval) + the locked shared recipe. Decided 2026-06-24: the FIG.0X work-index squares + the case-study plates ARE these marks, and Wallace generates them (resolves T-L3).
+**Outputs:** one mark per case study (~5), rendered as a **visual family** — modern technical-schematic "drafted fantastical object" on natural paper, NOT steampunk/patent (per `plans/recalibration-sprint0-notes.md` + `feedback_imagery_restraint` / `feedback_no_flat_color_covers`). Two crops per project: **square** (work-index `Thumb` in `TocLinkList`) + **4:5 plate** (`DraftedObjectMark`). Fixed seeds; consistent palette/paper/line-treatment so the set reads as one system.
+**Process:** render ONE reference mark first → Justin approves the language → batch the rest with seed discipline.
+**Scope boundary:** Mark renders only. Does NOT wire them into data/UI (T2f) and does NOT touch hero/cover images (T2a).
+
+### T2f: Wire per-project marks into data + slots
+
+**Layer:** Core + UI (`core/content/case-studies.ts`, `src/pages/WorkPage.tsx`, `src/components/content/CaseStudyPageTemplate.tsx`)
+**Owner:** Tyrell  **Branch:** `feat/marks-wire`  **Commit prefix:** `feat(core):`
+**Inputs:** T2e.
+**Outputs:** a `mark?: { src; alt }` field on the `CaseStudy` interface + per-study values; `WorkPage` row `thumbnail.src` and the shell `DraftedObjectMark.src` pointed at the renders; `case-studies.test.ts` updated if the model changes. Slots are already placeholder-aware (`isRealImage()` guard in `DraftedObjectMark`/`Thumb`), so this is additive — no component refactor.
+**Scope boundary:** Model field + src wiring + test. Does NOT restyle the slot components. ⚠ COLLISION: edits `case-studies.ts` — sequence in the case-studies.ts chain (after T3a/T3b/T3f), coordinate with T2d.
 
 ---
 
@@ -187,10 +204,11 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 
 - **T-L1 Wordmark/header** — re-evaluate the "Justin Hernandez" header as a display moment in Hedvig (NOT hand-lettered); `/impeccable live` variants. Layer: UI (`src/components/layout/Header.tsx`). Owner: Tyrell. Branch: `feat/wordmark`. Inputs: M1.
 - **T-L2 Drop-caps call** — Justin's one-line decision (collision #4, never closed). Recommendation: **strike** (Field Notebook + slop bans + Perihelion already owns a sigil drop cap; sibling-not-copy). Resolve BEFORE any case-study-shell type work. Decision item, not code.
-- **T-L3 Per-project mark SYSTEM ADR** — the `DraftedObjectMark` slot primitive exists; the bespoke-per-project mark system is still undesigned. Owner: Dreamer → `invest-adr`. Branch: `docs/mark-system-adr`. Parallel-safe.
+- **T-L3 Per-project mark system — decision record (lightweight ADR).** RESOLVED 2026-06-24 (Justin): the mark system = **Wallace-generated "drafted fantastical object" specimens, one per project**, rendered into the existing placeholder-aware slots (`Thumb` square on the work index, `DraftedObjectMark` 4:5 plate on case-study shells). No new component system needed — the slots already shipped in the Conservatory-surfaces mission. ADR just records the decision + the shared render recipe + the per-project object list. **The render work is now T2e; the wiring is T2f.** Owner: Dreamer → `invest-adr` (short). Branch: `docs/mark-system-adr`. Parallel-safe.
 - **T-L4 Doctrine sync to ADR-013** — PRODUCT.md + VECTOR.md (P3 "faces not yet locked" → locked Stack E) + **ARCHITECTURE.md (Stack L62 + Styling L214, stale "Fraunces/Geist")** → Conservatory + locked faces. Owner: Tyrell/Director. Branch: `docs/doctrine-sync-adr013`. ⚠ Sequence AFTER T1e (type lock) so it references the locked faces.
 - **T-L5 Lighthouse 95+** — carry as a per-surface PR gate, not a task.
-- **T-L6 Roy final review** — full review vs ADR-013 (last was "SHIP WITH NOTES" 2026-06-21; confirm notes actioned). Owner: Roy. **Final gate before `feat/conservatory-tokens` → `main`.**
+- **T-L6 Impeccable critique + polish (final design QA)** — a scored `/critique` pass across the touched surfaces (Nielsen table, P0–P3, slop detector, persisted snapshot), then `/polish` consuming that snapshot as its backlog (P0/P1 first). Owner: Tyrell (Impeccable). Branch: `polish/final-design-qa`. Sequenced AFTER all build work + Lighthouse, BEFORE Roy — Impeccable catches the design-craft gaps; Roy then reviews against doctrine/architecture with a clean surface.
+- **T-L7 Roy final review** — full review vs ADR-013 (last was "SHIP WITH NOTES" 2026-06-21; confirm notes actioned). Owner: Roy. **Final gate before `feat/conservatory-tokens` → `main`.**
 
 ---
 
@@ -199,24 +217,24 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Start immediately (parallel):**
 
 - M1 `feat/type-v2` (T1a → T1b → T1c sequential) **+** `feat/type-v2-sidestripe` (T1d) **+** `docs/type-v2-lock` (T1e)
-- M2 T2a (Wallace) **+** T2b (Justin captures, external)
+- M2 T2a (Wallace heroes) **+** T2b (Justin captures, external) **+** T2e (Wallace mark set — once the per-project object list is settled)
 - M3 T3a (notes infra — after its quick content-type ADR), T3c (About copy)
-- M5 T-L3 (mark ADR)
+- M5 T-L3 (mark decision-record ADR)
 
 **After M1 lands:**
 
 - T-L4 (doctrine sync — needs T1e) ; T-L1 (wordmark — needs Hedvig) ; T3d (About/Resume register — needs faces + T3c) ; T3b (posts prose — needs T3a)
 
-**After imagery in (T2a+T2b):** T2c → then T3f → then T2d (case-studies.ts collision chain)
+**After imagery in (T2a+T2b+T2e):** T2c, then the `case-studies.ts` chain: T3f → T2f (mark wiring) → T2d (alt text)
 
-**Last:** M4 motion (T4a → T4b → T4c) → **T-L6 Roy gate** → merge `feat/conservatory-tokens` → `main`
+**Last:** M4 motion (T4a → T4b → T4c) → **T-L6 Impeccable critique + polish** → **T-L7 Roy gate** → merge `feat/conservatory-tokens` → `main`
 
-**Critical path:** T1a → T1b → T1c (type spine) → T3d/T-L1 (surfaces on new faces) → T4a → T4b → T4c (motion) → T-L6 (Roy) → main. Motion is gated last by design; the spine is the type chain.
+**Critical path:** T1a → T1b → T1c (type spine) → T3d/T-L1 (surfaces on new faces) → T4a → T4b → T4c (motion) → T-L6 (Impeccable critique + polish) → T-L7 (Roy) → main. Motion is gated last by design; the spine is the type chain; the two final gates are design-craft (Impeccable) then doctrine (Roy).
 
 ## Cross-Mission Collision Flags
 
 1. `**src/styles/globals.css`** — T1a/T1b/T1c. Single branch `feat/type-v2`, sequential, one owner. Never parallel.
-2. `**core/content/case-studies.ts` + case-study `.md**` — T3f (citations), T2d (alt text), T3b/T3a (registry). Chain: T3a → T3b/T3f → T2d. No parallel worktrees on these files.
+2. **`core/content/case-studies.ts` + case-study `.md`** — T3f (citations), T2f (mark wiring), T2d (alt text), T3b/T3a (registry). Chain: T3a → T3b/T3f → T2f → T2d. No parallel worktrees on these files.
 3. `**vector/decisions/ADR-013` + `DESIGN.md**` — T1e (type amendment) vs T-L4 (broad sync). Sequence T1e → T-L4.
 4. `**src/pages/AboutPage.tsx**` — T3c (copy) vs T3d (register). Same branch or T3c → T3d.
 5. `**tokens.css**` — only T4a (motion). M1 font tokens live in `globals.css` `@theme`, so no collision.
@@ -226,9 +244,9 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 Complete when:
 
 - Hedvig/Figtree/JetBrains live both modes; dark-mode body weight tuned; `/impeccable typeset` pass done; #5 side-stripes gone; DESIGN.md + ADR-013 + PRODUCT/VECTOR/ARCHITECTURE all synced to the new lock.
-- All `image-punchlist.md` images present (no broken refs), low-res replaced, alt text WCAG-clean.
+- All `image-punchlist.md` images present (no broken refs), low-res replaced, alt text WCAG-clean; the per-project Wallace mark set renders in the FIG slots + case-study plates (no placeholders).
 - Notes/posts type ships with ≥1 post; About has the Kiavi subsection in the new register; citations verified before publish.
 - Motion layer landed per VECTOR P4 (ease-out-expo, reduced-motion respected, one ambitious moment per surface).
-- Loose ends closed: wordmark, drop-caps call recorded, mark-system ADR written, Lighthouse 95+ per surface.
-- `npm run lint` + `npm run build` + `npm run test` green; Roy final review passed; merged to `main`.
+- Loose ends closed: wordmark, drop-caps call recorded, mark-system decision-record ADR written, Lighthouse 95+ per surface.
+- `npm run lint` + `npm run build` + `npm run test` green; Impeccable critique + polish gate cleared, then Roy final review passed; merged to `main`.
 

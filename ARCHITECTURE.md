@@ -59,7 +59,7 @@ Violations: `core/` importing from `src/`, `services/`, or `design-system/`. `se
 | **Frontend** | React 19 + Vite 6 | Fast builds, hot reload, ES modules native |
 | **Language** | TypeScript (strict mode) | Catch errors at compile time, self-documenting code |
 | **Styling** | Tailwind v4 + CSS variable tokens | Utility-first with design system enforcement via `design-system/tokens.css` |
-| **Typography** | Three-face stack -- display serif (Fraunces), body sans (Geist), mono kicker (JetBrains Mono) per ADR-011 | Variable axes used intentionally for *fit* (weight, opsz, SOFT, WONK), not animation. Currently loaded in `src/styles/globals.css`; migration to `design-system/tokens.css` planned in the next ADR |
+| **Typography** | Three-face stack -- display serif (Hedvig Letters Serif), body sans (Figtree), mono kicker (JetBrains Mono) per ADR-013 ("Stack E", locked 2026-06-24) | Variable axes used intentionally for *fit* (Figtree weight; night-mode body trim), not animation. Hedvig is single-weight (no axes). Loaded in `src/styles/globals.css` `@theme`; the `design-system/tokens.css` migration remains deferred |
 | **Animation** | motion/react | Spring physics animations, gesture support |
 | **Routing** | react-router v7 | Client-side routing with SPA support via `vercel.json` rewrites |
 | **SEO** | react-helmet-async | Per-page `<title>` and meta tags |
@@ -211,7 +211,7 @@ agentic-portfolio/
 - Tailwind v4 with CSS variable tokens from `design-system/tokens.css`
 - All color is OKLCH via tokens, referenced by name -- no default Tailwind palette, no hex (`#000`, `#FFF`), no `rgb()`, no named colors anywhere
 - Dark mode is the default and primary experience
-- Typography: three-face stack per ADR-011 (display serif / body sans / mono kicker). Variable axes used intentionally for *fit*, not animation. See VECTOR.md and PRODUCT.md for full direction
+- Typography: three-face stack per ADR-013 (Hedvig Letters Serif display / Figtree body / JetBrains Mono kicker, "Stack E" locked 2026-06-24). Variable axes used intentionally for *fit*, not animation. See VECTOR.md, PRODUCT.md, and DESIGN.md for full direction
 
 ### Routing
 - react-router v7 for client-side navigation

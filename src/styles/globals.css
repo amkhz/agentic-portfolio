@@ -2,12 +2,14 @@
 @import "../../design-system/tokens.css";
 
 @theme inline {
-  /* --- Fonts (locked: "The Conservatory", ADR-013) ---
-     Three-face stack: display + humanist body sans (covers UI/nav via --font-heading) + mono kicker.
-     --font-heading retained as an alias of the body sans for existing call sites. */
-  --font-display: 'Fraunces Variable', Georgia, serif;
-  --font-heading: 'Source Sans 3 Variable', system-ui, sans-serif;
-  --font-body: 'Source Sans 3 Variable', system-ui, sans-serif;
+  /* --- Fonts (locked: "The Conservatory", ADR-013, type-v2 amendment 2026-06-24) ---
+     Three-face stack: Hedvig Letters Serif (display) + Figtree (body sans, covers
+     UI/nav via --font-heading) + JetBrains Mono (kicker). Replaces the prior
+     Fraunces/Source Sans lock (Fraunces read as an AI tell). --font-heading
+     retained as an alias of the body sans for existing call sites. */
+  --font-display: 'Hedvig Letters Serif', Georgia, serif;
+  --font-heading: 'Figtree Variable', system-ui, sans-serif;
+  --font-body: 'Figtree Variable', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* --- Colors: resolve from theme layer --- */
@@ -134,29 +136,23 @@ body {
   line-height: var(--leading-normal);
 }
 
-/* Night mode: counter dark-mode bloom on body prose. Display headings are
-   pinned to regular weight in @layer base below, so they hold their gravity
-   and do not thin along with the prose. */
+/* Night mode: counter dark-mode bloom on Figtree body prose. Light-on-dark
+   text optically blooms and reads heavier, so night trims the body weight
+   slightly to keep prose crisp; day (golden hour) keeps full regular weight.
+   Display headings are pinned to regular weight in @layer base below, so they
+   hold their gravity and do not thin along with the prose. */
 [data-theme="dark"] {
   --body-weight: 350;
 }
 
-/* Fraunces display-axis tuning ("The Conservatory", ADR-013).
-   opsz tracks size via font-optical-sizing: auto; wght stays per-element via
-   font-weight. SOFT adds wabi-sabi warmth at the terminals; WONK (eccentric
-   alternate glyphs) on for characterful imperfection. Tunable via the
-   custom properties below. */
-:root {
-  --display-soft: 45; /* 0 hard ... 100 soft */
-  --display-wonk: 1;  /* 0 normal ... 1 wonky */
-}
-
+/* Hedvig Letters Serif is a single-weight, non-variable display face — no
+   optical-size, SOFT, or WONK axes (those belonged to Fraunces). Optical
+   sizing stays on as a harmless no-op for any future variable display face. */
 .font-display {
   font-optical-sizing: auto;
-  font-variation-settings: "SOFT" var(--display-soft), "WONK" var(--display-wonk);
 }
 
-/* Pin display headings to regular weight so they keep their weight independent
+/* Pin display headings to regular weight so they keep their gravity independent
    of the night-mode body trim. Lives in @layer base so explicit weight
    utilities (font-medium, font-bold) still override it. */
 @layer base {

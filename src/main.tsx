@@ -5,10 +5,11 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { App } from "./App";
 
-// Locked type stack ("The Conservatory", ADR-013):
-// Display = Fraunces (full axis: opsz + SOFT + WONK), Body/UI = Source Sans 3, Mono kicker = JetBrains Mono.
-import "@fontsource-variable/fraunces/full.css";
-import "@fontsource-variable/source-sans-3";
+// Locked type stack v2 ("The Conservatory", ADR-013, amended 2026-06-24):
+// Display = Hedvig Letters Serif, Body/UI = Figtree, Mono kicker = JetBrains Mono.
+import "@fontsource-variable/figtree";
+import "@fontsource-variable/figtree/wght-italic.css";
+import "@fontsource/hedvig-letters-serif/400.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 

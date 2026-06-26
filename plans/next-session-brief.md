@@ -31,7 +31,7 @@ Then, in order:
 ## Then the rest of the batch
 
 - **M3 Notes/posts (T3a→T3b)** — needs a quick content-type ADR first (`invest-adr`: extend `case-studies.ts` pattern vs new `posts.ts`). Then Writer drafts the manifesto ("Design infrastructure, not just designs" — same one-liner as the hub, but the *argument* form per ADR-014) / Five-Ways / 2026 retro. Then verified PR/ADR citations (T3f).
-- **M4 Motion** (fast-follow, LAST) — interface-craft (Storyboard + DialKit) + `/impeccable animate` backup. Hold until surfaces settle.
+- **M4 Motion** (fast-follow, LAST) — interface-craft (Storyboard + DialKit) + `/impeccable animate` backup. Hold until surfaces settle. New **T4d** spikes a Paper Shaders (`@paper-design/shaders-react`) atmospheric layer over the M2 Wallace renders — material light to complement the choreography. Reference brief: `plans/paper-shaders-reference.md` (verified API + Conservatory shortlist + the OKLCH-vs-hex question to settle).
 - **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` (final design QA) → **Roy final review** → merge `feat/conservatory-tokens` → `main`.
 
 ## Critical path

@@ -196,6 +196,15 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 
 **Scope boundary:** Motion only — no layout/type/color changes. `RevealOnScroll`/`GlowEffect` can be refreshed or reinvented.
 
+### T4d: Paper Shaders atmospheric layer over imagery (SPIKE → optional ship)
+
+**Layer:** UI (`src/components/effects/`)
+**Owner:** Tyrell  **Branch:** `feat/shader-atmosphere`  **Commit prefix:** `feat(ui):`
+**Inputs:** M2 imagery in (T2a/T2e renders to composite over); T4a (motion strategy + reduced-motion); reference brief **`plans/paper-shaders-reference.md`**.
+**Outputs:** A WebGL shader layer (`@paper-design/shaders-react`, verified at v0.0.76, React 19 peer-clean) reading Conservatory tokens, composited over/behind the Wallace renders to push covers past flat panels into living light. Lead with **static** shaders (Static Mesh Gradient / Grain Gradient) and **image-filter** shaders (Paper Texture / Fluted Glass) over the actual renders — no motion budget, no a11y tax. Reserve **one** animated shader (God Rays) for a single hero behind `prefers-reduced-motion`, lazy-mounted.
+**Process:** SPIKE FIRST. Must settle the load-bearing open question — does the shader `colors` prop accept `oklch()`, or do we feed runtime-resolved token values (and accept sRGB interpolation between stops)? Resolve before any shipped surface; no hardcoded hex (derive from `tokens.css`). Screenshot both modes; verify atmosphere reads as material, not an effect demo.
+**Scope boundary:** Shader effect component(s) + cover/hero compositing only. Does NOT touch layout, type, color tokens, or the M2 render generation. Orthogonal to T4b choreography — shaders supply material motion, `motion/react` supplies choreography. ⚠ Optional ship: if the spike doesn't clear the slop-ban / OKLCH bar, document in the reference brief and drop — do not force it.
+
 ### T4c: interface-craft Design Critique on motion
 
 **Owner:** Tyrell/Roy  **Inputs:** T4b. Backup: `/impeccable animate` for any surface that lands flat.

@@ -82,11 +82,11 @@ export const caseStudies: CaseStudy[] = [
         items: [
           {
             label: 'Design tokens as a pipeline',
-            line: 'CSS holds the direction of truth, a shipped exporter pushes tokens downstream, and several brands coexist, each governed by its own profile. The design tool becomes the workbench, not the source.',
+            line: 'CSS holds the direction of truth, a shipped exporter pushes tokens downstream, and several brands coexist, each governed by its own profile. Design tools remain for tangible iteration, not as the source of truth.',
           },
           {
             label: 'Brand voice as executable doctrine',
-            line: 'A voice guide turned into a skill that both writes copy and checks it, with the legal and attestation strings locked down. Language as a system anyone on the team can pick up.',
+            line: 'A voice guide turned into a skill that both writes copy and checks it, with the legal and attestation strings locked down. Language as a system automatically applied while you work.',
           },
           {
             label: 'CI for a design repo',
@@ -94,7 +94,7 @@ export const caseStudies: CaseStudy[] = [
           },
           {
             label: 'Fleets, not single sessions',
-            line: 'Parallel agent sprints that landed two architecture decisions at once, plus a way to break a feature into scoped agent tasks, each with its own branch and commit prefix.',
+            line: 'Parallel agent sprints that landed two architecture decisions at once, plus a repeatable way to break a feature into scoped agent tasks, each with its own branch and commit prefix.',
           },
           {
             label: 'Production impact, not just prototypes',

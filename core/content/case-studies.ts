@@ -46,6 +46,15 @@ export interface CaseStudy {
     alt: string;
     placeholder?: string;
   };
+  /** Per-project drafted-object mark (ADR-013 / DESIGN.md): a modern
+   *  technical-schematic specimen of a fantastical instrument. `src` is the
+   *  4:5 plate (DraftedObjectMark on the case-study shell); `thumb` is the
+   *  square work-index crop. Hub studies may carry only a `thumb`. */
+  mark?: {
+    src?: string;
+    thumb?: string;
+    alt: string;
+  };
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -59,6 +68,10 @@ export const caseStudies: CaseStudy[] = [
       src: '/images/design-infrastructure.png',
       alt: 'Design Infrastructure: the origin and the current state of an AI-native design practice',
       placeholder: 'Design Infrastructure hub cover (Wallace render pending)',
+    },
+    mark: {
+      thumb: '/images/design-infrastructure-thumb.png',
+      alt: 'Drafted technical schematic of a modular lattice substrate with instruments docked into its nodes',
     },
     hub: {
       headline: 'I build design infrastructure, not just designs.',
@@ -129,6 +142,10 @@ export const caseStudies: CaseStudy[] = [
       alt: 'AI workshop presentation showing the 6-step prototyping process',
       placeholder: 'Screenshot of "Building with AI Tools" presentation title slide, or a composite showing the Define→Scope→Plan→Build→Test→Iterate workflow',
     },
+    mark: {
+      src: '/images/ai-leadership-mark.png',
+      alt: 'Drafted technical schematic of a first-light apparatus, a single spark igniting a ring of small lamps',
+    },
   },
   {
     slug: 'doctrine-not-prompts',
@@ -150,6 +167,10 @@ export const caseStudies: CaseStudy[] = [
       alt: 'Team agent answering a project-specific question by reading version-controlled doctrine files',
       placeholder: 'Split view: a prompt to the team agent on the left, its project-specific answer on the right, with VECTOR.md, CLAUDE.md, and ARCHITECTURE.md labeled as the doctrine it read',
     },
+    mark: {
+      src: '/images/doctrine-not-prompts-mark.png',
+      alt: 'Drafted technical schematic of a governing core directing a calm orbit of small satellite forms',
+    },
   },
   {
     slug: 'instant-sow',
@@ -161,9 +182,14 @@ export const caseStudies: CaseStudy[] = [
       label: 'per SOW, observed',
     },
     heroImage: {
-      src: '/images/sow-toolbox.png',
+      src: '/images/sow-toolbox-hero.png',
       alt: 'My SOW Toolbox interface showing Upload, Describe, and Recycle options',
       placeholder: 'High-fidelity mockup of the "My Scope of Work Toolbox" UI showing the three AI-assisted paths: Upload Files, Describe Your Project, Select Previous SOW',
+    },
+    mark: {
+      src: '/images/instant-sow-mark.png',
+      thumb: '/images/instant-sow-thumb.png',
+      alt: 'Drafted technical schematic of a modular scoping armature, a jointed arm assembling measured parts on a base',
     },
   },
   {
@@ -176,9 +202,14 @@ export const caseStudies: CaseStudy[] = [
       label: 'less PSA review time per loan',
     },
     heroImage: {
-      src: '/images/idr-hifi.png',
-      alt: 'Property Admin Page showing extracted data alongside original document viewer',
+      src: '/images/idr-hero.png',
+      alt: 'Property Asset review page with an Action Required panel flagging six failed rules, each with a remark and rationale, above a pass/fail rules table',
       placeholder: 'High-fidelity mockup of the Property Admin Page with document viewer panel, extracted data fields, and rule override controls',
+    },
+    mark: {
+      src: '/images/instant-doc-review-mark.png',
+      thumb: '/images/instant-doc-review-thumb.png',
+      alt: 'Drafted technical schematic of a reading-and-extraction instrument lifting ordered points off a flat plane',
     },
   },
   {
@@ -194,6 +225,11 @@ export const caseStudies: CaseStudy[] = [
       src: '/images/wallace-hero.png',
       alt: 'Cinematic north-star render: a designer atelier at night in warm brass light with a Finn Juhl chair silhouette',
       placeholder: 'Wallace north-star hero: dark atmospheric atelier interior, volumetric warm-brass light through haze, a Finn Juhl lounge chair in shadow, a single dusty-magenta glow, with the structured JSON caption that produced it shown alongside',
+    },
+    mark: {
+      src: '/images/wallace-mark.png',
+      thumb: '/images/wallace-thumb.png',
+      alt: 'Drafted technical schematic of an optical compiler instrument resolving structured rays into one plane of light',
     },
   },
 ];

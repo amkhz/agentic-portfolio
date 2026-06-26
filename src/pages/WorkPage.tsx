@@ -7,9 +7,11 @@ import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import {
   DossierFrame,
   DossierTags,
+  RegistrationMark,
   TocLinkList,
   type TocItem,
 } from "@/components/fieldnotebook";
+import { HeroScrim } from "@/components/content/HeroScrim";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 
 // Studies folded behind a hub are reached through it, not listed here.
@@ -21,7 +23,8 @@ const tocItems: TocItem[] = indexedStudies.map((study, i) => ({
   to: `/work/${study.slug}`,
   // No leading number — the thumbnail carries the visual index.
   thumbnail: {
-    alt: `${study.title} project mark`,
+    src: study.mark?.thumb,
+    alt: study.mark?.alt ?? `${study.title} project mark`,
     placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
   },
   description: study.subtitle,
@@ -92,20 +95,39 @@ export function WorkPage() {
         <link rel="canonical" href="https://justinh.design/work" />
       </Helmet>
 
-      <section className="py-24 sm:py-32">
-        <Container>
-          <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-            Field notebook
-          </p>
-          <h1 className="mt-4 font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
-            Work
-          </h1>
-          <p className="mt-5 max-w-[65ch] font-body text-lg leading-normal text-text-secondary">
-            A working index of case files spanning AI strategy, enterprise UX, and
-            design systems. 
-          </p>
+      {/* Atelier hero - the workshop the case files come from. Field Notebook
+          grammar: registration marks frame the type, humus scrim anchors it
+          lower-left, top fade blends under the sticky header. */}
+      <section className="relative isolate flex min-h-[56vh] items-end overflow-hidden bg-bg-deep">
+        <img
+          src="/images/work-hero.png"
+          alt="A designer's atelier at night within a biophilic habitat, warm brass light over a workbench of instruments"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
+          loading="eager"
+          fetchPriority="high"
+        />
+        <HeroScrim top bottom left />
 
-          <RevealOnScroll className="mt-14">
+        <Container className="relative z-10 pb-14 pt-32 sm:pb-20 sm:pt-40">
+          <div className="relative max-w-[60ch] py-8 pl-9 sm:py-10 sm:pl-14">
+            <RegistrationMark corners={["tl", "bl"]} />
+            <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+              Field notebook
+            </p>
+            <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+              Work
+            </h1>
+            <p className="mt-5 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
+              A working index of case files spanning AI strategy, enterprise UX,
+              and design systems.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-24">
+        <Container>
+          <RevealOnScroll>
             <FeaturedEntry />
           </RevealOnScroll>
 

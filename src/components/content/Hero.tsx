@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
 import { RegistrationMark } from "@/components/fieldnotebook";
+import { HeroScrim } from "@/components/content/HeroScrim";
 
 /**
  * Home hero - "The Conservatory" register (ADR-013 / DESIGN.md).
@@ -24,16 +25,10 @@ export function Hero() {
         loading="eager"
         fetchPriority="high"
       />
-      {/* Warm scrim for legibility - humus-black, densest at lower-left.
-          References tokens only (bg-deep -> transparent), no literal color. */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "linear-gradient(to top, var(--theme-bg-deep) 6%, transparent 64%), linear-gradient(to right, var(--theme-bg-deep) 4%, transparent 52%)",
-        }}
-      />
+      {/* Warm scrim - legibility at lower-left, plus a top fade so the image
+          blends under the sticky translucent header instead of meeting it with
+          a hard seam (most visible in light mode). Token-only, re-tints per mode. */}
+      <HeroScrim top bottom left />
 
       <Container className="relative z-10 pb-16 pt-32 sm:pb-24 sm:pt-44">
         {/* Type column framed as an instrument plate - registration marks in

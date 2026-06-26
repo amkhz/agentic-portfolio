@@ -72,7 +72,12 @@ export function ImageBlock({
               src={src}
               alt={alt}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-contain"
+              className={cn(
+                "absolute inset-0 h-full w-full",
+                // Covers (DossierFrame heroes) fill to the frame edge; body
+                // figures stay fully visible. Matches the `bare` contract.
+                bare ? "object-cover" : "object-contain"
+              )}
             />
           </div>
         ) : (

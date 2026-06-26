@@ -23,7 +23,8 @@ export function HomePage() {
     to: `/work/${study.slug}`,
     label: study.title,
     thumbnail: {
-      alt: `${study.title} project mark`,
+      src: study.mark?.thumb,
+      alt: study.mark?.alt ?? `${study.title} project mark`,
       placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
     },
     kicker: study.tags.slice(0, 2).join(" / "),

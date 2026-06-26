@@ -133,7 +133,8 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
               </div>
               <div className="lg:col-span-5">
                 <DraftedObjectMark
-                  alt={`${study.title} project mark`}
+                  src={study.mark?.src}
+                  alt={study.mark?.alt ?? `${study.title} project mark`}
                   kicker="Specimen"
                   caption={`Fig. ${slugify(study.slug)}`}
                   placeholder="Drafted object pending"

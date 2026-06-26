@@ -24,6 +24,9 @@ That's important because Wallace doesn't work alone. It sits inside my Impeccabl
 
 I didn't build Wallace to talk about it. I built it to make a decision. When this portfolio needed a new visual direction, I used Wallace to render four full north-star directions, monograph, atelier, field notebook, and a tech-and-nature conservatory, as finished hero images rather than mood boards. Eight heroes, fixed seeds, captions saved per image, about seven minutes per render on my M5 Max.
 
+![A designer's atelier at night within a biophilic habitat, warm brass light over a workbench of optical instruments, one of the four north-star directions Wallace rendered](/images/wallace-atelier.png)
+*The atelier direction, rendered by Wallace as a finished hero rather than a mood board. The instrument on the bench is the kind of object the schematic marks across this site abstract.*
+
 Seeing the directions fully realized gave me the power to speak my intent into existence. The conservatory thesis got rejected in its first cut because the renders read as post-apocalyptic instead of inhabited, and I could see that precisely because the image was specific enough to be wrong and I understood what I needed to change. I re-cut the caption, demoted the green to a sage accent, brought the warmth up, put the instrument back in active use, and the direction landed. That whole conversation happened in the schema, one variable at a time. Renders fed straight into the visual-direction decision record. My tools authored the evidence the call was made on.
 
 ## Results

@@ -86,7 +86,7 @@ export function ResumePage() {
           <div className="mx-auto max-w-[920px] space-y-10">
             <div className="flex flex-col gap-5 rounded-lg border border-border-subtle bg-bg-elevated p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
               <div>
-                <p className="font-heading text-xs uppercase tracking-wider text-text-secondary">
+                <p className="font-mono text-xs uppercase tracking-wider text-text-secondary">
                   Resume
                 </p>
                 <p className="mt-2 font-body text-sm text-text-secondary">

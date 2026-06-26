@@ -1,38 +1,39 @@
-# Pickup Brief — Surfaces phase landed; next up is M2 Imagery (Wallace)
+# Pickup Brief — M2 Imagery landed; next is M3 Notes/Posts (and Justin's screenshots)
 
-Updated end of 2026-06-25. Integration branch is **`feat/conservatory-tokens`** — everything below is merged into it. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest — read it first).
+Updated 2026-06-26. Integration branch is **`feat/conservatory-tokens`**. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest). Latest commit: **`25b0de2`** (M2 imagery).
 
-## Where we left off (this session)
+## Where we left off (this session) — M2 Imagery DONE ✅
 
-All merged into `feat/conservatory-tokens`, lint/build/test green (139 tests):
+Committed to `feat/conservatory-tokens` (`25b0de2`), lint/build/test green (139 tests). All Wallace renders done locally via `mflux-generate-ideogram4` (drafts in **`mocks/m2-imagery/`**, gitignored — captions + scripts + sweeps live there, ~128M, on this machine only).
 
-- **Housekeeping** — merged the two M1 branches in: `feat/type-v2` (type stack + T1c tuning) and `docs/doctrine-sync-adr013` (T-L4). Both fully integrated.
-- **T-L1 Wordmark** ✅ — "Justin Hernandez" header is now a Hedvig display moment (`font-display`, dropped the single-weight faux-bold, `text-lg → text-xl`). `src/components/layout/Header.tsx`.
-- **T3c — Kiavi "body of work"** ✅ — IA decision (see **ADR-014**): the "what I've built at Kiavi" overview lives as a **"Beyond Workshops" breadth layer on the `design-infrastructure` hub**, NOT an About subsection and NOT a standalone study. Added optional `hub.bodyOfWork` to the `CaseStudy` model; rendered below the doors in `HubPageTemplate` (`BodyOfWorkItem`). Copy Writer-refined + Joi voice-audited, anonymized. Source: `port-sources/practice.md`.
-- **T3d — About/Resume register pass** ✅ — About: hero kicker → mono brass; the stacked prose sections (Life/Beliefs/Elsewhere/Contact) → editorial composition with **marginal mono numbering** via new `src/components/content/EditorialSection.tsx` (DESIGN.md L93); added the ADR-014 hub pointer. Resume: 3 mono-kicker face fixes only (no content change, PDF untouched). All About bio copy preserved verbatim.
+- **T2a Heroes** ✅ — `V4_QUALITY_48` finals placed:
+  - Home hero (`conservatory-hero.png`) = **atrium** (seed 8603)
+  - `/work` hero (`work-hero.png`, NEW hero on WorkPage) = **atelier** (8704)
+  - Wallace page (`wallace-hero.png`) = **self-portrait** (8802) — the Caption Engine made real
+  - IDR hero (`idr-hero.png`) = crop of `admin-page-tasks.png` (Action Required panel)
+  - SOW hero (`sow-toolbox-hero.png`) = crop of `sow-toolbox.png` (the AI toolbox card)
+- **T2e Marks** ✅ — six drafted-object schematic marks, **all baked text stripped** (Ideogram gibberish risk — see memory `feedback_no_baked_text_in_marks`; residual tiny dimension ticks accepted by Justin). Picked v2 seeds: Caption Engine **8902** (wallace), Reading Loom **8911** (idr), Scoping Armature **8923** (sow), First-Light **8932** (ai-leadership), Doctrine Core **8942** (doctrine), Design-Infra lattice **8952** (hub thumb). Cropped to text-free 4:5 plates + square thumbs via PIL/`sips`.
+  - ⚠ Marks are **V4_DEFAULT_20 drafts cropped**, NOT 48 finals (Justin picked the exact drafts; re-rendering at 48 would change composition). Optional later upgrade.
+- **T2f Wiring** ✅ — new `mark?: { src?; thumb?; alt }` on `CaseStudy`. Plates → `DraftedObjectMark` on shells; square thumbs → work-index `TocLinkList` (Home + WorkPage). Descriptive alt on every mark.
+- **Bonus fixes** ✅ — `ImageBlock` `bare` covers now `object-cover` (fill to frame; was a contain bug → hero letterboxing). New `HeroScrim` (token-only top/bottom/left scrim; top fade blends a full-bleed hero under the sticky header, worst in light mode) on Home + `/work`. Atelier render featured in the Wallace case-study **body** (`wallace.md`, "The Proof Is This Portfolio").
 
-**Merged branches safe to delete** (all fully integrated): `feat/type-v2`, `docs/doctrine-sync-adr013`, `feat/wordmark`, `feat/kiavi-body-of-work`, `feat/about-resume-register`.
+## Next — pick up either track
 
-## Next — M2 Imagery (Wallace). START WITH THE INTERVIEW.
+**Track A — M3 Notes/Posts** (no external dependency, ready now):
+- **T3a** — quick content-type ADR first (`invest-adr`: extend `case-studies.ts` pattern vs new `posts.ts` + `parse-post.ts`), then build the type (parser, registry, route, list + detail). Branch `feat/notes-content-type`.
+- **T3b** (Writer, after T3a) — manifesto ("Design infrastructure, not just designs", the *argument* form per ADR-014) / "Five Ways I Work" (`practice.md`) / 2026 retro (`wins.md`). Joi voice, no em-dashes, anonymize internal names.
+- **T3f** (Writer) — verified PR/ADR citations into `doctrine-not-prompts.md` + `instant-doc-review.md`. **Justin verifies the numbers before publish.**
 
-This is the planned focus for the fresh session. Wallace work has **no type dependency** and does **not** wait on Justin's screenshot-gathering (that's T2b, external, separate).
-
-**First action: run the Wallace interview** before generating anything. It settles:
-1. **Per-project object identity (T2e)** — one "drafted fantastical object" per case study (~5). Justin names them, or Wallace proposes a candidate object per project for approval.
-2. **The shared render recipe** — palette / paper / line-treatment so the set reads as one family: modern technical-schematic on natural paper, NOT steampunk/patent (`plans/recalibration-sprint0-notes.md`, `feedback_imagery_restraint`, `feedback_no_flat_color_covers`).
-
-Then, in order:
-- **T2a** — Wallace renders `wallace-hero.png` (north-star atelier) + `design-infrastructure.png` (hub cover) at exact slot aspect/crop, atmospheric (never flat panel), `V4_QUALITY_48`, fixed seeds. Branch `feat/imagery-wallace`.
-- **T2e** — render ONE reference mark first → Justin approves the language → batch the rest with seed discipline. Two crops per project: **square** (work-index `Thumb` in `TocLinkList`) + **4:5 plate** (`DraftedObjectMark`). Branch `feat/imagery-marks`.
-- **T2f** (after T2e) — wire a `mark?: { src; alt }` field on `CaseStudy`; point `WorkPage` thumbnails + `DraftedObjectMark.src` at the renders. Slots are already placeholder-aware (`isRealImage()` guard), so this is additive. Branch `feat/marks-wire`. ⚠ `case-studies.ts` collision — coordinate with the content chain.
-
-**Justin owns externally:** the per-project object list (interview input) + the screenshot captures (T2b) per `image-punchlist.md` (10 missing + 8 hi-res re-shoots). These can be gathered in parallel; they block T2c verification, not Wallace generation.
+**Track B — finish M2 imagery** (needs Justin's screenshots, see below):
+- **T2b** (Justin, external) — re-shoots per `image-punchlist.md`. **IDR especially**: the current `admin-page-tasks.png` crop is a good interim, but the punch list still wants the missing/hi-res set.
+- **T2c** — wire + verify (no broken paths, low-res `meta-*` replaced). Then the `case-studies.ts` chain: T3f → T2f-touchups → **T2d** alt-text audit.
 
 ## Then the rest of the batch
-
-- **M3 Notes/posts (T3a→T3b)** — needs a quick content-type ADR first (`invest-adr`: extend `case-studies.ts` pattern vs new `posts.ts`). Then Writer drafts the manifesto ("Design infrastructure, not just designs" — same one-liner as the hub, but the *argument* form per ADR-014) / Five-Ways / 2026 retro. Then verified PR/ADR citations (T3f).
-- **M4 Motion** (fast-follow, LAST) — interface-craft (Storyboard + DialKit) + `/impeccable animate` backup. Hold until surfaces settle. New **T4d** spikes a Paper Shaders (`@paper-design/shaders-react`) atmospheric layer over the M2 Wallace renders — material light to complement the choreography. Reference brief: `plans/paper-shaders-reference.md` (verified API + Conservatory shortlist + the OKLCH-vs-hex question to settle).
-- **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` (final design QA) → **Roy final review** → merge `feat/conservatory-tokens` → `main`.
+- **M4 Motion** (fast-follow, LAST) — interface-craft (Storyboard + DialKit) + `/impeccable animate`. **T4d** spikes a Paper Shaders (`@paper-design/shaders-react`) atmospheric layer over the M2 renders. Reference: `plans/paper-shaders-reference.md`. Hold until surfaces settle.
+- **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` → **Roy final review** → merge `feat/conservatory-tokens` → `main`.
 
 ## Critical path
-surfaces (done: wordmark, hub, About/Resume) → **M2 imagery** → M3 notes → motion → Impeccable critique+polish → Roy → main.
+surfaces ✅ → **M2 imagery ✅** → M3 notes → motion → Impeccable critique+polish → Roy → main.
+
+## Justin's open to-dos (external)
+- **Image punch list: `image-punchlist.md`** (repo root) — 10 missing screenshots + 8 hi-res re-shoots of the low-res `meta-*` set (currently ~1400px; target 3840px). Drop files at `public/images/<name>` and they auto-wire (paths already referenced). These block T2c verification, nothing else.

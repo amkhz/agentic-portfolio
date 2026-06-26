@@ -74,7 +74,9 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 
 ## M2 — Imagery Finals (parallel to M1; no type dependency)
 
-### T2a: Wallace renders
+> **M2 LANDED 2026-06-26** (commit `25b0de2` on `feat/conservatory-tokens`). T2a + T2e + T2f done; T2b (Justin screenshots) + T2c (wire/verify) + T2d (alt audit) remain. Render drafts/captions in `mocks/m2-imagery/` (gitignored). Picks + seeds + the slot map are in `plans/next-session-brief.md`. Marks ship as cropped V4_DEFAULT_20 drafts (Justin picked the exact drafts); optional 48 upgrade later. Key learning: marks carry ZERO baked text (`feedback_no_baked_text_in_marks`). Bonus this pass: `HeroScrim` (header-seam top fade) + `ImageBlock` cover-fill fix + atelier in the Wallace body.
+
+### T2a: Wallace renders ✅ DONE 2026-06-26
 
 **Layer:** Assets (`public/images/`)
 **Owner:** Wallace (skill)  **Branch:** `feat/imagery-wallace`  **Commit prefix:** `feat(assets):`
@@ -104,7 +106,7 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Outputs:** Every new image has descriptive, non-redundant alt text; WCAG 1.1.1 pass.
 **Scope boundary:** Alt-text fields only. ⚠ **COLLISION: `case-studies.ts` + case-study `.md` also edited by M3 (T3f citations) and T2f (mark wiring).** Sequence T2d AFTER T3f + T2f, or coordinate — never parallel worktrees on those files.
 
-### T2e: Per-project drafted-object mark SET
+### T2e: Per-project drafted-object mark SET ✅ DONE 2026-06-26
 
 **Layer:** Assets (`public/images/`)
 **Owner:** Wallace (skill)  **Branch:** `feat/imagery-marks`  **Commit prefix:** `feat(assets):`
@@ -113,7 +115,7 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Process:** render ONE reference mark first → Justin approves the language → batch the rest with seed discipline.
 **Scope boundary:** Mark renders only. Does NOT wire them into data/UI (T2f) and does NOT touch hero/cover images (T2a).
 
-### T2f: Wire per-project marks into data + slots
+### T2f: Wire per-project marks into data + slots ✅ DONE 2026-06-26
 
 **Layer:** Core + UI (`core/content/case-studies.ts`, `src/pages/WorkPage.tsx`, `src/components/content/CaseStudyPageTemplate.tsx`)
 **Owner:** Tyrell  **Branch:** `feat/marks-wire`  **Commit prefix:** `feat(core):`

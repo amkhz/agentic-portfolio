@@ -15,7 +15,7 @@ export function ResumeExperienceItem({ item }: ResumeExperienceItemProps) {
           ) : null}
         </h3>
         {item.date ? (
-          <p className="font-heading text-xs uppercase tracking-wider text-text-secondary">
+          <p className="font-mono text-xs uppercase tracking-wider text-text-secondary">
             {item.date}
           </p>
         ) : null}

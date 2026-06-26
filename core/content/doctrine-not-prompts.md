@@ -4,7 +4,7 @@ How a small design team started shipping closer to engineering grade by treating
 
 ## The Problem
 
-AI usually shows up in design as a tool. Point it at a task, it spits out a mockup or some code a little faster. But, generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate. That's a try hard intern with amnesia.
+AI usually shows up in design as a tool. Point it at a task, it spits out a mockup or some code a little faster. But, generic AI plus a generic prompt gets you generic output. It doesn't know your domain, your standards, or how your team actually works. So you re-explain yourself every single session. That's not a teammate, at least not a very good one.
 
 I wanted something different. Over ~4 months at Kiavi, I built an operating model where AI works as an actual teammate for a small design team: a force multiplier that makes good designers better, not a stand-in that replaces them.
 

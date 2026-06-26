@@ -32,6 +32,14 @@ export interface CaseStudy {
     headline: string;
     body: string;
     doors: { slug: string; label: string; line: string }[];
+    /** The breadth layer below the doors: the rest of the body of work.
+     *  Items with a `slug` link to a deep dive; items without stand as
+     *  stated scope (work without its own study yet). */
+    bodyOfWork?: {
+      heading: string;
+      intro?: string;
+      items: { label: string; line: string; slug?: string }[];
+    };
   };
   heroImage: {
     src: string;
@@ -67,6 +75,38 @@ export const caseStudies: CaseStudy[] = [
           line: 'An AI-as-teammate operating model: version-controlled doctrine, four proof points, shipped.',
         },
       ],
+      bodyOfWork: {
+        heading: 'Beyond Workshops',
+        intro:
+          'The two stories above are the roots. The rest grew around them: the operating system a private-lending design team reaches for every day.',
+        items: [
+          {
+            label: 'Design tokens as a pipeline',
+            line: 'CSS holds the direction of truth, a shipped exporter pushes tokens downstream, and several brands coexist, each governed by its own profile. Design tools remain for tangible iteration, not as the source of truth.',
+          },
+          {
+            label: 'Brand voice as executable doctrine',
+            line: 'A voice guide turned into a skill that both writes copy and checks it, with the legal and attestation strings locked down. Language as a system automatically applied while you work.',
+          },
+          {
+            label: 'CI for a design repo',
+            line: 'A drift-check gate, scoped dependency updates, and a branch-protection strategy. DevOps hygiene applied to design work, set up early so adoption felt safe.',
+          },
+          {
+            label: 'Fleets, not single sessions',
+            line: 'Parallel agent sprints that landed two architecture decisions at once, plus a repeatable way to break a feature into scoped agent tasks, each with its own branch and commit prefix.',
+          },
+          {
+            label: 'Production impact, not just prototypes',
+            line: "The first live-production app to carry the team's brand, handed cleanly to engineering. Real flows, real borrowers.",
+            slug: 'instant-doc-review',
+          },
+          {
+            label: 'Bringing the team along',
+            line: 'Growth plans, getting-started docs, and a dual-track prototyping workflow, so the team can step into the system at their own pace.',
+          },
+        ],
+      },
     },
   },
   {

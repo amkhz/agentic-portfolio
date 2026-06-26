@@ -61,11 +61,64 @@ function DoorCard({
   );
 }
 
+/** One entry in the breadth layer. Items with a target study link out
+ *  (brass owns the interaction); stated-scope items render inert. */
+function BodyOfWorkItem({
+  item,
+}: {
+  item: NonNullable<NonNullable<CaseStudy["hub"]>["bodyOfWork"]>["items"][number];
+}) {
+  const target = item.slug
+    ? caseStudies.find((s) => s.slug === item.slug)
+    : undefined;
+
+  const label = (
+    <h3 className="font-display text-xl leading-tight tracking-tight text-text-primary">
+      {item.label}
+    </h3>
+  );
+  const line = (
+    <p className="mt-2 max-w-[44ch] font-body text-base leading-normal text-text-secondary">
+      {item.line}
+    </p>
+  );
+
+  if (!target) {
+    return (
+      <div className="border-t border-border-subtle pt-6">
+        {label}
+        {line}
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      to={`/work/${target.slug}`}
+      className="group block border-t border-border-subtle pt-6 transition-colors duration-normal hover:[border-color:var(--fieldnote-rule-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+    >
+      <h3 className="font-display text-xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary">
+        {item.label}
+      </h3>
+      {line}
+      <span className="mt-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent-primary">
+        Read the story
+        <span
+          aria-hidden="true"
+          className="transition-transform duration-normal group-hover:translate-x-1"
+        >
+          &rarr;
+        </span>
+      </span>
+    </Link>
+  );
+}
+
 export function HubPageTemplate({ slug }: HubPageProps) {
   const study = caseStudies.find((s) => s.slug === slug);
   if (!study?.hub) return <Navigate to="/work" replace />;
 
-  const { headline, body, doors } = study.hub;
+  const { headline, body, doors, bodyOfWork } = study.hub;
   const kicker = study.title;
 
   return (
@@ -97,6 +150,24 @@ export function HubPageTemplate({ slug }: HubPageProps) {
               <DoorCard key={door.slug} door={door} />
             ))}
           </div>
+
+          {bodyOfWork && (
+            <div className="mt-20">
+              <h2 className="font-display text-2xl leading-snug tracking-tight text-text-primary sm:text-3xl">
+                {bodyOfWork.heading}
+              </h2>
+              {bodyOfWork.intro && (
+                <p className="mt-4 max-w-[60ch] font-body text-lg leading-normal text-text-secondary">
+                  {parseInline(bodyOfWork.intro)}
+                </p>
+              )}
+              <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                {bodyOfWork.items.map((item) => (
+                  <BodyOfWorkItem key={item.label} item={item} />
+                ))}
+              </div>
+            </div>
+          )}
 
           <div className="mt-16 border-t border-border-subtle pt-10">
             <BackLink label="Back to all work" />

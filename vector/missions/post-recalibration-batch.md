@@ -141,21 +141,23 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Outputs:** "Design infrastructure, not just designs" manifesto; "Five Ways I Work" (from `practice.md`); 2026 retrospective (from `wins.md`). Joi voice; no em-dashes; no permission/gatekeeper framing; anonymize internal names (Matt/Caro/Brenno) + internal product names.
 **Scope boundary:** Post prose only. No infra, no UI.
 
-### T3c: About-page "What I've built at Kiavi" subsection
+### T3c: Kiavi "what I've built" body-of-work layer ✅ DONE 2026-06-25
 
-**Layer:** Core (`core/content/` — About copy)
-**Owner:** Writer  **Branch:** `feat/about-kiavi-section`  **Commit prefix:** `feat(content):`
-**Inputs:** None (source = `practice.md` eight deliverables).
-**Outputs:** ~200–300 word subsection, anonymized/generalized. Joi voice.
-**Scope boundary:** About copy only. ⚠ Coordinates with T3d (same surface).
+> **IA decision (2026-06-25, Justin):** the "what I've built at Kiavi" content does NOT live as an About-page subsection. It would get buried at the wrong altitude, and a standalone case study would duplicate the existing deep dives. **It lives on the `design-infrastructure` hub** — the surface already built for this exact one-liner ("I build design infrastructure, not just designs") — as a breadth layer ("Beyond Workshops") below the two doors. Items with a deep dive link out; items without stand as stated scope. About keeps only a short pointer (folds into T3d). The same one-liner still feeds the T3b manifesto post as the *argument* form (hub = index, post = narrative).
+
+**Layer:** Core + UI (`core/content/case-studies.ts` `hub.bodyOfWork` model + data; `src/components/content/HubPageTemplate.tsx` render)
+**Owner:** Tyrell (model + UI) + Writer/Joi (prose)  **Branch:** `feat/kiavi-body-of-work`  **Commit prefix:** `feat(core):`
+**Inputs:** `practice.md` "what he's built" section (in `port-sources/`).
+**Outputs:** ✅ `bodyOfWork` block (heading + intro + 6 items) on `design-infrastructure`, anonymized/generalized (internal codenames + teammate names dropped; Kiavi + instant-doc-review public, kept), Writer-refined + Joi voice-audited. Optional `hub.bodyOfWork` field added to the `CaseStudy` model. lint/build/test green.
+**Scope boundary:** Hub model + data + render. About pointer deferred to T3d. ⚠ COLLISION: edits `case-studies.ts` (see flag #2).
 
 ### T3d: About / Resume visual register pass
 
 **Layer:** UI (`src/pages/AboutPage.tsx`, `src/pages/ResumePage.tsx`, `src/components/content/AboutSnippet.tsx`)
 **Owner:** Tyrell  **Branch:** `feat/about-resume-register`  **Commit prefix:** `feat(ui):`
-**Inputs:** M1 (new faces), T3c (new copy to lay in).
-**Outputs:** About/Resume brought to the Conservatory register + Hedvig/Figtree (the Plan A Phase 4 deferral). Long-form essay treatment, kicker/metadata in margin.
-**Scope boundary:** About/Resume surfaces only. ⚠ COLLISION with T3c on About — same branch or sequence T3c→T3d.
+**Inputs:** M1 (new faces). (T3c no longer adds an About subsection — instead About gets a short pointer into the `design-infrastructure` hub, authored as part of this register pass.)
+**Outputs:** About/Resume brought to the Conservatory register + Hedvig/Figtree (the Plan A Phase 4 deferral). Long-form essay treatment, kicker/metadata in margin. Add the short "what I've built" pointer to the hub.
+**Scope boundary:** About/Resume surfaces only. (T3c↔T3d About collision dissolved by the IA decision — T3c now lives on the hub.)
 
 ### T3e: instant-dscr case study (STRETCH / optional)
 

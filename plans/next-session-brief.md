@@ -1,37 +1,38 @@
-# Pickup Brief — Post-M1 close (Type Stack v2 locked + tuned, doctrine synced)
+# Pickup Brief — Surfaces phase landed; next up is M2 Imagery (Wallace)
 
-Updated end of 2026-06-25. Two open branches off `feat/conservatory-tokens`:
-- **`feat/type-v2`** → M1 type stack + T1c tuning (`fdbf1e2`). Carries T1e's DESIGN.md + ADR-013 lock.
-- **`docs/doctrine-sync-adr013`** → T-L4 doctrine sync (`07d2207`).
+Updated end of 2026-06-25. Integration branch is **`feat/conservatory-tokens`** — everything below is merged into it. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest — read it first).
 
-Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest — read it first).
+## Where we left off (this session)
 
-## Where we left off
+All merged into `feat/conservatory-tokens`, lint/build/test green (139 tests):
 
-**M1 — Type Stack v2: FULLY CLOSED.** Stack E — Hedvig Letters Serif (display) / Figtree (body) / JetBrains Mono (kicker).
-- M1 core shipped `5ef5591` (font swap, `--body-weight: 350` dark trim, #5 side-stripe fix, harness removed, DESIGN.md + ADR-013 lock, drop caps struck).
-- **T1c typeset pass** `fdbf1e2` (this session): purged faux-bold on the single-weight Hedvig (TocLinkList `font-medium`, NotFoundPage `font-bold`) + added `font-synthesis: none` guard; section headings → `text-2xl sm:text-3xl`; display leading `--leading-tight` 1.1 → 1.2; macOS grayscale antialiasing on body. Hero kerning eyeballed + locked. Pull-quote/callout (T1d) confirmed both modes. Justin-approved live.
-- **T-L4 doctrine sync** `07d2207` (this session): PRODUCT.md + VECTOR.md (P3 + Hard constraints) + ARCHITECTURE.md (Stack L62 + Styling) → Stack E lock; dropped Fraunces-only opsz/SOFT/WONK refs.
-- lint/build/test green (139 tests).
+- **Housekeeping** — merged the two M1 branches in: `feat/type-v2` (type stack + T1c tuning) and `docs/doctrine-sync-adr013` (T-L4). Both fully integrated.
+- **T-L1 Wordmark** ✅ — "Justin Hernandez" header is now a Hedvig display moment (`font-display`, dropped the single-weight faux-bold, `text-lg → text-xl`). `src/components/layout/Header.tsx`.
+- **T3c — Kiavi "body of work"** ✅ — IA decision (see **ADR-014**): the "what I've built at Kiavi" overview lives as a **"Beyond Workshops" breadth layer on the `design-infrastructure` hub**, NOT an About subsection and NOT a standalone study. Added optional `hub.bodyOfWork` to the `CaseStudy` model; rendered below the doors in `HubPageTemplate` (`BodyOfWorkItem`). Copy Writer-refined + Joi voice-audited, anonymized. Source: `port-sources/practice.md`.
+- **T3d — About/Resume register pass** ✅ — About: hero kicker → mono brass; the stacked prose sections (Life/Beliefs/Elsewhere/Contact) → editorial composition with **marginal mono numbering** via new `src/components/content/EditorialSection.tsx` (DESIGN.md L93); added the ADR-014 hub pointer. Resume: 3 mono-kicker face fixes only (no content change, PDF untouched). All About bio copy preserved verbatim.
 
-**First housekeeping next session:** PR both branches into `feat/conservatory-tokens` — `feat/type-v2` first (brings code + DESIGN.md lock that T-L4's prose references), then `docs/doctrine-sync-adr013`. No file collisions between them.
+**Merged branches safe to delete** (all fully integrated): `feat/type-v2`, `docs/doctrine-sync-adr013`, `feat/wordmark`, `feat/kiavi-body-of-work`, `feat/about-resume-register`.
 
-Decisions banked: drop-caps struck · instant-dscr OUT (revisit later) · PR/ADR citations confirmed.
+## Next — M2 Imagery (Wallace). START WITH THE INTERVIEW.
 
-⚠ **Branch hazard noted:** don't `git checkout` away from `feat/type-v2` while its dev server runs — the doctrine branch off `conservatory-tokens` predates the `node_modules` font swap, so `main.tsx` imports a Fraunces that's no longer installed → Vite error. Stop the server first, or `npm install` after switching.
+This is the planned focus for the fresh session. Wallace work has **no type dependency** and does **not** wait on Justin's screenshot-gathering (that's T2b, external, separate).
 
-## Next — the surfaces phase (all now have the new faces they waited on)
+**First action: run the Wallace interview** before generating anything. It settles:
+1. **Per-project object identity (T2e)** — one "drafted fantastical object" per case study (~5). Justin names them, or Wallace proposes a candidate object per project for approval.
+2. **The shared render recipe** — palette / paper / line-treatment so the set reads as one family: modern technical-schematic on natural paper, NOT steampunk/patent (`plans/recalibration-sprint0-notes.md`, `feedback_imagery_restraint`, `feedback_no_flat_color_covers`).
 
-1. **T-L1 Wordmark/header in Hedvig** (`/impeccable live`) — "Justin Hernandez" as a display moment, NOT hand-lettered. `src/components/layout/Header.tsx`. Quick. Branch `feat/wordmark`.
-2. **T3c → T3d** — Writer drafts the About "What I've built at Kiavi" subsection (anonymized, Joi voice), then bring About/Resume to the Conservatory register + Hedvig/Figtree. Share a branch or sequence T3c→T3d (same surface).
-3. **M2 Imagery** (parallel, no type dep) — Wallace renders hero + hub cover (T2a) and the per-project drafted-object mark SET (T2e: square work-index + 4:5 plate, one family, fixed seeds). Then wire `mark` field on `CaseStudy` (T2f). **External deps you own:** the per-project object list + the screenshot captures (T2b) per `image-punchlist.md`.
+Then, in order:
+- **T2a** — Wallace renders `wallace-hero.png` (north-star atelier) + `design-infrastructure.png` (hub cover) at exact slot aspect/crop, atmospheric (never flat panel), `V4_QUALITY_48`, fixed seeds. Branch `feat/imagery-wallace`.
+- **T2e** — render ONE reference mark first → Justin approves the language → batch the rest with seed discipline. Two crops per project: **square** (work-index `Thumb` in `TocLinkList`) + **4:5 plate** (`DraftedObjectMark`). Branch `feat/imagery-marks`.
+- **T2f** (after T2e) — wire a `mark?: { src; alt }` field on `CaseStudy`; point `WorkPage` thumbnails + `DraftedObjectMark.src` at the renders. Slots are already placeholder-aware (`isRealImage()` guard), so this is additive. Branch `feat/marks-wire`. ⚠ `case-studies.ts` collision — coordinate with the content chain.
+
+**Justin owns externally:** the per-project object list (interview input) + the screenshot captures (T2b) per `image-punchlist.md` (10 missing + 8 hi-res re-shoots). These can be gathered in parallel; they block T2c verification, not Wallace generation.
 
 ## Then the rest of the batch
 
-- **M3 Notes/posts + folds** — new content type (needs a quick content-type ADR first via `invest-adr`) → manifesto / Five-Ways / 2026 retro posts. Then verified PR/ADR citations into existing studies (T3f).
-- **M4 Motion** (fast-follow, LAST) — via interface-craft (Storyboard + DialKit) + `/impeccable animate` backup. Hold until surfaces settle so durations tune against final layouts.
-- **Loose ends:** mark decision-record ADR (Dreamer, lightweight — the call's made).
-- **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` (final design QA) → **Roy final review** → merge `feat/conservatory-tokens` → main.
+- **M3 Notes/posts (T3a→T3b)** — needs a quick content-type ADR first (`invest-adr`: extend `case-studies.ts` pattern vs new `posts.ts`). Then Writer drafts the manifesto ("Design infrastructure, not just designs" — same one-liner as the hub, but the *argument* form per ADR-014) / Five-Ways / 2026 retro. Then verified PR/ADR citations (T3f).
+- **M4 Motion** (fast-follow, LAST) — interface-craft (Storyboard + DialKit) + `/impeccable animate` backup. Hold until surfaces settle.
+- **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` (final design QA) → **Roy final review** → merge `feat/conservatory-tokens` → `main`.
 
 ## Critical path
-M1 (done) → surfaces (wordmark, About/Resume) → motion → Impeccable critique+polish → Roy → main.
+surfaces (done: wordmark, hub, About/Resume) → **M2 imagery** → M3 notes → motion → Impeccable critique+polish → Roy → main.

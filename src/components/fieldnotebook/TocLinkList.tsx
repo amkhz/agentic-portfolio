@@ -102,7 +102,7 @@ function RowBody({ item }: { item: TocItem }) {
       )}
 
       <span className="flex min-w-0 flex-col gap-1.5">
-        <span className="font-display text-xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
+        <span className="font-display text-xl leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
           {item.label}
         </span>
         {item.description ? (

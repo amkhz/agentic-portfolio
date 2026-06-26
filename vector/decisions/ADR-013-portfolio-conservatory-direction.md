@@ -74,3 +74,25 @@ A single coherent system with the Conservatory worldview as soul, Atelier's real
 - **ADR-009 / ADR-010 / ADR-012:** Perihelion architecture, rename, and house identity — context for the lab's separate absorption path.
 - **PRODUCT.md, VECTOR.md:** Require amendment to reflect this direction (follow-up task in Plan A).
 - **Memory:** `feedback_imagery_restraint`, `feedback_no_flat_color_covers`, `feedback_oklch_only`, `feedback_respect_slop_bans`.
+
+---
+
+## Amendment — Type Stack v2 (2026-06-24)
+
+**Deciders:** Justin Hernandez (operator), Tyrell
+
+Decision point 5 above locked faces *after live validation*; the first lock (2026-06-21) was **Fraunces / Source Sans 3 / JetBrains Mono**. On 2026-06-24 Justin reopened that lock: **Fraunces had begun to read as an AI tell**, and he wanted an Albert-Sans-adjacent body without copying another shop's exact stack.
+
+A two-round live specimen on real Conservatory copy (both modes) settled it. **New lock — "Stack E":**
+
+- **Display:** **Hedvig Letters Serif** (single-weight, low-ubiquity, characterful) — replaces Fraunces.
+- **Body / UI / nav:** **Figtree** (variable wght, geometric-humanist, Albert-Sans-adjacent) — replaces Source Sans 3.
+- **Mono kicker:** **JetBrains Mono** — unchanged.
+
+**Consequences:**
+- The Fraunces variable-axis tuning (opsz / SOFT / WONK) is retired — Hedvig is single-weight. Pull-quotes now carry on the display serif at scale plus a hanging brass quotation mark.
+- Dark-mode body weight is trimmed (`--body-weight: 350`) to counter light-on-dark bloom on Figtree; day keeps regular.
+- **Drop caps struck** (was an open collision from ADR-011; Justin's call): Field Notebook grammar + slop bans, and Perihelion already owns a sigil drop cap.
+- The struck brass/green `border-l-[6px]` side-stripes on `QuoteBlock` / `CalloutBlock` were finally removed here, honoring the 2026-06-10 side-stripe-ban resolution with no exemption.
+- Three-face *spirit* and the "refuse blandness" intent are unchanged; only the specific faces moved.
+- **Doctrine still to sync** (follow-up): ARCHITECTURE.md Stack + Styling and VECTOR.md P3 still name the old faces.

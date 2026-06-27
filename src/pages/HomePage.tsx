@@ -46,7 +46,7 @@ export function HomePage() {
       {/* Featured - the one ambitious composed moment: an editorial spread that
           echoes the case-study hero, not a glossy card. */}
       <section className="border-t border-border-subtle pt-24 pb-20 sm:pt-32 sm:pb-24">
-        <RevealOnScroll>
+        <RevealOnScroll blur>
           <ProjectCard study={featured} />
         </RevealOnScroll>
       </section>

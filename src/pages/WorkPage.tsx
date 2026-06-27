@@ -127,7 +127,7 @@ export function WorkPage() {
 
       <section className="py-20 sm:py-24">
         <Container>
-          <RevealOnScroll>
+          <RevealOnScroll blur>
             <FeaturedEntry />
           </RevealOnScroll>
 

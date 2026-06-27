@@ -1,4 +1,5 @@
 import { Link, Navigate } from "react-router";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
 import { caseStudyContent } from "@core/content/case-studies";
 import { slugify } from "@core/utils/format";
@@ -6,6 +7,26 @@ import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { CoverParallax } from "@/components/effects/CoverParallax";
+import { springSettle } from "@/components/effects/motionConfig";
+
+// Case-study entry choreography — the surface's deliberate moment (DESIGN.md).
+// The hero spread settles in on mount: cover plate, then the type column inks in
+// element by element. Cushioned spring, no overshoot; layered over the global
+// page entry. Honors reduced-motion.
+const entranceContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+const entranceGroup: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.04 } },
+};
+
+const entranceItem: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: springSettle },
+};
 import {
   DossierFrame,
   DossierTags,
@@ -36,6 +57,7 @@ function BackLink({ label }: { label: string }) {
 }
 
 export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
+  const reduced = useReducedMotion();
   const study = allProjects.find((s) => s.slug === slug);
   if (!study) return <Navigate to="/work" replace />;
 
@@ -66,6 +88,12 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
 
   const kicker = study.tags[0] ?? "Case file";
 
+  const containerProps = reduced
+    ? {}
+    : { variants: entranceContainer, initial: "hidden" as const, animate: "show" as const };
+  const groupProps = reduced ? {} : { variants: entranceGroup };
+  const itemProps = reduced ? {} : { variants: entranceItem };
+
   return (
     <article>
       {/* Hero — editorial spread: dossier cover plate + type spread */}
@@ -75,37 +103,51 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
             <BackLink label="All work" />
           </nav>
 
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
+          <motion.div className="grid gap-10 lg:grid-cols-12 lg:gap-12" {...containerProps}>
             {/* Cover plate — image lives within the padded frame; the
                 registration marks sit in the margin and frame it. */}
-            <CoverParallax className="lg:order-1 lg:col-span-5">
-              <DossierFrame className="bg-bg-base">
-                <ImageBlock
-                  bare
-                  src={study.heroImage.src}
-                  alt={study.heroImage.alt}
-                  placeholder={study.heroImage.placeholder}
-                  aspect="4:3"
-                />
-              </DossierFrame>
-            </CoverParallax>
+            <motion.div className="lg:order-1 lg:col-span-5" {...itemProps}>
+              <CoverParallax>
+                <DossierFrame className="bg-bg-base">
+                  <ImageBlock
+                    bare
+                    src={study.heroImage.src}
+                    alt={study.heroImage.alt}
+                    placeholder={study.heroImage.placeholder}
+                    aspect="4:3"
+                  />
+                </DossierFrame>
+              </CoverParallax>
+            </motion.div>
 
-            {/* Type spread */}
-            <div className="flex flex-col justify-center lg:order-2 lg:col-span-7">
-              <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+            {/* Type spread — inks in element by element after the cover */}
+            <motion.div
+              className="flex flex-col justify-center lg:order-2 lg:col-span-7"
+              {...groupProps}
+            >
+              <motion.p
+                className="font-mono text-xs uppercase tracking-wider text-accent-primary"
+                {...itemProps}
+              >
                 {kicker}
-              </p>
+              </motion.p>
 
-              <h1 className="mt-4 max-w-[18ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+              <motion.h1
+                className="mt-4 max-w-[18ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl"
+                {...itemProps}
+              >
                 {study.title}
-              </h1>
+              </motion.h1>
 
-              <p className="mt-5 max-w-[60ch] font-body text-lg leading-normal text-text-secondary">
+              <motion.p
+                className="mt-5 max-w-[60ch] font-body text-lg leading-normal text-text-secondary"
+                {...itemProps}
+              >
                 {study.subtitle}
-              </p>
+              </motion.p>
 
               {study.heroMetric && (
-                <div className="relative mt-8 flex items-baseline gap-3">
+                <motion.div className="relative mt-8 flex items-baseline gap-3" {...itemProps}>
                   <GlowEffect color="brass" size="sm" className="-left-8 -top-8" />
                   <span className="relative font-display text-4xl leading-tight tracking-tight text-accent-primary">
                     {study.heroMetric.value}
@@ -113,12 +155,14 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                   <span className="relative font-mono text-xs uppercase tracking-wider text-text-secondary">
                     {study.heroMetric.label}
                   </span>
-                </div>
+                </motion.div>
               )}
 
-              <DossierTags tags={study.tags} className="mt-8" />
-            </div>
-          </div>
+              <motion.div {...itemProps}>
+                <DossierTags tags={study.tags} className="mt-8" />
+              </motion.div>
+            </motion.div>
+          </motion.div>
         </Container>
       </section>
 

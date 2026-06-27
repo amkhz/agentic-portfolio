@@ -87,7 +87,7 @@ function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) 
     !thumbnail.src.includes("placeholder-");
 
   return (
-    <span className="relative block h-16 w-16 shrink-0 overflow-hidden border border-border-strong bg-bg-elevated">
+    <span className="relative block h-16 w-16 shrink-0 overflow-hidden border border-border-strong bg-bg-elevated float-left mr-4 mb-2 sm:float-none sm:mr-0 sm:mb-0">
       {real ? (
         <img
           src={thumbnail.src}
@@ -112,13 +112,13 @@ function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) 
 function RowBody({ item }: { item: TocItem }) {
   return (
     <span
-      className="flex w-full items-center"
+      className="block w-full sm:flex sm:items-center"
       style={{ columnGap: "var(--fieldnote-leader-gap)" }}
     >
       {item.thumbnail && <Thumb thumbnail={item.thumbnail} />}
 
       {item.index && (
-        <span className="shrink-0 font-mono text-xs tabular-nums text-text-muted transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary">
+        <span className="float-left mr-2 shrink-0 font-mono text-xs tabular-nums text-text-muted transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:float-none sm:mr-0">
           {item.index}
         </span>
       )}
@@ -126,17 +126,17 @@ function RowBody({ item }: { item: TocItem }) {
         <span aria-hidden="true" className="shrink-0" style={swatchStyle(item.swatchColor)} />
       )}
 
-      <span className="flex min-w-0 flex-col gap-1.5">
-        <span className="font-display text-xl leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
+      <span className="block min-w-0 sm:flex sm:flex-col sm:gap-1.5">
+        <span className="block font-display text-xl leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-2xl">
           {item.label}
         </span>
         {item.description ? (
-          <span className="max-w-[52ch] font-body text-sm leading-normal text-text-secondary sm:text-base">
+          <span className="mt-1.5 block max-w-[52ch] font-body text-sm leading-normal text-text-secondary sm:mt-0 sm:text-base">
             {item.description}
           </span>
         ) : (
           item.kicker && (
-            <span className="font-mono text-xs uppercase tracking-wider text-text-muted">
+            <span className="mt-1.5 block font-mono text-xs uppercase tracking-wider text-text-muted sm:mt-0">
               {item.kicker}
             </span>
           )
@@ -145,12 +145,12 @@ function RowBody({ item }: { item: TocItem }) {
 
       <span
         aria-hidden="true"
-        className="min-w-6 flex-1 self-center transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]"
+        className="hidden min-w-6 flex-1 self-center transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)] sm:block"
         style={leaderStyle}
       />
 
       {item.trailing && (
-        <span className="shrink-0 self-center font-mono text-xs uppercase tracking-wider tabular-nums text-text-muted">
+        <span className="mt-2 block clear-both font-mono text-xs uppercase tracking-wider tabular-nums text-text-muted sm:mt-0 sm:clear-none sm:shrink-0 sm:self-center">
           {item.trailing}
         </span>
       )}

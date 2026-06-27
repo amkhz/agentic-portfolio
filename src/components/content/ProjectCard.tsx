@@ -3,6 +3,7 @@ import type { CaseStudy } from "@core/content/case-studies";
 import { Container } from "@/components/layout/Container";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { DossierFrame, DossierTags } from "@/components/fieldnotebook";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 
 /**
  * ProjectCard - repurposed as the Home "featured dossier" spread (ADR-013 /
@@ -41,10 +42,11 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
             >
               {hasRealImage ? (
                 <div className="relative aspect-[16/10] overflow-hidden">
-                  <img
+                  <ResponsiveImage
                     src={study.heroImage.src}
                     alt={study.heroImage.alt}
                     loading="lazy"
+                    sizes="(min-width: 1024px) 58vw, 100vw"
                     className="absolute inset-0 h-full w-full object-contain motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
                   />
                 </div>

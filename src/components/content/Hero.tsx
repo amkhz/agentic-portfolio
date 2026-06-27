@@ -3,6 +3,7 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
 import { RegistrationMark } from "@/components/fieldnotebook";
 import { HeroScrim } from "@/components/content/HeroScrim";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 import { springSettle } from "@/components/effects/motionConfig";
 
 // Hero settle — the home page's one ambitious moment. The type column rises
@@ -38,13 +39,15 @@ export function Hero() {
 
   return (
     <section className="relative isolate flex min-h-[82vh] items-end overflow-hidden bg-bg-deep">
-      {/* Atmospheric anchor - inhabited biophilic atrium */}
-      <img
+      {/* Atmospheric anchor - inhabited biophilic atrium. The LCP image: eager,
+          high priority, full-bleed, served as AVIF/WebP via ResponsiveImage. */}
+      <ResponsiveImage
         src="/images/conservatory-hero.png"
         alt="A soaring biophilic atrium at night, mature trees rising through warm-lit architecture with people gathered below"
         className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
         loading="eager"
         fetchPriority="high"
+        sizes="100vw"
       />
       {/* Warm scrim - legibility at lower-left, plus a top fade so the image
           blends under the sticky translucent header instead of meeting it with

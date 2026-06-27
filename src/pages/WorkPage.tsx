@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "@/components/content/ImageBlock";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import {
@@ -99,12 +100,13 @@ export function WorkPage() {
           grammar: registration marks frame the type, humus scrim anchors it
           lower-left, top fade blends under the sticky header. */}
       <section className="relative isolate flex min-h-[56vh] items-end overflow-hidden bg-bg-deep">
-        <img
+        <ResponsiveImage
           src="/images/work-hero.png"
           alt="A designer's atelier at night within a biophilic habitat, warm brass light over a workbench of instruments"
           className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
           loading="eager"
           fetchPriority="high"
+          sizes="100vw"
         />
         <HeroScrim top bottom left />
 

@@ -109,6 +109,13 @@
   --shadow-glow-magenta: var(--theme-shadow-glow-magenta);
 
   /* --- Motion / Transitions --- */
+  /* Doctrine (VECTOR P4): motion serves arrival and focus, never decoration.
+     --ease-out-expo is the default curve for entrance/focus choreography
+     (section reveals, page transitions, cover settles) — a long, decelerating
+     tail with no overshoot. No bounce, no elastic, ever. The Material curves
+     below stay for micro-transitions and theme/color crossfades, where a short
+     symmetric ease reads better than a dramatic decelerate. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -118,6 +125,8 @@
   --duration-normal: 200ms;
   --duration-slow: 400ms;
   --duration-slower: 600ms;
+  /* Arrival choreography sits in the slow..slower band; --duration-ambient is
+     reserved for looping atmosphere (grain, shader drift), never one-shot UI. */
   --duration-ambient: 1200ms;
 
 }

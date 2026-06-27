@@ -16,3 +16,10 @@ dist/
 # Scratchpad — local working files, internal receipts, temp specimens. Never commit
 # (the repo is public; internal PR/ADR numbers and metrics must stay out).
 /scratchpad/
+
+# Generated responsive image variants (npm run generate:images, run at build).
+# The source PNG/JPEG stays committed as the <picture> fallback; only the
+# derived AVIF/WebP width-steps are emitted and ignored. The manifest that
+# indexes them (core/images/manifest.generated.ts) IS committed.
+/public/images/*-[0-9]*.avif
+/public/images/*-[0-9]*.webp

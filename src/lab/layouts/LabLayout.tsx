@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Outlet } from "react-router";
 import { ScrollToTop } from "@lab/components/ScrollToTop";
 import { LabThemeToggle } from "@lab/components/LabThemeToggle";
@@ -62,7 +63,9 @@ export function LabLayout() {
         tabIndex={-1}
         className="min-h-[calc(100vh-12rem)] outline-none"
       >
-        <Outlet />
+        <Suspense fallback={null}>
+          <Outlet />
+        </Suspense>
       </main>
 
       <footer className="mt-24 border-t border-lab-border-subtle">

@@ -8,6 +8,7 @@ import {
   type TocItem,
 } from "@/components/fieldnotebook";
 import { HeroScrim } from "@/components/content/HeroScrim";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 import { notes } from "@core/content/notes";
 import { formatNoteDate } from "@core/utils/format";
 
@@ -54,12 +55,12 @@ export function NotesPage() {
       {/* Hero — quieter than Work: type-forward marginalia, no full-bleed
           image. Notes are the reflective register, not the case-file register. */}
       <section className="relative isolate flex min-h-[44vh] items-end overflow-hidden bg-bg-deep">
-        <img
+        <ResponsiveImage
           src="/images/work-hero.png"
           alt=""
-          aria-hidden="true"
           className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-40"
           loading="eager"
+          sizes="100vw"
         />
         <HeroScrim top bottom left />
 

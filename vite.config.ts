@@ -52,6 +52,26 @@ export default defineConfig({
         main: path.resolve(__dirname, 'index.html'),
         labs: path.resolve(__dirname, 'labs.html'),
       },
+      output: {
+        // Split the heavy shared libraries into long-lived vendor chunks so
+        // they cache across routes and across both entries (portfolio + labs),
+        // instead of inflating each entry bundle. react/router rarely change;
+        // motion is large and used everywhere.
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+          if (
+            id.includes('/react-dom/') ||
+            id.includes('/react/') ||
+            id.includes('/react-router/') ||
+            id.includes('/scheduler/')
+          ) {
+            return 'react-vendor';
+          }
+          if (id.includes('/motion/') || id.includes('/motion-dom/') || id.includes('/framer-motion/')) {
+            return 'motion';
+          }
+        },
+      },
     },
   },
   server: {

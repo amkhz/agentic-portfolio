@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@core/utils";
 import { ImageLightbox } from "./ImageLightbox";
+import { ResponsiveImage } from "./ResponsiveImage";
 import { ParallaxImage } from "@/components/effects/ParallaxImage";
 
 interface ImageBlockProps {
@@ -76,10 +77,12 @@ export function ImageBlock({
             {parallax ? (
               <ParallaxImage src={src} alt={alt} />
             ) : (
-              <img
+              <ResponsiveImage
                 src={src}
                 alt={alt}
                 loading="lazy"
+                // Covers span most of the content column; body figures the same.
+                sizes="(min-width: 768px) 760px, 100vw"
                 className={cn(
                   "absolute inset-0 h-full w-full",
                   // Covers (DossierFrame heroes) fill to the frame edge; body

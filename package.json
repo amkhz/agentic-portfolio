@@ -5,11 +5,12 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run generate:images && tsc && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
+    "generate:images": "tsx scripts/generate-image-variants.ts",
     "generate:og": "tsx scripts/generate-og-images.ts",
     "generate:favicons": "tsx scripts/generate-favicons.ts",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",

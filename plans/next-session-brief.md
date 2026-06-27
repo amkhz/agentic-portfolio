@@ -1,6 +1,6 @@
-# Pickup Brief — M2 imagery fully integrated; M3 Notes/Posts (T3a) ADR decision pending
+# Pickup Brief — M3 T3a notes infra SHIPPED; T3b prose is next
 
-Updated 2026-06-27. Integration branch is **`feat/conservatory-tokens`**. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest). Latest commit: **`ce13c13`** (screenshot integration + IDR hero crop).
+Updated 2026-06-27. Integration branch is **`feat/conservatory-tokens`**. T3a built on **`feat/notes-content-type`** (commit `1de0fab`, lint + build + 147 tests green) — not yet merged back to the integration branch. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest).
 
 ## Where we left off (this session)
 
@@ -16,19 +16,23 @@ Justin dropped 15 screenshots (`port-sources/SCREeN/`). Triaged and wired them a
 
 Net M2: **T2a ✅, T2b ✅ (meta descoped), T2c ✅, T2e ✅, T2f ✅.** Only **T2d** (formal WCAG alt-text audit) remains, and it's largely satisfied — every new image already has descriptive alt text. A dedicated audit pass is optional.
 
-### M3 Notes/Posts (T3a) — ADR decision pending, NOT yet built
-Started T3a (notes/posts content-type infra). Mapped the routing + content architecture. **Key discovery (Justin flagged it): we already built a near-twin.** The Perihelion Archive **lab guide library** at `core/lab/` is a full posts-style system — `guide-types.ts` (model), `guides.ts` (`import.meta.glob` registry), `parse-guide.ts` (parser + tests), 11 guide `.md`s, glossary/figures. But it's scoped to `labs.justinh.design` (a research library: territories, academic source citations). The portfolio still has **no** notes/posts type (no `posts.ts`, no `/notes` route, no list/detail page).
+### M3 Notes/Posts (T3a) — SHIPPED ✅
+Decision landed: **Option 1, frontmatter + glob** (recorded in **ADR-015**). Built on `feat/notes-content-type`:
+- `core/content/note-types.ts` — `Note` + `NoteFrontmatter` (title/date/summary/kicker?/draft?).
+- `core/content/parse-note.ts` (+ `parse-note.test.ts`, 8 tests) — YAML frontmatter parser, field-level validation, body via the shared `parseCaseStudyMarkdown`. **Gotcha solved:** loads with `yaml.JSON_SCHEMA` so an unquoted `date: 2026-06-27` stays a string instead of becoming a JS `Date`.
+- `core/content/notes.ts` — `import.meta.glob('./notes/*.md')` registry, reverse-chron by date, drafts hidden in prod / reachable by slug in dev. Empty dir → empty array → index empty state.
+- `core/utils/format.ts` — `formatNoteDate` (timezone-safe long-form).
+- `src/pages/NotesPage.tsx` (list + empty state) + `NotePage.tsx` (single-column reading register, reuses `renderSection`). Routes `/notes` + `/notes/:slug`; Notes link in Header + Footer; sitemap entry.
 
-**The open ADR decision — pick this BEFORE building:**
-1. **Lab-style frontmatter + glob** — each post = one self-contained `.md` (YAML frontmatter: title/date/summary/kicker + body), auto-registered via `import.meta.glob`, body rendered through the existing case-study section renderer (`renderSection` / `parseCaseStudyMarkdown`). Cleanest authoring (Writer touches one file), closest to what already works in the lab.
-2. **Lightweight `posts.ts`** — metadata in a hand-written TS array (mirrors `case-studies.ts`), body `.md` parsed by the existing section parser. Fastest to stand up; Writer edits two places per post.
-3. **Hold / rethink scope** — maybe the lab already covers the writing itch, or posts live on an existing surface instead of a new top-level `/notes`.
+**Body grammar = case-study grammar.** A post can use text / image / callout / quote / metrics / cta sections with zero new parser work. Author one `.md` in `core/content/notes/`; it auto-registers.
 
-**Tyrell's lean: Option 1** (frontmatter + glob, reuse the section renderer) — best authoring ergonomics, proven pattern, keeps body grammar shared with case studies. Justin paused to think; **decide first thing next session.**
+**Two open follow-ups (non-blocking):**
+- NotesPage hero reuses `/images/work-hero.png` at 40% as atmosphere (aria-hidden). Fine as interim; consider a dedicated notes hero or going type-only later.
+- Sitemap generator (`scripts/generate-sitemap.ts`) is broken under Node 25 (`ERR_UNKNOWN_FILE_EXTENSION` on the `.md?raw` imports) — pre-existing, not T3a. `/notes` was added by hand. Worth a real fix (vite-node) before relying on it for note slugs.
 
-## Next — M3, then the tail
-- **T3a** (Tyrell, infra) — once the ADR lands: spin a quick `invest-adr` (ADR-015), then build the type (parser/registry, `/notes` + `/notes/:slug` routes, list + detail surfaces, Notes nav link). Branch `feat/notes-content-type`. Infra + empty-state only; prose is T3b.
-- **T3b** (Writer, after T3a) — the three posts: "Design infrastructure, not just designs" manifesto (the *argument* form per ADR-014); "Five Ways I Work" (from `port-sources/practice.md`); 2026 retro (from `port-sources/wins.md`). Joi voice, no em-dashes, anonymize internal names. More source material in `port-sources/ai-assisted-design-at-kiavi.md`.
+## Next — M3 prose, then the tail
+- **MERGE first:** fold `feat/notes-content-type` (`1de0fab`) back into `feat/conservatory-tokens` before T3b so the Writer authors against the integration branch.
+- **T3b** (Writer, after merge) — the three posts as `.md` files in `core/content/notes/`: "Design infrastructure, not just designs" manifesto (the *argument* form per ADR-014); "Five Ways I Work" (from `port-sources/practice.md`); 2026 retro (from `port-sources/wins.md`). Joi voice, no em-dashes, anonymize internal names. More source material in `port-sources/ai-assisted-design-at-kiavi.md`. Frontmatter contract: `title`, `date` (YYYY-MM-DD), `summary`, optional `kicker`, optional `draft: true`.
 - **T3f** (Writer) — verified PR/ADR citations into `doctrine-not-prompts.md` + `instant-doc-review.md`. **Justin verifies the numbers before publish.**
 - **T2d** (optional) — formal alt-text audit pass on the new imagery.
 

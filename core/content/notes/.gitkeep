@@ -1,0 +1,4 @@
+# Notes content lives here as self-contained frontmatter .md files (ADR-015).
+# One file per post; the glob in ../notes.ts auto-registers them. Body grammar
+# is the shared case-study section grammar. Empty dir renders the index empty state.
+# Prose is T3b (Writer, Joi voice). This placeholder keeps the dir tracked.

@@ -129,9 +129,11 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 
 ## M3 — Notes/Posts + Content Folds
 
-### T3a: Notes/posts content-type infrastructure
+> **M3 COMPLETE 2026-06-27** (latest `8bac8d0` on `feat/conservatory-tokens`). T3a notes infra (ADR-015, Option 1 frontmatter + glob) built + merged. T3b shipped **two** posts (manifesto + "Five ways I work"), both Gaff-passed; the **2026 retro was cut** (too redundant with the doctrine-not-prompts case study). T3f resolved as **no PR/ADR citations** (Justin's call) — only two factual fixes landed. T3c ✅, T3d ✅ (merged earlier). Only **T2d** (optional alt audit) remains in the content chain. See `plans/next-session-brief.md` for the pickup.
 
-> **STATUS 2026-06-27 — ADR decision pending, NOT yet built.** Architecture mapped; no code written. **Key finding:** the portfolio has no notes/posts type, but `core/lab/` already ships a near-twin — a full posts-style system (`guide-types.ts` model, `guides.ts` `import.meta.glob` registry, `parse-guide.ts` parser + tests, glossary/figures), scoped to the lab subdomain (research library). The ADR now has THREE options, not two: (1) **lab-style frontmatter + glob** — one self-contained `.md` per post (YAML frontmatter + body), auto-registered, body via the existing `renderSection`/`parseCaseStudyMarkdown`; (2) **lightweight `posts.ts`** — TS metadata array + `.md` body via the section parser (mirrors `case-studies.ts`); (3) **hold / rethink scope**. Tyrell's lean: **Option 1** (best authoring ergonomics, proven pattern, shared body grammar). Spin `invest-adr` (ADR-015) once Justin picks. Section renderer/parser confirmed reusable as-is.
+### T3a: Notes/posts content-type infrastructure ✅ DONE 2026-06-27
+
+> **SHIPPED (ADR-015, Option 1: frontmatter + glob).** Each post is a self-contained `.md` (YAML frontmatter + body), auto-registered via `import.meta.glob`, body rendered through the shared `parseCaseStudyMarkdown`/`renderSection` pipeline. Files: `core/content/note-types.ts` (model), `parse-note.ts` (+ 8 tests; loads frontmatter with `yaml.JSON_SCHEMA` so unquoted ISO dates stay strings), `notes.ts` (glob registry, reverse-chron, draft-hiding). Surfaces: `src/pages/NotesPage.tsx` (list + empty state) + `NotePage.tsx` (detail). Routes `/notes` + `/notes/:slug`; Notes in Header + Footer nav; sitemap entry (generator is broken under Node 25, added by hand). Built on `feat/notes-content-type`, merged to integration branch (`9777a75`).
 
 **Layer:** Core + UI (`core/content/` parser/registry, `src/pages/` + route, minimal `design-system` if a post layout token is needed)
 **Owner:** Tyrell (infra)  **Branch:** `feat/notes-content-type`  **Commit prefix:** `feat(core):`
@@ -139,12 +141,13 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Outputs:** A notes/posts type the portfolio can render (it has none today) — parser, registry, route, list + detail surfaces. Unlocks T3b.
 **Scope boundary:** Infra + empty-state surfaces only. Does NOT write post prose (T3b). Follows four-layer order (tokens → core → ui).
 
-### T3b: Posts prose — manifesto + Five Ways + 2026 retro
+### T3b: Posts prose — manifesto + Five Ways (retro cut) ✅ DONE 2026-06-27
 
-**Layer:** Core (`core/content/`)
-**Owner:** Writer  **Branch:** `feat/posts-content`  **Commit prefix:** `feat(content):`
-**Inputs:** T3a (needs the content type).
-**Outputs:** "Design infrastructure, not just designs" manifesto; "Five Ways I Work" (from `practice.md`); 2026 retrospective (from `wins.md`). Joi voice; no em-dashes; no permission/gatekeeper framing; anonymize internal names (Matt/Caro/Brenno) + internal product names.
+> **SHIPPED — two posts, not three.** `design-infrastructure-not-just-designs.md` (the manifesto, argument form per ADR-014, Gaff concision pass applied) + `five-ways-i-work.md` (practice principles; Justin rewrote it and owns the personal Way-1 voice about arguing with the agent, which carries the intent throughline). The **2026 retro (`from-one-prototype-to-a-workshop.md`) was written then CUT** — too redundant with the doctrine-not-prompts case study; wins.md stays a receipts source, not a post. Joi voice, no em-dashes, coworkers anonymized to roles, no internal numbers. Authored on the integration branch directly (post-merge).
+
+**Layer:** Core (`core/content/notes/`)
+**Owner:** Writer
+**Outputs (as shipped):** Two `.md` posts above. Gaff ran two concision passes (manifesto + the Five-ways rewrite); fixed broken frontmatter + typos along the way.
 **Scope boundary:** Post prose only. No infra, no UI.
 
 ### T3c: Kiavi "what I've built" body-of-work layer ✅ DONE 2026-06-25
@@ -172,13 +175,13 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 **Outputs:** New case study — the screen-polish harness ("build the workflow, then run it"). Defer if the batch is tight.
 **Scope boundary:** One new study; new slug in `case-studies.ts`.
 
-### T3f: PR/ADR citations into existing studies
+### T3f: case-study claim verification (no citations) ✅ DONE 2026-06-27
+
+> **RESOLVED — no PR/ADR citations.** Justin's call: internal IDs mean nothing to external readers and leak repo structure on a public site (see `feedback_no_internal_ids_in_public_copy`). Scope became verify-and-correct only. He confirmed all six instant-doc-review metrics accurate (unchanged). **Two factual fixes landed** (`e812941`): designer ramp reconciled to "inside 2 months" across both studies (was "about 30 days" in doctrine-not-prompts, a cross-study contradiction); "ship by July" → "ship by the end of July". Verification worksheet archived at `scratchpad/t3f-verification-worksheet.md` (now gitignored — `89dac3a` added `/scratchpad/` to `.gitignore` so internal receipts can't leak).
 
 **Layer:** Core (`core/content/doctrine-not-prompts.md`, `core/content/instant-doc-review.md`)
-**Owner:** Writer  **Branch:** `feat/study-citations`  **Commit prefix:** `feat(content):`
-**Inputs:** **Justin verifies PR/ADR numbers before publish** (working-memory, not yet confirmed).
-**Outputs:** Citations woven in where `wins.md` supplies them.
-**Scope boundary:** Those two `.md` files. ⚠ COLLISION with T2d on case-study content — sequence T3f → T2d.
+**Owner:** Writer
+**Scope boundary:** Those two `.md` files. ⚠ COLLISION with T2d on case-study content — sequence T3f → T2d (still applies for the optional alt pass).
 
 ---
 
@@ -262,7 +265,7 @@ Complete when:
 
 - Hedvig/Figtree/JetBrains live both modes; dark-mode body weight tuned; `/impeccable typeset` pass done; #5 side-stripes gone; DESIGN.md + ADR-013 + PRODUCT/VECTOR/ARCHITECTURE all synced to the new lock.
 - All `image-punchlist.md` images present (no broken refs), low-res replaced, alt text WCAG-clean; the per-project Wallace mark set renders in the FIG slots + case-study plates (no placeholders).
-- Notes/posts type ships with ≥1 post; About has the Kiavi subsection in the new register; citations verified before publish.
+- Notes/posts type ships with ≥1 post (✅ two posts live); About points into the Kiavi hub in the new register (✅ T3d); case-study claims verified, no internal citations (✅ T3f).
 - Motion layer landed per VECTOR P4 (ease-out-expo, reduced-motion respected, one ambitious moment per surface).
 - Loose ends closed: wordmark, drop-caps call recorded, mark-system decision-record ADR written, Lighthouse 95+ per surface.
 - `npm run lint` + `npm run build` + `npm run test` green; Impeccable critique + polish gate cleared, then Roy final review passed; merged to `main`.

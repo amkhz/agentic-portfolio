@@ -58,7 +58,7 @@ export const constellationNodes: ConstellationNode[] = [
     inscription: 'From magic numbers to a system you can read.',
     size: 'md',
     status: 'shipped',
-    connections: ['the-sprint', 'the-structure', 'the-craft'],
+    connections: ['the-sprint', 'the-structure', 'the-craft', 'the-recalibration'],
     fixedPosition: { x: 0.24, y: 0.30 },
   },
   {
@@ -94,7 +94,7 @@ export const constellationNodes: ConstellationNode[] = [
     inscription: 'What earned confidence looks like in practice.',
     size: 'md',
     status: 'active',
-    connections: ['the-material', 'the-process'],
+    connections: ['the-material', 'the-process', 'the-recalibration', 'the-field-notebook'],
     fixedPosition: { x: 0.50, y: 0.75 },
   },
   {
@@ -112,18 +112,36 @@ export const constellationNodes: ConstellationNode[] = [
     inscription: 'The design system as a living artifact.',
     size: 'md',
     status: 'shipped',
-    connections: ['the-material', 'the-craft'],
+    connections: ['the-material', 'the-craft', 'the-field-notebook'],
     fixedPosition: { x: 0.16, y: 0.58 },
   },
-  // Planned nodes
+  // The recalibration arc: worldview, grammar, and the sibling lab
+  {
+    id: 'the-recalibration',
+    title: 'The Recalibration',
+    inscription: 'When a tidy idea became a worldview.',
+    size: 'md',
+    status: 'shipped',
+    connections: ['the-material', 'the-craft', 'the-field-notebook'],
+    fixedPosition: { x: 0.34, y: 0.87 },
+  },
+  {
+    id: 'the-field-notebook',
+    title: 'The Field Notebook',
+    inscription: 'A grammar for composing the worldview.',
+    size: 'md',
+    status: 'shipped',
+    connections: ['the-recalibration', 'the-system', 'the-craft', 'the-lab'],
+    fixedPosition: { x: 0.12, y: 0.82 },
+  },
   {
     id: 'the-lab',
     title: 'Perihelion',
     inscription: 'Research and design at closest approach to the frontier.',
-    size: 'sm',
-    status: 'planned',
-    connections: ['the-process', 'the-craft'],
-    fixedPosition: { x: 0.72, y: 0.85 },
+    size: 'md',
+    status: 'active',
+    connections: ['the-process', 'the-craft', 'the-field-notebook'],
+    fixedPosition: { x: 0.72, y: 0.88 },
   },
 ];
 

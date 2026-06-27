@@ -1,68 +1,88 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
 import { Container } from "@/components/layout/Container";
-import { Tag } from "@/components/interactive/Tag";
-import { SpotlightCard } from "@/components/effects/SpotlightCard";
+import { ImageBlock } from "@/components/content/ImageBlock";
+import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
+import {
+  DossierFrame,
+  DossierTags,
+  RegistrationMark,
+  TocLinkList,
+  type TocItem,
+} from "@/components/fieldnotebook";
+import { HeroScrim } from "@/components/content/HeroScrim";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
-import type { CaseStudy } from "@core/content/case-studies";
 
-function hasRealImage(study: CaseStudy): boolean {
-  return (
-    typeof study.heroImage.src === "string" &&
-    study.heroImage.src.length > 0 &&
-    !study.heroImage.src.includes("placeholder-")
-  );
-}
+// Studies folded behind a hub are reached through it, not listed here.
+const indexedStudies = caseStudies.filter((study) => !study.parentHub);
 
-function ImageIcon() {
+const tocItems: TocItem[] = indexedStudies.map((study, i) => ({
+  id: study.slug,
+  label: study.title,
+  to: `/work/${study.slug}`,
+  // No leading number — the thumbnail carries the visual index.
+  thumbnail: {
+    src: study.mark?.thumb,
+    alt: study.mark?.alt ?? `${study.title} project mark`,
+    placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
+  },
+  description: study.subtitle,
+  trailing: study.tags[0],
+}));
+
+/** Featured meta case study as a dossier entry: flush cover plate + type spread. */
+function FeaturedEntry() {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+    <Link
+      to={`/work/${metaCaseStudy.slug}`}
+      aria-label={`View case study: ${metaCaseStudy.title}`}
+      className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
-      <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-      <circle cx="9" cy="9" r="2" />
-      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-    </svg>
-  );
-}
+      <DossierFrame
+        kicker="Featured case file"
+        className="bg-bg-base transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]"
+      >
+        <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:order-1 lg:col-span-5">
+            <DossierFrame marked={false} className="bg-bg-base">
+              <ImageBlock
+                bare
+                expandable={false}
+                src={metaCaseStudy.heroImage.src}
+                alt={metaCaseStudy.heroImage.alt}
+                placeholder={metaCaseStudy.heroImage.placeholder}
+                aspect="4:3"
+              />
+            </DossierFrame>
+          </div>
 
-function HeroImage({ study, className }: { study: CaseStudy; className?: string }) {
-  if (hasRealImage(study)) {
-    return (
-      <img
-        src={study.heroImage.src}
-        alt={study.heroImage.alt}
-        loading="lazy"
-        className={`h-full w-full object-cover ${className ?? ""}`}
-      />
-    );
-  }
+          <div className="flex flex-col justify-center lg:order-2 lg:col-span-7">
+            <h2 className="max-w-[18ch] font-display text-2xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-3xl lg:text-4xl">
+              {metaCaseStudy.title}
+            </h2>
 
-  return (
-    <div
-      className={`flex h-full w-full items-center justify-center bg-bg-elevated ${className ?? ""}`}
-      role="img"
-      aria-label={study.heroImage.alt}
-    >
-      <div className="flex flex-col items-center gap-2 px-6">
-        <span className="text-text-muted">
-          <ImageIcon />
-        </span>
-        <span className="text-center font-body text-sm leading-normal text-text-muted">
-          {study.heroImage.placeholder}
-        </span>
-      </div>
-    </div>
+            <p className="mt-4 max-w-[60ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
+              {metaCaseStudy.subtitle}
+            </p>
+
+            {metaCaseStudy.heroMetric && (
+              <div className="relative mt-6 flex items-baseline gap-3">
+                <GlowEffect color="brass" size="sm" className="-left-6 -top-6" />
+                <span className="relative font-display text-3xl leading-tight tracking-tight text-accent-primary">
+                  {metaCaseStudy.heroMetric.value}
+                </span>
+                <span className="relative font-mono text-xs uppercase tracking-wider text-text-secondary">
+                  {metaCaseStudy.heroMetric.label}
+                </span>
+              </div>
+            )}
+
+            <DossierTags tags={metaCaseStudy.tags} className="mt-6" />
+          </div>
+        </div>
+      </DossierFrame>
+    </Link>
   );
 }
 
@@ -71,110 +91,49 @@ export function WorkPage() {
     <>
       <Helmet>
         <title>Work | Justin Hernandez</title>
-        <meta name="description" content="Case studies in AI-powered enterprise product design." />
+        <meta name="description" content="Case studies in AI-driven enterprise product design." />
         <link rel="canonical" href="https://justinh.design/work" />
       </Helmet>
 
-      <section className="py-24 sm:py-32">
+      {/* Atelier hero - the workshop the case files come from. Field Notebook
+          grammar: registration marks frame the type, humus scrim anchors it
+          lower-left, top fade blends under the sticky header. */}
+      <section className="relative isolate flex min-h-[56vh] items-end overflow-hidden bg-bg-deep">
+        <img
+          src="/images/work-hero.png"
+          alt="A designer's atelier at night within a biophilic habitat, warm brass light over a workbench of instruments"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-center"
+          loading="eager"
+          fetchPriority="high"
+        />
+        <HeroScrim top bottom left />
+
+        <Container className="relative z-10 pb-14 pt-32 sm:pb-20 sm:pt-40">
+          <div className="relative max-w-[60ch] py-8 pl-9 sm:py-10 sm:pl-14">
+            <RegistrationMark corners={["tl", "bl"]} />
+            <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+              Field notebook
+            </p>
+            <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+              Work
+            </h1>
+            <p className="mt-5 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
+              A working index of case files spanning AI strategy, enterprise UX,
+              and design systems.
+            </p>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 sm:py-24">
         <Container>
-          <h1 className="font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
-            Work
-          </h1>
-          <p className="mt-4 max-w-[65ch] font-body text-lg leading-normal text-text-secondary">
-            A selection of case studies spanning AI strategy, enterprise UX, and
-            design systems.
-          </p>
-
-          <div className="mt-10 h-px w-16 bg-accent-primary" />
-
-          {/* Featured: Meta case study */}
-          <RevealOnScroll className="mt-12">
-            <SpotlightCard className="p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
-              <Link
-                to={`/work/${metaCaseStudy.slug}`}
-                aria-label={`View case study: ${metaCaseStudy.title}`}
-                className="group block overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-              >
-                <div className="relative aspect-[21/9] overflow-hidden border-b border-border-subtle bg-bg-elevated">
-                  <HeroImage study={metaCaseStudy} className="motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]" />
-                </div>
-
-                <div className="p-6 sm:p-8">
-                  <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-                    <h2 className="font-heading text-2xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary sm:text-3xl">
-                      {metaCaseStudy.title}
-                    </h2>
-                    {metaCaseStudy.heroMetric && (
-                      <span className="font-heading text-lg tracking-wide text-accent-primary sm:text-xl">
-                        {metaCaseStudy.heroMetric.value}
-                      </span>
-                    )}
-                  </div>
-
-                  <p className="mt-3 max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
-                    {metaCaseStudy.subtitle}
-                  </p>
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {metaCaseStudy.tags.map((tag) => (
-                      <Tag
-                        key={tag}
-                        className="bg-bg-subtle transition-colors duration-normal group-hover:border-border-strong"
-                      >
-                        {tag}
-                      </Tag>
-                    ))}
-                  </div>
-                </div>
-              </Link>
-            </SpotlightCard>
+          <RevealOnScroll blur>
+            <FeaturedEntry />
           </RevealOnScroll>
 
-          {/* Case study grid */}
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {caseStudies.map((study, i) => (
-              <RevealOnScroll key={study.slug} delay={i * 100}>
-                <SpotlightCard className="h-full p-0 bg-bg-base border-border-subtle hover:border-accent-primary hover:shadow-glow-brass transition-[border-color,box-shadow] duration-normal">
-                  <Link
-                    to={`/work/${study.slug}`}
-                    aria-label={`View case study: ${study.title}`}
-                    className="group flex h-full flex-col overflow-hidden rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-                  >
-                    <div className="relative aspect-video overflow-hidden border-b border-border-subtle bg-bg-elevated">
-                      <HeroImage study={study} className="motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]" />
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-4 sm:p-5">
-                      <h3 className="font-heading text-xl font-medium leading-snug tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary">
-                        {study.title}
-                      </h3>
-
-                      <p className="mt-2 line-clamp-2 font-body text-base leading-normal text-text-secondary">
-                        {study.subtitle}
-                      </p>
-
-                      {study.heroMetric && (
-                        <p className="mt-2 font-heading text-sm tracking-wide text-text-muted">
-                          {study.heroMetric.value} {study.heroMetric.label}
-                        </p>
-                      )}
-
-                      <div className="mt-auto flex flex-wrap gap-2 pt-4">
-                        {study.tags.map((tag) => (
-                          <Tag
-                            key={tag}
-                            className="bg-bg-subtle transition-colors duration-normal group-hover:border-border-strong"
-                          >
-                            {tag}
-                          </Tag>
-                        ))}
-                      </div>
-                    </div>
-                  </Link>
-                </SpotlightCard>
-              </RevealOnScroll>
-            ))}
-          </div>
+          <DossierFrame kicker="Selected case files" className="mt-12 bg-bg-base">
+            <TocLinkList items={tocItems} ariaLabel="Selected case studies" reveal />
+          </DossierFrame>
         </Container>
       </section>
     </>

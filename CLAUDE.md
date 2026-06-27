@@ -92,9 +92,9 @@ After every change, state which files you touched and which layer they belong to
 
 ## Design System Non-Negotiables
 
-- **Visual direction:** "Blade Runner + William Gibson meets Finn Juhl, composed like a Pentagram monograph" -- dark mode is primary, warm blacks, dual accent (aged brass + dusty magenta via `--theme-accent-primary` and `--theme-secondary-*` tokens), editorial composition discipline, WCAG 2.2 AA throughout. See PRODUCT.md for the full aesthetic direction and the recalibration brief at `plans/portfolio-visual-recalibration-brief.md` for rationale.
+- **Visual direction:** "The Conservatory" -- an inhabited biophilic-future register (ADR-013). Dual mode is literal (humus-dark night / golden-hour day). Aged brass/amber (`--theme-accent-*`) is technology-and-light and owns interaction; soft sage/moss green (`--theme-secondary-*`) is the living primary expressed as atmosphere and material only, never an interaction color; dusty magenta (`--theme-signal-*`) is a rare signal. Field Notebook composition, WCAG 2.2 AA both modes. **See `DESIGN.md` for the full visual specification** (the design source of truth); the prior brass+magenta direction is superseded.
 - **All color is OKLCH via tokens.** No hex, no `rgb()`, no named colors anywhere -- not in components, not in tokens.css, not in doctrine files. Every color is `oklch()` defined in `design-system/tokens.css` and referenced by token name. No default Tailwind colors, no `#000`, no `#FFF`. If you write a literal color value outside `tokens.css`, you've made an error.
-- **Typography:** three-face stack -- display serif (h1/h2/section openers, hero), body sans (prose/UI/navigation), mono kicker (metadata/labels). Variable axes used intentionally for *fit* (weight, optical size, grade), not for animation. Specific face picks live in `design-system/tokens.css` and are validated live before locking. The earlier "Didact Gothic 400 only" constraint is superseded -- see PRODUCT.md.
+- **Typography:** three-face stack -- display (h1/h2/section openers, hero), body sans (prose/UI/navigation), mono kicker (metadata/labels). Variable axes used intentionally for *fit* (weight, optical size, grade), not for animation. Faces LOCKED 2026-06-21: **Fraunces** (display) / **Source Sans 3** (body + UI) / **JetBrains Mono** (kicker), validated live and Justin-approved -- see `DESIGN.md`.
 - One `h1` per page, heading hierarchy `h2 -> h3` in order, never skip levels
 - No UI library sprawl -- keep implementation lean
 - Avoid em-dashes in copy
@@ -156,10 +156,13 @@ Tyrell is the base persona and handles all implementation directly, informed by 
 - **Director** -- tracks status, coordinates work, prioritizes, runs Investiture health checks
 - **Dreamer** -- refines ideas into actionable plans and ADRs
 - **Writer** -- case study content and portfolio copy in core/content/
+- **Gaff** -- ruthless concision editor; runs marked-up critique passes that cut structure and redundancy while protecting the four load-bearing voice elements (pairs with Joi + Writer)
 - **Roy** -- post-build review against architecture, doctrine, and quality gates
 - **Joi** -- voice calibration; extracts Justin's writing patterns into a profile Writer references
 
 The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (v3.5.0) for design quality work: `/impeccable craft` for shape-then-build feature work, `/critique` for scored review (its persisted snapshot becomes `/polish`'s backlog), `/audit`, `/shape`, `/typeset`, `/impeccable live` for in-browser variants, and the rest of the command table in `.claude/skills/impeccable/SKILL.md`.
+
+**Skill storage convention.** Hand-authored crew skills (director, writer, dreamer, roy, joi, and other project-owned skills) are single-sourced: the real file lives in `.claude/skills/<name>`, and `.agents/skills/<name>` is a symlink to it. Edit the `.claude/` copy; never make a second real copy (that was the old drift source, now removed). The Impeccable suite is the exception: it ships installer-managed per-harness variants (`.claude/` = Claude Code flavor with `/` commands, `.agents/` = Codex flavor with `$` commands + `agents/*.toml`), so those legitimately differ between trees and are managed by the Impeccable installer, not by hand.
 
 ---
 
@@ -171,4 +174,4 @@ Tyrell's persona, voice, and working style are defined in the sections above. Th
 
 ## Design Context
 
-Full design context (users, brand personality, aesthetic direction, design principles) lives in `PRODUCT.md`. That file is the single source of truth for design direction, referenced by the Impeccable skill suite and available to all agents. See also `design-system/tokens.css` for the CSS implementation of all visual decisions, and `plans/portfolio-visual-recalibration-brief.md` for the rationale behind the current visual direction.
+The **visual specification** (color, typography, motion, imagery, composition) lives in `DESIGN.md`, the design source of truth, binding to ADR-013 ("The Conservatory") and auto-loaded by the Impeccable skill suite. **Brand context** (users, brand personality, tone, design principles) lives in `PRODUCT.md`. See also `design-system/tokens.css` for the CSS implementation of all visual decisions, and `vector/decisions/ADR-013-portfolio-conservatory-direction.md` plus `plans/recalibration-sprint0-notes.md` for the rationale behind the current direction.

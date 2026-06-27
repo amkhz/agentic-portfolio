@@ -1,4 +1,5 @@
 import type { CaseStudySection } from "@core/content/case-studies";
+import { slugify } from "@core/utils/format";
 import { SectionHeading } from "./SectionHeading";
 import { TextBlock } from "./TextBlock";
 import { ImageBlock } from "./ImageBlock";
@@ -7,6 +8,7 @@ import { MetricGrid } from "./MetricGrid";
 import { ComparisonBlock } from "./ComparisonBlock";
 import { QuoteBlock } from "./QuoteBlock";
 import { CalloutBlock } from "./CalloutBlock";
+import { CtaBlock } from "./CtaBlock";
 import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 
@@ -31,12 +33,21 @@ export function renderSection(
   headingAs?: "h2" | "h3"
 ) {
   const isChapterStart = headingAs === "h2";
+  const heading =
+    "heading" in section && typeof section.heading === "string"
+      ? section.heading
+      : undefined;
+  // Chapter anchor — lets the dossier Contents index jump to this section.
+  // scroll-mt offsets the jump clear of the fixed header.
+  const chapterId = isChapterStart && heading ? slugify(heading) : undefined;
+  const anchorClass = (...extra: (string | false | undefined)[]) =>
+    [chapterId && "scroll-mt-24", ...extra].filter(Boolean).join(" ") || undefined;
 
   switch (section.type) {
     case "text":
       return (
         <RevealOnScroll key={index}>
-          <div className={isChapterStart ? "mt-4" : undefined}>
+          <div id={chapterId} className={anchorClass(isChapterStart && "mt-4")}>
             {section.heading && headingAs && (
               <>
                 {isChapterStart && index > 0 && <ChapterBreak />}
@@ -68,7 +79,10 @@ export function renderSection(
     case "metrics":
       return (
         <RevealOnScroll key={index}>
-          <div className="-mx-6 rounded-lg bg-bg-elevated/50 px-6 py-8 sm:-mx-8 sm:px-8">
+          <div
+            id={chapterId}
+            className={anchorClass("-mx-6 bg-bg-elevated/40 px-6 py-10 sm:-mx-8 sm:px-8")}
+          >
             {section.heading && headingAs && (
               <SectionHeading as={headingAs}>{section.heading}</SectionHeading>
             )}
@@ -90,7 +104,7 @@ export function renderSection(
     case "comparison":
       return (
         <RevealOnScroll key={index}>
-          <div className="-mx-2 sm:-mx-4">
+          <div id={chapterId} className={anchorClass("-mx-2 sm:-mx-4")}>
             {section.heading && headingAs && (
               <div className="mx-2 sm:mx-4">
                 <SectionHeading as={headingAs}>
@@ -120,6 +134,18 @@ export function renderSection(
       return (
         <RevealOnScroll key={index}>
           <CalloutBlock label={section.label} body={section.body} />
+        </RevealOnScroll>
+      );
+
+    case "cta":
+      return (
+        <RevealOnScroll key={index}>
+          <CtaBlock
+            kicker={section.kicker}
+            href={section.href}
+            action={section.action}
+            body={section.body}
+          />
         </RevealOnScroll>
       );
 

@@ -5,7 +5,7 @@ interface SectionHeadingProps {
 
 export function SectionHeading({ children, as: Tag = "h2" }: SectionHeadingProps) {
   return (
-    <Tag className="mb-6 font-display text-2xl leading-snug tracking-tight text-text-primary">
+    <Tag className="mb-6 font-display text-2xl leading-snug tracking-tight text-text-primary sm:text-3xl">
       {children}
     </Tag>
   );

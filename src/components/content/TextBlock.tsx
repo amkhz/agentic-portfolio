@@ -12,7 +12,7 @@ export function TextBlock({ children }: TextBlockProps) {
       {paragraphs.map((paragraph, i) => (
         <p
           key={i}
-          className="mb-6 font-body text-base leading-normal text-text-secondary last:mb-0 sm:text-lg"
+          className="mb-6 font-body text-base leading-normal text-text-primary last:mb-0 sm:text-lg"
         >
           {parseInline(paragraph)}
         </p>

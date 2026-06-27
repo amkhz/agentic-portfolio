@@ -15,7 +15,7 @@ export function NotFoundPage() {
         <GlowEffect color="brass" size="md" className="left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2" />
 
         <Container className="relative z-10 text-center">
-          <h1 className="font-display text-5xl font-bold tracking-tight text-text-primary sm:text-[6rem]">
+          <h1 className="font-display text-5xl tracking-tight text-text-primary sm:text-[6rem]">
             404
           </h1>
 

@@ -51,10 +51,12 @@ export const colors = {
 } as const;
 
 export const typography = {
+  // Stack E (ADR-013 / DESIGN.md). The live faces are set in globals.css @theme;
+  // this export mirrors them for any JS consumer. Keep in sync.
   fontFamily: {
-    display: "'Podkova', serif",          // hero, big statements
-    heading: "'Space Grotesk', sans-serif", // section heads, nav
-    body:    "'Didact Gothic', sans-serif",  // body, descriptions
+    display: "'Hedvig Letters Serif', Georgia, serif", // hero, big statements
+    heading: "'Figtree', system-ui, sans-serif",       // section heads, nav, UI
+    body:    "'Figtree', system-ui, sans-serif",        // body, descriptions
   },
 
   fontSize: {

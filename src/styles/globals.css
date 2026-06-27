@@ -2,10 +2,15 @@
 @import "../../design-system/tokens.css";
 
 @theme inline {
-  /* --- Fonts --- */
-  --font-display: 'Podkova', serif;
-  --font-heading: 'Space Grotesk', sans-serif;
-  --font-body: 'Didact Gothic', sans-serif;
+  /* --- Fonts (locked: "The Conservatory", ADR-013, type-v2 amendment 2026-06-24) ---
+     Three-face stack: Hedvig Letters Serif (display) + Figtree (body sans, covers
+     UI/nav via --font-heading) + JetBrains Mono (kicker). Replaces the prior
+     Fraunces/Source Sans lock (Fraunces read as an AI tell). --font-heading
+     retained as an alias of the body sans for existing call sites. */
+  --font-display: 'Hedvig Letters Serif', Georgia, serif;
+  --font-heading: 'Figtree Variable', system-ui, sans-serif;
+  --font-body: 'Figtree Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* --- Colors: resolve from theme layer --- */
   --color-bg-deep: var(--theme-bg-deep);
@@ -28,6 +33,11 @@
   --color-secondary-muted: var(--theme-secondary-muted);
   --color-secondary-glow: var(--theme-secondary-glow);
 
+  --color-signal-primary: var(--theme-signal-primary);
+  --color-signal-hover: var(--theme-signal-hover);
+  --color-signal-muted: var(--theme-signal-muted);
+  --color-signal-glow: var(--theme-signal-glow);
+
   --color-border-subtle: var(--theme-border-subtle);
   --color-border-strong: var(--theme-border-strong);
 
@@ -39,7 +49,7 @@
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
+  --text-lg: 1.2rem; /* widened from 1.125 (base->lg ~1.2x) for clearer reading-range hierarchy */
   --text-xl: 1.375rem;
   --text-2xl: 1.75rem;
   --text-3xl: 2.5rem;
@@ -47,9 +57,10 @@
   --text-5xl: 5rem;
 
   /* --- Typography: Line heights --- */
-  --leading-tight: 1.1;
+  --leading-tight: 1.2; /* relaxed from 1.1 — Hedvig display headlines read airier at scale without losing display tightness */
   --leading-snug: 1.3;
-  --leading-normal: 1.65;
+  --leading-mid: 1.45;    /* mid-size multi-line text: intros, subheads, pull quotes */
+  --leading-normal: 1.55; /* long-form body: tightened from 1.65 for editorial crispness */
   --leading-loose: 1.8;
 
   /* --- Typography: Letter spacing --- */
@@ -94,9 +105,26 @@
   --shadow-lg: var(--theme-shadow-lg);
   --shadow-xl: var(--theme-shadow-xl);
   --shadow-glow-brass: var(--theme-shadow-glow-brass);
+  --shadow-glow-green: var(--theme-shadow-glow-green);
   --shadow-glow-magenta: var(--theme-shadow-glow-magenta);
 
   /* --- Motion / Transitions --- */
+  /* Doctrine (VECTOR P4): motion serves arrival and focus, never decoration.
+     --ease-out-expo is the default curve for entrance/focus choreography
+     (section reveals, page transitions, cover settles) — a long, decelerating
+     tail with no overshoot. No bounce, no elastic, ever. The Material curves
+     below stay for micro-transitions and theme/color crossfades, where a short
+     symmetric ease reads better than a dramatic decelerate. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Organic spring-feel curves (CSS, no JS). Sampled from spring step-responses
+     so they read like physics, not a mechanical ramp — and neither overshoots
+     (doctrine: no bounce/elastic).
+       --ease-settle: critically-damped, slow-in / long settle. The cushioned
+         arrival curve for reveals — luxurious, never abrupt.
+       --ease-organic: exponential approach, quick response then a soft tail.
+         For interaction (hover/focus lift) — smooth, not jumpy. */
+  --ease-settle: linear(0, 0.122 10%, 0.337 20%, 0.537 30%, 0.692 40%, 0.801 50%, 0.874 60%, 0.922 70%, 0.952 80%, 0.971 90%, 1);
+  --ease-organic: linear(0, 0.33 10%, 0.551 20%, 0.699 30%, 0.798 40%, 0.865 50%, 0.909 60%, 0.939 70%, 0.959 80%, 0.973 90%, 1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -106,16 +134,61 @@
   --duration-normal: 200ms;
   --duration-slow: 400ms;
   --duration-slower: 600ms;
+  /* Section-reveal arrival — the long cushioned settle (paired with --ease-settle). */
+  --duration-reveal: 900ms;
+  /* Arrival choreography sits in the slow..slower band; --duration-ambient is
+     reserved for looping atmosphere (grain, shader drift), never one-shot UI. */
   --duration-ambient: 1200ms;
 
 }
 
 body {
   background-color: var(--color-bg-deep);
-  background-image: var(--texture-linen);
+  /* Material texture comes from the global GrainOverlay (film grain), not a
+     line-based gradient. The old circuit-trace texture read as banding/bug
+     lines and did not fit the biophilic register. */
   color: var(--color-text-primary);
   font-family: var(--font-body), sans-serif;
+  /* Grayscale antialiasing on macOS/WebKit. Default subpixel smoothing renders
+     light-on-dark text heavier (the same bloom the night-mode --body-weight trim
+     fights); grayscale keeps Figtree crisp and even. Pairs with the dark-mode
+     weight trim rather than competing with it. */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Body weight is tunable per mode: light-on-dark text optically blooms and
+     reads heavier, so night trims the weight slightly to keep prose crisp.
+     Day (golden hour) keeps full regular weight. */
+  font-weight: var(--body-weight, var(--font-weight-regular));
   line-height: var(--leading-normal);
+}
+
+/* Night mode: counter dark-mode bloom on Figtree body prose. Light-on-dark
+   text optically blooms and reads heavier, so night trims the body weight
+   slightly to keep prose crisp; day (golden hour) keeps full regular weight.
+   Display headings are pinned to regular weight in @layer base below, so they
+   hold their gravity and do not thin along with the prose. */
+[data-theme="dark"] {
+  --body-weight: 350;
+}
+
+/* Hedvig Letters Serif is a single-weight, non-variable display face — no
+   optical-size, SOFT, or WONK axes (those belonged to Fraunces). Optical
+   sizing stays on as a harmless no-op for any future variable display face.
+   font-synthesis: none bans faux-bold and faux-oblique: Hedvig ships only a
+   400 roman with no true italic, so a stray weight/italic utility must no-op,
+   never smear. Display hierarchy comes from size/leading/tracking, not weight. */
+.font-display {
+  font-optical-sizing: auto;
+  font-synthesis: none;
+}
+
+/* Pin display headings to regular weight so they keep their gravity independent
+   of the night-mode body trim. Lives in @layer base so explicit weight
+   utilities (font-medium, font-bold) still override it. */
+@layer base {
+  .font-display {
+    font-weight: var(--font-weight-regular);
+  }
 }
 
 a:focus-visible,

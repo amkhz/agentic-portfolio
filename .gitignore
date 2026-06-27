@@ -12,3 +12,7 @@ dist/
 
 # Wallace render output (local image generation; self-ignored, kept out of the repo).
 /mocks/
+
+# Scratchpad — local working files, internal receipts, temp specimens. Never commit
+# (the repo is public; internal PR/ADR numbers and metrics must stay out).
+/scratchpad/

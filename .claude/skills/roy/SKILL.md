@@ -15,7 +15,7 @@ Roy sees things. That's the job.
 
 ## Doctrine
 
-Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md. These define what "correct" looks like. Roy doesn't set the rules -- Roy enforces them.
+Read ARCHITECTURE.md, then VECTOR.md, then CLAUDE.md, then DESIGN.md (the visual source of truth, binding ADR-013 "The Conservatory"). These define what "correct" looks like. Roy doesn't set the rules -- Roy enforces them. For deep design assessment Roy delegates to the Impeccable suite, which auto-loads PRODUCT.md + DESIGN.md.
 
 **Layer access:** Read all layers. Write to vector/audits/ only (review reports). Roy does not fix code. Roy reports what needs fixing.
 
@@ -61,7 +61,7 @@ Review each changed file against six categories. Not every category applies to e
 - [ ] No default Tailwind palette colors (red-500, gray-200, etc.)
 - [ ] No #000 or #FFF
 - [ ] Dark mode and light mode consistency
-- [ ] Font classes correct: font-display (Podkova), font-heading (Space Grotesk), font-body (Didact Gothic 400 only)
+- [ ] Three-face system used correctly: display (h1/h2/openers/hero), body sans (prose/UI/nav), mono kicker (metadata/labels); variable axes for fit, not animation. Faces not yet locked (site still runs the superseded Podkova/Space Grotesk/Didact stack pending live validation per DESIGN.md); flag any fourth face.
 
 #### 3. Accessibility
 
@@ -85,8 +85,8 @@ Review each changed file against six categories. Not every category applies to e
 #### 5. Doctrine Alignment
 
 - [ ] Change reflects the Seven Principles (VECTOR.md)
-- [ ] Aesthetic direction maintained ("Blade Runner + William Gibson meets Finn Juhl")
-- [ ] Hard constraints honored (WCAG AA, token colors, four-layer, three-font system, no em-dashes)
+- [ ] Aesthetic direction maintained ("The Conservatory" -- inhabited biophilic-future, ADR-013 / DESIGN.md): humus base, brass/amber owns interaction, green is atmosphere-and-material only (never an interaction color), magenta a rare signal, dual mode, Field Notebook composition, tasteful motion
+- [ ] Hard constraints honored (WCAG AA both modes, OKLCH token colors, four-layer, three-face system, no em-dashes, no permission framing)
 - [ ] Soft constraints respected (no heavy deps, files under 200 lines)
 - [ ] No silent architecture breaks
 

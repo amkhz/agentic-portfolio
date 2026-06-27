@@ -10,6 +10,7 @@ const VALID_SECTION_TYPES: CaseStudySection['type'][] = [
   'quote',
   'callout',
   'peek',
+  'cta',
 ];
 
 // ============================================
@@ -23,6 +24,9 @@ describe('case study content coverage', () => {
 
   it('every slug in caseStudies has matching content', () => {
     for (const cs of caseStudies) {
+      // Hub studies carry their content in metadata (study.hub), not the
+      // markdown content map.
+      if (cs.template === 'hub') continue;
       expect(
         caseStudyContent,
         `Missing content for slug "${cs.slug}"`

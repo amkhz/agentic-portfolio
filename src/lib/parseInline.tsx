@@ -1,7 +1,9 @@
 import React from "react";
 
 export function parseInline(text: string): React.ReactNode[] {
-  const tokenPattern = /(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g;
+  // Order matters: bold (**) is matched before italic (*) so the double
+  // asterisk is never mistaken for two single ones.
+  const tokenPattern = /(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g;
   const parts = text.split(tokenPattern);
 
   return parts.map((part, i) => {
@@ -10,6 +12,14 @@ export function parseInline(text: string): React.ReactNode[] {
         <strong key={i} className="font-semibold text-text-primary">
           {part.slice(2, -2)}
         </strong>
+      );
+    }
+
+    if (part.startsWith("*") && part.endsWith("*") && part.length > 2) {
+      return (
+        <em key={i} className="italic">
+          {part.slice(1, -1)}
+        </em>
       );
     }
 

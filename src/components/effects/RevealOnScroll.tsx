@@ -9,10 +9,17 @@ export function RevealOnScroll({
   children,
   delay = 0,
   className,
+  blur = false,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  /**
+   * Add a focus-pull blur to the reveal. Reserved for the focal/ambitious
+   * moments (featured covers) — most section reveals are opacity + rise only,
+   * so blur stays a deliberate accent rather than firing site-wide.
+   */
+  blur?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(prefersReducedMotion);
@@ -47,15 +54,15 @@ export function RevealOnScroll({
       className={cn(
         isVisible
           ? "translate-y-0 opacity-100"
-          : "translate-y-2 opacity-0",
+          : "translate-y-5 opacity-0",
         className
       )}
       style={{
-        transitionProperty: "opacity, translate, filter",
-        transitionDuration: "600ms",
-        transitionTimingFunction: "var(--ease-out)",
+        transitionProperty: blur ? "opacity, translate, filter" : "opacity, translate",
+        transitionDuration: "var(--duration-reveal)",
+        transitionTimingFunction: "var(--ease-settle)",
         transitionDelay: isVisible ? `${delay}ms` : "0ms",
-        filter: isVisible ? "blur(0px)" : "blur(4px)",
+        ...(blur ? { filter: isVisible ? "blur(0px)" : "blur(5px)" } : {}),
       }}
     >
       {children}

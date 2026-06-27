@@ -4,7 +4,8 @@ Generated: 2026-04-12 (Phase 1)
 Updated: 2026-04-30 (Phase 2 — humor register and scientific voice)
 Updated: 2026-04-30 (Phase 3 — edited prose patterns from About-page corpus)
 Updated: 2026-04-30 (Phase 3.1 — calibration tweaks from Emergent Quantization rewrite)
-Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3) + cold-read calibration on lab guide rewrite (Phase 3.1)
+Updated: 2026-06-22 (Phase 4 — edited-prose patterns from the Conservatory case-study edit pass)
+Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3) + cold-read calibration on lab guide rewrite (Phase 3.1) + Justin's hand-edits across 8 case-study files (Phase 4)
 
 ## What changed in Phase 2
 
@@ -20,6 +21,12 @@ Original sections remain accurate. New sections (Humor Register, Scientific Voic
 Phase 1 and Phase 2 calibrated from interview transcripts — *spoken* voice. Phase 3 adds *edited prose patterns* extracted from `voice-corpus-about.md` (the About page Justin wrote himself). Same voice, polished side of the line: the moves Justin reaches for when shaping a paragraph for publication rather than answering on the fly.
 
 New material: a Structural Templates section (identity-stack, verb-stack, hobby-catalog, belief-block, biographical-spine, stakes-escalation), additions to Concrete Constraints and Vocabulary, the maximalist-with-deflation rhythm note, three Phase 3 calibration anchors, three Phase 3 before/after pairs, and an edited-prose anti-patterns block. Existing sections were extended, not rewritten.
+
+## What changed in Phase 4
+
+Phases 1 through 3.1 calibrated from interviews and About-page prose. Phase 4 is calibrated from a different and higher-signal source: *Justin's own line edits* over Tyrell-drafted case-study copy (8 files, the Conservatory content pass). Watching what he deliberately changes (and what he leaves alone) exposes editing instincts that don't show up in fresh writing. The Phase 4 section near the end captures those instincts as falsifiable rules; the existing sections still hold.
+
+One drift-protection finding worth flagging up front: **Justin's prose expands when he edits.** His changes add more than they cut (maximalist list expansion, register-breakers, growth-framing clauses); only one edit in the whole pass was a pure tightening. The voice consequence: when a *separate* editorial cut happens, take it out of structure and redundancy, never out of the register-breakers or the intent throughline, because those are the voice, not the fat. (The editorial act itself, making the hard concision cuts on request, is a working preference, not a voice trait, so it lives in crew working-notes / memory, not here.)
 
 ## The Voice in One Sentence
 
@@ -220,6 +227,73 @@ Multi-paragraph bios progress *past → present → near-recent → future*. Eac
 
 **Generic:** "I have a wide range of personal interests including outdoor activities, music, and automotive enthusiasm."
 **Justin:** "I'm a music and technology nerd, a living room DJ, a motorsports enthusiast, a knowledge curator, and a relentlessly curious human. I enjoy back country camping, feeling the warmth of the sun on the California coast, and searching for music I haven't heard yet. And of course, Porsches."
+
+## Phase 4 — Edited-prose patterns (from the Conservatory case-study pass)
+
+These are the moves Justin reaches for when *revising* drafted copy. Each is observed across multiple files in the edit pass.
+
+### The intent throughline (load-bearing)
+
+The single most consistent edit. Justin repeatedly steers prose toward **intent and its faithful expression**: "look like anyone" became "what I wanted to convey"; "ability to compose in it" became "ability to express it"; "conveyed through color" became "expressed through color"; "stay in charge of them" became "stay in charge of how their intent is expressed"; "what is this, and is it mine" became "is it really what I intended to make." Reach for *express, convey, articulate, intent, intended* at the thesis moments. This is Justin's central belief about design (faithful execution of intent), so it is the one theme to protect, never trim.
+
+### "Enter X." as a reveal opener
+
+Replaces flatter introductions when naming a thing for the first time. "That became Perihelion" became "Enter Perihelion"; "I call it the Field Notebook" became "Enter the Field Notebook." Theatrical, confident, names-the-thing. Use sparingly (it loses force if repeated within one piece).
+
+### Humility downgrades on self-claims
+
+- **the → a** to dial back self-aggrandizement: "the go-to resource" → "a go-to resource"; "The systematic audit" → "A systematic audit."
+- **Verb downgrades:** "I redesigned" → "I enhanced"; "the number I'd stake the whole thing on" → "something I'm proud of." Warmer and less chest-beating, without hedging the claim itself.
+
+### Casualizes his own coinages and meta-language
+
+Justin distrusts capital-letter Concepts in his own copy. "The Big Flip" → "the flip"; "The core insight:" → "The gist:"; "The meta-insight is the one that matters most:" → "This is where it gets meta:". He de-brands and lowercases his own framings.
+
+### Temporal / evolution honesty
+
+Heavy past-tense conversion plus explicit timestamping to mark living documents as point-in-time snapshots and to show forward motion: "The foundation is 21 tokens" → "The foundation was 21 tokens"; added "The design system has evolved from when this was first written but it's preserved as a point in time reminder of how we started"; added "Since I gave my talk, we've already made big strides." When copy describes an evolving system, Justin marks *when* it was true and notes what changed since.
+
+### Personal possessive ownership
+
+Claims the work as his: "the M5 Max" → "my M5 Max"; "the tool authored the evidence" → "My tools authored the evidence"; "When agents work" → "When my agents work"; "a content partner" stays anonymous no more (see specificity). Pairs with self-deprecating ownership too ("rough ideas" → "rough ideas from my ramblings").
+
+### Specificity upgrades (people, titles, systems) — but de-specify incidental detail
+
+Names real roles and systems: "A content partner demoed" → "Our Director of Product Management demoed"; "Kiavi Borrower" → "Kiavi Experience Manager"; "the design system" → "the Operations design system"; "a full Michelin kitchen" → "a 3 star Michelin kitchen." But he *removes* incidental precision that adds nothing: "Saturday around 1pm" → "Saturday afternoon." Specify the load-bearing nouns; round off the trivia.
+
+### Register-breakers (confirmed and extended)
+
+Phase 2 flagged "all that jazz," "the whole shebang," "Easy peasy." Phase 4 confirms "the whole shebang" in live use and adds a batch: **"all willy nilly," "get lost in the sauce," "he was a real one," "try hard," "the big one," "aha moment," "cross your fingers."** These are tonal release valves dropped mid-paragraph. They are *the voice* and survive any concision pass.
+
+### Maximalist list expansion (Phase 3 confirmed)
+
+When editing, Justin adds list items rather than trimming: "naming the real problem" → "evaluating options, naming the real problems"; "PMs" → "PMs and all new hires"; "actually learn it" → "learn it beyond simply reading research papers, articles, and books." The sprawl is deliberate (see Phase 3 maximalist note). Concision must come from cutting redundant *sentences*, not from curating these lists.
+
+### Phase 4 calibration anchors
+
+> "Seeing the directions fully realized gave me the power to speak my intent into existence."
+
+> "So we retired it. Not replaced. Retired. Threw it a party and everything. ... You build scaffolding so the building can stand on its own."
+
+> "Builder's digital hands were on every feature that shipped, he was a real one."
+
+### Phase 4 before/after (real edits)
+
+**Drafted:** "The first version of this portfolio looked good. It did not look like anyone."
+**Justin:** "The first version of this portfolio looked good. It wasn't good enough for what I wanted to convey."
+
+**Drafted:** "That's the difference between a design instrument and a dice roll: you can move one variable and read the result."
+**Justin:** "Now we're playing with a design instrument and not a dice roll: you can move one variable and read the result."
+
+**Drafted:** "I became the go-to resource for AI strategy across design, product, and engineering."
+**Justin:** "I became a go-to resource for AI strategy across design, product, and engineering."
+
+### Watch list (artifacts in the raw edits, NOT voice — fix in polish)
+
+These appeared in the hand-edit pass and should be corrected, not preserved as style:
+- **Spaced-hyphen em-dash substitutes:** "and that's okay - we're constantly experimenting," "bigger picture - it's easy to get lost in the sauce." A spaced ` - ` is an em-dash in disguise. The no-em-dash rule wants the sentence *restructured*, not the dash respelled.
+- **Typos / broken clauses from fast editing:** "exisiting," "practce," "seperation," "critcally," "the your personal intent in the loop" (incomplete clause), "I wanted test the loop" (missing "to"). Dictation and typing artifacts, not voice.
+- **"gatekeep" retained** in the Lab node: framed as the rejected anti-pattern (acceptable), but it still carries gate energy against the no-permission-framing rule. Flag for Justin's call before publish.
 
 ## Anti-Patterns
 

@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-06-10
+**Last updated:** 2026-06-20
 
 ---
 
@@ -98,12 +98,17 @@
 - Build-time figure optimization via `vite-imagetools`
 - Full-text search once content volume demands it
 
-### 2. Portfolio visual recalibration polish pass (ADR-011 implementation)
+### 2. Portfolio visual overhaul — "The Conservatory" (ADR-013) + case-study content refresh
 
-**Status:** Doctrine active on main (PR #68, merged 2026-06-09). Implementation not started; plan rewritten 2026-06-10 for Impeccable v3.5.0. Nothing else blocks it.
-**Brief:** `plans/portfolio-visual-recalibration-brief.md` (2026-06-10 addendum) | **Implementation plan:** `plans/portfolio-adr-011-implementation-plan.md` (v2) | **ADR:** ADR-011
+**Status:** Active on branch `feat/conservatory-tokens` (not yet merged to main). Fresh-exploration recalibration locked 2026-06-20, superseding the never-implemented ADR-011 editorial direction. Build + 130 tests green.
+**Direction:** ADR-013 | **Live status + open items:** `plans/recalibration-sprint0-notes.md` | **Plans:** `vector/missions/conservatory-visual-build.md` (A), `vector/missions/case-study-content-refresh.md` (B) | **North-stars:** `mocks/recalibration-sprint0/`
 
-The pass applies the editorial-craftsperson register to portfolio surfaces: three-face type stack (Fraunces display, Geist body, JetBrains Mono kicker) superseding the Didact-400-only constraint, the tightened OKLCH-only color rule, and the new restraint-is-not-blandness and editorial-composition principles. Perihelion is explicitly out of scope (sibling-but-separate per the brief). The plan v2 re-anchors on main (the old PR #68 stack frame is gone), runs each surface through the Impeccable v3.5.0 `craft` → `critique` → `polish` snapshot pipeline, and carries two pending Justin calls (pull-quote border-left vs. the v3.5.0 side-stripe ban; the brief's internal drop-cap contradiction) that must resolve before the case-study-shell PR.
+"The Conservatory" is an inhabited biophilic-future register: humus-black + brass/amber + sage-green color inversion (magenta demoted to rare signal), wabi-sabi + Danish craft, seamless advanced tech, subtle luxury, day/night dual mode. Wallace-generated imagery is the centerpiece; Field Notebook layout grammar; the two-door origin→evolution piece ships as "The Fork" (split-screen entry).
+
+**Done:** token spine (both modes, WCAG-verified), tokens synced to Paper, Home biophilic hero (placeholder image), all 5 case studies drafted + consolidated (IDR rewrite, Wallace, Pioneering AI Adoption refresh + Doctrine Not Prompts, SOW refresh).
+**Remaining (order):** surfaces (Work index Field Notebook TOC + case-study shell, incl. Home rebalance) → The Fork → motion+interaction pass (+ doctrine update) → imagery finals → type validation → housekeeping (sync PRODUCT.md/VECTOR.md to ADR-013, prune stale branches, PR to main).
+**Justin-driven next:** de-AI voice read-through + a hard conciseness pass on every case study.
+**Open:** green's UI role (brass/green duotone reverted as clashing); type still on old faces; ADR-013 not yet synced into PRODUCT.md/VECTOR.md.
 
 ### 3. Constellation enhancements
 
@@ -178,4 +183,6 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 008 | Defer DESIGN.md adoption | 2026-04-14 | Accepted |
 | 009 | Lab subdomain architecture (two Vite builds, one repo) | 2026-04-20 | Accepted |
 | 010 | Rename lab to Perihelion (two-arm house: Archive and Works) | 2026-04-21 | Accepted |
-| 011 | Portfolio visual recalibration to editorial-craftsperson register | 2026-05-17 | Accepted, activated on main 2026-06-09 (PR #68) |
+| 011 | Portfolio visual recalibration to editorial-craftsperson register | 2026-05-17 | Superseded by ADR-013 |
+| 012 | Perihelion house identity | 2026-06 | Accepted |
+| 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, in build on `feat/conservatory-tokens` |

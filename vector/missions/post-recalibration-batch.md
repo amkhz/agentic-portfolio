@@ -75,6 +75,8 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 ## M2 — Imagery Finals (parallel to M1; no type dependency)
 
 > **M2 LANDED 2026-06-26** (commit `25b0de2` on `feat/conservatory-tokens`). T2a + T2e + T2f done; T2b (Justin screenshots) + T2c (wire/verify) + T2d (alt audit) remain. Render drafts/captions in `mocks/m2-imagery/` (gitignored). Picks + seeds + the slot map are in `plans/next-session-brief.md`. Marks ship as cropped V4_DEFAULT_20 drafts (Justin picked the exact drafts); optional 48 upgrade later. Key learning: marks carry ZERO baked text (`feedback_no_baked_text_in_marks`). Bonus this pass: `HeroScrim` (header-seam top fade) + `ImageBlock` cover-fill fix + atelier in the Wallace body.
+>
+> **M2 CLOSED 2026-06-27** (commit `ce13c13`). Justin's 15 screenshots integrated: 10 punch-list slots filled, 2 new image blocks in `doctrine-not-prompts.md` (`key-agent-terminal`, `leverage-math`; Writer/Joi captions), 1 staged backup (`snapshot-evidence-inspection-alt`). `idr-hero.png` re-cropped from `admin-page-tasks.png` (old crop was off-center). `image-punchlist.md` deleted. **T2b's 8 hi-res `meta-*` re-shoots DESCOPED** (Justin: no longer cares about the early low-res set). **T2a/T2b/T2c/T2e/T2f all ✅.** Only **T2d** (formal alt audit) left, and it's largely satisfied — every new image has descriptive alt text; a dedicated pass is optional.
 
 ### T2a: Wallace renders ✅ DONE 2026-06-26
 
@@ -128,6 +130,8 @@ Faces LOCKED to **Stack E: Hedvig Letters Serif (display) / Figtree (body) / Jet
 ## M3 — Notes/Posts + Content Folds
 
 ### T3a: Notes/posts content-type infrastructure
+
+> **STATUS 2026-06-27 — ADR decision pending, NOT yet built.** Architecture mapped; no code written. **Key finding:** the portfolio has no notes/posts type, but `core/lab/` already ships a near-twin — a full posts-style system (`guide-types.ts` model, `guides.ts` `import.meta.glob` registry, `parse-guide.ts` parser + tests, glossary/figures), scoped to the lab subdomain (research library). The ADR now has THREE options, not two: (1) **lab-style frontmatter + glob** — one self-contained `.md` per post (YAML frontmatter + body), auto-registered, body via the existing `renderSection`/`parseCaseStudyMarkdown`; (2) **lightweight `posts.ts`** — TS metadata array + `.md` body via the section parser (mirrors `case-studies.ts`); (3) **hold / rethink scope**. Tyrell's lean: **Option 1** (best authoring ergonomics, proven pattern, shared body grammar). Spin `invest-adr` (ADR-015) once Justin picks. Section renderer/parser confirmed reusable as-is.
 
 **Layer:** Core + UI (`core/content/` parser/registry, `src/pages/` + route, minimal `design-system` if a post layout token is needed)
 **Owner:** Tyrell (infra)  **Branch:** `feat/notes-content-type`  **Commit prefix:** `feat(core):`

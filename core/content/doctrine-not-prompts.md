@@ -22,6 +22,10 @@ Three beliefs hold the whole thing together:
 *"Doctrine reads doctrine": a live prompt to the team agent ("what design decisions am I committed to on this project?") returns project-specific opinions, not generic LLM output. You can see it reach into VECTOR.md (why), CLAUDE.md (how), and ARCHITECTURE.md (where).*
 <!-- aspect:16:9 placeholder:Split view, the prompt on the left, the agent's project-specific answer on the right, with the three doctrine files (VECTOR / CLAUDE / ARCHITECTURE) labeled as the source it read. -->
 
+![The team agent introducing itself in a terminal session, describing the doctrine it reads first](/images/key-agent-terminal.png)
+*The same agent in its native habitat. Key introducing itself in a live terminal session, reading the team's doctrine, architecture, and voice files before it writes a line. The view above is the polished answer. This is where it comes from.*
+<!-- aspect:16:9 placeholder:Terminal screenshot of the team agent (Key) introducing itself in a Claude Code session, describing the four-layer architecture and the doctrine, brand, and voice files it reads first. -->
+
 ## The System: Kiavi World
 
 Kiavi World is the team's home base: a dashboard, a reference library, and a prototype launcher, all in one place. It's also itself a prototype, built on the team's standard architecture: every component is a reference implementation of the design quality the team is aiming for.
@@ -33,6 +37,10 @@ Four views, four jobs. Home is an editorial, magazine-cover landing, deliberatel
 ![Kiavi World home view, editorial landing](/images/kiavi-world-home.png)
 *Kiavi World's Home view. Modern editorial meets design tool: dark-first, typographically rich, generous whitespace. The deliberate opposite of utilitarian dashboard gray.*
 <!-- aspect:16:9 placeholder:Kiavi World Home, magazine-cover editorial layout, Playfair Display headings, teal-and-mint palette, dark theme, curated featured links. -->
+
+![Interactive Leverage Math calculator in Kiavi World's Learn view](/images/leverage-math.png)
+*The Learn view's Leverage Math model. Borrowers and agents get LTC-versus-ARV-cap math wrong constantly, so this lets you move the inputs and watch which constraint binds. New designers learn the lending domain by playing with it, not reading a memo.*
+<!-- aspect:16:9 placeholder:Kiavi World Learn view, interactive Leverage Math calculator with Purchase Price, Rehab, and ARV inputs; LTC constraint versus ARV cap constraint, the binding one driving Loan Amount and Cash to Close. -->
 
 ## The Proof Points
 

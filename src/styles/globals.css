@@ -134,6 +134,8 @@
   --duration-normal: 200ms;
   --duration-slow: 400ms;
   --duration-slower: 600ms;
+  /* Section-reveal arrival — the long cushioned settle (paired with --ease-settle). */
+  --duration-reveal: 900ms;
   /* Arrival choreography sits in the slow..slower band; --duration-ambient is
      reserved for looping atmosphere (grain, shader drift), never one-shot UI. */
   --duration-ambient: 1200ms;

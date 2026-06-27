@@ -84,7 +84,7 @@ export function NotesPage() {
         <Container>
           {notes.length > 0 ? (
             <DossierFrame kicker="Entries" className="bg-bg-base">
-              <TocLinkList items={tocItems} ariaLabel="Notes entries" reveal />
+              <TocLinkList items={tocItems} ariaLabel="Notes entries" reveal revealStagger={0.14} />
             </DossierFrame>
           ) : (
             <RevealOnScroll>

@@ -17,7 +17,7 @@ import { scrollSpring } from "./motionConfig";
  */
 export function CoverParallax({
   children,
-  distance = 24,
+  distance = 18,
   className,
 }: {
   children: ReactNode;

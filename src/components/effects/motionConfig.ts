@@ -10,17 +10,6 @@
  * decelerating tail, no overshoot. No bounce, no elastic, ever.
  */
 
-/** cubic-bezier(0.16, 1, 0.3, 1) — mirrors --ease-out-expo. */
-export const easeOutExpo = [0.16, 1, 0.3, 1] as const;
-
-/** Durations in seconds (motion/react unit). Mirror --duration-* (ms). */
-export const duration = {
-  fast: 0.1,
-  normal: 0.2,
-  slow: 0.4,
-  slower: 0.6,
-} as const;
-
 /**
  * Spring presets for entrance/arrival choreography. Real spring physics read as
  * organic and alive where a fixed bezier reads mechanical. `bounce: 0` keeps
@@ -37,7 +26,7 @@ export const springSoft = { type: "spring", bounce: 0, duration: 0.55 } as const
  * settles with life instead of ramping mechanically. Micro-interaction only;
  * the arrival/page register stays overshoot-free per doctrine.
  */
-export const springHover = { type: "spring", bounce: 0.32, duration: 0.5 } as const;
+export const springHover = { type: "spring", bounce: 0.3, duration: 0.4 } as const;
 
 /** Smoothing spring for scroll-linked values (parallax) — gives drift weight. */
 export const scrollSpring = { stiffness: 80, damping: 24, mass: 0.6 } as const;

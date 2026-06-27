@@ -52,15 +52,16 @@ interface TocLinkListProps {
    * dense lists (case-study contents, home selected) stay still.
    */
   reveal?: boolean;
+  /**
+   * Seconds between each row in the reveal cascade. Lets surfaces set their own
+   * tempo — Work inks in briskly, Notes reads more reflective. Only applies when
+   * `reveal` is set.
+   */
+  revealStagger?: number;
 }
 
 // Staggered row reveal — the list cascade for Work + Notes (opt-in via `reveal`).
 // Spring physics + a roomier stagger so rows ink in one after another.
-const listContainer: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
-};
-
 const listRow: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: springSettle },
@@ -92,7 +93,7 @@ function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) 
           src={thumbnail.src}
           alt={thumbnail.alt}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[700ms] ease-[var(--ease-settle)] group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[var(--duration-slow)] ease-[var(--ease-organic)] group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       ) : (
         <span
@@ -207,11 +208,16 @@ export function TocLinkList({
   ariaLabel,
   className,
   reveal = false,
+  revealStagger = 0.09,
 }: TocLinkListProps) {
   const reduced = useReducedMotion();
   const liClass = "border-t border-border-subtle first:border-t-0";
 
   if (reveal && !reduced) {
+    const listContainer: Variants = {
+      hidden: {},
+      show: { transition: { staggerChildren: revealStagger, delayChildren: 0.05 } },
+    };
     return (
       <motion.ul
         aria-label={ariaLabel}

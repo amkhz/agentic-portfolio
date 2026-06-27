@@ -52,7 +52,7 @@ export function RevealOnScroll({
       )}
       style={{
         transitionProperty: "opacity, translate, filter",
-        transitionDuration: "950ms",
+        transitionDuration: "var(--duration-reveal)",
         transitionTimingFunction: "var(--ease-settle)",
         transitionDelay: isVisible ? `${delay}ms` : "0ms",
         filter: isVisible ? "blur(0px)" : "blur(5px)",

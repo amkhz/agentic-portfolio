@@ -86,6 +86,67 @@ Most of the 29 are wrong register (Metaballs, Dot Orbit, Neuro Noise, Voronoi, S
 5. Screenshot both modes (night / golden-hour). Verify atmosphere reads as material, not as an effect demo (`feedback_respect_slop_bans`).
 6. If animated: add `prefers-reduced-motion` fallback + lazy mount; confirm Lighthouse still 95+ on the surface.
 
+## Spike results (2026-06-27)
+
+Ran T4d on branch `feat/conservatory-tokens`. Installed, inspected the package internals, built one static prototype, ran the gates. Nothing wired into a shipped surface; nothing committed.
+
+### Install + peer status
+
+- Installed `@paper-design/shaders-react@0.0.76` (pulls `@paper-design/shaders@0.0.76`). Version matches the 2026-06-25 capture — no drift.
+- Peer dep resolves clean on this stack: `react: ^18 || ^19` + optional `@types/react`. We are on React 19.2.4, deduped. Two packages added, effectively zero extra runtime deps.
+- `npm audit` reports vulnerabilities in the wider tree, but `npm ls` shows the shader packages add nothing transitive of their own — the audit noise is pre-existing, not introduced here.
+
+### The OKLCH verdict (load-bearing question — settled)
+
+**The `colors` prop does NOT accept `oklch()` strings.** Confirmed by reading the parser in `node_modules/@paper-design/shaders/dist/get-shader-color-from-string.js`: `getShaderColorFromString` branches on `#hex`, `rgb(`, `hsl(` only. Anything else hits `console.error("Unsupported color format")` and returns the black fallback `[0,0,0,1]`. Feeding our tokens raw would silently paint everything black.
+
+**There IS an OKLCH path on the GPU — but it is unwired in 0.0.76.** `dist/shader-color-spaces.js` defines `ShaderColorSpaces = { rgb: 0, oklch: 1 }` plus full GLSL oklab/oklch transforms (`srgbToOklab`, `mixOklabVector`, hue-aware `mixHue`). However: (a) no shader module imports that file (`grep` for `declareOklchTransforms` / `srgbToOklab` matches only the file itself), (b) neither `StaticMeshGradientParams` nor `GrainGradientParams` exposes a `colorSpace` prop, and (c) the mesh fragment shader blends stops with plain `mix()` in its own working (sRGB-ish) space. So perceptually-uniform OKLCH interpolation between stops is **not available via any prop today**. It looks like scaffolding for a future release — worth re-checking post-1.0.
+
+**Chosen approach (no hardcoded color):** read the live token values off `:root` with `getComputedStyle`, then resolve each `oklch()` token to an sRGB hex using the browser's own color engine via a throwaway `<canvas>` 2D context (`ctx.fillStyle = oklchString; ctx.fillStyle` returns `#rrggbb`/`rgba()`). Feed the resolved endpoints to `colors`. **Endpoints are exact token values; only the blend between stops is non-OKLCH** — acceptable for atmospheric texture where stops are close in the humus/green/brass family. Re-resolve on theme flip for dual mode. This keeps the component honest to `feedback_oklch_only`: zero literal colors in source, single source of truth stays `tokens.css`.
+
+> **Brief correction:** the open-question section above guessed token names `--color-accent-*` / `--color-secondary-*` / `--color-bg-*`. The real tokens are `--theme-accent-primary`, `--theme-secondary-primary`, and `--theme-bg-deep/base/elevated/subtle` (see `design-system/tokens.css`). The prototype uses the real names.
+
+### Static = genuinely free
+
+`shader-mount.js` documents and implements: `speed = 0` stops `requestAnimationFrame` entirely ("static shaders have no recurring performance costs"), and it pauses when the tab is hidden. So a static shader carries **no motion budget and nothing for `prefers-reduced-motion` to gate** — the only a11y/perf concern is the one-time WebGL paint. We still ship a token-driven CSS gradient underneath as the no-WebGL / pre-resolve floor, so the surface is never a flat panel and degrades gracefully.
+
+### Shader shortlist — confirmed/adjusted
+
+- **Static Mesh Gradient** — confirmed top pick for covers. Static by default, exposes `mixing`, `waveX/Y`, `grainMixer`, `grainOverlay` — enough to read as material, not a panel. This is what the prototype uses.
+- **Grain Gradient** — confirmed strong #2. Has a dedicated `colorBack` + `colors` + `noise`/`softness`; the literal "no flat color covers" answer. Can run static (`speed={0}`).
+- **Paper Texture / Fluted Glass** — still the right lever for "shaders over my Wallace renders" (image-filter register). NOT prototyped this pass (the cover-background thesis was the priority); prototype before relying on it.
+- **God Rays** (animated, one hero only) — unchanged: reserve, gate behind reduced-motion + lazy mount if ever used.
+- Drop the sci-fi/SaaS register shaders as before (Metaballs, Neuro Noise, Voronoi, Spiral, Dot Orbit).
+
+### Recommendation: **GO (conditional)**
+
+Conditional GO. The OKLCH-only bar is satisfiable (resolve tokens → hex at runtime; no literals in source), and the static path is free of motion/a11y cost — both doctrine blockers clear. The remaining risk is purely visual: whether the mesh reads as inhabited atmosphere or as a generic gradient "effect demo" (`feedback_respect_slop_bans`). That is Justin's eyeball call on the dev server before any ship. If it reads as material → wire it into one case-study cover behind the Wallace render. If it reads as effect → keep the CSS-gradient + grain-overlay path already in the repo and shelve the dependency.
+
+### Exact integration steps if GO
+
+1. Keep `@paper-design/shaders-react` in `dependencies` (already added by the spike).
+2. Use `src/components/effects/ShaderCover.tsx` (the prototype) as the base. It is self-contained, token-driven, dual-mode aware, static.
+3. Mount it as the background layer of one case-study cover, compositing the Wallace render as its `children` (or behind it via z-order) — start with a single cover, not the index.
+4. Tune `mixing` / `waveX/Y` / `grainOverlay` / `opacity` against that specific cover's Wallace plate so the shader is atmosphere, not the subject.
+5. Consider lazy-mounting via `React.lazy` so the WebGL bundle only loads on case-study routes, not the home/index paint.
+6. Re-run `scripts/wcag-check.py` is not needed for the shader itself (decorative, `aria-hidden`), but ensure any text composited over it still meets AA against the darkest shader region in both modes.
+
+### What Justin must eyeball himself (no browser driver here)
+
+On the running dev server (port 5173), drop `<ShaderCover>` onto a scratch route or temporarily into one cover, then check:
+
+1. **Night mode:** does it read as inhabited humus + golden light atmosphere, or as a generic "mesh gradient" effect demo? (slop-ban gut check)
+2. **Day mode (`data-theme="light"`):** flip the theme toggle — confirm it re-tints to sun-bleached sand/amber and does NOT stay dark. (validates the runtime re-resolution)
+3. **Flat-panel test:** at cover scale, is there real depth/light variation, or does it flatten into a near-solid wash? Tune `mixing`/`waveX/Y` if flat.
+4. **Token fidelity:** colors should be recognizably brass + sage + humus, not muddy or off-hue — confirms the canvas oklch→hex resolution landed the right values.
+5. **Composited over a Wallace render:** does the shader add atmosphere or fight the image? (the actual cover use case)
+6. **Reduced-motion / no-WebGL:** nothing to gate for motion (static), but confirm the CSS-gradient fallback alone still looks intentional if WebGL is unavailable.
+7. **Screenshots:** capture night + day for the spike record — that visual sign-off is the GO/NO-GO gate.
+
+### Cleanup note
+
+If NO-GO: `npm uninstall @paper-design/shaders-react` and delete `src/components/effects/ShaderCover.tsx`. Spike left both in the working tree, uncommitted, for Justin to evaluate.
+
 ## Sources
 
 - npm: `@paper-design/shaders-react@0.0.76` (peer `react ^18 || ^19`)

@@ -8,6 +8,7 @@ import { NotesPage } from "@/pages/NotesPage";
 import { NotePage } from "@/pages/NotePage";
 import { ResumePage } from "@/pages/ResumePage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { ShaderPreviewPage } from "@/pages/_ShaderPreview"; // TEMP: spike T4d preview, do not commit
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
         <Route path="/notes" element={<NotesPage />} />
         <Route path="/notes/:slug" element={<NotePage />} />
         <Route path="/resume" element={<ResumePage />} />
+        <Route path="/_shader-preview" element={<ShaderPreviewPage />} /> {/* TEMP: spike T4d, do not commit */}
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

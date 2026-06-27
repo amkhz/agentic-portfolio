@@ -131,11 +131,9 @@ export function WorkPage() {
             <FeaturedEntry />
           </RevealOnScroll>
 
-          <RevealOnScroll className="mt-12" delay={100}>
-            <DossierFrame kicker="Selected case files" className="bg-bg-base">
-              <TocLinkList items={tocItems} ariaLabel="Selected case studies" />
-            </DossierFrame>
-          </RevealOnScroll>
+          <DossierFrame kicker="Selected case files" className="mt-12 bg-bg-base">
+            <TocLinkList items={tocItems} ariaLabel="Selected case studies" reveal />
+          </DossierFrame>
         </Container>
       </section>
     </>

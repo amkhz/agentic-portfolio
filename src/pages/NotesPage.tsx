@@ -82,15 +82,15 @@ export function NotesPage() {
 
       <section className="py-20 sm:py-24">
         <Container>
-          <RevealOnScroll>
-            {notes.length > 0 ? (
-              <DossierFrame kicker="Entries" className="bg-bg-base">
-                <TocLinkList items={tocItems} ariaLabel="Notes entries" />
-              </DossierFrame>
-            ) : (
+          {notes.length > 0 ? (
+            <DossierFrame kicker="Entries" className="bg-bg-base">
+              <TocLinkList items={tocItems} ariaLabel="Notes entries" reveal />
+            </DossierFrame>
+          ) : (
+            <RevealOnScroll>
               <EmptyState />
-            )}
-          </RevealOnScroll>
+            </RevealOnScroll>
+          )}
         </Container>
       </section>
     </>

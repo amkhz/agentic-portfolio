@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
+import { motion, useReducedMotion, type Variants } from "motion/react";
+import { easeOutExpo, duration } from "@/components/effects/motionConfig";
 import { RegistrationMark } from "./RegistrationMark";
 
 /**
@@ -40,7 +42,28 @@ interface TocLinkListProps {
   /** Accessible name for the list. */
   ariaLabel?: string;
   className?: string;
+  /**
+   * When true, rows cascade in on scroll (staggered fade + rise). Used on the
+   * Work index and Notes list as their ambitious motion moment; defaults off so
+   * dense lists (case-study contents, home selected) stay still.
+   */
+  reveal?: boolean;
 }
+
+// Staggered row reveal — the list cascade for Work + Notes (opt-in via `reveal`).
+const listContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
+};
+
+const listRow: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: duration.slow, ease: easeOutExpo },
+  },
+};
 
 const leaderStyle: CSSProperties = {
   borderBottomWidth: "var(--fieldnote-mark-stroke)",
@@ -133,33 +156,74 @@ function RowBody({ item }: { item: TocItem }) {
   );
 }
 
-export function TocLinkList({ items, ariaLabel, className }: TocLinkListProps) {
+/** The interactive (or static) row content for one item. */
+function Row({ item }: { item: TocItem }) {
+  // Brass owns interaction: warm + leader-rule strengthen (in RowBody) plus a
+  // small physical lift to the right on hover/focus. motion-safe gates the
+  // transform so reduced-motion users get the color shift only.
   const rowClass =
-    "group flex items-baseline rounded-sm py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep";
+    "group flex items-baseline rounded-sm py-4 transition-transform duration-normal ease-[var(--ease-out-expo)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep motion-safe:hover:translate-x-1 motion-safe:focus-visible:translate-x-1";
+
+  if (item.to) {
+    return (
+      <Link to={item.to} className={rowClass}>
+        <RowBody item={item} />
+      </Link>
+    );
+  }
+  if (item.href) {
+    return (
+      <a
+        href={item.href}
+        className={rowClass}
+        {...(item.href.startsWith("#")
+          ? {}
+          : { target: "_blank", rel: "noreferrer" })}
+      >
+        <RowBody item={item} />
+      </a>
+    );
+  }
+  return (
+    <div className="flex items-baseline py-4">
+      <RowBody item={item} />
+    </div>
+  );
+}
+
+export function TocLinkList({
+  items,
+  ariaLabel,
+  className,
+  reveal = false,
+}: TocLinkListProps) {
+  const reduced = useReducedMotion();
+  const liClass = "border-t border-border-subtle first:border-t-0";
+
+  if (reveal && !reduced) {
+    return (
+      <motion.ul
+        aria-label={ariaLabel}
+        className={`flex flex-col ${className ?? ""}`}
+        variants={listContainer}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.15 }}
+      >
+        {items.map((item) => (
+          <motion.li key={item.id} className={liClass} variants={listRow}>
+            <Row item={item} />
+          </motion.li>
+        ))}
+      </motion.ul>
+    );
+  }
 
   return (
     <ul aria-label={ariaLabel} className={`flex flex-col ${className ?? ""}`}>
       {items.map((item) => (
-        <li key={item.id} className="border-t border-border-subtle first:border-t-0">
-          {item.to ? (
-            <Link to={item.to} className={rowClass}>
-              <RowBody item={item} />
-            </Link>
-          ) : item.href ? (
-            <a
-              href={item.href}
-              className={rowClass}
-              {...(item.href.startsWith("#")
-                ? {}
-                : { target: "_blank", rel: "noreferrer" })}
-            >
-              <RowBody item={item} />
-            </a>
-          ) : (
-            <div className="flex items-baseline py-4">
-              <RowBody item={item} />
-            </div>
-          )}
+        <li key={item.id} className={liClass}>
+          <Row item={item} />
         </li>
       ))}
     </ul>

@@ -5,6 +5,7 @@ import { slugify } from "@core/utils/format";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
 import { GlowEffect } from "@/components/effects/GlowEffect";
+import { CoverParallax } from "@/components/effects/CoverParallax";
 import {
   DossierFrame,
   DossierTags,
@@ -77,7 +78,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Cover plate — image lives within the padded frame; the
                 registration marks sit in the margin and frame it. */}
-            <div className="lg:order-1 lg:col-span-5">
+            <CoverParallax className="lg:order-1 lg:col-span-5">
               <DossierFrame className="bg-bg-base">
                 <ImageBlock
                   bare
@@ -87,7 +88,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                   aspect="4:3"
                 />
               </DossierFrame>
-            </div>
+            </CoverParallax>
 
             {/* Type spread */}
             <div className="flex flex-col justify-center lg:order-2 lg:col-span-7">

@@ -1,7 +1,26 @@
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
 import { RegistrationMark } from "@/components/fieldnotebook";
 import { HeroScrim } from "@/components/content/HeroScrim";
+import { easeOutExpo, duration } from "@/components/effects/motionConfig";
+
+// Hero settle — the home page's one ambitious moment. The type column rises
+// and settles in sequence (kicker, headline, lede, action) over the
+// atmospheric atrium. ease-out-expo, no overshoot; honors reduced-motion.
+const settleContainer: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.12 } },
+};
+
+const settleItem: Variants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: duration.slower, ease: easeOutExpo },
+  },
+};
 
 /**
  * Home hero - "The Conservatory" register (ADR-013 / DESIGN.md).
@@ -15,6 +34,12 @@ import { HeroScrim } from "@/components/content/HeroScrim";
  * real crop) land in Plan A Phase 3.
  */
 export function Hero() {
+  const reduced = useReducedMotion();
+  const containerProps = reduced
+    ? {}
+    : { variants: settleContainer, initial: "hidden" as const, animate: "show" as const };
+  const itemProps = reduced ? {} : { variants: settleItem };
+
   return (
     <section className="relative isolate flex min-h-[82vh] items-end overflow-hidden bg-bg-deep">
       {/* Atmospheric anchor - inhabited biophilic atrium */}
@@ -34,29 +59,41 @@ export function Hero() {
         {/* Type column framed as an instrument plate - registration marks in
             the margin, no panel fill, so the atrium reads through. Generous
             inset keeps the marks framing the copy, not crowding it. */}
-        <div className="relative max-w-[60ch] py-8 pl-9 sm:py-12 sm:pl-14">
+        <motion.div
+          className="relative max-w-[60ch] py-8 pl-9 sm:py-12 sm:pl-14"
+          {...containerProps}
+        >
           <RegistrationMark corners={["tl", "bl"]} />
 
-          <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+          <motion.p
+            className="font-mono text-xs uppercase tracking-wider text-accent-primary"
+            {...itemProps}
+          >
             <span className="tabular-nums text-text-secondary">00</span>
             <span aria-hidden="true" className="mx-2 text-text-muted">
               /
             </span>
             Product design leadership
-          </p>
-          <h1 className="mt-4 max-w-[20ch] font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+          </motion.p>
+          <motion.h1
+            className="mt-4 max-w-[20ch] font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl"
+            {...itemProps}
+          >
             Making complex things clear, useful, and human
-          </h1>
-          <p className="mt-6 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
+          </motion.h1>
+          <motion.p
+            className="mt-6 max-w-[54ch] font-body text-lg leading-normal text-text-secondary"
+            {...itemProps}
+          >
             Fifteen years turning complex systems into experiences people
             trust.
-          </p>
-          <div className="mt-10">
+          </motion.p>
+          <motion.div className="mt-10" {...itemProps}>
             <Button variant="primary" href="#work">
               View My Work
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </Container>
     </section>
   );

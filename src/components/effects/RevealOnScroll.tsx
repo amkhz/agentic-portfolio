@@ -47,13 +47,13 @@ export function RevealOnScroll({
       className={cn(
         isVisible
           ? "translate-y-0 opacity-100"
-          : "translate-y-2 opacity-0",
+          : "translate-y-3 opacity-0",
         className
       )}
       style={{
         transitionProperty: "opacity, translate, filter",
-        transitionDuration: "600ms",
-        transitionTimingFunction: "var(--ease-out)",
+        transitionDuration: "700ms",
+        transitionTimingFunction: "var(--ease-out-expo)",
         transitionDelay: isVisible ? `${delay}ms` : "0ms",
         filter: isVisible ? "blur(0px)" : "blur(4px)",
       }}

@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
 import { ProfileCard } from "@/components/effects/ProfileCard";
 import { EditorialSection } from "@/components/content/EditorialSection";
+import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 
 export function AboutPage() {
   return (
@@ -92,6 +93,7 @@ export function AboutPage() {
         </Container>
       </section>
 
+      <RevealOnScroll>
       <EditorialSection index="01" label="Life" heading="Life these days">
         <div className="max-w-[65ch] space-y-6 font-body text-base leading-normal text-text-secondary sm:text-lg">
           <p>
@@ -119,7 +121,9 @@ export function AboutPage() {
           </p>
         </div>
       </EditorialSection>
+      </RevealOnScroll>
 
+      <RevealOnScroll>
       <EditorialSection index="02" label="Beliefs" heading="What I believe">
         <div className="max-w-[65ch] space-y-12">
             <div>
@@ -155,7 +159,9 @@ export function AboutPage() {
             </div>
           </div>
       </EditorialSection>
+      </RevealOnScroll>
 
+      <RevealOnScroll>
       <EditorialSection index="03" label="Elsewhere" heading="Elsewhere I'm working">
         <p className="max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
             I&apos;m also building{" "}
@@ -173,7 +179,9 @@ export function AboutPage() {
             and NSF-funded labs.
           </p>
       </EditorialSection>
+      </RevealOnScroll>
 
+      <RevealOnScroll>
       <EditorialSection
         index="04"
         label="Contact"
@@ -198,6 +206,7 @@ export function AboutPage() {
           </Button>
         </div>
       </EditorialSection>
+      </RevealOnScroll>
     </>
   );
 }

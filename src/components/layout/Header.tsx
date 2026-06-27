@@ -6,6 +6,7 @@ import { NowPlaying } from "@/components/interactive/NowPlaying";
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/work", label: "Work" },
+  { to: "/notes", label: "Notes" },
   { to: "/about", label: "About" },
   { to: "/resume", label: "Resume" },
 ];

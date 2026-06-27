@@ -16,7 +16,7 @@ const OUT_PATH = join(import.meta.dirname ?? '.', '..', 'public', 'sitemap.xml')
 
 const now = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
-const staticRoutes = ['/', '/about', '/work', '/resume'];
+const staticRoutes = ['/', '/about', '/work', '/notes', '/resume'];
 
 const caseStudyRoutes = [...caseStudies, metaCaseStudy].map(
   (study) => `/work/${study.slug}`

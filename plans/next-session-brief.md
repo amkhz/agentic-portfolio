@@ -1,6 +1,6 @@
-# Pickup Brief — M3 T3a notes infra SHIPPED; T3b prose is next
+# Pickup Brief — M3 DONE (notes infra + prose + case-study verification); M4 motion + gates next
 
-Updated 2026-06-27. Integration branch is **`feat/conservatory-tokens`**. T3a built on **`feat/notes-content-type`** (commit `1de0fab`, lint + build + 147 tests green) — not yet merged back to the integration branch. Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest).
+Updated 2026-06-27. Integration branch is **`feat/conservatory-tokens`** (all M3 work merged + committed here; latest `e812941`). Full batch plan: **`vector/missions/post-recalibration-batch.md`** (the manifest).
 
 ## Where we left off (this session)
 
@@ -30,18 +30,23 @@ Decision landed: **Option 1, frontmatter + glob** (recorded in **ADR-015**). Bui
 - NotesPage hero reuses `/images/work-hero.png` at 40% as atmosphere (aria-hidden). Fine as interim; consider a dedicated notes hero or going type-only later.
 - Sitemap generator (`scripts/generate-sitemap.ts`) is broken under Node 25 (`ERR_UNKNOWN_FILE_EXTENSION` on the `.md?raw` imports) — pre-existing, not T3a. `/notes` was added by hand. Worth a real fix (vite-node) before relying on it for note slugs.
 
-## Next — M3 prose, then the tail
-- **MERGE first:** fold `feat/notes-content-type` (`1de0fab`) back into `feat/conservatory-tokens` before T3b so the Writer authors against the integration branch.
-- **T3b** (Writer, after merge) — the three posts as `.md` files in `core/content/notes/`: "Design infrastructure, not just designs" manifesto (the *argument* form per ADR-014); "Five Ways I Work" (from `port-sources/practice.md`); 2026 retro (from `port-sources/wins.md`). Joi voice, no em-dashes, anonymize internal names. More source material in `port-sources/ai-assisted-design-at-kiavi.md`. Frontmatter contract: `title`, `date` (YYYY-MM-DD), `summary`, optional `kicker`, optional `draft: true`.
-- **T3f** (Writer) — verified PR/ADR citations into `doctrine-not-prompts.md` + `instant-doc-review.md`. **Justin verifies the numbers before publish.**
-- **T2d** (optional) — formal alt-text audit pass on the new imagery.
+## M3 — DONE ✅
+- **T3a** ✅ notes infra (ADR-015): frontmatter + glob, shared case-study body grammar, `/notes` + `/notes/:slug`, empty-state, nav. Merged to integration branch.
+- **T3b** ✅ **two** posts live in `core/content/notes/` (Joi voice, Gaff-passed, no em-dashes, coworkers anonymized, no internal numbers):
+  - `design-infrastructure-not-just-designs.md` — the manifesto (argument form, ADR-014).
+  - `five-ways-i-work.md` — practice principles (Justin rewrote + owns the personal Way-1 voice).
+  - **Retro CUT** (`from-one-prototype-to-a-workshop.md` deleted) — too redundant with the doctrine-not-prompts case study. wins.md material stays a receipts source, not a post.
+- **T3f** ✅ Justin's call: **no PR/ADR citations** in the external case studies (decided against; internal IDs mean nothing to readers + leak structure on a public repo). Only two factual fixes landed (`e812941`): designer ramp reconciled to "inside 2 months" across both studies; "ship by July" → "ship by the end of July". All IDR metrics verified accurate by Justin, unchanged. Worksheet archived at `scratchpad/t3f-verification-worksheet.md` (gitignored).
+
+## Next — the tail, then gates
+- **T2d** (optional) — formal alt-text audit pass on the new imagery. Largely satisfied already; a dedicated pass is optional.
 
 ## Then the rest of the batch
 - **M4 Motion** (fast-follow, LAST) — T4a tokens → T4b choreography (interface-craft Storyboard + DialKit) → T4c critique. **T4d** Paper Shaders spike (`plans/paper-shaders-reference.md`). Hold until surfaces settle.
 - **Gates:** Lighthouse 95+ per surface → Impeccable `/critique` + `/polish` → **Roy final review** → merge `feat/conservatory-tokens` → `main`.
 
 ## Critical path
-surfaces ✅ → M2 imagery ✅ → **M3 notes (T3a ADR → build → T3b prose)** → motion → Impeccable critique+polish → Roy → main.
+surfaces ✅ → M2 imagery ✅ → M3 notes + prose + verification ✅ → **M4 motion** → Impeccable critique+polish → Roy → merge to main.
 
 ## Open items / notes
 - **Post source material** lives in `port-sources/`: `practice.md`, `wins.md`, `ai-assisted-design-at-kiavi.md`, plus the manifesto drafts.

@@ -116,6 +116,15 @@
      below stay for micro-transitions and theme/color crossfades, where a short
      symmetric ease reads better than a dramatic decelerate. */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Organic spring-feel curves (CSS, no JS). Sampled from spring step-responses
+     so they read like physics, not a mechanical ramp — and neither overshoots
+     (doctrine: no bounce/elastic).
+       --ease-settle: critically-damped, slow-in / long settle. The cushioned
+         arrival curve for reveals — luxurious, never abrupt.
+       --ease-organic: exponential approach, quick response then a soft tail.
+         For interaction (hover/focus lift) — smooth, not jumpy. */
+  --ease-settle: linear(0, 0.122 10%, 0.337 20%, 0.537 30%, 0.692 40%, 0.801 50%, 0.874 60%, 0.922 70%, 0.952 80%, 0.971 90%, 1);
+  --ease-organic: linear(0, 0.33 10%, 0.551 20%, 0.699 30%, 0.798 40%, 0.865 50%, 0.909 60%, 0.939 70%, 0.959 80%, 0.973 90%, 1);
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-in: cubic-bezier(0.4, 0, 1, 1);
   --ease-out: cubic-bezier(0, 0, 0.2, 1);

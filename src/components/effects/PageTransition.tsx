@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 import { useLocation } from "react-router";
 import { motion, useReducedMotion } from "motion/react";
-import { easeOutExpo, duration } from "./motionConfig";
+import { springSoft } from "./motionConfig";
 
 /**
  * Site-wide page-entry choreography. Wraps the routed Outlet and runs a gentle
@@ -22,9 +22,9 @@ export function PageTransition({ children }: { children: ReactNode }) {
   return (
     <motion.div
       key={pathname}
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: duration.slow, ease: easeOutExpo }}
+      transition={springSoft}
     >
       {children}
     </motion.div>

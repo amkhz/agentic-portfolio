@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { easeOutExpo, duration } from "@/components/effects/motionConfig";
+import { springSettle } from "@/components/effects/motionConfig";
 import { RegistrationMark } from "./RegistrationMark";
 
 /**
@@ -51,18 +51,15 @@ interface TocLinkListProps {
 }
 
 // Staggered row reveal — the list cascade for Work + Notes (opt-in via `reveal`).
+// Spring physics + a roomier stagger so rows ink in one after another.
 const listContainer: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
 };
 
 const listRow: Variants = {
-  hidden: { opacity: 0, y: 12 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: duration.slow, ease: easeOutExpo },
-  },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: springSettle },
 };
 
 const leaderStyle: CSSProperties = {
@@ -159,10 +156,11 @@ function RowBody({ item }: { item: TocItem }) {
 /** The interactive (or static) row content for one item. */
 function Row({ item }: { item: TocItem }) {
   // Brass owns interaction: warm + leader-rule strengthen (in RowBody) plus a
-  // small physical lift to the right on hover/focus. motion-safe gates the
-  // transform so reduced-motion users get the color shift only.
+  // physical glide to the right on hover/focus. The organic curve + longer
+  // duration keep it smooth, never a snap. motion-safe gates the transform so
+  // reduced-motion users get the color shift only.
   const rowClass =
-    "group flex items-baseline rounded-sm py-4 transition-transform duration-normal ease-[var(--ease-out-expo)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep motion-safe:hover:translate-x-1 motion-safe:focus-visible:translate-x-1";
+    "group flex items-baseline rounded-sm py-4 transition-transform duration-[420ms] ease-[var(--ease-organic)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep motion-safe:hover:translate-x-2 motion-safe:focus-visible:translate-x-2";
 
   if (item.to) {
     return (

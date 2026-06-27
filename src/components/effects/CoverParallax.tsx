@@ -1,5 +1,12 @@
 import { useRef, type ReactNode } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "motion/react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useReducedMotion,
+} from "motion/react";
+import { scrollSpring } from "./motionConfig";
 
 /**
  * Subtle scroll-linked parallax for a case-study cover plate. As the element
@@ -10,7 +17,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "motion/react"
  */
 export function CoverParallax({
   children,
-  distance = 18,
+  distance = 24,
   className,
 }: {
   children: ReactNode;
@@ -24,7 +31,10 @@ export function CoverParallax({
     target: ref,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], [distance, -distance]);
+  const yRaw = useTransform(scrollYProgress, [0, 1], [distance, -distance]);
+  // Spring-smooth the scroll value so the drift has weight and lag instead of
+  // tracking the scrollbar rigidly — reads organic, not mechanical.
+  const y = useSpring(yRaw, scrollSpring);
 
   if (reduced) {
     return <div className={className}>{children}</div>;

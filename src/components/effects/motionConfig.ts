@@ -20,3 +20,16 @@ export const duration = {
   slow: 0.4,
   slower: 0.6,
 } as const;
+
+/**
+ * Spring presets for entrance/arrival choreography. Real spring physics read as
+ * organic and alive where a fixed bezier reads mechanical. `bounce: 0` keeps
+ * them critically damped — settle, never overshoot (doctrine: no bounce).
+ *   springSettle — the slow, cushioned arrival (hero settle, list cascade).
+ *   springSoft   — a quicker settle for lightweight transitions (page entry).
+ */
+export const springSettle = { type: "spring", bounce: 0, duration: 0.9 } as const;
+export const springSoft = { type: "spring", bounce: 0, duration: 0.55 } as const;
+
+/** Smoothing spring for scroll-linked values (parallax) — gives drift weight. */
+export const scrollSpring = { stiffness: 80, damping: 24, mass: 0.6 } as const;

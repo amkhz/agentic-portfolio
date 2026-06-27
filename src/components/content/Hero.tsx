@@ -3,23 +3,19 @@ import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
 import { RegistrationMark } from "@/components/fieldnotebook";
 import { HeroScrim } from "@/components/content/HeroScrim";
-import { easeOutExpo, duration } from "@/components/effects/motionConfig";
+import { springSettle } from "@/components/effects/motionConfig";
 
 // Hero settle — the home page's one ambitious moment. The type column rises
 // and settles in sequence (kicker, headline, lede, action) over the
-// atmospheric atrium. ease-out-expo, no overshoot; honors reduced-motion.
+// atmospheric atrium on a cushioned spring. No overshoot; honors reduced-motion.
 const settleContainer: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.12 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 };
 
 const settleItem: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: duration.slower, ease: easeOutExpo },
-  },
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: springSettle },
 };
 
 /**

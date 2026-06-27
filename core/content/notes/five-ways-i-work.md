@@ -2,7 +2,7 @@
 title: Five ways I work
 date: 2026-06-26
 kicker: Field note
-summary: People ask how building with AI changed the way I work. The tools changed; the principles underneath just got sharper. Here are five that hold up.
+summary: How AI changed the way I work. The tools changed; the principles got sharper. 
 ---
 
 So how has all this AI stuff changed how I work? Honestly, the principles underneath didn't change much. But they did get sharper. When making gets cheap, the way you decide what to make becomes a whole lot more important than before. Here's five things that matter to me today.
@@ -19,11 +19,11 @@ The sequence I trust for any redesign is brief, then bold. Ground the move in ev
 
 ## 3. Write the decision down
 
-The moment a decision has consequences, I reach for a decision record. Not a doc nobody reads, a short dated note: what we chose, what we considered, why. A growing stack of them now governs a design repo, which is not where most people expect to find architecture decision records. They turn "why did we build it this way?" from a Slack thread into a handy link to a markdown file. Future-you is the main beneficiary, and so is everyone who inherits the repo.
+The moment a decision has consequences, I reach for a decision record. Not a doc nobody reads, a short dated note: what we chose, what we considered, why. A growing stack of them now governs a design repo, which is not where most people expect to find architecture decision records. They turn "why did we build it this way?" from a Slack thread into a handy link to a markdown file. Future-you is the main beneficiary, and so is everyone involved in the project.
 
 ## 4. Extend before you invent
 
-Before building something new, I look hard at what's already there. Existing chrome over a net-new card. Native CSS over a new library. When there's a real gap, it gets documented in a decision record instead of papering over it. Inventing feels productive and quietly doubles what you have to maintain. Most of the time the better move is to extend what's already earning its keep.
+Before building something new, I look hard at what's already there. Existing chrome over a net-new card. Native CSS over a new library. When there's a real gap, it gets documented in a decision record instead of papering over it. Inventing feels productive and quietly doubles what you have to maintain. Most of the time the better move is to extend what's already there.
 
 ## 5. Build the workflow, then run it
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import { cn } from "@core/utils";
 import { ImageLightbox } from "./ImageLightbox";
+import { ParallaxImage } from "@/components/effects/ParallaxImage";
 
 interface ImageBlockProps {
   src: string;
@@ -14,6 +15,9 @@ interface ImageBlockProps {
   /** Flush plate mode: no figure margin, no rounded border of its own, and the
    *  image fills (object-cover). For mounting inside a DossierFrame cover. */
   bare?: boolean;
+  /** Subtle scroll-linked parallax on the image, clipped within the slot. For
+   *  case-study cover plates. Honors reduced-motion. */
+  parallax?: boolean;
 }
 
 const aspectMap = {
@@ -30,6 +34,7 @@ export function ImageBlock({
   aspect = "16:9",
   expandable,
   bare = false,
+  parallax = false,
 }: ImageBlockProps) {
   const displayText = placeholder || alt;
   const hasRealImage =
@@ -68,17 +73,21 @@ export function ImageBlock({
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             )}
           >
-            <img
-              src={src}
-              alt={alt}
-              loading="lazy"
-              className={cn(
-                "absolute inset-0 h-full w-full",
-                // Covers (DossierFrame heroes) fill to the frame edge; body
-                // figures stay fully visible. Matches the `bare` contract.
-                bare ? "object-cover" : "object-contain"
-              )}
-            />
+            {parallax ? (
+              <ParallaxImage src={src} alt={alt} />
+            ) : (
+              <img
+                src={src}
+                alt={alt}
+                loading="lazy"
+                className={cn(
+                  "absolute inset-0 h-full w-full",
+                  // Covers (DossierFrame heroes) fill to the frame edge; body
+                  // figures stay fully visible. Matches the `bare` contract.
+                  bare ? "object-cover" : "object-contain"
+                )}
+              />
+            )}
           </div>
         ) : (
           <div

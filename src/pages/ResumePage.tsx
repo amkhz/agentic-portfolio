@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
+import { DossierFrame } from "@/components/fieldnotebook";
 import { getResumeModel, type ResumeModel } from "@core/content/resume";
 import { ResumeHeader } from "@/components/content/resume/ResumeHeader";
 import { ResumeSection } from "@/components/content/resume/ResumeSection";
@@ -26,7 +27,7 @@ export function ResumePage() {
             <h1 className="font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
               Resume
             </h1>
-            <div className="rounded-lg border border-border-subtle bg-bg-elevated p-6 sm:p-8 text-center">
+            <DossierFrame className="bg-bg-elevated text-center">
               <p className="font-body text-base text-text-secondary">{error}</p>
               <Button
                 variant="primary"
@@ -36,7 +37,7 @@ export function ResumePage() {
               >
                 Download Resume (PDF)
               </Button>
-            </div>
+            </DossierFrame>
           </div>
         </Container>
       </section>
@@ -52,7 +53,7 @@ export function ResumePage() {
               Resume
             </h1>
             {/* Skeleton blocks matching the real layout */}
-            <div className="space-y-8 rounded-lg border border-border-subtle bg-bg-base p-6 sm:p-8">
+            <DossierFrame className="space-y-8 bg-bg-base">
               <div className="h-4 w-48 animate-pulse rounded bg-bg-subtle" />
               <div className="space-y-3">
                 <div className="h-3 w-full max-w-[65ch] animate-pulse rounded bg-bg-subtle" />
@@ -63,7 +64,7 @@ export function ResumePage() {
                 <div className="h-3 w-full max-w-[65ch] animate-pulse rounded bg-bg-subtle" />
                 <div className="h-3 w-3/4 max-w-[48ch] animate-pulse rounded bg-bg-subtle" />
               </div>
-            </div>
+            </DossierFrame>
           </div>
         </Container>
       </section>
@@ -84,26 +85,23 @@ export function ResumePage() {
       <section className="py-24 sm:py-32 motion-safe:animate-[fadeIn_400ms_ease-out]">
         <Container>
           <div className="mx-auto max-w-[920px] space-y-10">
-            <div className="flex flex-col gap-5 rounded-lg border border-border-subtle bg-bg-elevated p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
-              <div>
-                <p className="font-mono text-xs uppercase tracking-wider text-text-secondary">
-                  Resume
-                </p>
-                <p className="mt-2 font-body text-sm text-text-secondary">
+            <DossierFrame kicker="Curriculum vitae" className="bg-bg-elevated">
+              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                <p className="font-body text-sm text-text-secondary">
                   Web version generated from Markdown
                 </p>
+
+                <Button
+                  variant="primary"
+                  href="/resume/justin-hernandez-resume-1page.pdf"
+                  aria-label="Download Justin Hernandez resume PDF"
+                >
+                  Download Resume (PDF)
+                </Button>
               </div>
+            </DossierFrame>
 
-              <Button
-                variant="primary"
-                href="/resume/justin-hernandez-resume-1page.pdf"
-                aria-label="Download Justin Hernandez resume PDF"
-              >
-                Download Resume (PDF)
-              </Button>
-            </div>
-
-            <div className="space-y-10 rounded-lg border border-border-subtle bg-bg-base p-6 sm:p-8">
+            <DossierFrame className="space-y-10 bg-bg-base">
               <ResumeHeader
                 name={resume.name}
                 title={resume.title}
@@ -167,7 +165,7 @@ export function ResumePage() {
                   ))}
                 </ul>
               </ResumeSection>
-            </div>
+            </DossierFrame>
           </div>
         </Container>
       </section>

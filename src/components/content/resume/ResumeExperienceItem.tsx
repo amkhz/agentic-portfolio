@@ -6,7 +6,7 @@ interface ResumeExperienceItemProps {
 
 export function ResumeExperienceItem({ item }: ResumeExperienceItemProps) {
   return (
-    <article className="rounded-lg border border-border-subtle bg-bg-base p-5">
+    <article className="border-t border-border-subtle pt-5 first:border-t-0 first:pt-0">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between">
         <h3 className="font-heading text-lg font-semibold text-text-primary">
           {item.role}

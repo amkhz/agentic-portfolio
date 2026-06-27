@@ -6,7 +6,6 @@ import { slugify } from "@core/utils/format";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
 import { GlowEffect } from "@/components/effects/GlowEffect";
-import { CoverParallax } from "@/components/effects/CoverParallax";
 import { springSettle } from "@/components/effects/motionConfig";
 
 // Case-study entry choreography — the surface's deliberate moment (DESIGN.md).
@@ -107,17 +106,16 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
             {/* Cover plate — image lives within the padded frame; the
                 registration marks sit in the margin and frame it. */}
             <motion.div className="lg:order-1 lg:col-span-5" {...itemProps}>
-              <CoverParallax>
-                <DossierFrame className="bg-bg-base">
-                  <ImageBlock
-                    bare
-                    src={study.heroImage.src}
-                    alt={study.heroImage.alt}
-                    placeholder={study.heroImage.placeholder}
-                    aspect="4:3"
-                  />
-                </DossierFrame>
-              </CoverParallax>
+              <DossierFrame className="bg-bg-base">
+                <ImageBlock
+                  bare
+                  parallax
+                  src={study.heroImage.src}
+                  alt={study.heroImage.alt}
+                  placeholder={study.heroImage.placeholder}
+                  aspect="4:3"
+                />
+              </DossierFrame>
             </motion.div>
 
             {/* Type spread — inks in element by element after the cover */}

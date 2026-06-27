@@ -44,7 +44,7 @@ export function ConstellationStrip({
             aria-label="Jump to section"
             value={selectedId ?? ""}
             onChange={(e) => onSelectNode(e.target.value)}
-            className="w-full appearance-none rounded-md border border-border-strong bg-bg-elevated py-1.5 pl-3 pr-9 font-mono text-xs uppercase tracking-wider text-text-primary transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            className="min-h-11 w-full appearance-none rounded-md border border-border-strong bg-bg-elevated py-1.5 pl-3 pr-9 font-mono text-xs uppercase tracking-wider text-text-primary transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
           >
             {ordered.map((node) => (
               <option

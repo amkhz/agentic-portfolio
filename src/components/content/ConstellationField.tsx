@@ -160,7 +160,11 @@ export function ConstellationField({
         ref={fieldRef}
         className={cn(
           "relative mx-auto w-full",
-          compact ? "block h-full" : "hidden min-[375px]:block",
+          // The spatial field reveals inscriptions on hover, so it's gated on
+          // input method, not width: only a fine pointer (mouse/trackpad) gets
+          // it. Touch -- phone, tablet, touch laptop at any width -- gets the
+          // readable list below, where nothing hides behind a hover.
+          compact ? "block h-full" : "hidden pointer-fine:block",
           tuneMode && "cursor-crosshair"
         )}
         style={
@@ -221,9 +225,11 @@ export function ConstellationField({
         )}
       </div>
 
-      {/* List fallback for very small screens (<375px) -- hero mode only */}
+      {/* Readable list for touch (coarse pointer) -- hero mode only. The
+          spatial field can't reveal inscriptions without hover, so every mode
+          shows its title + inscription inline here and taps into the section. */}
       {!compact && (
-        <div className="flex flex-col gap-1 min-[375px]:hidden">
+        <div className="flex flex-col gap-1 pointer-fine:hidden">
           {nodes.map((node) => (
             <button
               key={node.id}
@@ -264,7 +270,7 @@ export function ConstellationField({
                 >
                   {node.title}
                 </span>
-                <span className="block truncate font-body text-xs text-text-muted">
+                <span className="mt-0.5 block font-body text-xs leading-snug text-text-muted">
                   {node.status === "planned" ? "Coming soon" : node.inscription}
                 </span>
               </div>

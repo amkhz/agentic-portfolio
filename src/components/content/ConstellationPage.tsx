@@ -145,8 +145,11 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         </div>
       )}
 
-      {/* Main layout: animated grid on desktop, stacked on mobile */}
-      <section className="py-16 sm:py-20">
+      {/* Main layout: animated grid on desktop, stacked on mobile.
+          flex-col so the hero preamble can sit ABOVE the field/list on touch
+          (order-1) but BELOW the spatial field on desktop (lg:order-2), keeping
+          the constellation the centerpiece where there's room for it. */}
+      <section className="flex flex-col py-16 sm:py-20">
         {/*
           Desktop: 2-column grid that animates between states.
           Hero: 1fr 0fr (field fills, content collapsed)
@@ -155,7 +158,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         */}
         <div
           className={cn(
-            "mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:px-12",
+            "order-2 mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:order-1 lg:px-12",
             "lg:grid lg:gap-12",
             "motion-safe:transition-[grid-template-columns] motion-safe:duration-ambient motion-safe:ease-spring"
           )}
@@ -217,9 +220,10 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
           </div>
         </div>
 
-        {/* Preamble below the field in hero state */}
+        {/* Preamble: above the list on touch (order-1), below the spatial
+            field on desktop (lg:order-2). */}
         {!isReading && constellationContent.preamble.length > 0 && (
-          <div className="mx-auto mt-12 max-w-[65ch] px-6 sm:px-8 lg:px-12 motion-safe:animate-[fadeIn_400ms_var(--ease-spring)_both]">
+          <div className="order-1 mx-auto mb-10 max-w-[65ch] px-6 sm:px-8 lg:order-2 lg:mb-0 lg:mt-12 lg:px-12 motion-safe:animate-[fadeIn_400ms_var(--ease-spring)_both]">
             {constellationContent.preamble.map((section, i) => {
               if (section.type === "text") {
                 return <TextBlock key={i}>{section.body}</TextBlock>;

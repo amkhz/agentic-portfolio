@@ -2,9 +2,9 @@ Most image models key off a sentence. You type "moody designer's studio at night
 
 ## The Problem
 
-Raster models are powerful and dumb in the same breath. They render gorgeous surfaces, then quietly fill every gap with their own defaults. Composition drifts. Palette drifts. The thing you actually care about, where the headline sits, what color the light is, gets averaged into the model's idea of "nice." For a portfolio whose whole pitch is that I direct the work, "I described it and hoped" is the wrong story. I needed an instrument, not a vending machine.
+Raster models are powerful and dumb in the same breath. They render gorgeous surfaces, then quietly fill every gap with their own defaults. Composition drifts. Palette drifts. The things you actually care about, where the headline sits, what color the light is, is up to what the model thinks "nice" means. My whole pitch with this portfolio is that I direct the work, so "I described it and crossed my fingers" is not the story to tell. I needed a finely tuned instrument, not just an image generator.
 
-Hosted image tools meter you, train on you, and decide for you. The reference workflows from Impeccable leaned on GPT Image 2, which costs money per render and ships your intent to someone else's server. I wanted to test the loop on my own hardware, free to iterate as many times as the work needed.
+Hosted image tools meter you, train on you, and decide for you. The reference workflows from Impeccable leaned on GPT Image 2, which costs money per render and ships design intent to someone else's server. I wanted to test the loop on my own hardware, free to iterate as many times as the work needed.
 
 ## What Wallace Actually Is
 

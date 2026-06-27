@@ -1,8 +1,12 @@
 import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
 import { motion, useReducedMotion, type Variants } from "motion/react";
-import { springSettle } from "@/components/effects/motionConfig";
+import { springSettle, springHover } from "@/components/effects/motionConfig";
 import { RegistrationMark } from "./RegistrationMark";
+
+// Spring-driven hover targets: glide right + a hair of scale so the row leans in.
+const MotionLink = motion.create(Link);
+const hoverLift = { x: 8, scale: 1.012 };
 
 /**
  * TocLinkList — the Field Notebook table-of-contents grammar (ADR-013 /
@@ -88,7 +92,7 @@ function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) 
           src={thumbnail.src}
           alt={thumbnail.alt}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[700ms] ease-[var(--ease-settle)] group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
         />
       ) : (
         <span
@@ -155,31 +159,40 @@ function RowBody({ item }: { item: TocItem }) {
 
 /** The interactive (or static) row content for one item. */
 function Row({ item }: { item: TocItem }) {
-  // Brass owns interaction: warm + leader-rule strengthen (in RowBody) plus a
-  // physical glide to the right on hover/focus. The organic curve + longer
-  // duration keep it smooth, never a snap. motion-safe gates the transform so
-  // reduced-motion users get the color shift only.
+  const reduced = useReducedMotion();
+
+  // Brass owns interaction: warm + leader-rule strengthen (CSS, in RowBody)
+  // plus a spring-driven glide on hover/focus — the spring carries the organic
+  // feel a CSS ramp can't. Reduced-motion users get the color shift only.
   const rowClass =
-    "group flex items-baseline rounded-sm py-4 transition-transform duration-[420ms] ease-[var(--ease-organic)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep motion-safe:hover:translate-x-2 motion-safe:focus-visible:translate-x-2";
+    "group flex items-baseline rounded-sm py-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep";
+  const motionProps = reduced
+    ? {}
+    : {
+        whileHover: hoverLift,
+        whileFocus: hoverLift,
+        transition: springHover,
+      };
 
   if (item.to) {
     return (
-      <Link to={item.to} className={rowClass}>
+      <MotionLink to={item.to} className={rowClass} {...motionProps}>
         <RowBody item={item} />
-      </Link>
+      </MotionLink>
     );
   }
   if (item.href) {
     return (
-      <a
+      <motion.a
         href={item.href}
         className={rowClass}
+        {...motionProps}
         {...(item.href.startsWith("#")
           ? {}
           : { target: "_blank", rel: "noreferrer" })}
       >
         <RowBody item={item} />
-      </a>
+      </motion.a>
     );
   }
   return (

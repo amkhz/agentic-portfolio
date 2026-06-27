@@ -31,5 +31,13 @@ export const duration = {
 export const springSettle = { type: "spring", bounce: 0, duration: 0.9 } as const;
 export const springSoft = { type: "spring", bounce: 0, duration: 0.55 } as const;
 
+/**
+ * Interaction spring for hover/focus lift. Unlike the arrival springs above this
+ * one carries a small `bounce` — a deliberate, lightly-damped wave so the lift
+ * settles with life instead of ramping mechanically. Micro-interaction only;
+ * the arrival/page register stays overshoot-free per doctrine.
+ */
+export const springHover = { type: "spring", bounce: 0.32, duration: 0.5 } as const;
+
 /** Smoothing spring for scroll-linked values (parallax) — gives drift weight. */
 export const scrollSpring = { stiffness: 80, damping: 24, mass: 0.6 } as const;

@@ -1,4 +1,3 @@
-import { cn } from "@core/utils";
 import type { ConstellationNode } from "@core/content/constellation";
 import { readingOrder } from "@core/content/constellation";
 
@@ -9,8 +8,11 @@ interface ConstellationStripProps {
 }
 
 /**
- * Compact horizontal strip of node dots for mobile reading state.
- * Sticky below the header. Shows node titles on hover/active.
+ * Mobile reading-state section nav. Sticky below the header. A horizontal dot
+ * strip overflowed the viewport with 11 sections, so this is a single "jump to
+ * section" select -- it does exactly what the strip did (move between the
+ * constellation's sections) without running off the edge of a phone. The
+ * spatial field is the lg+ way to navigate; this is its small-screen peer.
  */
 export function ConstellationStrip({
   nodes,
@@ -18,73 +20,59 @@ export function ConstellationStrip({
   onSelectNode,
 }: ConstellationStripProps) {
   const nodeMap = new Map(nodes.map((n) => [n.id, n]));
-  const selectedNode = selectedId ? nodeMap.get(selectedId) : null;
-  const selectedConnections = selectedNode?.connections ?? [];
 
-  // Order nodes for the strip
   const ordered = readingOrder
     .map((id) => nodeMap.get(id))
     .filter((n): n is ConstellationNode => n != null);
 
   return (
     <nav
-      aria-label="Case study topics"
-      className={cn(
-        "sticky z-40 border-b border-border-subtle lg:hidden",
-        "bg-bg-deep/80 backdrop-blur-md"
-      )}
+      aria-label="Case study sections"
+      className="sticky z-40 border-b border-border-subtle bg-bg-deep/80 backdrop-blur-md lg:hidden"
       style={{ top: "64px" }}
     >
-      {/* Dot row */}
-      <div className="flex items-center justify-center gap-2 px-4 py-2">
-        {ordered.map((node) => {
-          const isSelected = node.id === selectedId;
-          const isConnected = selectedConnections.includes(node.id);
-          const isPlanned = node.status === "planned";
+      <div className="flex items-center gap-3 px-4 py-2.5">
+        <span
+          aria-hidden="true"
+          className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-text-muted"
+        >
+          Section
+        </span>
 
-          return (
-            <button
-              key={node.id}
-              type="button"
-              onClick={!isPlanned ? () => onSelectNode(node.id) : undefined}
-              disabled={isPlanned}
-              className={cn(
-                "flex flex-col items-center gap-0.5 rounded-md px-1.5 py-1 transition-[background-color] duration-normal",
-                isSelected
-                  ? "bg-bg-elevated/60"
-                  : "hover:bg-bg-subtle/30",
-                isPlanned && "cursor-default"
-              )}
-              aria-label={`${node.title}${isPlanned ? " (coming soon)" : ""}`}
-              aria-current={isSelected ? "true" : undefined}
-            >
-              <div
-                className={cn(
-                  "rounded-full transition-[width,height,background-color,border-color,box-shadow] duration-normal",
-                  isSelected
-                    ? "h-2.5 w-2.5 bg-accent-primary shadow-[0_0_8px_var(--constellation-glow-shipped)]"
-                    : isConnected
-                      ? "h-2 w-2 bg-accent-primary/60"
-                      : isPlanned
-                        ? "h-1.5 w-1.5 border border-dashed border-text-muted/30"
-                        : "h-2 w-2 border border-[var(--constellation-node-border)]"
-                )}
-              />
-              <span
-                className={cn(
-                  "max-w-[48px] truncate font-mono text-[9px] uppercase leading-none tracking-wider",
-                  isSelected
-                    ? "text-accent-primary"
-                    : isConnected
-                      ? "text-text-muted"
-                      : "text-text-muted/50"
-                )}
+        <div className="relative min-w-0 flex-1">
+          <select
+            aria-label="Jump to section"
+            value={selectedId ?? ""}
+            onChange={(e) => onSelectNode(e.target.value)}
+            className="w-full appearance-none rounded-md border border-border-strong bg-bg-elevated py-1.5 pl-3 pr-9 font-mono text-xs uppercase tracking-wider text-text-primary transition-colors duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+          >
+            {ordered.map((node) => (
+              <option
+                key={node.id}
+                value={node.id}
+                disabled={node.status === "planned"}
               >
-                {node.title.replace("The ", "")}
-              </span>
-            </button>
-          );
-        })}
+                {node.title}
+                {node.status === "planned" ? " — coming soon" : ""}
+              </option>
+            ))}
+          </select>
+
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-accent-primary"
+          >
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path
+                d="M1 1l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        </div>
       </div>
     </nav>
   );

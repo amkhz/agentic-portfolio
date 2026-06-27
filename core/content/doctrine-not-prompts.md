@@ -74,7 +74,7 @@ Leading with the hard, verifiable one.
 - Real, today | Accessibility verified across every token pair on the refreshed brand. Two genuine contrast bugs caught and fixed inside the workflow before any user saw them. | brass
 - Real, today | Snapshot sketch to interactive in 2 days. Operations design system authored from the prototype in ~2 weeks. Brand refresh in 2 days. App shell in 1 day.
 - Bet in flight | Prototype-to-production cycle time. Snapshot was handed to engineering in May, on patterns chosen so the handoff isn't a rebuild. | magenta
-- Too early to claim | Designer ramp time. New hires read what the AI reads. One contributed to Snapshot about 30 days after joining. Another is starting a new project in the Product-Design repo. Promising, not proven.
+- Too early to claim | Designer ramp time. New hires read what the AI reads. One contributed to Snapshot inside their first 2 months. Another is starting a new project in the Product-Design repo. Promising, not proven.
 :::
 
 That accessibility number is the one I'm proud of: two real bugs, caught by the system, before a single user hit them. The cycle-time and ramp claims are honest bets, labeled that way on purpose. Converting a bet into a claimed result would misrepresent the work, and that honesty is part of what makes the rest credible. 

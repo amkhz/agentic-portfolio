@@ -99,7 +99,7 @@ The real test of whether this is a *way of working* and not just my personal wor
 - 7% | Borrowers resolving PSA issues before Processing starts
 :::
 
-Instant Doc Review V1 and V2 are in production. Snapshot is planned to ship by July. The numbers tell two stories. The speed story is in the percentages above. The honest part: on 39% of loans the analyst changes nothing and just verifies, but the other 61% still get at least one correction. That's today's state, and the number we're working to move.
+Instant Doc Review V1 and V2 are in production. Snapshot is planned to ship by the end of July. The numbers tell two stories. The speed story is in the percentages above. The honest part: on 39% of loans the analyst changes nothing and just verifies, but the other 61% still get at least one correction. That's today's state, and the number we're working to move.
 
 The quality story matters more. Speed is easy to fake, so we tracked what happens downstream where Underwriting checks the work. For years, underwriters kicked the PSA back to the analyst on roughly 40 to 45% of loans. After the Property Asset Processing rollouts in spring 2026, that rate fell to around 30%. And when we compared conditions on autocompleted loans against analyst-worked loans, the substantive defect mix (missing signatures, addenda, name mismatches) was nearly identical. Automation isn't creating a new class of error. It's running the same review, faster, with a cleaner handoff.
 

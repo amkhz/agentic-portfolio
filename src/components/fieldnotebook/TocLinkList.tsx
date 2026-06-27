@@ -87,7 +87,7 @@ function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) 
     !thumbnail.src.includes("placeholder-");
 
   return (
-    <span className="relative block h-16 w-16 shrink-0 overflow-hidden border border-border-strong bg-bg-elevated float-right ml-4 mb-2 sm:float-none sm:ml-0 sm:mb-0">
+    <span className="relative block h-16 w-16 shrink-0 overflow-hidden border border-border-strong bg-bg-elevated float-left mr-4 mb-2 sm:float-none sm:mr-0 sm:mb-0">
       {real ? (
         <img
           src={thumbnail.src}

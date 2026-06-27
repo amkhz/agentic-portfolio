@@ -65,7 +65,8 @@ Details: body line length capped 65-75ch; hierarchy through scale + weight contr
 
 Motion is **elevated to a named pillar** of the visual system (ADR-013 follow-through; Justin-approved). Tasteful, restrained-but-expressive motion that serves *arrival* and *focus*, never spectacle.
 
-- Ease-out exponential curves (ease-out-quart / quint / expo). **No bounce, no elastic.** Never animate CSS layout properties.
+- **All motion is wave-driven (site-wide mandate).** Spring physics (Motion springs) and spring-sampled easing curves (`--ease-settle`, `--ease-organic` in `globals.css`, sampled from spring step-responses) are the default driver for every animation — they read like physics, not a mechanical ramp. A damped spring is a decaying sine wave; that is the organic feel we want. Arbitrary fixed cubic-beziers are the exception, not the reflex (reserve for trivial color/opacity crossfades).
+- **Damping rule.** The arrival/focus register is **critically damped — no overshoot** (the "no bounce, no elastic" rule holds for section reveals, page transitions, parallax — `bounce: 0`). **Micro-interactions** (hover/focus/tap) MAY carry a small damped overshoot — a wave with a little life — as a deliberate, scoped exception. Never animate CSS layout properties.
 - Most things are still; motion works because it is rare. One ambitious motion moment per major surface, no more.
 - Permitted vocabulary: slow warm fades on section reveal, weight-shift on hover (variable-axis play), subtle parallax on case-study covers, deliberate page-transition choreography on case-study entry, glow-from-within breathing on tech-in-material accents.
 - Respect `prefers-reduced-motion`: the ambitious moments degrade to instant or to a still state.

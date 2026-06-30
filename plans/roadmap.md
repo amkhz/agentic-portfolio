@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-06-20
+**Last updated:** 2026-06-30
 
 ---
 
@@ -72,12 +72,16 @@
 - `chore/stash-impeccable-v3-and-void-2026-05-17` (PR #50, Impeccable v3.0.7 + VOID.md)
 - `chore/perihelion-b1-dird-frontmatter` (PR #51, B.1 DIRD frontmatter)
 - `chore/perihelion-renderer-scope-lock` (PR #52, B.1 renderer scope)
+- `feat/conservatory-tokens` (PR #130, "The Conservatory" post-recalibration batch — type, imagery, notes, motion, Roy review, Impeccable polish)
+- Post-launch polish on main: responsive AVIF/WebP + code-split (#132), mobile UX fixes (#133–#138), Wallace skill craft (#137/#138)
 
 ---
 
 ## Active explorations
 
-### 1. Perihelion content sweep and growth
+### 1. Perihelion content sweep and growth — ⭐ NEXT FOCUS
+
+> **Current focus (2026-06-30):** with the Conservatory portfolio recalibration shipped, the next batch is bringing **Perihelion up to a new visual standard.** Scope to be planned (likely a Dreamer pass over the C.2 restyling + D logotype/sigil workstreams below, measured against the Conservatory bar the portfolio now sets).
 
 **Status:** Archive shipped + welcome wave landed. Voice locked at Phase 3.1. B.1 small pieces and C.1 done. B.1 renderer enhancement build is the next open mission.
 **Plan:** `plans/perihelion-next-steps.md` | **Renderer scope:** `plans/archive/perihelion-b1-renderer-scope.md` | **Launch mission (archived):** `vector/missions/archive/speculative-lab-library.md` | **ADRs:** ADR-009, ADR-010
@@ -98,17 +102,15 @@
 - Build-time figure optimization via `vite-imagetools`
 - Full-text search once content volume demands it
 
-### 2. Portfolio visual overhaul — "The Conservatory" (ADR-013) + case-study content refresh
+### 2. Portfolio visual overhaul — "The Conservatory" (ADR-013) ✅ SHIPPED
 
-**Status:** Active on branch `feat/conservatory-tokens` (not yet merged to main). Fresh-exploration recalibration locked 2026-06-20, superseding the never-implemented ADR-011 editorial direction. Build + 130 tests green.
-**Direction:** ADR-013 | **Live status + open items:** `plans/recalibration-sprint0-notes.md` | **Plans:** `vector/missions/conservatory-visual-build.md` (A), `vector/missions/case-study-content-refresh.md` (B) | **North-stars:** `mocks/recalibration-sprint0/`
+**Status:** ✅ Shipped to main via PR #130 ("The Conservatory — post-recalibration batch: type, imagery, notes, motion"), merged 2026-06-27. The whole batch landed: M1 surfaces, M2 imagery, M3 notes + prose + case-study verification, M4 motion (tokens, surface choreography, wave-driven mandate), Roy final review, and the Impeccable critique/polish fixes. Build + tests green at merge.
+**Direction:** ADR-013 | **Mission manifest (archived):** `vector/missions/archive/post-recalibration-batch.md` | **Sub-missions (archived):** `conservatory-visual-build.md` (A), `case-study-content-refresh.md` (B), `conservatory-surfaces.md` | **Sprint-0 notes (archived):** `plans/archive/recalibration-sprint0-notes.md` | **North-stars:** `mocks/recalibration-sprint0/`
 
 "The Conservatory" is an inhabited biophilic-future register: humus-black + brass/amber + sage-green color inversion (magenta demoted to rare signal), wabi-sabi + Danish craft, seamless advanced tech, subtle luxury, day/night dual mode. Wallace-generated imagery is the centerpiece; Field Notebook layout grammar; the two-door origin→evolution piece ships as "The Fork" (split-screen entry).
 
-**Done:** token spine (both modes, WCAG-verified), tokens synced to Paper, Home biophilic hero (placeholder image), all 5 case studies drafted + consolidated (IDR rewrite, Wallace, Pioneering AI Adoption refresh + Doctrine Not Prompts, SOW refresh).
-**Remaining (order):** surfaces (Work index Field Notebook TOC + case-study shell, incl. Home rebalance) → The Fork → motion+interaction pass (+ doctrine update) → imagery finals → type validation → housekeeping (sync PRODUCT.md/VECTOR.md to ADR-013, prune stale branches, PR to main).
-**Justin-driven next:** de-AI voice read-through + a hard conciseness pass on every case study.
-**Open:** green's UI role (brass/green duotone reverted as clashing); type still on old faces; ADR-013 not yet synced into PRODUCT.md/VECTOR.md.
+**One open thread (parked):** T4d Paper Shaders spike — parked on `spike/paper-shaders`, NO-GO on cover-backgrounds (faint over the low-contrast dark palette; the `colors` prop also rejects `oklch()`). Retry as image-filter-over-renders post-launch. Reference: `plans/paper-shaders-reference.md`.
+**Post-launch follow-up (separate initiative):** mobile RES / Lighthouse perf — see exploration #9 below.
 
 ### 3. Constellation enhancements
 
@@ -156,6 +158,11 @@
 
 **Goal:** Auto-generated `/system` or `/tokens` page rendering all token values, component variants, and a11y specs.
 
+### 9. Mobile performance — Lighthouse RES follow-up
+
+**Status:** Active investigation. Vercel mobile RES at 58; INP ~928ms is the killer (main-thread JS / motion work), while CLS and FID are already strong. Justin wants this run as its own focused thread.
+**Plan:** `plans/lighthouse-perf-followup.md` (open on PR #139, branch `docs/mobile-res-investigation`).
+
 ---
 
 ## Infrastructure
@@ -185,4 +192,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 010 | Rename lab to Perihelion (two-arm house: Archive and Works) | 2026-04-21 | Accepted |
 | 011 | Portfolio visual recalibration to editorial-craftsperson register | 2026-05-17 | Superseded by ADR-013 |
 | 012 | Perihelion house identity | 2026-06 | Accepted |
-| 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, in build on `feat/conservatory-tokens` |
+| 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, shipped to main via PR #130 |

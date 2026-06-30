@@ -12,6 +12,16 @@ Baseline captured 2026-06-27 (production build, headless): Home 71 · Work 71 ·
 4. **Explicit dimensions / `aspect-ratio`** on images to reserve space and kill CLS (a perf-score component). Covers already use `aspect-[4/3]`; confirm the full-bleed heroes hold a stable box.
 5. **LCP discipline.** Keep the one LCP hero `eager` + `fetchpriority="high"` (already done) and consider a `<link rel="preload">` for just that image; everything below the fold stays `loading="lazy"` (thumbnails already are).
 
+## Build cache — keep CI builds fast (shipped)
+
+The responsive pipeline above (`scripts/generate-image-variants.ts`) emits ~548 AVIF/WebP variants from 58 sources, and those derived files are gitignored. That meant every fresh Vercel checkout started with zero variants and the old mtime staleness check re-encoded all 548 from scratch (~107s of the 274 AVIF encodes at `effort: 5` being the bulk).
+
+Fix: a **content-hash build cache** at `node_modules/.cache/image-variants/` — Vercel persists `node_modules` (including `.cache`) between builds, and local dev keeps it too. The script SHA-256s each source's bytes and stores `{ hash, dims, variants[] }` plus the encoded files. On each run, unchanged sources have their variants **restored** from the cache into `public/images/` instead of re-encoded; only new or byte-changed sources re-encode (writing to both `public/images/` and the cache). The committed `core/images/manifest.generated.ts` is regenerated identically for unchanged sources, so the runtime is unaffected. No `vercel.json` change is needed — the cache is automatic.
+
+Measured (M-series local): cold run 548 encoded ≈ 107s → warm run 0 encoded, 548 restored ≈ 0.4s; a single changed source re-encodes only its 8 variants ≈ 2s. The cache directory is ~41 MB and stays out of the repo.
+
+Separate possible win (not done): AVIF `effort: 5` → a lower effort would cut the *cold*-build cost further at a small size penalty; the cache makes that moot for warm builds, so it was left alone to preserve byte-for-byte output.
+
 ## JavaScript bundle — perf without touching images
 
 6. **Code-split the heavy chunks.** The build warns of >500 kB chunks (labs ≈ 683 kB, a route chunk ≈ 346 kB). Use `React.lazy` + `Suspense` for the labs app and the heaviest pages. The portfolio and the lab are separate entries — verify the lab bundle never loads on a portfolio route.

@@ -101,11 +101,19 @@
     --lab-mark-spark: var(--guide-accent);
 
     /* --- Typography families ---
-       Weights loaded by src/lab/main.tsx. Georgia is a system
-       font (no network request). */
+       Loaded by src/lab/main.tsx. Newsreader is a variable reading
+       serif (opsz + wght axes); Georgia is the fallback. Podkova and
+       JetBrains Mono load as fixed weights. */
     --lab-heading-font: 'Podkova', Georgia, serif;
-    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* Body weight is per-mode: dark runs LIGHTER (330) than light (400).
+       Light-on-dark strokes bloom on the humus floor, so thinning the
+       weight at night keeps Newsreader's serifs crisp instead of inky.
+       Standard bloom-trim direction, same as the portfolio. Validated live. */
+    --lab-body-weight: 330;
+    --lab-body-weight-strong: 560;
 
     /* --- Academic preprint watermark ---
        A graph-paper-under-ink texture: fine horizontal ruling every
@@ -229,12 +237,17 @@
     --lab-mark-spark: oklch(0.4600 0.1150 60.96);
 
     /* --- Typography families ---
-       Unchanged from dark mode. The lab's three-font stack
-       (Podkova / Georgia / JetBrains Mono) is theme-agnostic;
-       only the colors flip. */
+       Families match dark mode (same Newsreader Variable body); only
+       the colors and the body WEIGHT flip. */
     --lab-heading-font: 'Podkova', Georgia, serif;
-    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* Heavier on cream: dark-on-light strokes read thinner than they
+       measure, so 400 gives Newsreader presence on warm paper without
+       going inky. Pairs with dark 330. */
+    --lab-body-weight: 400;
+    --lab-body-weight-strong: 620;
 
     /* --- Academic preprint watermark ---
        Same graph-paper-under-ink ruling, retuned for cream

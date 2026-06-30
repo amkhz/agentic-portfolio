@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@fontsource-variable/figtree": "^5.2.10",
+    "@fontsource-variable/newsreader": "^5.2.10",
     "@fontsource/hedvig-letters-serif": "^5.2.8",
     "@fontsource/jetbrains-mono": "^5.2.8",
     "@fontsource/podkova": "^5.1.1",

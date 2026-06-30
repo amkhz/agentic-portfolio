@@ -48,7 +48,7 @@ function renderNodes(
 
 export function GuideList({ list, glossary }: GuideListProps) {
   const itemClassName =
-    "pl-2 font-lab-body text-base leading-relaxed text-lab-text-primary marker:text-lab-text-muted md:text-lg";
+    "pl-2 font-lab-body text-lg leading-relaxed text-lab-text-primary marker:text-lab-text-muted md:text-xl";
   const containerClassName = list.ordered
     ? "ml-5 list-decimal space-y-2 md:ml-6"
     : "ml-5 list-disc space-y-2 md:ml-6";

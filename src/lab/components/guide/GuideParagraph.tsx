@@ -39,7 +39,7 @@ export function GuideParagraph({ paragraph, glossary }: GuideParagraphProps) {
 
   return (
     <div>
-      <p className="font-lab-body text-base leading-relaxed text-lab-text-primary md:text-lg">
+      <p className="font-lab-body text-lg leading-relaxed text-lab-text-primary md:text-xl">
         {paragraph.nodes.map((node, index) => {
           if (node.kind === "text") {
             return <span key={index}>{node.value}</span>;

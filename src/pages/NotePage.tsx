@@ -36,7 +36,7 @@ export function NotePage() {
   return (
     <article>
       <Helmet>
-        <title>{title} | Justin Hernandez</title>
+        <title>{`${title} | Justin Hernandez`}</title>
         <meta name="description" content={summary} />
         <link rel="canonical" href={`https://justinh.design/notes/${note.slug}`} />
       </Helmet>

@@ -15,7 +15,7 @@ export function CaseStudyPage() {
     <>
       {study && (
         <Helmet>
-          <title>{study.title} | Justin Hernandez</title>
+          <title>{`${study.title} | Justin Hernandez`}</title>
           <meta name="description" content={study.subtitle} />
           <link rel="canonical" href={`https://justinh.design/work/${study.slug}`} />
         </Helmet>

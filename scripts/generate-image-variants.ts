@@ -52,19 +52,34 @@ const CACHE_DIR = join(ROOT, 'node_modules', '.cache', 'image-variants');
 const CACHE_FILES_DIR = join(CACHE_DIR, 'files');
 const CACHE_INDEX_PATH = join(CACHE_DIR, 'index.json');
 
-// Responsive width ladder. A source only emits the steps at or below its own
-// intrinsic width, and always its full width as the top step so large/retina
-// displays still receive every native pixel — no upscaling, no softening.
+// Responsive width ladder. A source emits the steps at or below its intrinsic
+// width, capped at MAX_WIDTH. 2560 covers retina rendering on any real display;
+// the case-study shots render inside a content column, so wider sources (e.g.
+// 3840px Wallace renders) are wasted pixels — and the 3840 step is the single
+// most expensive AVIF to encode. We cap there rather than emit it.
 const WIDTH_LADDER = [640, 960, 1280, 1920, 2560];
+const MAX_WIDTH = WIDTH_LADDER[WIDTH_LADDER.length - 1];
 
 // Quality is deliberately generous: the whole point is "smaller file, same
 // picture." AVIF at 82 / WebP at 88 is visually lossless for these renders
-// while still landing 50–80% under the source PNG.
-const AVIF_OPTIONS: sharp.AvifOptions = { quality: 82, effort: 5 };
+// while still landing 50–80% under the source PNG. `effort` is encoder search
+// depth, NOT visual quality (that's `quality`); dropping AVIF 5→4 trades a few
+// percent of file size for a large cut in encode time on CI's slow cores. The
+// picture is identical.
+const AVIF_OPTIONS: sharp.AvifOptions = { quality: 82, effort: 4 };
 const WEBP_OPTIONS: sharp.WebpOptions = { quality: 88, effort: 5 };
 
 const SOURCE_EXT = /\.(png|jpe?g)$/i;
 const DERIVED = /-\d+\.(avif|webp)$/i; // a variant we previously emitted
+
+// Cache key over the encode settings. The per-source hash only sees source
+// bytes, so changing the ladder or encoder options wouldn't invalidate it and
+// we'd restore stale variants. Fold the settings in and treat the whole cache
+// as cold when they change.
+const CONFIG_KEY = createHash('sha256')
+  .update(JSON.stringify({ WIDTH_LADDER, MAX_WIDTH, AVIF_OPTIONS, WEBP_OPTIONS }))
+  .digest('hex')
+  .slice(0, 12);
 
 interface ManifestEntry {
   width: number;
@@ -83,10 +98,23 @@ interface CacheEntry {
 
 type CacheIndex = Record<string, CacheEntry>;
 
-/** Widths to emit for a source of the given intrinsic width (never upscaled). */
+/** The on-disk index: cached sources plus the encode-config key they were built with. */
+interface CacheFile {
+  config: string;
+  sources: CacheIndex;
+}
+
+/**
+ * Widths to emit for a source of the given intrinsic width — never upscaled,
+ * never above MAX_WIDTH. Sources smaller than the cap also get their own exact
+ * width as the top step so they're served pixel-perfect.
+ */
 function widthsFor(intrinsicWidth: number): number[] {
-  const steps = WIDTH_LADDER.filter((w) => w < intrinsicWidth);
-  if (!steps.includes(intrinsicWidth)) steps.push(intrinsicWidth);
+  const cap = Math.min(intrinsicWidth, MAX_WIDTH);
+  const steps = WIDTH_LADDER.filter((w) => w <= cap);
+  if (intrinsicWidth < MAX_WIDTH && !steps.includes(intrinsicWidth)) {
+    steps.push(intrinsicWidth);
+  }
   return steps.sort((a, b) => a - b);
 }
 
@@ -107,11 +135,15 @@ function variantNames(stem: string, widths: number[]): string[] {
 function loadCacheIndex(): CacheIndex {
   if (!existsSync(CACHE_INDEX_PATH)) return {};
   try {
-    return JSON.parse(readFileSync(CACHE_INDEX_PATH, 'utf8')) as CacheIndex;
+    const parsed = JSON.parse(readFileSync(CACHE_INDEX_PATH, 'utf8')) as CacheFile;
+    if (parsed.config === CONFIG_KEY) return parsed.sources ?? {};
   } catch {
-    // A corrupt or partial index just means a cold rebuild — safe to ignore.
-    return {};
+    // A corrupt or partial index just means a cold rebuild — fall through.
   }
+  // Config changed (or index unreadable) — clear the cache dir so the rebuild is
+  // clean and no orphaned variants from the old settings linger.
+  rmSync(CACHE_DIR, { recursive: true, force: true });
+  return {};
 }
 
 /**
@@ -132,8 +164,9 @@ function restoreFromCache(entry: CacheEntry): boolean {
 }
 
 async function run() {
-  mkdirSync(CACHE_FILES_DIR, { recursive: true });
+  // Load first: a config change wipes CACHE_DIR, so (re)create it afterwards.
   const cache = loadCacheIndex();
+  mkdirSync(CACHE_FILES_DIR, { recursive: true });
 
   const files = readdirSync(IMAGES_DIR)
     .filter((f) => SOURCE_EXT.test(f) && !DERIVED.test(f))
@@ -218,7 +251,8 @@ async function run() {
       for (const name of entry.variants) rmSync(join(CACHE_FILES_DIR, name), { force: true });
     }
   }
-  writeFileSync(CACHE_INDEX_PATH, `${JSON.stringify(nextCache, null, 2)}\n`, 'utf8');
+  const indexFile: CacheFile = { config: CONFIG_KEY, sources: nextCache };
+  writeFileSync(CACHE_INDEX_PATH, `${JSON.stringify(indexFile, null, 2)}\n`, 'utf8');
 
   writeManifest(manifest);
   console.log(

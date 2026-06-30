@@ -1,11 +1,19 @@
+import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { guides } from "@core/lab/guides";
 import { territories } from "@core/lab/territories";
+import type { ShelfLayout } from "@lab/components/library/guideShelfCommon";
 import { LibraryHeader } from "@lab/components/library/LibraryHeader";
 import { LibraryWelcome } from "@lab/components/library/LibraryWelcome";
+import { ShelfLayoutToggle } from "@lab/components/library/ShelfLayoutToggle";
 import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
 
 export function LibraryIndex() {
+  // Temporary T3 prototype: pick the shelf layout to validate live. Defaults to
+  // the Ledger Stack (recommended lead). Remove with ShelfLayoutToggle once the
+  // direction is chosen.
+  const [layout, setLayout] = useState<ShelfLayout>("stack");
+
   return (
     <>
       <Helmet>
@@ -27,7 +35,8 @@ export function LibraryIndex() {
           territoryCount={territories.length}
         />
         <LibraryWelcome />
-        <TerritoryGrid guides={guides} />
+        <ShelfLayoutToggle value={layout} onChange={setLayout} />
+        <TerritoryGrid guides={guides} layout={layout} />
       </div>
     </>
   );

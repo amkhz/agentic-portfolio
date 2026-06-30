@@ -3,12 +3,15 @@ import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
 import { upcomingGuides } from "@core/lab/upcoming";
-import { GuideCard } from "./GuideCard";
+import type { ShelfLayout } from "./guideShelfCommon";
+import { GuideSpine } from "./GuideSpine";
+import { GuideLedgerRow } from "./GuideLedgerRow";
 import { TerritoryBadge } from "./TerritoryBadge";
 import { UpcomingCard } from "./UpcomingCard";
 
 interface TerritoryGridProps {
   guides: Guide[];
+  layout: ShelfLayout;
 }
 
 function groupByTerritory(guides: Guide[]): Record<Territory, Guide[]> {
@@ -52,7 +55,7 @@ const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-export function TerritoryGrid({ guides }: TerritoryGridProps) {
+export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
   const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
   const shouldReduce = useReducedMotion();
@@ -117,13 +120,27 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
             ) : (
               <>
                 {hasBuilt ? (
-                  <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    {territoryGuides.map((guide) => (
-                      <li key={guide.slug}>
-                        <GuideCard guide={guide} />
-                      </li>
-                    ))}
-                  </ul>
+                  layout === "stack" ? (
+                    // The Ledger Stack: spines stacked tight, like a pile of
+                    // books resting on the territory ledge.
+                    <ul className="mt-8 flex flex-col gap-1.5">
+                      {territoryGuides.map((guide) => (
+                        <li key={guide.slug}>
+                          <GuideSpine guide={guide} />
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    // The Accession Ledger: ruled rows separated by hairlines,
+                    // scanned top-to-bottom like a catalog of holdings.
+                    <ul className="mt-8 divide-y divide-lab-border-subtle border-y border-lab-border-subtle">
+                      {territoryGuides.map((guide) => (
+                        <li key={guide.slug}>
+                          <GuideLedgerRow guide={guide} />
+                        </li>
+                      ))}
+                    </ul>
+                  )
                 ) : null}
 
                 {hasUpcoming ? (

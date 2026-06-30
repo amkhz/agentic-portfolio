@@ -195,7 +195,7 @@ button:focus-visible,
    accent ring, any per-territory chrome — picks up the matching
    --lab-territory-tN via the --guide-accent variable. Class-based
    instead of inline style so the ADR-009 inline-style budget stays
-   reserved for GuideRenderer + GuideCard. */
+   reserved for GuideRenderer + GuideSpine. */
 .lab-territory-t1 { --guide-accent: var(--lab-territory-t1); }
 .lab-territory-t2 { --guide-accent: var(--lab-territory-t2); }
 .lab-territory-t3 { --guide-accent: var(--lab-territory-t3); }

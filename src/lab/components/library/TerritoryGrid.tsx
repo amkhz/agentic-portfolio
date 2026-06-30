@@ -3,7 +3,7 @@ import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
 import { upcomingGuides } from "@core/lab/upcoming";
-import { GuideCard } from "./GuideCard";
+import { GuideSpine } from "./GuideSpine";
 import { TerritoryBadge } from "./TerritoryBadge";
 import { UpcomingCard } from "./UpcomingCard";
 
@@ -117,10 +117,13 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
             ) : (
               <>
                 {hasBuilt ? (
-                  <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                  // Mobile: spines lie flat in a stacked pile. Desktop: they
+                  // stand on a shelf — a flex-wrap row sitting on a ledge
+                  // (the bottom rule), spines of varied thickness side by side.
+                  <ul className="mt-8 flex flex-col gap-3 md:mt-10 md:flex-row md:flex-wrap md:items-end md:gap-3 md:border-b md:border-lab-border-strong md:pb-px">
                     {territoryGuides.map((guide) => (
-                      <li key={guide.slug}>
-                        <GuideCard guide={guide} />
+                      <li key={guide.slug} className="md:flex md:items-end">
+                        <GuideSpine guide={guide} />
                       </li>
                     ))}
                   </ul>

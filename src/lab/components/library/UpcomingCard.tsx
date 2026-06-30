@@ -1,6 +1,6 @@
-// Placeholder card for guides that aren't published yet. Same
-// shape as GuideCard but visually muted: dashed border, no accent
-// dot, quiet status pills. Non-interactive — these are hints at
+// Placeholder card for guides that aren't published yet. A quiet
+// pipeline tile (not a shelf spine): dashed border, no accent
+// dot, muted status pills. Non-interactive — these are hints at
 // what's coming, not links, so clicks are a no-op and the card is
 // announced as disabled to assistive tech.
 import type { UpcomingGuide, UpcomingStatus } from "@core/lab/upcoming";

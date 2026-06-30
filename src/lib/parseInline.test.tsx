@@ -35,6 +35,17 @@ describe("parseInline", () => {
     expect(out).toContain("the lab");
   });
 
+  it("opens external links in a new tab with a safe rel", () => {
+    const out = html("through [Paper](https://paper.design)");
+    expect(out).toContain("target=\"_blank\"");
+    expect(out).toContain("rel=\"noopener noreferrer\"");
+  });
+
+  it("keeps internal links in the same tab", () => {
+    const out = html("see [work](/work)");
+    expect(out).not.toContain("target=\"_blank\"");
+  });
+
   it("leaves a lone unpaired asterisk literal", () => {
     expect(html("2 * 3 = 6")).toContain("2 * 3 = 6");
   });

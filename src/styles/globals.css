@@ -142,6 +142,17 @@
 
 }
 
+/* Scroll-reveal arrival, mobile-tuned. On phones / coarse pointers the long
+   900ms settle (built for a wide desktop canvas) reads as a slow fade in a
+   single column, so shorten it to ~560ms. Desktop keeps the luxurious settle.
+   Only the duration moves — the critically-damped --ease-settle curve is
+   unchanged in both registers (RevealOnScroll reads --duration-reveal live). */
+@media (max-width: 640px), (pointer: coarse) {
+  :root {
+    --duration-reveal: 560ms;
+  }
+}
+
 body {
   background-color: var(--color-bg-deep);
   /* Material texture comes from the global GrainOverlay (film grain), not a

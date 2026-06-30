@@ -314,6 +314,15 @@ export type CtaSection = {
   body: string;
 };
 
+/** An ordered or unordered list. Items retain inline markdown (bold/italic/
+ *  links) for the renderer to parse. Authored in markdown as consecutive
+ *  `1. ...` / `- ...` lines. */
+export type ListSection = {
+  type: 'list';
+  ordered: boolean;
+  items: string[];
+};
+
 export type CaseStudySection =
   | TextSection
   | ImageSection
@@ -322,7 +331,8 @@ export type CaseStudySection =
   | QuoteSection
   | CalloutSection
   | PeekSection
-  | CtaSection;
+  | CtaSection
+  | ListSection;
 
 // --- Markdown file imports ---
 

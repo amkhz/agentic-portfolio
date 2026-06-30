@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link, NavLink } from "react-router";
 import { Container } from "./Container";
+import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "@/components/interactive/ThemeToggle";
 import { NowPlaying } from "@/components/interactive/NowPlaying";
 
@@ -12,6 +14,8 @@ const navLinks = [
 ];
 
 export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <header className="relative sticky top-0 z-50 border-b border-border-subtle bg-bg-deep/80 backdrop-blur-md">
       <a
@@ -32,7 +36,7 @@ export function Header() {
             <span className="sm:hidden">JH</span>
           </Link>
 
-          <ul className="flex items-center gap-4 sm:gap-8">
+          <ul className="hidden items-center gap-4 sm:flex sm:gap-8">
             {navLinks.map((link) => (
               <li key={link.to}>
                 <NavLink
@@ -48,11 +52,16 @@ export function Header() {
             ))}
           </ul>
 
-          <ThemeToggle />
+          <div className="flex items-center gap-1">
+            <MobileMenu navLinks={navLinks} onOpenChange={setMenuOpen} />
+            <ThemeToggle />
+          </div>
         </nav>
       </Container>
 
-      <NowPlaying />
+      {/* Kept mounted (poll stays warm); hidden while the drawer covers the
+          screen so the centered tab doesn't sit under the overlay. */}
+      <NowPlaying className={menuOpen ? "hidden" : undefined} />
     </header>
   );
 }

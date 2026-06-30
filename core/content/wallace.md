@@ -28,6 +28,12 @@ So Wallace is a compiler. He takes the way I already talk about design, composit
 
 The judgment is in the constraints, not the cleverness of a prompt. Lock the composition and vary only the palette. Lock the palette and vary only the light. Keep the seed fixed so a change shows you exactly what it changed. Now we're playing with a design instrument and not a dice roll: you can move one variable and see the result.
 
+::: callout The engine underneath
+The compiler is the part I had to think about a little longer. Something still has to run the weights on my own machine, and that part is [MFLUX](https://github.com/filipstrand/mflux), an MLX-native engine that drives the model straight on my Mac's GPU. Wiring it into the skill was its own small job. Ideogram 4 only runs on one exact path. The model ships a single text encoder where the usual setup expects two, so the default command just crashes. The skill reads the live runtime instead of trusting the docs, so the only flags it reaches for are the ones that actually work on this machine.
+:::
+
+I wrote Wallace so I could move him to my Windows machine and run him on CUDA if I ever wanted to, and I built scripts that sync upstream so my compiler and pipeline stay current as the model shifts underneath them. He's built to outlive any one machine or any single version of the model.
+
 ## The Caption Is the Spec
 
 Every render saves its caption beside the image as a sidecar, so the next step in the pipeline reads the spec (palette hexes, headline copy, layout regions) instead of reverse-engineering pixels.

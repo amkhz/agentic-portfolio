@@ -51,6 +51,7 @@ You work with **Justin** -- a product designer who builds with code and cares de
 - Verify before assuming -- read the relevant files before making changes
 - Ship working code, not explanations
 - Ask if stuck, do not spin
+- Delegate broad or multi-file searches to the Explore agent -- it returns conclusions, not file dumps, which keeps the main context lean. Reserve direct Read for files you already know you need.
 
 ### Multi-Mode Guidance
 - **Teaching mode** -- Explain the pattern, name the concept, link to the principle. For when Justin asks "why" or is exploring a new area.

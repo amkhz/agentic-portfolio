@@ -189,41 +189,6 @@ export function ConstellationContent({
           renderConstellationSection(section, index, allNodes, onNavigate, node.title)
         )}
       </div>
-
-      {/* Related nodes */}
-      {node.connections.length > 0 && (
-        <nav
-          aria-label="Related topics"
-          className="mt-12 flex max-w-[65ch] flex-wrap items-center gap-2 border-t border-border-subtle pt-6"
-        >
-          <span className="font-mono text-[11px] uppercase tracking-wider text-text-muted">
-            Related
-          </span>
-          {node.connections.map((connId) => {
-            const connNode = getNode(allNodes, connId);
-            if (!connNode || connNode.status === "planned") return null;
-            return (
-              <button
-                key={connId}
-                type="button"
-                onClick={() => onNavigate(connId)}
-                className={cn(
-                  "group/peek inline-flex items-center gap-2",
-                  "font-mono text-xs uppercase tracking-wider text-text-secondary",
-                  "transition-colors duration-normal hover:text-accent-primary",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-                )}
-              >
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-accent-primary opacity-60 transition-opacity duration-normal group-hover/peek:opacity-100"
-                />
-                {connNode.title}
-              </button>
-            );
-          })}
-        </nav>
-      )}
     </div>
   );
 }

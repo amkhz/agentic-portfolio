@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cn } from './index';
+import { cn, clampRevealDelay, REVEAL_DELAY_CAP_MS } from './index';
 import { slugify } from './format';
 
 // ============================================
@@ -71,6 +71,29 @@ describe('slugify()', () => {
 
   it('trims whitespace', () => {
     expect(slugify('  hello world  ')).toBe('hello-world');
+  });
+});
+
+// ============================================
+// clampRevealDelay()
+// ============================================
+
+describe('clampRevealDelay()', () => {
+  it('passes through small delays unchanged', () => {
+    expect(clampRevealDelay(0)).toBe(0);
+    expect(clampRevealDelay(100)).toBe(100);
+    expect(clampRevealDelay(300)).toBe(300);
+  });
+
+  it('caps delays past the ceiling (stops the mobile cascade tail)', () => {
+    expect(clampRevealDelay(400)).toBe(REVEAL_DELAY_CAP_MS);
+    expect(clampRevealDelay(1300)).toBe(REVEAL_DELAY_CAP_MS);
+  });
+
+  it('floors negative and non-finite delays to 0', () => {
+    expect(clampRevealDelay(-50)).toBe(0);
+    expect(clampRevealDelay(Number.NaN)).toBe(0);
+    expect(clampRevealDelay(Number.POSITIVE_INFINITY)).toBe(0);
   });
 });
 

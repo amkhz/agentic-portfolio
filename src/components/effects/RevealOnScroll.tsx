@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { cn } from "@core/utils";
+import { cn, clampRevealDelay } from "@core/utils";
 
 const prefersReducedMotion =
   typeof window !== "undefined" &&
@@ -37,7 +37,11 @@ export function RevealOnScroll({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.1 }
+      // Expand the root's bottom edge so the reveal fires while the element is
+      // still ~12% of a viewport below the fold. It's then mid-fade as it
+      // scrolls into view instead of popping in after arrival. threshold 0
+      // pairs with the margin: any contact with the expanded root triggers.
+      { threshold: 0, rootMargin: "0px 0px 12% 0px" }
     );
 
     observer.observe(el);
@@ -61,7 +65,7 @@ export function RevealOnScroll({
         transitionProperty: blur ? "opacity, translate, filter" : "opacity, translate",
         transitionDuration: "var(--duration-reveal)",
         transitionTimingFunction: "var(--ease-settle)",
-        transitionDelay: isVisible ? `${delay}ms` : "0ms",
+        transitionDelay: isVisible ? `${clampRevealDelay(delay)}ms` : "0ms",
         ...(blur ? { filter: isVisible ? "blur(0px)" : "blur(5px)" } : {}),
       }}
     >

@@ -114,6 +114,39 @@ Common layout zones (any aspect ratio, since coords are normalized):
 
 ---
 
+## Typographic craft — lean into the moat
+
+Independent eval (contralabs, 20 typography prompts × 10 pro designers, blind
+pairwise + Likert): everyone spells now — Ideogram's text *accuracy* (4.59) was
+basically tied with rivals (4.54–4.55). Where it separated was **Typographic
+Craft** — font choice, kerning, spacing, and how type *integrates with the
+image* — 3.92 vs 3.34–3.50, and it was the only model to reach client-ready for
+type-driven work (3.55 vs 2.49–2.84). **The moat is craft, not spelling.** Reach
+for Ideogram on poster / kicker / wordmark / type-as-hero work; it's where this
+model wins. (Public-facing marks still forbid baked text — see SKILL doctrine 4.
+This applies to portfolio/lab/internal renders where we control the glyphs.)
+
+Two disciplines fall out of that, plus a finding about prompt shape:
+
+- **A text element's `desc` describes type craft, not mood.** Weight, optical
+  size, how the glyphs sit on the surface / catch the light, kerning feel,
+  integration with the plate. NOT a re-list of "moody, cinematic, golden hour" —
+  that already lives in `style_description`. The craft score rewards type that
+  belongs to the image; describe the belonging, not the atmosphere.
+- **One concern, one field — don't smear style across descs.** The same eval
+  found leaner prompts beat "longer, more directive" ones that "spike on word
+  count, specificity, and stacked directives like style, camera/lighting, and
+  technical terms." That finding was on plain-text prompts through the hosted
+  magic-prompt path; **the schema's field separation IS that leanness mechanism**
+  for us. Keep `aesthetics`/`lighting`/`art_style` adjectives in their fields and
+  out of every element `desc`. Duplicating them is the stacking the eval
+  penalizes, smuggled in through structure.
+- **Lean ≠ sparse.** That same eval does NOT mean trim our descs. We bypass
+  magic prompt and write the JSON distribution, which the model was trained to
+  see fully described — structural completeness still helps. Cut *redundant
+  stylistic stacking*, never *structural coverage*. Describe everything once, in
+  the right field.
+
 ## Text rendering notes (empirical)
 
 Observed on the Neo Mirai proof-out (ideogram-4-fp8, mflux 0.18.0), but the

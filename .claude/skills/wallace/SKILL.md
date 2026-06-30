@@ -20,6 +20,7 @@ Wallace manufactures. It does not decide what should exist — that's Justin's c
 3. License guardrail: Ideogram 4 weights are **non-commercial**. Generated images are fine for portfolio experiments, `/lab` explorations, and personal work. If a request smells like client or Kiavi production work, flag the license before rendering — don't silently proceed.
 4. Never paraphrase literal render text. If Justin says the poster should say "BARE METAL POLTERGEIST", the `text` field carries exactly that string.
 5. For illustrated, editorial, or hand-made styles, read `references/style-language.md` before composing. Ideogram's default is smooth semi-realistic rendering; distinctive illustration requires naming the technique, texture, and linework, and (for faces) explicit negatives. It also records the long-word and tategaki caption bugs.
+6. Type is the moat. Ideogram's independently-measured edge is **typographic craft** (how type integrates with the image), not spelling. Reach for it on type-driven work. A text element's `desc` describes type craft — weight, optical size, kerning feel, how glyphs sit on the surface — never atmosphere; mood lives in `style_description`. Keep each concern in its one field. See the "Typographic craft" section in `references/caption-schema.md`.
 
 ---
 
@@ -56,7 +57,7 @@ Build the caption against `references/caption-schema.md`. Non-negotiables:
 - Element key order: obj = `type, bbox, desc, color_palette`; text = `type, bbox, text, desc, color_palette`
 - Serialize with `json.dumps(caption, separators=(",", ":"), ensure_ascii=False)`
 
-Write rich `desc` strings — material, pose, lighting interaction, relative position. One or two sentences per element minimum for primary subjects.
+Write rich `desc` strings — material, pose, lighting interaction, relative position. One or two sentences per element minimum for primary subjects. Describe everything *once, in its right field*: don't smear `aesthetics`/`lighting`/`art_style` adjectives across element descs — that's the directive-stacking the typography eval penalizes, and the schema's field separation already carries it. For text elements, `desc` is type craft (weight, optical size, kerning, integration), not mood.
 
 In Coworker mode, present the caption as pretty-printed JSON with a one-line rationale per decision, then wait for a go.
 

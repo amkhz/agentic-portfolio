@@ -108,12 +108,12 @@
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
-    /* Body weight is per-mode: dark runs HEAVIER (400) than light (330).
-       This inverts the usual light-on-dark bloom trim because the warmed
-       humus floor is mid-contrast (text L 0.78 on bg L 0.17) plus a grain
-       texture, which thins serif strokes at night. Validated live. */
-    --lab-body-weight: 400;
-    --lab-body-weight-strong: 620;
+    /* Body weight is per-mode: dark runs LIGHTER (330) than light (400).
+       Light-on-dark strokes bloom on the humus floor, so thinning the
+       weight at night keeps Newsreader's serifs crisp instead of inky.
+       Standard bloom-trim direction, same as the portfolio. Validated live. */
+    --lab-body-weight: 330;
+    --lab-body-weight-strong: 560;
 
     /* --- Academic preprint watermark ---
        A graph-paper-under-ink texture: fine horizontal ruling every
@@ -243,10 +243,11 @@
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
-    /* Lighter on cream: thin serif strokes read crisp on light paper,
-       so 330 keeps prose from going inky. Pairs with dark 400. */
-    --lab-body-weight: 330;
-    --lab-body-weight-strong: 560;
+    /* Heavier on cream: dark-on-light strokes read thinner than they
+       measure, so 400 gives Newsreader presence on warm paper without
+       going inky. Pairs with dark 330. */
+    --lab-body-weight: 400;
+    --lab-body-weight-strong: 620;
 
     /* --- Academic preprint watermark ---
        Same graph-paper-under-ink ruling, retuned for cream

@@ -82,7 +82,7 @@ function BlockquoteBody({
       {block.paragraphs.map((p, i) => (
         <p
           key={`${keyPrefix}-${i}`}
-          className="font-lab-body text-base leading-relaxed text-lab-text-secondary md:text-lg"
+          className="font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl"
         >
           {renderNodes(p.nodes, glossary, `${keyPrefix}-${i}`)}
         </p>
@@ -98,7 +98,7 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
         className="rounded-sm border-l-2 border-guide-accent bg-guide-accent/[0.06] py-3 pl-5 pr-4 md:pl-6"
         aria-label="Definition"
       >
-        <p className="font-lab-body text-base leading-relaxed text-lab-text-secondary md:text-lg">
+        <p className="font-lab-body text-lg leading-relaxed text-lab-text-secondary md:text-xl">
           {block.term && (
             <strong className="mr-1.5 font-semibold text-guide-accent">
               {block.term}

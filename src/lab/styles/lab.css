@@ -95,8 +95,14 @@ body {
   font-size: 1.1875rem;
   line-height: 1.65;
   font-optical-sizing: auto;
+  /* This wght axis wins over the `font-weight` property for Newsreader
+     (the variable body face). To change a serif element's weight, drive
+     --lab-body-weight-strong or set font-variation-settings here -- a
+     Tailwind font-medium/font-semibold class will no-op on Newsreader.
+     (Weight utilities still work on Podkova headings; it is non-variable.) */
   font-variation-settings: "wght" var(--lab-body-weight, 400);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 

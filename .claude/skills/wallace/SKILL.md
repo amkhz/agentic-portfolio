@@ -45,6 +45,8 @@ Extract from Justin's request (ask only for what's genuinely missing):
 - **Typography** — any literal in-image text, and where it sits
 - **Layout intent** — if Justin describes spatial structure ("logo top-left, tagline lower third"), that becomes bboxes
 
+When Justin gives a plain-language art direction ("light flowing through the surface, not on top"; "like I'm standing a few feet away"), translate it with `references/direction-vocabulary.md` — a living table mapping his words to the exact caption mechanic, grounded in our own before/afters. His vivid sensory directions are the input, not a deficiency; the doc just speeds the mapping. **Add an entry to it whenever a direction lands or misses and we learn why.**
+
 If Justin gives a vague one-liner and Flow mode is active, expand it the way the magic prompt would: exhaustively descriptive, every element named. Sparse captions are out-of-distribution; the model was trained on captions that describe *everything*.
 
 ### Phase 2: Compile

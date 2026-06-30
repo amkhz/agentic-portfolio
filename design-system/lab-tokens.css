@@ -101,11 +101,19 @@
     --lab-mark-spark: var(--guide-accent);
 
     /* --- Typography families ---
-       Weights loaded by src/lab/main.tsx. Georgia is a system
-       font (no network request). */
+       Loaded by src/lab/main.tsx. Newsreader is a variable reading
+       serif (opsz + wght axes); Georgia is the fallback. Podkova and
+       JetBrains Mono load as fixed weights. */
     --lab-heading-font: 'Podkova', Georgia, serif;
-    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* Body weight is per-mode: dark runs HEAVIER (400) than light (330).
+       This inverts the usual light-on-dark bloom trim because the warmed
+       humus floor is mid-contrast (text L 0.78 on bg L 0.17) plus a grain
+       texture, which thins serif strokes at night. Validated live. */
+    --lab-body-weight: 400;
+    --lab-body-weight-strong: 620;
 
     /* --- Academic preprint watermark ---
        A graph-paper-under-ink texture: fine horizontal ruling every
@@ -229,12 +237,16 @@
     --lab-mark-spark: oklch(0.4600 0.1150 60.96);
 
     /* --- Typography families ---
-       Unchanged from dark mode. The lab's three-font stack
-       (Podkova / Georgia / JetBrains Mono) is theme-agnostic;
-       only the colors flip. */
+       Families match dark mode (same Newsreader Variable body); only
+       the colors and the body WEIGHT flip. */
     --lab-heading-font: 'Podkova', Georgia, serif;
-    --lab-body-font: Georgia, 'Podkova', serif;
+    --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+    /* Lighter on cream: thin serif strokes read crisp on light paper,
+       so 330 keeps prose from going inky. Pairs with dark 400. */
+    --lab-body-weight: 330;
+    --lab-body-weight-strong: 560;
 
     /* --- Academic preprint watermark ---
        Same graph-paper-under-ink ruling, retuned for cream

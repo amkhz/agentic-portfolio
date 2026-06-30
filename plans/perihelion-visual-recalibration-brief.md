@@ -61,7 +61,7 @@ The lab keeps its own register where it should: graphite floor (no pure black, l
 |---|---|---|
 | Shelf register | **Wallace material spines.** Editorial spine/catalog bones; each spine carries a generated material surface (binder cloth, pressed board, foil-stamp feel). No literal 3D skeuomorph. | Shelf layout stays composed and editorial; the *surface* is authored. |
 | Palette convergence | **Warm toward humus.** Re-hue lab dark neutrals from 270 toward ~60 to 80, holding L 0.17. Light mode is already warm cream, minor tune only. | The spine of the work; gates every surface, exactly as tokens-first gated the Conservatory. |
-| Reading type | **Uncommon, readable, modern serif. Not Fraunces (reads AI), not system Georgia.** Variable preferred so the reader sliders work. Podkova stays as the identity-locked display face. | Locked *live* via a specimen pass (section 7), the way the portfolio locked Hedvig. |
+| Reading type | **LOCKED 2026-06-30: Newsreader (variable).** Uncommon, readable, modern serif; not Fraunces (reads AI), not system Georgia. Podkova stays the identity-locked display face. | Locked *live* via the section 7 specimen, the way the portfolio locked Hedvig. Per-mode body weight light 330 / dark 400. |
 | Wallace scope | **Spine and cover materials only.** No full scenes, no per-section art, no wallpaper. | Honors imagery restraint; net-new pipeline use for the lab. |
 
 ---
@@ -118,6 +118,8 @@ Constraints from Justin: uncommon, genuinely readable, modern, not Fraunces, not
 - **Signifier** or **Roslindale** — high-contrast modern serifs with real personality, uncommon in portfolios.
 
 **Plan:** two-round live specimen on real guide body copy, both modes, against the warmed P1 palette, mirroring how the portfolio locked Hedvig. Recommended first round: Literata, Newsreader, GT Sectra. Lock records into this brief and into ADR-016.
+
+**Locked (2026-06-30, P2 build):** **Newsreader Variable** (`@fontsource-variable/newsreader`, opsz + wght axes). Specimen: `scratchpad/reading-room-type-specimen.html`. Round one ran Literata and Newsreader live; GT Sectra never rendered (Grilli Type commercial, no licensed file), so it was a Literata-vs-Newsreader call and Newsreader won. Type system: body 1.1875rem / line-height 1.65 / `font-optical-sizing: auto` (opsz tracks size). **Per-mode body weight via `--lab-body-weight`: light 330 / dark 400**, with `--lab-body-weight-strong` 560 / 620 for emphasis. The weight is INVERTED from the portfolio's bloom trim (portfolio runs dark lighter): on the warmed humus floor (mid-contrast warm text + grain) thin serif strokes need *more* weight at night, not less. Record this finding in ADR-016. Podkova display and JetBrains Mono unchanged.
 
 ---
 

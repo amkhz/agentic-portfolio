@@ -92,8 +92,10 @@ body {
   background-image: var(--lab-texture);
   color: var(--lab-text-primary);
   font-family: var(--lab-body-font);
-  font-size: 1.0625rem;
-  line-height: 1.7;
+  font-size: 1.1875rem;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  font-variation-settings: "wght" var(--lab-body-weight, 400);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -103,10 +105,18 @@ h1, h2, h3, h4 {
   color: var(--lab-text-primary);
   line-height: 1.2;
   letter-spacing: -0.01em;
+  /* Podkova loads as fixed weights; shed the inherited body wght axis. */
+  font-variation-settings: normal;
+}
+
+/* Emphasis steps up from the per-mode body weight (Newsreader variable). */
+strong, b {
+  font-variation-settings: "wght" var(--lab-body-weight-strong, 620);
 }
 
 code, kbd, samp, pre {
   font-family: var(--lab-mono-font);
+  font-variation-settings: normal;
 }
 
 a {

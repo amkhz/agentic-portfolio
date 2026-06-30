@@ -2,6 +2,7 @@ import type { CaseStudySection } from "@core/content/case-studies";
 import { slugify } from "@core/utils/format";
 import { SectionHeading } from "./SectionHeading";
 import { TextBlock } from "./TextBlock";
+import { ListBlock } from "./ListBlock";
 import { ImageBlock } from "./ImageBlock";
 import { MetricCard } from "./MetricCard";
 import { MetricGrid } from "./MetricGrid";
@@ -58,6 +59,13 @@ export function renderSection(
             )}
             <TextBlock>{section.body}</TextBlock>
           </div>
+        </RevealOnScroll>
+      );
+
+    case "list":
+      return (
+        <RevealOnScroll key={index}>
+          <ListBlock ordered={section.ordered} items={section.items} />
         </RevealOnScroll>
       );
 

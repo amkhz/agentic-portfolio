@@ -11,6 +11,7 @@ const VALID_SECTION_TYPES: CaseStudySection['type'][] = [
   'callout',
   'peek',
   'cta',
+  'list',
 ];
 
 // ============================================

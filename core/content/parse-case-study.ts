@@ -20,6 +20,12 @@ const IMAGE_RE = /^!\[([^\]]*)\]\(([^)]+)\)$/;
 const CAPTION_RE = /^\*([^*]+)\*$/;
 const IMAGE_META_RE = /^<!--\s*(.*?)\s*-->$/;
 
+// --- List item regexes ---
+// Ordered: `1. text`  Unordered: `- text`. A leading space is required after
+// the marker so `**bold**` paragraphs and `*caption*` lines never match.
+const ORDERED_ITEM_RE = /^\d+\.\s+(.*)$/;
+const UNORDERED_ITEM_RE = /^-\s+(.*)$/;
+
 function parseMeta(meta: string): Record<string, string> {
   const result: Record<string, string> = {};
 
@@ -270,6 +276,23 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
         ...(aspect ? { aspect } : {}),
       });
       i++;
+      continue;
+    }
+
+    // --- Lists (ordered or unordered) ---
+    const isOrdered = ORDERED_ITEM_RE.test(line);
+    const isUnordered = UNORDERED_ITEM_RE.test(line);
+    if (isOrdered || isUnordered) {
+      flushText();
+      const itemRe = isOrdered ? ORDERED_ITEM_RE : UNORDERED_ITEM_RE;
+      const items: string[] = [];
+      while (i < lines.length) {
+        const itemMatch = lines[i].match(itemRe);
+        if (!itemMatch) break;
+        items.push(itemMatch[1].trim());
+        i++;
+      }
+      sections.push({ type: 'list' as const, ordered: isOrdered, items });
       continue;
     }
 

@@ -25,10 +25,13 @@ export function parseInline(text: string): React.ReactNode[] {
 
     const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     if (linkMatch) {
+      const href = linkMatch[2];
+      const isExternal = /^https?:\/\//.test(href);
       return (
         <a
           key={i}
-          href={linkMatch[2]}
+          href={href}
+          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           className="text-accent-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
         >
           {linkMatch[1]}

@@ -179,6 +179,6 @@ The CaptionVerifier warns on `\uXXXX` escapes. Compact separators, real UTF-8.
 
 ---
 
-<!-- SYNCED: 2026-06-13 — ideogram-oss/ideogram4 docs/prompting.md. Schema verified identical, zero drift. Top-level, style_description branches, compositional_deconstruction, element key orders, bbox [y,x,y,x] 0-1000, hex rules, serialization all confirmed against upstream. -->
-<!-- SYNCED: 2026-06-13 — filipstrand/mflux ideogram4 README (v0.18.0 installed). Render params verified. Validated CLI surface: --prompt-file, --width, --height, --seed, --preset, --lora-paths (experimental), --strict-caption-validation. --steps/--guidance ignored (preset-driven). Other --help flags are MFLUX shared argparse, not validated for ideogram4. -->
+<!-- SYNCED: 2026-06-29 — ideogram-oss/ideogram4 docs/prompting.md. Re-validated, zero drift since 2026-06-13. Top-level, style_description branches, compositional_deconstruction, element key orders, bbox [y,x,y,x] 0-1000, hex rules, serialization all confirmed identical to upstream. -->
+<!-- SYNCED: 2026-06-29 — filipstrand/mflux ideogram4 README (v0.18.0 installed). Re-validated, zero drift since 2026-06-13. Validated CLI surface: --prompt-file, --width, --height, --seed, --preset, --lora-paths (experimental), --strict-caption-validation. --steps/--guidance ignored (preset-driven). image-to-image still NOT supported for ideogram4 (mflux's new edit/kontext/i2i CLIs target other models). Other --help flags are MFLUX shared argparse, not validated for ideogram4. -->
 

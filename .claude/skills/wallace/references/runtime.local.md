@@ -122,4 +122,4 @@ dedicated CLI.
 
 ---
 
-<!-- SYNCED: 2026-06-13 — mflux v0.18.0 (uv tool), ideogram-ai/ideogram-4-fp8 (26 GB cached, gate satisfied via on-disk token), M5 Max / 64 GB. Validated surface reconciled against dedicated README; LoRA confirmed experimental. Smoke render PASSED (teapot, turbo-12, ~61s, peak 30.64 GB). -->
+<!-- SYNCED: 2026-06-29 — re-validated, zero drift since 2026-06-13. mflux STILL v0.18.0 (uv tool), ideogram-ai/ideogram-4-fp8 (26 GB cached, gate satisfied via on-disk token), M5 Max / 64 GB. Live `--help` reconciled flag-for-flag against this doc — identical. No interface change, so no re-smoke-render needed; prior smoke render PASSED (teapot, turbo-12, ~61s, peak 30.64 GB) remains valid. -->

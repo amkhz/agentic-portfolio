@@ -87,3 +87,53 @@ def run(name, P, pairs):
 
 run("DARK", D, PAIRS)
 run("LIGHT", Lt, PAIRS_L)
+
+# ============================================================
+# LAB palette — labs.justinh.design ("The Reading Room", P1)
+# Verifies the warm-humus re-hue (hue 270 -> 70) in
+# design-system/lab-tokens.css. Warm hues carry more WCAG
+# luminance than blue-violet at the same OKLCH L, so every
+# text/accent pair is re-checked here rather than assumed.
+# ============================================================
+LAB_D = {
+  "bg-deep":    (0.1700, 0.0080, 70),
+  "bg-surface": (0.2050, 0.0110, 70),
+  "bg-raised":  (0.2400, 0.0140, 70),
+  "text-pri":   (0.9500, 0.0050, 80),
+  "text-sec":   (0.7800, 0.0150, 78),
+  "text-mut":   (0.6200, 0.0180, 76),
+  "border-st":  (0.4200, 0.0180, 72),
+  "terr-t1":    (0.7400, 0.1500, 295),
+  "terr-t2":    (0.7400, 0.1200, 240),
+  "terr-t3":    (0.7200, 0.1400, 15),
+  "terr-t4":    (0.8200, 0.2000, 145),
+  "up-draft":   (0.7800, 0.1300, 145),
+  "up-resrch":  (0.7800, 0.1000, 80),
+}
+LAB_L = {
+  "bg-deep":    (0.9650, 0.0140, 80),
+  "bg-surface": (0.9450, 0.0180, 78),
+  "bg-raised":  (0.9250, 0.0220, 76),
+  "text-pri":   (0.2200, 0.0150, 70),
+  "text-sec":   (0.4000, 0.0200, 68),
+  "text-mut":   (0.5200, 0.0220, 70),
+  "border-st":  (0.7000, 0.0260, 75),
+  "terr-t1":    (0.4700, 0.1700, 295),
+  "terr-t2":    (0.4800, 0.1400, 240),
+  "terr-t3":    (0.4900, 0.1600, 15),
+  "terr-t4":    (0.4600, 0.1500, 145),
+  "up-draft":   (0.5050, 0.1100, 145),
+  "up-resrch":  (0.5200, 0.0900, 70),
+}
+LAB_PAIRS = [
+  ("text-pri","bg-deep",4.5),("text-pri","bg-surface",4.5),("text-pri","bg-raised",4.5),
+  ("text-sec","bg-deep",4.5),("text-sec","bg-surface",4.5),
+  ("text-mut","bg-deep",4.5),("text-mut","bg-surface",4.5),
+  ("terr-t1","bg-deep",4.5),("terr-t2","bg-deep",4.5),
+  ("terr-t3","bg-deep",4.5),("terr-t4","bg-deep",4.5),
+  ("up-draft","bg-surface",4.5),("up-resrch","bg-surface",4.5),
+  ("border-st","bg-deep",3.0),
+]
+
+run("LAB DARK", LAB_D, LAB_PAIRS)
+run("LAB LIGHT", LAB_L, LAB_PAIRS)

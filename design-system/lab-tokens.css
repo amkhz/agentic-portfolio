@@ -2,9 +2,12 @@
    LAB DESIGN TOKENS — Frontier Lab
    ----------------------------------------------
    Dark-academic palette for labs.justinh.design.
-   Distinct from the portfolio palette in tokens.css:
-   cooler blacks, serif body, per-guide accent driven
-   by frontmatter via the --guide-accent variable.
+   Distinct from the portfolio palette in tokens.css by
+   metaphor and body face (reading serif), but converging
+   on its warmth: the dark neutrals were re-hued to humus
+   (P1, "The Reading Room") so the lab reads as a quieter
+   wing of the same building. Per-guide accent driven by
+   frontmatter via the --guide-accent variable.
 
    Scoping: :root is shared with portfolio tokens. All
    variables in this file are prefixed --lab-* or
@@ -26,30 +29,35 @@
 
 @layer theme {
   :root {
-    /* --- Backgrounds: cool graphite, academic ---
+    /* --- Backgrounds: warm humus graphite, academic ---
        Recalibrated 2026-05-25 (C.1.5) away from pure-black for extended
-       reading comfort. The previous stack landed at L 0.08 / 0.125 / 0.165
-       which read as near-pitch and caused OLED halation around the long-form
-       guide body type. Lifted to a graphite register that preserves the
-       Gibson-cool blue-violet character (hue 270) while removing the
-       reading fatigue. Approximate sRGB equivalents: #0e0f13, #15171c,
-       #1d1f26 — same neighborhood as GitHub dark surface. */
-    --lab-bg-deep: oklch(0.1700 0.0080 270);
-    --lab-bg-surface: oklch(0.2050 0.0110 270);
-    --lab-bg-raised: oklch(0.2400 0.0140 270);
+       reading comfort, then re-hued 2026-06-30 (P1, "The Reading Room")
+       from the old Gibson-cool blue-violet (hue 270) toward warm humus
+       (hue 70) so the lab converges on the Conservatory's warmth. The
+       portfolio dark humus sits at hue 85-90; the lab holds a touch
+       cooler (70) to keep its own register. The L 0.17 graphite floor is
+       LOCKED and unchanged — the warming re-hues, it never darkens.
+       Chroma scales gently with lightness, mirroring the portfolio ladder. */
+    --lab-bg-deep: oklch(0.1700 0.0080 70);
+    --lab-bg-surface: oklch(0.2050 0.0110 70);
+    --lab-bg-raised: oklch(0.2400 0.0140 70);
 
     /* --- Borders: lifted in lockstep with the bg recalibration so the
-       deep/surface/raised/border ladder keeps its rhythm --- */
-    --lab-border-subtle: oklch(0.3200 0.0140 270);
-    --lab-border-strong: oklch(0.4200 0.0170 270);
+       deep/surface/raised/border ladder keeps its rhythm. Re-hued to
+       humus (hue 72) with P1; chroma nudged up slightly so the warmth
+       registers at the ladder's lighter rungs. --- */
+    --lab-border-subtle: oklch(0.3200 0.0150 72);
+    --lab-border-strong: oklch(0.4200 0.0180 72);
 
-    /* --- Text: verified ≥ WCAG AA against the new --lab-bg-deep ---
-       text-primary is unchanged at L 0.95 (still ~16.5:1). secondary and
-       muted lifted slightly so they retain the original hierarchy gap
-       against the brighter bg and stay safely above AA. */
-    --lab-text-primary: oklch(0.9500 0.0050 270);     /* ~16.5:1 on bg-deep */
-    --lab-text-secondary: oklch(0.7800 0.0150 250);   /* ~9.5:1 on bg-deep */
-    --lab-text-muted: oklch(0.6200 0.0180 250);       /* ~5.2:1 on bg-deep */
+    /* --- Text: warm ink, verified ≥ WCAG AA against --lab-bg-deep ---
+       Re-hued with P1 from cool (250/270) to warm ink (76-80) so the
+       type reads as ink on humus, not slate on graphite. Ratios re-run
+       via scripts/wcag-check.py (LAB_DARK block) after the warming —
+       warm hues carry slightly more WCAG luminance than blue-violet at
+       the same OKLCH L, so every pair was re-verified, not assumed. */
+    --lab-text-primary: oklch(0.9500 0.0050 80);      /* ~16:1 on bg-deep */
+    --lab-text-secondary: oklch(0.7800 0.0150 78);    /* ~9:1 on bg-deep */
+    --lab-text-muted: oklch(0.6200 0.0180 76);        /* ~5:1 on bg-deep */
 
     /* --- Figure container: warm off-white paper --- */
     /* Scanned academic figures live on white paper; this container
@@ -105,20 +113,22 @@
        deliberately minimal so the surface reads as "on paper" rather
        than decorated. Pattern follows the same CSS-only layered
        gradient technique as ADR-005's portfolio textures but tuned
-       to the cool lab palette. Ruling color lifted to L 0.40 and
+       to the lab palette. Ruling color lifted to L 0.40 and
        alpha bumped slightly to compensate for the C.1.5 bg lift —
        the previous L 0.32 / alpha 0.018-0.028 wash disappeared once
-       bg-deep moved from L 0.08 to L 0.17. */
+       bg-deep moved from L 0.08 to L 0.17. Re-hued with P1 from cool
+       slate (hue 250) to warm humus (hue 75) so the ruling sits in
+       the same family as the warmed surface, not against it. */
     --lab-texture:
       repeating-linear-gradient(
         180deg,
-        oklch(0.40 0.012 250 / 0.045) 0px,
+        oklch(0.40 0.014 75 / 0.045) 0px,
         transparent 1px,
         transparent 28px
       ),
       repeating-linear-gradient(
         90deg,
-        oklch(0.40 0.012 250 / 0.030) 0px,
+        oklch(0.40 0.014 75 / 0.030) 0px,
         transparent 1px,
         transparent 128px
       );
@@ -198,8 +208,8 @@
        accents so placeholder cards read as queued. Tuned
        against --lab-bg-surface (L ~0.945) at small mono
        type, contrast >= WCAG AA. */
-    --lab-upcoming-drafting: oklch(0.5200 0.1100 145);    /* signal-green, dimmed */
-    --lab-upcoming-researching: oklch(0.5400 0.0900 70);  /* brass, dimmed */
+    --lab-upcoming-drafting: oklch(0.5050 0.1100 145);    /* signal-green, dimmed — L nudged for AA (P1) */
+    --lab-upcoming-researching: oklch(0.5200 0.0900 70);  /* brass, dimmed — L nudged for AA (P1) */
 
     /* --- Per-guide accent ---
        Light side of the dual-var contract (C.3): resolves the

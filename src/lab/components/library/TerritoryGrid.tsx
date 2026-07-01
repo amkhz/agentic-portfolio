@@ -3,28 +3,11 @@ import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
 import { upcomingGuides } from "@core/lab/upcoming";
-import type { ShelfLayout } from "./guideShelfCommon";
-import { RegisterShelf } from "./RegisterShelf";
-import { LedgerShelf } from "./LedgerShelf";
-import { BayShelf } from "./BayShelf";
+import { RegisterShelf, RegisterUpcomingShelf } from "./RegisterShelf";
 import { TerritoryBadge } from "./TerritoryBadge";
-import { UpcomingCard } from "./UpcomingCard";
 
 interface TerritoryGridProps {
   guides: Guide[];
-  layout: ShelfLayout;
-}
-
-function ShelfBody({
-  guides,
-  layout,
-}: {
-  guides: Guide[];
-  layout: ShelfLayout;
-}) {
-  if (layout === "ledger") return <LedgerShelf guides={guides} />;
-  if (layout === "bay") return <BayShelf guides={guides} />;
-  return <RegisterShelf guides={guides} />;
 }
 
 function groupByTerritory(guides: Guide[]): Record<Territory, Guide[]> {
@@ -68,7 +51,7 @@ const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
+export function TerritoryGrid({ guides }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
   const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
   const shouldReduce = useReducedMotion();
@@ -133,7 +116,7 @@ export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
             ) : (
               <>
                 {hasBuilt ? (
-                  <ShelfBody guides={territoryGuides} layout={layout} />
+                  <RegisterShelf guides={territoryGuides} />
                 ) : null}
 
                 {hasUpcoming ? (
@@ -141,7 +124,7 @@ export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
                     <div
                       className={
                         hasBuilt
-                          ? "mt-12 flex items-center gap-3"
+                          ? "mt-14 flex items-center gap-3"
                           : "mt-8 flex items-center gap-3"
                       }
                     >
@@ -153,13 +136,7 @@ export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
                         className="h-px flex-1 bg-lab-border-subtle"
                       />
                     </div>
-                    <ul className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                      {territoryUpcoming.map((upcoming) => (
-                        <li key={upcoming.id}>
-                          <UpcomingCard upcoming={upcoming} />
-                        </li>
-                      ))}
-                    </ul>
+                    <RegisterUpcomingShelf guides={territoryUpcoming} />
                   </>
                 ) : null}
               </>

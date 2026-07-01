@@ -1,19 +1,11 @@
-import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { guides } from "@core/lab/guides";
 import { territories } from "@core/lab/territories";
-import type { ShelfLayout } from "@lab/components/library/guideShelfCommon";
 import { LibraryHeader } from "@lab/components/library/LibraryHeader";
 import { LibraryWelcome } from "@lab/components/library/LibraryWelcome";
-import { ShelfLayoutToggle } from "@lab/components/library/ShelfLayoutToggle";
 import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
 
 export function LibraryIndex() {
-  // Temporary T3 prototype: pick the shelf layout to validate live. Defaults to
-  // the Accession Register (recommended). Remove with ShelfLayoutToggle once a
-  // direction is chosen.
-  const [layout, setLayout] = useState<ShelfLayout>("register");
-
   return (
     <>
       <Helmet>
@@ -35,8 +27,7 @@ export function LibraryIndex() {
           territoryCount={territories.length}
         />
         <LibraryWelcome />
-        <ShelfLayoutToggle value={layout} onChange={setLayout} />
-        <TerritoryGrid guides={guides} layout={layout} />
+        <TerritoryGrid guides={guides} />
       </div>
     </>
   );

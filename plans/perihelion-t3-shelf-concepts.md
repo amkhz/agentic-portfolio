@@ -1,6 +1,9 @@
 # Perihelion "Reading Room" — T3 Shelf Concepts
 
-Status: **prototyping three behind a live toggle** (Register / Ledger / Lit Bay).
+Status: **CHOSEN — the Accession Register** (Justin, 2026-06-30, live). The
+toggle + the two losing layouts (Ledger, Lit Bay) are removed; the Register is
+refined and shipping on PR #150. Prior slate (three behind a live toggle) kept
+below for the record.
 Fresh, doctrine-native slate generated 2026-06-30 after the second attempt
 (PR #149, "Ledger Stack" + "Accession Ledger") was set aside as **AI-slop** —
 both leaned on a neon accent GLOW ("that lush border thing"), which DESIGN.md

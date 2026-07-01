@@ -19,11 +19,6 @@ import type { CSSProperties } from "react";
 import { useMemo } from "react";
 import type { Guide, GuideStatus } from "@core/lab/guide-types";
 
-// Which shelf layout the library index renders. A temporary prototype switch
-// (ShelfLayoutToggle) flips between the three for live comparison; the losers
-// and the toggle come out once a direction is chosen.
-export type ShelfLayout = "register" | "ledger" | "bay";
-
 export const STATUS_LABEL: Record<GuideStatus, string> = {
   complete: "Complete",
   "in-progress": "In progress",

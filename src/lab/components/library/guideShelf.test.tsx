@@ -4,8 +4,6 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 import type { Guide } from "@core/lab/guide-types";
 import { RegisterShelf } from "./RegisterShelf";
-import { LedgerShelf } from "./LedgerShelf";
-import { BayShelf } from "./BayShelf";
 
 const makeGuide = (accentLight?: string): Guide => ({
   slug: "sample-guide",
@@ -27,44 +25,18 @@ const makeGuide = (accentLight?: string): Guide => ({
   figures: {},
 });
 
-// Every candidate shelf shares guideShelfCommon's accent publication and the
-// .lab-guide-spine resolution hook, so the ADR-009 contract is asserted for each
-// one identically: publish the dual-var pair, never set --guide-accent, and carry
-// the class that re-resolves it per guide.
-const SHELVES: {
-  name: string;
-  render: (guide: Guide) => HTMLElement | null;
-}[] = [
-  {
-    name: "RegisterShelf",
-    render: (guide) =>
-      render(
-        <MemoryRouter>
-          <RegisterShelf guides={[guide]} />
-        </MemoryRouter>,
-      ).container.querySelector("a"),
-  },
-  {
-    name: "LedgerShelf",
-    render: (guide) =>
-      render(
-        <MemoryRouter>
-          <LedgerShelf guides={[guide]} />
-        </MemoryRouter>,
-      ).container.querySelector("a"),
-  },
-  {
-    name: "BayShelf",
-    render: (guide) =>
-      render(
-        <MemoryRouter>
-          <BayShelf guides={[guide]} />
-        </MemoryRouter>,
-      ).container.querySelector("a"),
-  },
-];
+// The Accession Register entry follows guideShelfCommon's accent publication and
+// the .lab-guide-spine resolution hook. Assert the ADR-009 contract: publish the
+// dual-var pair, never set --guide-accent, and carry the class that re-resolves
+// it per guide.
+const renderItem = (guide: Guide): HTMLElement | null =>
+  render(
+    <MemoryRouter>
+      <RegisterShelf guides={[guide]} />
+    </MemoryRouter>,
+  ).container.querySelector("a");
 
-describe.each(SHELVES)("$name accent publication", ({ render: renderItem }) => {
+describe("RegisterShelf accent publication", () => {
   it("publishes both accent custom properties when accentLight is present", () => {
     const link = renderItem(makeGuide("#6d28d9"));
     expect(link).not.toBeNull();

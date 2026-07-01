@@ -1,75 +1,93 @@
 import type { GuideSection } from "@core/lab/guide-types";
 import { SectionIcon } from "./SectionIcon";
+import { cn } from "@core/utils";
 
-// Matches the PR #64 callout-chip icon size; color inherits from the chip.
-const CHIP_ICON_SIZE = 14;
+// Matches the callout-chip icon size; color inherits from the row.
+const CHIP_ICON_SIZE = 13;
 
 interface GuideSectionNavProps {
   sections: GuideSection[];
   activeSection: string;
-  onActiveSectionChange: (id: string) => void;
+  /** Navigate to a section. GuideRenderer owns mode-switch + scroll. */
+  onSelect: (id: string) => void;
 }
 
-function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined") return false;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({
-    behavior: prefersReducedMotion() ? "auto" : "smooth",
-    block: "start",
-  });
-}
-
+/**
+ * The guide's section index, set as a vertical ledger for the reader rail
+ * (T4). Accession-register vocabulary: a mono ordinal, the heading, and a
+ * horizontal register tick that lengthens and takes the domain accent at the
+ * active row. No vertical colored bar at rest — accent is carried by type and
+ * the horizontal mark (Justin's live call on the shelf, applied here too).
+ */
 export function GuideSectionNav({
   sections,
   activeSection,
-  onActiveSectionChange,
+  onSelect,
 }: GuideSectionNavProps) {
   if (sections.length === 0) return null;
 
-  const handleClick = (id: string) => {
-    onActiveSectionChange(id);
-    scrollToSection(id);
-    window.history.replaceState(null, "", `#${id}`);
-  };
-
   return (
-    <nav
-      aria-label="Guide sections"
-      className="lab-sticky-nav lab-hscroll sticky top-0 z-10 -mx-6 border-b border-lab-border-subtle bg-lab-bg-deep/90 px-6 py-3 backdrop-blur md:-mx-10 md:px-10"
-    >
-      <ul className="flex min-w-max gap-2">
-        {sections.map((section) => {
+    <nav aria-label="Guide sections">
+      <p className="mb-3 font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
+        Sections
+      </p>
+      <ol className="space-y-0.5">
+        {sections.map((section, index) => {
           const selected = section.id === activeSection;
           return (
             <li key={section.id}>
               <button
                 type="button"
-                onClick={() => handleClick(section.id)}
+                onClick={() => onSelect(section.id)}
                 aria-current={selected ? "location" : undefined}
-                className={
-                  selected
-                    ? "inline-flex min-h-11 items-center gap-2 rounded-md border border-guide-accent bg-lab-bg-raised px-3.5 py-2 font-lab-mono text-xs tracking-wide text-guide-accent"
-                    : "inline-flex min-h-11 items-center gap-2 rounded-md border border-lab-border-subtle bg-lab-bg-surface px-3.5 py-2 font-lab-mono text-xs tracking-wide text-lab-text-secondary hover:border-lab-border-strong hover:text-lab-text-primary"
-                }
+                className="group flex w-full items-center gap-2.5 py-2 text-left"
               >
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "h-px shrink-0 transition-all duration-[var(--duration-normal)] motion-reduce:transition-none",
+                    selected
+                      ? "w-4 bg-guide-accent"
+                      : "w-1.5 bg-lab-border-strong group-hover:w-3 group-hover:bg-lab-text-muted",
+                  )}
+                />
+                <span
+                  className={cn(
+                    "shrink-0 font-lab-mono text-[0.65rem] tabular-nums tracking-wide transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                    selected
+                      ? "text-guide-accent"
+                      : "text-lab-text-muted group-hover:text-lab-text-secondary",
+                  )}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 {section.icon && (
                   <SectionIcon
                     name={section.icon}
                     size={CHIP_ICON_SIZE}
-                    className="shrink-0"
+                    className={cn(
+                      "shrink-0 transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                      selected
+                        ? "text-guide-accent"
+                        : "text-lab-text-muted group-hover:text-lab-text-secondary",
+                    )}
                   />
                 )}
-                <span>{section.heading}</span>
+                <span
+                  className={cn(
+                    "font-lab-mono text-xs leading-snug tracking-wide transition-colors duration-[var(--duration-fast)] motion-reduce:transition-none",
+                    selected
+                      ? "text-lab-text-primary"
+                      : "text-lab-text-secondary group-hover:text-lab-text-primary",
+                  )}
+                >
+                  {section.heading}
+                </span>
               </button>
             </li>
           );
         })}
-      </ul>
+      </ol>
     </nav>
   );
 }

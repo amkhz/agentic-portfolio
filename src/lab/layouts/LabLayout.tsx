@@ -1,10 +1,15 @@
 import { Suspense } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { ScrollToTop } from "@lab/components/ScrollToTop";
 import { LabThemeToggle } from "@lab/components/LabThemeToggle";
 import { PerihelionMark } from "@lab/components/PerihelionMark";
 
 export function LabLayout() {
+  // On guide detail pages the reader rail (T4) owns the theme toggle, so the
+  // global float steps aside there to avoid a double control. Everywhere else
+  // (the library, house pages) the float stays the theme's reachable home.
+  const onGuidePage = useLocation().pathname.startsWith("/g/");
+
   return (
     <>
       <ScrollToTop />
@@ -12,10 +17,12 @@ export function LabLayout() {
         Skip to content
       </a>
 
-      {/* Floating so the theme is reachable mid-scroll on long guides.
-          Solid raised surface + pencil-line border, no shadow; sits below
-          the skip link (z-100) in the stacking order. */}
-      <LabThemeToggle className="fixed bottom-3 right-3 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
+      {/* Floating so the theme is reachable mid-scroll. Solid raised surface +
+          pencil-line border, no shadow; sits below the skip link (z-100) in
+          the stacking order. Suppressed on guide pages — the rail hosts it. */}
+      {!onGuidePage && (
+        <LabThemeToggle className="fixed bottom-3 right-3 z-50 rounded-full border border-lab-border-subtle bg-lab-bg-raised hover:border-lab-border-strong md:bottom-8 md:right-8" />
+      )}
 
       <header className="border-b border-lab-border-subtle">
         <div className="mx-auto flex max-w-6xl items-center px-6 py-5 md:px-10">

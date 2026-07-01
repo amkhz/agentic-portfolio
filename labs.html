@@ -50,6 +50,27 @@
         } catch(e) {}
       })();
     </script>
+    <script>
+      // Reader accommodation prefs (T4), applied before paint so a saved
+      // type size / measure never flashes at the default and jumps. Mirrors
+      // core/lab/reading-prefs.ts; the React hook re-clamps on mount.
+      (function(){
+        try {
+          var m = document.cookie.match(/(?:^|;\s*)labprefs=([^;]+)/);
+          if (!m) return;
+          var p = decodeURIComponent(m[1]).match(/^s(-?\d+)w(-?\d+)m(\d+)$/);
+          if (!p) return;
+          var clamp = function(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); };
+          var size = clamp(parseInt(p[1], 10), 90, 140);
+          var weight = clamp(parseInt(p[2], 10), -40, 140);
+          var measure = clamp(parseInt(p[3], 10), 48, 64);
+          var s = document.documentElement.style;
+          s.setProperty('--lab-reading-scale', String(size / 100));
+          s.setProperty('--lab-body-weight-delta', String(weight));
+          s.setProperty('--lab-measure', measure + 'rem');
+        } catch(e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

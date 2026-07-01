@@ -121,22 +121,20 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
     );
   }
 
+  // Callouts DO need to read as set apart (top-rule alone was too quiet).
+  // A squared neutral-surface inset gives a bounded aside — distinct from the
+  // prose — without the rounded + accent-fill + colored-left-bar signature.
+  // Accent stays as ink in the mono label, which announces the variant.
   const calloutLabel = CALLOUT_LABELS[block.variant];
   const Icon = CALLOUT_ICONS[block.variant];
   return (
     <blockquote
-      className="border-t border-lab-border-strong pt-4"
+      className="bg-lab-bg-surface px-5 py-4 md:px-6 md:py-5"
+      data-callout={block.variant}
       aria-label={calloutLabel}
     >
-      <div
-        className="mb-3 inline-flex items-center gap-1.5 font-lab-mono text-[0.7rem] font-medium uppercase tracking-[0.12em] text-guide-accent"
-        data-callout={block.variant}
-      >
-        <Icon
-          aria-hidden="true"
-          strokeWidth={2}
-          className="h-3.5 w-3.5 text-guide-accent/80"
-        />
+      <div className="mb-2.5 inline-flex items-center gap-2 font-lab-mono text-[0.72rem] font-medium uppercase tracking-[0.16em] text-guide-accent">
+        <Icon aria-hidden="true" strokeWidth={2} className="h-4 w-4" />
         {calloutLabel}
       </div>
       <BlockquoteBody block={block} glossary={glossary} keyPrefix="bq-c" />

@@ -45,7 +45,7 @@ export function GuideSectionNav({
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "h-px shrink-0 transition-all duration-[var(--duration-normal)] motion-reduce:transition-none",
+                    "h-px shrink-0 transition-all duration-[var(--duration-normal)] ease-spring motion-reduce:transition-none",
                     selected
                       ? "w-4 bg-guide-accent"
                       : "w-1.5 bg-lab-border-strong group-hover:w-3 group-hover:bg-lab-text-muted",

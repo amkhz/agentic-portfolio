@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
+import { springSoft } from "@/components/effects/motionConfig";
 import { termCardId } from "./termCardId";
 
 interface GuideDefinitionCardProps {
@@ -18,9 +19,7 @@ export function GuideDefinitionCard({
   onClose,
 }: GuideDefinitionCardProps) {
   const shouldReduce = useReducedMotion();
-  const transition = shouldReduce
-    ? { duration: 0 }
-    : { duration: 0.2, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] };
+  const transition = shouldReduce ? { duration: 0 } : springSoft;
 
   return (
     <motion.aside

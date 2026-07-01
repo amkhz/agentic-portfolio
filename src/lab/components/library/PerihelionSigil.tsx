@@ -4,17 +4,83 @@
 // moment of closest approach. Each ring carries a small body drifting at
 // its own pace (inner rings faster, as orbits go), and the brass point
 // exhales a faint ring once per inner-body orbit, timed to its closest
-// approach. All motion lives in lab.css (.peri-sigil rules) so
+// approach. Ambient drift + pulse live in lab.css (.peri-sigil rules) so
 // prefers-reduced-motion freezes the bodies at scattered static
 // positions and hides the pulse via the global animation kill.
 // Geometry and scale accepted from live iteration 2026-06-11
 // (confocal + arrival pulse, inner ink 0.5, size 1.05, pulse 0.95).
+//
+// SPIKE (spike/sigil-arc-motion): one added arrival gesture on mount — a
+// brass spark swings in along a CURVED orbital arc to closest approach,
+// via Motion's arc() (transition.path). It nods to the house mark's
+// transit (a spark reaching periapsis) without copying its full CSS
+// ellipse orbit: this is a single incoming curve that settles on the
+// brass dot. Wave-driven (springSettle, critically damped bounce 0),
+// one signature moment, token color only. prefers-reduced-motion renders
+// the sigil complete and static, spark hidden.
+//
+// STORYBOARD — "closest approach" (fires once, ~0.4s after mount)
+//
+//   t=0.00s  spark invisible at the inner-ring far point (aphelion side)
+//            ·                                           ◍  ← brass periapsis
+//   t≈0.5s   spark lit, arcing in/up along the curved path (not a straight line)
+//                    ✦﹏﹏                                ◍
+//                        ⤴ curve bulges perpendicular to travel (arc strength)
+//   t≈1.0s   spark reaches closest approach, dissolving into the brass dot
+//                                                    ✦→◍
+//            (the ambient CSS pulse keeps exhaling underneath, untouched)
+//
+import { useMemo } from "react";
+import { motion, useReducedMotion, arc } from "motion/react";
+import { springSettle } from "@/components/effects/motionConfig";
 
 interface PerihelionSigilProps {
   className?: string;
 }
 
+// The brass periapsis — the spark's destination and the sigil's anchor.
+const PERIAPSIS = { cx: 58, cy: 18 } as const;
+
+// The spark starts at the inner ring's far point (its aphelion side, x=30)
+// and travels to the periapsis, so the offset is a pure inward sweep. The
+// arc() bulge is perpendicular to this line, which reads as an orbital curve.
+const SPARK_START = { x: 30 - PERIAPSIS.cx, y: 0 } as const; // { x: -28, y: 0 }
+
+// arc() config — a restrained curve, not a loop. strength 0.34 keeps the
+// bulge tasteful over the ~28-unit sweep; ccw picks a stable side; the spark
+// is a dot, so tangent rotation is irrelevant (omitted).
+const ARC_STRENGTH = 0.34;
+
+// One beat after the manifesto fades in, so the gesture reads as arrival,
+// not load noise.
+const SPARK_DELAY_S = 0.4;
+
 export function PerihelionSigil({ className = "" }: PerihelionSigilProps) {
+  const shouldReduce = useReducedMotion();
+
+  // Reuse the arc() instance across renders (its continuity closure has no
+  // memory if recreated); a fresh one per render would reset mid-flight.
+  const orbitalArc = useMemo(() => arc({ strength: ARC_STRENGTH, direction: "ccw" }), []);
+
+  // Motion props for the arrival spark. Reduced motion → hidden + instant.
+  const sparkMotion = shouldReduce
+    ? { initial: { opacity: 0 }, animate: { opacity: 0 } }
+    : {
+        initial: { x: SPARK_START.x, y: SPARK_START.y, opacity: 0 },
+        animate: { x: 0, y: 0, opacity: [0, 0.9, 0.9, 0] },
+        transition: {
+          path: orbitalArc,
+          ...springSettle, // drives x/y arrival: critically damped, bounce 0
+          delay: SPARK_DELAY_S,
+          opacity: {
+            duration: springSettle.duration,
+            times: [0, 0.2, 0.7, 1],
+            ease: "easeOut" as const,
+            delay: SPARK_DELAY_S,
+          },
+        },
+      };
+
   return (
     <span
       aria-hidden
@@ -116,6 +182,17 @@ export function PerihelionSigil({ className = "" }: PerihelionSigilProps) {
           r="3"
           fill="var(--guide-accent)"
           filter="url(#perihelion-dot-halo)"
+        />
+
+        {/* SPIKE: arc() arrival spark. Base position is the periapsis; the
+            x/y offset above sweeps it in along the curved path, arriving at
+            (0,0) = closest approach. Sits above the dot so it dissolves in. */}
+        <motion.circle
+          cx={PERIAPSIS.cx}
+          cy={PERIAPSIS.cy}
+          r="1.3"
+          fill="var(--guide-accent)"
+          {...sparkMotion}
         />
       </svg>
     </span>

@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "@/components/content/ImageBlock";
 import { ResponsiveImage } from "@/components/content/ResponsiveImage";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import {
   DossierFrame,
@@ -69,7 +68,6 @@ function FeaturedEntry() {
 
             {metaCaseStudy.heroMetric && (
               <div className="relative mt-6 flex items-baseline gap-3">
-                <GlowEffect color="brass" size="sm" className="-left-6 -top-6" />
                 <span className="relative font-display text-3xl leading-tight tracking-tight text-accent-primary">
                   {metaCaseStudy.heroMetric.value}
                 </span>

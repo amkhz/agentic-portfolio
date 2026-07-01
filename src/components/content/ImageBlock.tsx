@@ -69,7 +69,7 @@ export function ImageBlock({
               "relative overflow-hidden bg-bg-elevated",
               !bare && "border border-border-subtle",
               aspectMap[aspect],
-              canExpand && !bare && "cursor-zoom-in transition-[border-color,box-shadow] duration-normal hover:border-accent-muted hover:shadow-[0_0_16px_var(--constellation-glow-shipped)]",
+              canExpand && !bare && "cursor-zoom-in transition-[border-color] duration-normal hover:border-accent-muted",
               canExpand && bare && "cursor-zoom-in",
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             )}

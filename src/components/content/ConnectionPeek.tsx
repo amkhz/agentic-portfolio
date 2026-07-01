@@ -17,8 +17,8 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
         "group relative my-6 flex w-full items-start gap-4 p-4 text-left",
         "border border-[var(--constellation-peek-border)]",
         "bg-[var(--constellation-peek-bg)]",
-        "transition-[border-color,box-shadow] duration-normal",
-        "hover:border-accent-muted hover:shadow-[0_0_20px_var(--constellation-glow-shipped)]",
+        "transition-[border-color] duration-normal",
+        "hover:border-accent-muted",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
       )}
     >
@@ -28,9 +28,8 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
           "flex shrink-0 items-center justify-center rounded-full",
           "h-8 w-8 border border-[var(--constellation-node-border)]",
           "bg-[var(--constellation-node-bg)]",
-          "transition-[border-color,box-shadow] duration-normal",
-          "group-hover:border-[var(--constellation-node-active-border)]",
-          "group-hover:shadow-[0_0_12px_var(--constellation-glow-shipped)]"
+          "transition-[border-color] duration-normal",
+          "group-hover:border-[var(--constellation-node-active-border)]"
         )}
       >
         <div className="h-1.5 w-1.5 rounded-full bg-accent-primary opacity-60 transition-opacity duration-normal group-hover:opacity-100" />

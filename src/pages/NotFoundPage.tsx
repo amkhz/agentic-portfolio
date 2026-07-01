@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import { motion, useReducedMotion, arc } from "motion/react";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/interactive/Button";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { springSettle } from "@/components/effects/motionConfig";
 
 export function NotFoundPage() {
@@ -35,7 +34,6 @@ export function NotFoundPage() {
       </Helmet>
 
       <section className="relative flex min-h-[70vh] items-center overflow-hidden py-20">
-        <GlowEffect color="brass" size="md" className="left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2" />
 
         <Container className="relative z-10 text-center">
           <motion.h1

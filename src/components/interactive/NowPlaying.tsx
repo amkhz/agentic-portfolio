@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNowPlaying } from "@/lib/useNowPlaying";
-import { DecryptedText } from "@/components/effects/DecryptedText";
 import { cn } from "@core/utils";
 
 const PROFILE_URL = "https://www.last.fm/user/amkhz_";
@@ -16,16 +15,7 @@ const BAR_CONFIG = [
 
 function EqBars({ isPlaying }: { isPlaying: boolean }) {
   return (
-    <span
-      aria-hidden="true"
-      className="flex items-end gap-[4px]"
-      style={{
-        filter: isPlaying
-          ? "drop-shadow(0 0 4px var(--theme-accent-glow))"
-          : "none",
-        transition: "filter 300ms ease-out",
-      }}
-    >
+    <span aria-hidden="true" className="flex items-end gap-[4px]">
       {BAR_CONFIG.map((bar, i) => (
         <span
           key={i}
@@ -34,6 +24,9 @@ function EqBars({ isPlaying }: { isPlaying: boolean }) {
             height: "14px",
             transformOrigin: "bottom",
             willChange: isPlaying ? "transform" : "auto",
+            // Brass->sage gradient reads as living material, not an interaction
+            // color: it's constant across play states (motion carries the
+            // state), and green never touches the tab's hover/focus/active.
             background: `linear-gradient(to top in oklch, var(--theme-accent-primary), var(--theme-secondary-primary))`,
             transform: isPlaying ? undefined : "scaleY(0.3)",
             transition: "transform 300ms ease-out",
@@ -129,10 +122,7 @@ export function NowPlaying({ className }: { className?: string }) {
                   alt={`${track.album} album art`}
                   width={48}
                   height={48}
-                  className={cn(
-                    "h-10 w-10 sm:h-12 sm:w-12 rounded-md transition-shadow duration-slow",
-                    isPlaying && "shadow-[0_0_12px_var(--theme-accent-glow)]"
-                  )}
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-md"
                 />
               ) : (
                 <div
@@ -142,13 +132,11 @@ export function NowPlaying({ className }: { className?: string }) {
               )}
 
               <div className="flex min-w-0 flex-col gap-0.5">
-                <span className="truncate font-heading text-sm font-medium text-text-primary">
-                  <DecryptedText
-                    text={track.name}
-                    speed={40}
-                    className="text-text-primary"
-                    encryptedClassName="text-text-muted"
-                  />
+                <span
+                  key={track.name}
+                  className="truncate font-heading text-sm font-medium text-text-primary motion-safe:animate-[fadeIn_400ms_ease-out]"
+                >
+                  {track.name}
                 </span>
                 <span className="truncate font-body text-xs text-text-muted">
                   {track.artist}

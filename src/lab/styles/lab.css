@@ -87,12 +87,26 @@
   --duration-slow: 400ms;
 }
 
+:root {
+  /* Single reading-size lever for body + guide prose. Before P4 these
+     diverged (body 1.1875rem vs prose text-lg/md:text-xl); one token now
+     drives both, ready for the reader's type-size control. 18px mobile;
+     bumps to 20px at the md breakpoint below. */
+  --lab-reading-size: 1.125rem;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --lab-reading-size: 1.25rem;
+  }
+}
+
 body {
   background-color: var(--lab-bg-deep);
   background-image: var(--lab-texture);
   color: var(--lab-text-primary);
   font-family: var(--lab-body-font);
-  font-size: 1.1875rem;
+  font-size: var(--lab-reading-size);
   line-height: 1.65;
   font-optical-sizing: auto;
   /* This wght axis wins over the `font-weight` property for Newsreader

@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { springSoft } from "@/components/effects/motionConfig";
+import { springSnappy } from "@/components/effects/motionConfig";
 import { termCardId } from "./termCardId";
 
 interface GuideDefinitionCardProps {
@@ -19,7 +19,7 @@ export function GuideDefinitionCard({
   onClose,
 }: GuideDefinitionCardProps) {
   const shouldReduce = useReducedMotion();
-  const transition = shouldReduce ? { duration: 0 } : springSoft;
+  const transition = shouldReduce ? { duration: 0 } : springSnappy;
 
   return (
     <motion.aside

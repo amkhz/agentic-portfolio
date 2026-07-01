@@ -92,17 +92,19 @@ function BlockquoteBody({
 }
 
 export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
+  // Editorial framing, not colored boxes: a hairline rule sets each aside off
+  // from the prose and the accent lives only in type (the run-in term, the
+  // mono label). No rounded corners, no accent-tinted fill, no vertical accent
+  // bar — those read as generic AI callouts (Justin's call, 2026-06-30).
   if (block.variant === "definition") {
     return (
       <blockquote
-        className="rounded-sm border-l-2 border-guide-accent bg-guide-accent/[0.06] py-3 pl-5 pr-4 md:pl-6"
+        className="border-t border-lab-border-subtle pt-3"
         aria-label="Definition"
       >
         <p className="font-lab-body text-[length:var(--lab-reading-size)] leading-relaxed text-lab-text-secondary">
           {block.term && (
-            <strong className="mr-1.5 font-semibold text-guide-accent">
-              {block.term}
-            </strong>
+            <strong className="mr-1.5 text-guide-accent">{block.term}</strong>
           )}
           {block.paragraphs[0] &&
             renderNodes(block.paragraphs[0].nodes, glossary, "bq-def")}
@@ -113,7 +115,7 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
 
   if (block.variant === "plain") {
     return (
-      <blockquote className="border-l-2 border-guide-accent pl-5 md:pl-6">
+      <blockquote className="border-t border-lab-border-subtle pt-4 italic">
         <BlockquoteBody block={block} glossary={glossary} keyPrefix="bq-p" />
       </blockquote>
     );
@@ -123,7 +125,7 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
   const Icon = CALLOUT_ICONS[block.variant];
   return (
     <blockquote
-      className="border-l-2 border-guide-accent pl-5 md:pl-6"
+      className="border-t border-lab-border-strong pt-4"
       aria-label={calloutLabel}
     >
       <div

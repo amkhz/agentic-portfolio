@@ -27,24 +27,37 @@ export function GuideView() {
         <meta property="og:description" content={metaDescription} />
         <meta property="og:type" content="article" />
       </Helmet>
-      <div className="mx-auto max-w-4xl px-6 pt-8 md:px-10">
-        <Link
-          to="/"
-          className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
-        >
-          <span aria-hidden>←</span>
-          Library
-        </Link>
+      {/* Back links ride the same reading grid as GuideRenderer (empty rail
+          track + content column) so they align with the guide title and the
+          rail, not the old centered max-w-4xl box. */}
+      <div className="mx-auto w-full px-6 pt-8 md:px-10">
+        <div className="lab-reading-grid">
+          <div aria-hidden className="hidden lg:block" />
+          <div className="lab-reading-col">
+            <Link
+              to="/"
+              className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+            >
+              <span aria-hidden>←</span>
+              Library
+            </Link>
+          </div>
+        </div>
       </div>
       <GuideRenderer guide={guide} />
-      <div className="mx-auto max-w-4xl px-6 pb-16 pt-4 text-center md:px-10">
-        <Link
-          to="/"
-          className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
-        >
-          <span aria-hidden>←</span>
-          Back to the library
-        </Link>
+      <div className="mx-auto w-full px-6 pb-16 pt-4 md:px-10">
+        <div className="lab-reading-grid">
+          <div aria-hidden className="hidden lg:block" />
+          <div className="lab-reading-col">
+            <Link
+              to="/"
+              className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+            >
+              <span aria-hidden>←</span>
+              Back to the library
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   );

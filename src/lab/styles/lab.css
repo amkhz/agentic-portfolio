@@ -88,16 +88,31 @@
 }
 
 :root {
-  /* Single reading-size lever for body + guide prose. Before P4 these
-     diverged (body 1.1875rem vs prose text-lg/md:text-xl); one token now
-     drives both, ready for the reader's type-size control. 18px mobile;
-     bumps to 20px at the md breakpoint below. */
-  --lab-reading-size: 1.125rem;
+  /* Reading size is base × reader-scale. The base is the locked default
+     (18px mobile; bumps to 20px at the md breakpoint below), and
+     --lab-reading-scale is the reader's type-size lever (default 1). The
+     reader rail (T4) overrides the scale on <html> within a11y-safe bounds;
+     the bounds live in core/lab/reading-prefs.ts. One token still drives
+     body + guide prose — the prose components read --lab-reading-size. */
+  --lab-reading-size-base: 1.125rem;
+  --lab-reading-scale: 1;
+  --lab-reading-size: calc(
+    var(--lab-reading-size-base) * var(--lab-reading-scale)
+  );
+
+  /* Prose column width (the "measure"). Reader-adjustable narrow/default/wide;
+     consumed by .lab-reading-col / .lab-reading-grid below. */
+  --lab-measure: 56rem;
+
+  /* Reader weight offset. Added to the per-mode Newsreader anchor
+     (--lab-body-weight: 330 dark / 400 light) and clamped per use so no
+     reader setting exits legible bounds. Default 0 = the locked anchor. */
+  --lab-body-weight-delta: 0;
 }
 
 @media (min-width: 48rem) {
   :root {
-    --lab-reading-size: 1.25rem;
+    --lab-reading-size-base: 1.25rem;
   }
 }
 
@@ -114,8 +129,11 @@ body {
      --lab-body-weight-strong or set font-variation-settings here -- a
      Tailwind font-medium/font-semibold class will no-op on Newsreader.
      (Weight utilities DO work on Bricolage Grotesque headings; it is a
-     variable face and maps font-weight to its wght axis. See below.) */
-  font-variation-settings: "wght" var(--lab-body-weight, 400);
+     variable face and maps font-weight to its wght axis. See below.)
+     The applied weight is the per-mode anchor plus the reader's delta,
+     clamped to [300, 520] so no rail setting goes illegibly thin or inky. */
+  font-variation-settings: "wght"
+    clamp(300, calc(var(--lab-body-weight, 400) + var(--lab-body-weight-delta, 0)), 520);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -132,9 +150,11 @@ h1, h2, h3, h4 {
   font-optical-sizing: auto;
 }
 
-/* Emphasis steps up from the per-mode body weight (Newsreader variable). */
+/* Emphasis steps up from the per-mode body weight (Newsreader variable).
+   Tracks the reader's delta too, on its own clamp so bold stays bold. */
 strong, b {
-  font-variation-settings: "wght" var(--lab-body-weight-strong, 620);
+  font-variation-settings: "wght"
+    clamp(480, calc(var(--lab-body-weight-strong, 620) + var(--lab-body-weight-delta, 0)), 760);
 }
 
 code, kbd, samp, pre {
@@ -151,6 +171,7 @@ a {
 a:focus-visible,
 button:focus-visible,
 summary:focus-visible,
+input:focus-visible,
 [role="button"]:focus-visible,
 [role="tab"]:focus-visible {
   outline: 2px solid var(--guide-accent);
@@ -206,6 +227,52 @@ summary:focus-visible,
    the accent-driven chrome inside the nav. */
 .lab-sticky-nav {
   box-shadow: 0 1px 0 var(--lab-border-subtle);
+}
+
+/* ── Reader shell (T4) ──────────────────────────────────────────────
+   The guide reading view is a centered group of two tracks: a
+   margin-dwelling rail (section index + reading controls + theme toggle)
+   and the prose column capped at the reader's measure. Below lg the rail
+   lifts out of flow into a drawer and the prose column stands alone,
+   centered. The measure is reader-adjustable via --lab-measure. */
+.lab-reading-col {
+  max-width: var(--lab-measure);
+  margin-inline: auto;
+  min-width: 0;
+}
+
+@media (min-width: 64rem) {
+  .lab-reading-grid {
+    display: grid;
+    grid-template-columns: 15rem minmax(0, var(--lab-measure));
+    column-gap: 6rem;
+    justify-content: center;
+  }
+  /* In the grid the track caps the measure; let the column fill it. The
+     grid cell stretches to the row height so the sticky rail can travel. */
+  .lab-reading-col {
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+/* The rail follows the reader: sticky below the top, with its own scroll
+   area if the index runs long. Rendered only at lg+ (drawer takes over
+   below). */
+.lab-reading-rail {
+  position: sticky;
+  top: 1.5rem;
+  max-height: calc(100vh - 3rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+/* Reading-progress fill. Width is data (the scroll position), published as
+   --reading-progress on the guide article — GuideRenderer's ADR-009
+   inline-style site — and consumed here so the rail keeps zero inline style. */
+.lab-reading-progress-fill {
+  width: var(--reading-progress, 0%);
 }
 
 /* Per-territory accent scope. TerritoryGrid sets one of these classes

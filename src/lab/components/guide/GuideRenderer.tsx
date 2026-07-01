@@ -16,19 +16,26 @@
  *
  * No other inline styles are permitted anywhere in lab UI code.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Guide } from "@core/lab/guide-types";
+import { isDefaultReadingPrefs } from "@core/lab/reading-prefs";
+import { useReadingPrefs } from "@/lib/useReadingPrefs";
 import { GuideHeader } from "./GuideHeader";
 import { GuideTabBar } from "./GuideTabBar";
 import type { GuideMode } from "./GuideTabBar";
-import { GuideSectionNav } from "./GuideSectionNav";
 import { GuideSection } from "./GuideSection";
-import { GuidePrevNext } from "./GuidePrevNext";
 import { GuideGlossaryView } from "./GuideGlossaryView";
+import { ReaderRail } from "./ReaderRail";
+import { useReadingProgress } from "./useReadingProgress";
 
 interface GuideRendererProps {
   guide: Guide;
+}
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
 export function GuideRenderer({ guide }: GuideRendererProps) {
@@ -36,6 +43,8 @@ export function GuideRenderer({ guide }: GuideRendererProps) {
   const [activeSection, setActiveSection] = useState<string>(
     guide.sections[0]?.id ?? "",
   );
+  const { prefs, setPref, reset } = useReadingPrefs();
+  const progress = useReadingProgress();
 
   const rootStyle = useMemo<CSSProperties>(() => {
     const style: Record<string, string> = {
@@ -66,53 +75,69 @@ export function GuideRenderer({ guide }: GuideRendererProps) {
     return () => observer.disconnect();
   }, [guide.sections, mode]);
 
+  // Rail/drawer navigation. Switching from the glossary means the target
+  // section may not be in the DOM yet, so scroll on the next frame. Owning
+  // this here (rather than in the nav) keeps cross-mode jumps reliable.
+  const handleSelectSection = useCallback((id: string) => {
+    setActiveSection(id);
+    setMode("guide");
+    requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        block: "start",
+      });
+      window.history.replaceState(null, "", `#${id}`);
+    });
+  }, []);
+
   return (
     <article
-      style={rootStyle}
-      className="mx-auto max-w-4xl px-6 pb-32 md:px-10"
+      style={{ ...rootStyle, "--reading-progress": `${progress}%` } as CSSProperties}
+      className="mx-auto w-full px-6 pb-32 md:px-10"
       aria-labelledby="guide-title"
     >
-      <GuideHeader guide={guide} />
-      <GuideTabBar mode={mode} onModeChange={setMode} />
+      <div className="lab-reading-grid">
+        <ReaderRail
+          sections={guide.sections}
+          activeSection={activeSection}
+          onSelect={handleSelectSection}
+          prefs={prefs}
+          onPrefChange={setPref}
+          onReset={reset}
+          isDefault={isDefaultReadingPrefs(prefs)}
+          progress={progress}
+        />
 
-      <div
-        id="guide-panel-guide"
-        role="tabpanel"
-        aria-labelledby="guide-tab-guide"
-        hidden={mode !== "guide"}
-      >
-        {mode === "guide" ? (
-          <GuideBody
-            guide={guide}
-            activeSection={activeSection}
-            onActiveSectionChange={setActiveSection}
-          />
-        ) : null}
-      </div>
+        <div className="lab-reading-col">
+          <GuideHeader guide={guide} />
+          <GuideTabBar mode={mode} onModeChange={setMode} />
 
-      <div
-        id="guide-panel-glossary"
-        role="tabpanel"
-        aria-labelledby="guide-tab-glossary"
-        hidden={mode !== "glossary"}
-      >
-        {mode === "glossary" ? (
-          <GuideGlossaryView glossary={guide.glossary} />
-        ) : null}
+          <div
+            id="guide-panel-guide"
+            role="tabpanel"
+            aria-labelledby="guide-tab-guide"
+            hidden={mode !== "guide"}
+          >
+            {mode === "guide" ? <GuideBody guide={guide} /> : null}
+          </div>
+
+          <div
+            id="guide-panel-glossary"
+            role="tabpanel"
+            aria-labelledby="guide-tab-glossary"
+            hidden={mode !== "glossary"}
+          >
+            {mode === "glossary" ? (
+              <GuideGlossaryView glossary={guide.glossary} />
+            ) : null}
+          </div>
+        </div>
       </div>
     </article>
   );
 }
 
-function GuideBody({
-  guide,
-  activeSection,
-  onActiveSectionChange,
-}: {
-  guide: Guide;
-  activeSection: string;
-  onActiveSectionChange: (id: string) => void;
-}) {
+function GuideBody({ guide }: { guide: Guide }) {
   if (guide.sections.length === 0) {
     return (
       <p className="mt-12 font-lab-mono text-xs tracking-wide text-lab-text-muted">
@@ -121,37 +146,20 @@ function GuideBody({
     );
   }
 
+  // Per-section prev/next cards were removed — the rail's section index is the
+  // single wayfinding surface now (Justin's call, 2026-06-30).
   return (
-    <>
-      <GuideSectionNav
-        sections={guide.sections}
-        activeSection={activeSection}
-        onActiveSectionChange={onActiveSectionChange}
-      />
-
-      <div className="mt-12 space-y-24">
-        {guide.sections.map((section, index) => {
-          const prev = guide.sections[index - 1];
-          const next = guide.sections[index + 1];
-          return (
-            <div key={section.id}>
-              <GuideSection
-                section={section}
-                glossary={guide.glossary}
-                figures={guide.figures}
-                guideSlug={guide.slug}
-              />
-              <GuidePrevNext
-                prevId={prev?.id}
-                prevLabel={prev?.heading}
-                nextId={next?.id}
-                nextLabel={next?.heading}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <div className="mt-12 space-y-24">
+      {guide.sections.map((section) => (
+        <GuideSection
+          key={section.id}
+          section={section}
+          glossary={guide.glossary}
+          figures={guide.figures}
+          guideSlug={guide.slug}
+        />
+      ))}
+    </div>
   );
 }
 

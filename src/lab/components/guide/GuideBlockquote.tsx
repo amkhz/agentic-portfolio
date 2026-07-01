@@ -92,17 +92,19 @@ function BlockquoteBody({
 }
 
 export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
+  // Editorial framing, not colored boxes: a hairline rule sets each aside off
+  // from the prose and the accent lives only in type (the run-in term, the
+  // mono label). No rounded corners, no accent-tinted fill, no vertical accent
+  // bar — those read as generic AI callouts (Justin's call, 2026-06-30).
   if (block.variant === "definition") {
     return (
       <blockquote
-        className="rounded-sm border-l-2 border-guide-accent bg-guide-accent/[0.06] py-3 pl-5 pr-4 md:pl-6"
+        className="border-t border-lab-border-subtle pt-3"
         aria-label="Definition"
       >
         <p className="font-lab-body text-[length:var(--lab-reading-size)] leading-relaxed text-lab-text-secondary">
           {block.term && (
-            <strong className="mr-1.5 font-semibold text-guide-accent">
-              {block.term}
-            </strong>
+            <strong className="mr-1.5 text-guide-accent">{block.term}</strong>
           )}
           {block.paragraphs[0] &&
             renderNodes(block.paragraphs[0].nodes, glossary, "bq-def")}
@@ -113,28 +115,26 @@ export function GuideBlockquote({ block, glossary }: GuideBlockquoteProps) {
 
   if (block.variant === "plain") {
     return (
-      <blockquote className="border-l-2 border-guide-accent pl-5 md:pl-6">
+      <blockquote className="border-t border-lab-border-subtle pt-4 italic">
         <BlockquoteBody block={block} glossary={glossary} keyPrefix="bq-p" />
       </blockquote>
     );
   }
 
+  // Callouts DO need to read as set apart (top-rule alone was too quiet).
+  // A squared neutral-surface inset gives a bounded aside — distinct from the
+  // prose — without the rounded + accent-fill + colored-left-bar signature.
+  // Accent stays as ink in the mono label, which announces the variant.
   const calloutLabel = CALLOUT_LABELS[block.variant];
   const Icon = CALLOUT_ICONS[block.variant];
   return (
     <blockquote
-      className="border-l-2 border-guide-accent pl-5 md:pl-6"
+      className="bg-lab-bg-surface px-5 py-4 md:px-6 md:py-5"
+      data-callout={block.variant}
       aria-label={calloutLabel}
     >
-      <div
-        className="mb-3 inline-flex items-center gap-1.5 font-lab-mono text-[0.7rem] font-medium uppercase tracking-[0.12em] text-guide-accent"
-        data-callout={block.variant}
-      >
-        <Icon
-          aria-hidden="true"
-          strokeWidth={2}
-          className="h-3.5 w-3.5 text-guide-accent/80"
-        />
+      <div className="mb-2.5 inline-flex items-center gap-2 font-lab-mono text-[0.72rem] font-medium uppercase tracking-[0.16em] text-guide-accent">
+        <Icon aria-hidden="true" strokeWidth={2} className="h-4 w-4" />
         {calloutLabel}
       </div>
       <BlockquoteBody block={block} glossary={glossary} keyPrefix="bq-c" />

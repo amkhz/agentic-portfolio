@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { SlidersHorizontal, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronsDownUp,
+  ChevronsUpDown,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import type { GuideSection } from "@core/lab/guide-types";
+import { cn } from "@core/utils";
 import type { ReadingPrefs } from "@core/lab/reading-prefs";
 import { LabThemeToggle } from "@lab/components/LabThemeToggle";
 import { GuideSectionNav } from "./GuideSectionNav";
@@ -15,6 +22,39 @@ interface ReaderRailProps {
   onReset: () => void;
   isDefault: boolean;
   progress: number;
+}
+
+// The rail's disclosure state is pure client UI (not a reading pref), so it
+// lives in localStorage rather than the prefs cookie. Guarded for SSR.
+const RAIL_UI_KEY = "lab-reader-rail";
+interface RailUiState {
+  collapsed: boolean;
+  controlsOpen: boolean;
+}
+const DEFAULT_RAIL_UI: RailUiState = { collapsed: false, controlsOpen: false };
+
+function readRailUi(): RailUiState {
+  if (typeof localStorage === "undefined") return DEFAULT_RAIL_UI;
+  try {
+    const raw = localStorage.getItem(RAIL_UI_KEY);
+    if (!raw) return DEFAULT_RAIL_UI;
+    const parsed = JSON.parse(raw) as Partial<RailUiState>;
+    return {
+      collapsed: Boolean(parsed.collapsed),
+      controlsOpen: Boolean(parsed.controlsOpen),
+    };
+  } catch {
+    return DEFAULT_RAIL_UI;
+  }
+}
+
+function writeRailUi(state: RailUiState) {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(RAIL_UI_KEY, JSON.stringify(state));
+  } catch {
+    /* private mode / quota — non-fatal */
+  }
 }
 
 function ReadingProgress({ value }: { value: number }) {
@@ -51,12 +91,24 @@ function ThemeRow() {
   );
 }
 
+interface RailBodyProps extends ReaderRailProps {
+  idPrefix: string;
+  controlsOpen: boolean;
+  onToggleControls: () => void;
+  collapsed: boolean;
+  /** When omitted (the drawer), the collapse-to-minimal affordance is hidden. */
+  onToggleCollapsed?: () => void;
+}
+
 /**
- * The rail's content, shared by the desktop sticky column and the mobile
- * drawer so both stay in lockstep. idPrefix disambiguates the control ids
- * when both instances are in the tree at once.
+ * The rail's content, shared by the desktop column and the mobile drawer.
+ * Three reveal states (Justin's model, 2026-06-30): collapsed shows only the
+ * progress marker + theme; default adds the section index; expanding the
+ * disclosure adds the reading controls — so it's never everything at once.
+ * The drawer skips the collapse affordance (opening it is already an intent
+ * to see the index).
  */
-function RailContent({
+function RailBody({
   sections,
   activeSection,
   onSelect,
@@ -66,29 +118,84 @@ function RailContent({
   isDefault,
   progress,
   idPrefix,
-}: ReaderRailProps & { idPrefix: string }) {
+  controlsOpen,
+  onToggleControls,
+  collapsed,
+  onToggleCollapsed,
+}: RailBodyProps) {
   const hasSections = sections.length > 0;
+  const controlsPanelId = `${idPrefix}-controls`;
+  const showBody = !collapsed;
+
   return (
     <div className="space-y-6">
-      {hasSections && (
+      <div className="flex items-start gap-3">
+        <div className="min-w-0 flex-1">
+          {hasSections && <ReadingProgress value={progress} />}
+        </div>
+        {onToggleCollapsed && (
+          <button
+            type="button"
+            onClick={onToggleCollapsed}
+            aria-expanded={!collapsed}
+            aria-label={collapsed ? "Expand reader rail" : "Collapse reader rail"}
+            className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+          >
+            {collapsed ? (
+              <ChevronsUpDown aria-hidden="true" className="h-4 w-4" />
+            ) : (
+              <ChevronsDownUp aria-hidden="true" className="h-4 w-4" />
+            )}
+          </button>
+        )}
+      </div>
+
+      {showBody && (
         <>
-          <ReadingProgress value={progress} />
-          <GuideSectionNav
-            sections={sections}
-            activeSection={activeSection}
-            onSelect={onSelect}
-          />
+          {hasSections && (
+            <GuideSectionNav
+              sections={sections}
+              activeSection={activeSection}
+              onSelect={onSelect}
+            />
+          )}
+
+          <div className="border-t border-lab-border-subtle" />
+
+          <div>
+            <button
+              type="button"
+              onClick={onToggleControls}
+              aria-expanded={controlsOpen}
+              aria-controls={controlsPanelId}
+              className="flex min-h-9 w-full items-center justify-between font-lab-mono text-[0.7rem] uppercase tracking-[0.16em] text-lab-text-secondary transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+            >
+              <span>Reading controls</span>
+              <ChevronDown
+                aria-hidden="true"
+                className={cn(
+                  "h-4 w-4 transition-transform duration-[var(--duration-normal)] motion-reduce:transition-none",
+                  controlsOpen && "rotate-180",
+                )}
+              />
+            </button>
+            {controlsOpen && (
+              <div id={controlsPanelId} className="mt-4">
+                <ReaderControls
+                  prefs={prefs}
+                  onChange={onPrefChange}
+                  onReset={onReset}
+                  isDefault={isDefault}
+                  idPrefix={idPrefix}
+                />
+              </div>
+            )}
+          </div>
+
           <div className="border-t border-lab-border-subtle" />
         </>
       )}
-      <ReaderControls
-        prefs={prefs}
-        onChange={onPrefChange}
-        onReset={onReset}
-        isDefault={isDefault}
-        idPrefix={idPrefix}
-      />
-      <div className="border-t border-lab-border-subtle" />
+
       <ThemeRow />
     </div>
   );
@@ -104,8 +211,18 @@ function RailContent({
  */
 export function ReaderRail(props: ReaderRailProps) {
   const [open, setOpen] = useState(false);
+  const [ui, setUi] = useState<RailUiState>(() => readRailUi());
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    writeRailUi(ui);
+  }, [ui]);
+
+  const toggleControls = () =>
+    setUi((prev) => ({ ...prev, controlsOpen: !prev.controlsOpen }));
+  const toggleCollapsed = () =>
+    setUi((prev) => ({ ...prev, collapsed: !prev.collapsed }));
 
   // Drawer plumbing: Esc closes, focus moves in on open and returns to the
   // trigger on close, and the body scroll locks while it's open.
@@ -140,10 +257,18 @@ export function ReaderRail(props: ReaderRailProps) {
         className="lab-reading-rail hidden lg:block"
         aria-label="Reader controls"
       >
-        <RailContent {...props} idPrefix="rail" />
+        <RailBody
+          {...props}
+          idPrefix="rail"
+          controlsOpen={ui.controlsOpen}
+          onToggleControls={toggleControls}
+          collapsed={ui.collapsed}
+          onToggleCollapsed={toggleCollapsed}
+        />
       </aside>
 
-      {/* Mobile: fixed trigger + slide-in drawer. */}
+      {/* Mobile: fixed trigger (bottom-right) + drawer that slides from the
+          same edge so the panel emerges next to the button. */}
       <div className="lg:hidden">
         <button
           ref={triggerRef}
@@ -172,7 +297,7 @@ export function ReaderRail(props: ReaderRailProps) {
               aria-modal="true"
               aria-label="Reader controls"
               tabIndex={-1}
-              className="lab-drawer-panel absolute inset-y-0 left-0 w-[min(20rem,85vw)] overflow-y-auto border-r border-lab-border-subtle bg-lab-bg-deep px-5 py-5 outline-none"
+              className="lab-drawer-panel absolute inset-y-0 right-0 w-[min(20rem,85vw)] overflow-y-auto border-l border-lab-border-subtle bg-lab-bg-deep px-5 py-5 outline-none"
             >
               <div className="mb-5 flex items-center justify-between">
                 <p className="font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted">
@@ -187,10 +312,13 @@ export function ReaderRail(props: ReaderRailProps) {
                   <X aria-hidden="true" className="h-5 w-5" />
                 </button>
               </div>
-              <RailContent
+              <RailBody
                 {...props}
                 onSelect={handleDrawerSelect}
                 idPrefix="drawer"
+                controlsOpen={ui.controlsOpen}
+                onToggleControls={toggleControls}
+                collapsed={false}
               />
             </div>
           </div>

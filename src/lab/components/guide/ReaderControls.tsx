@@ -40,10 +40,7 @@ export function ReaderControls({
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
-        <p className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
-          Reading
-        </p>
+      <div className="flex justify-end">
         <button
           type="button"
           onClick={onReset}

@@ -25,7 +25,6 @@ import { GuideHeader } from "./GuideHeader";
 import { GuideTabBar } from "./GuideTabBar";
 import type { GuideMode } from "./GuideTabBar";
 import { GuideSection } from "./GuideSection";
-import { GuidePrevNext } from "./GuidePrevNext";
 import { GuideGlossaryView } from "./GuideGlossaryView";
 import { ReaderRail } from "./ReaderRail";
 import { useReadingProgress } from "./useReadingProgress";
@@ -147,31 +146,20 @@ function GuideBody({ guide }: { guide: Guide }) {
     );
   }
 
+  // Per-section prev/next cards were removed — the rail's section index is the
+  // single wayfinding surface now (Justin's call, 2026-06-30).
   return (
-    <>
-      <div className="mt-12 space-y-24">
-        {guide.sections.map((section, index) => {
-          const prev = guide.sections[index - 1];
-          const next = guide.sections[index + 1];
-          return (
-            <div key={section.id}>
-              <GuideSection
-                section={section}
-                glossary={guide.glossary}
-                figures={guide.figures}
-                guideSlug={guide.slug}
-              />
-              <GuidePrevNext
-                prevId={prev?.id}
-                prevLabel={prev?.heading}
-                nextId={next?.id}
-                nextLabel={next?.heading}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </>
+    <div className="mt-12 space-y-24">
+      {guide.sections.map((section) => (
+        <GuideSection
+          key={section.id}
+          section={section}
+          glossary={guide.glossary}
+          figures={guide.figures}
+          guideSlug={guide.slug}
+        />
+      ))}
+    </div>
   );
 }
 

@@ -35,7 +35,7 @@ export function LabLayout() {
               <PerihelionMark width={44} animated />
             </span>
             <span className="flex flex-col gap-[3px]">
-              <span className="font-lab-heading text-[28px] font-medium leading-[1.1] tracking-[0.01em] text-lab-text-primary">
+              <span className="font-lab-heading text-[25px] font-normal leading-[1.1] tracking-[0.01em] text-lab-text-primary [font-variation-settings:'wght'_400]">
                 Perihelion
               </span>
               <span className="font-lab-mono text-[11px] font-medium tracking-[0.22em] text-lab-text-muted">

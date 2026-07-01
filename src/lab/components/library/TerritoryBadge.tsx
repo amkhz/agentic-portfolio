@@ -1,55 +1,34 @@
-// Per-territory number badge for the library index. The active
-// territory (order 1) pulses three times when its badge first enters
-// the viewport, then settles at the lowest opacity so the ring still
-// reads as "live" without competing for attention. Reduced-motion
-// users see the static badge with no ring at all.
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useRef, useState } from "react";
+// Per-territory identifier for the library index. A small square framed with
+// Field Notebook register marks (the portfolio's corner-tick vocabulary) around
+// a mono T-id, in the territory accent. Replaces the earlier circular chip with
+// its pulsing/settling ring — a "live/neon" motif that clashed with the editorial
+// Accession Register direction. Static: hierarchy is carried by the lifecycle
+// label beside it and the queued-section dimming, not by animation.
+import type { CSSProperties } from "react";
+import { RegistrationMark } from "@/components/fieldnotebook/RegistrationMark";
 
 interface TerritoryBadgeProps {
   id: string;
-  isActive: boolean;
 }
 
-const PULSE_KEYFRAMES = {
-  opacity: [0.32, 0.6, 0.32, 0.6, 0.32, 0.6, 0.32],
-  scale: [1, 1.3, 1, 1.3, 1, 1.3, 1],
-};
+// Tighten the register marks for this small square: shorter arms, flush to the
+// corners, drawn in the resolved territory accent.
+const badgeMarkVars = {
+  "--fieldnote-mark-size": "0.5rem",
+  "--fieldnote-mark-inset": "0px",
+  "--fieldnote-mark-color": "var(--guide-accent)",
+} as CSSProperties;
 
-const PULSE_DURATION_S = 15;
-
-export function TerritoryBadge({ id, isActive }: TerritoryBadgeProps) {
-  const shouldReduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { amount: 0.6, once: true });
-  const [pulseDone, setPulseDone] = useState(false);
-
-  const shouldPulse = isActive && !shouldReduce && inView && !pulseDone;
-  const showSettled = isActive && !shouldReduce && pulseDone;
-
+export function TerritoryBadge({ id }: TerritoryBadgeProps) {
   return (
-    <div
-      ref={ref}
-      className="relative inline-flex h-11 w-11 items-center justify-center"
+    <span
+      style={badgeMarkVars}
+      className="relative inline-flex h-10 w-10 items-center justify-center"
     >
-      {shouldPulse ? (
-        <motion.span
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-guide-accent"
-          initial={{ opacity: 0.32, scale: 1 }}
-          animate={PULSE_KEYFRAMES}
-          transition={{ duration: PULSE_DURATION_S, ease: "easeInOut" }}
-          onAnimationComplete={() => setPulseDone(true)}
-        />
-      ) : showSettled ? (
-        <span
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-guide-accent opacity-[0.32]"
-        />
-      ) : null}
-      <span className="relative z-10 inline-flex h-full w-full items-center justify-center rounded-full border border-guide-accent bg-lab-bg-surface font-lab-mono text-xs tracking-wide text-guide-accent">
+      <RegistrationMark />
+      <span className="font-lab-mono text-xs tracking-wide text-guide-accent">
         {id}
       </span>
-    </div>
+    </span>
   );
 }

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
+import { RegistrationMark } from "@/components/fieldnotebook/RegistrationMark";
 
 interface FieldNote {
   numeral: "01" | "02" | "03";
@@ -28,18 +29,15 @@ const NOTES: FieldNote[] = [
   },
 ];
 
-const NOTE_BASE_DELAY = 0.75;
-const NOTE_STAGGER = 0.15;
+const NOTE_BASE_DELAY = 0.1;
+const NOTE_STAGGER = 0.08;
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export function LibraryWelcome() {
   const shouldReduce = useReducedMotion();
 
   return (
-    <section
-      aria-labelledby="library-welcome-heading"
-      className="mt-20 md:mt-28"
-    >
+    <section aria-labelledby="library-welcome-heading" className="mt-20 md:mt-28">
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-4">
         <h2
           id="library-welcome-heading"
@@ -56,7 +54,10 @@ export function LibraryWelcome() {
         </p>
       </div>
 
-      <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {/* Each note is a Field Notebook instrument panel: register-mark corner
+          ticks on a flat ground instead of a soft surface card, matching the
+          portfolio's framing vocabulary (RegistrationMark). */}
+      <ul className="mt-8 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
         {NOTES.map((note, index) => {
           const noteMotion = shouldReduce
             ? {}
@@ -72,9 +73,10 @@ export function LibraryWelcome() {
           return (
             <motion.li
               key={note.numeral}
-              className="flex flex-col gap-4 rounded-lg border border-lab-border-subtle bg-lab-bg-surface p-7"
+              className="relative flex flex-col gap-4 px-6 py-7"
               {...noteMotion}
             >
+              <RegistrationMark />
               <div className="flex items-baseline gap-3">
                 <span className="font-lab-mono text-xs tracking-wider text-guide-accent">
                   {note.numeral}

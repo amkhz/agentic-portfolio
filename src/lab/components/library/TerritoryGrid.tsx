@@ -90,10 +90,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
               }
             >
               <div className="flex items-center gap-4">
-                <TerritoryBadge
-                  id={territory.id}
-                  isActive={lifecycle === "active"}
-                />
+                <TerritoryBadge id={territory.id} />
                 <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
                   {LIFECYCLE_LABEL[lifecycle]}
                 </span>

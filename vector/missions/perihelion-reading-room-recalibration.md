@@ -71,7 +71,7 @@
 **Locked direction call:** **Spine and cover materials ONLY.** Binder cloth, pressed board, foil-stamp surfaces; per-guide or per-territory material families (per-territory is the cheaper, more legible default — resolve when generation starts). No full scenes, no per-section art, no wallpaper.
 **Inputs:** Warmed P1 palette — generate against BOTH the warmed humus dark and the cream light so materials read as the same room in both modes; record the dark/light pairings.
 **Outputs:** Material surfaces feeding the T3 spines. Playbook references in the Wallace skill.
-**Scope boundary:** **NO baked text in any generated surface** — no titles, labels, numbers, or glyphs (Ideogram renders gibberish; real labels are HTML in the build, per the public-marks rule). Does NOT expand to scenes mid-build (imagery-creep is the named risk). Does NOT touch component code — produces assets only.
+**Scope boundary:** **NO baked text in any generated surface** — no titles, labels, numbers, or glyphs (these are material textures, not text surfaces; real labels are HTML in the build for accessibility and editability. This is surface-appropriateness, not a model limit — Ideogram 4 renders text reliably, so text-bearing generation is fine elsewhere). Does NOT expand to scenes mid-build (imagery-creep is the named risk). Does NOT touch component code — produces assets only.
 
 ### T6 (P6): Motion convergence — fixed bezier → spring/wave
 **Layer:** src UI motion (`src/lab/`) + any shared lab motion tokens

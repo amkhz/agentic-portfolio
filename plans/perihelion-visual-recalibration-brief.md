@@ -1,6 +1,6 @@
 # Perihelion Visual Recalibration Brief — "The Reading Room"
 
-**Status:** Scoping (Dreamer lane), direction calls locked 2026-06-30. No build until the ADR validates and the type face locks live.
+**Status:** ✅ SHIPPED & CLOSED (2026-07-01). All build passes merged to main; T5 (Wallace materials) deferred. This scoping brief is **superseded by ADR-016** as the authoritative record — where the two differ, ADR-016 wins. Two shipped divergences from this brief: the display face is **Bricolage Grotesque Variable** (not Podkova; ADR-016 Decision 5) and T3 shipped **type-led** as the Accession Register (not "material spines"; ADR-016 Decision 6). Kept for history; ready to archive.
 **Owner:** Justin, with Tyrell building per pass and Roy reviewing before each merge.
 **Predecessor / standard:** ADR-013 ("The Conservatory"), `DESIGN.md`. The portfolio recalibration is the bar this measures against.
 **Honors (does not redo):** ADR-012 (Perihelion house identity: Instrument sigil + Podkova logotype + colophon masthead, shipped and live). ADR-009 (multi-entry architecture, lab isolation with a documented convergence path), ADR-010 (rename and IA).
@@ -61,7 +61,7 @@ The lab keeps its own register where it should: graphite floor (no pure black, l
 |---|---|---|
 | Shelf register | **Wallace material spines.** Editorial spine/catalog bones; each spine carries a generated material surface (binder cloth, pressed board, foil-stamp feel). No literal 3D skeuomorph. | Shelf layout stays composed and editorial; the *surface* is authored. |
 | Palette convergence | **Warm toward humus.** Re-hue lab dark neutrals from 270 toward ~60 to 80, holding L 0.17. Light mode is already warm cream, minor tune only. | The spine of the work; gates every surface, exactly as tokens-first gated the Conservatory. |
-| Reading type | **LOCKED 2026-06-30: Newsreader (variable).** Uncommon, readable, modern serif; not Fraunces (reads AI), not system Georgia. Podkova stays the identity-locked display face. | Locked *live* via the section 7 specimen, the way the portfolio locked Hedvig. Per-mode body weight light 330 / dark 400. |
+| Reading type | **LOCKED 2026-06-30: Newsreader (variable).** Uncommon, readable, modern serif; not Fraunces (reads AI), not system Georgia. Podkova stays the identity-locked display face. | Locked *live* via the section 7 specimen, the way the portfolio locked Hedvig. Per-mode body weight **dark 330 / light 400** (see section 7 — this cell previously reversed them). |
 | Wallace scope | **Spine and cover materials only.** No full scenes, no per-section art, no wallpaper. | Honors imagery restraint; net-new pipeline use for the lab. |
 
 ---

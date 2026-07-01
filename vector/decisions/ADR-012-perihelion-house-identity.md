@@ -1,8 +1,10 @@
 # ADR-012: Perihelion house identity locks to the Instrument mark with dual drawing register
 
 **Date:** 2026-06-12
-**Status:** accepted
+**Status:** accepted — display face amended by ADR-016 (2026-07-01)
 **Deciders:** Justin Hernandez (live calls 2026-06-10 through 2026-06-12), Tyrell implementing
+
+> **Amendment (2026-07-01):** the Podkova display/logotype face locked here was later changed to **Bricolage Grotesque Variable** during the "Reading Room" recalibration — see **ADR-016, Decision 5** (Podkova clashed with the Newsreader body and register-mark vocabulary). The Instrument sigil, dual drawing register, colophon masthead, and favicon locked in this ADR stand untouched; only the display typeface moved.
 
 ## Context
 

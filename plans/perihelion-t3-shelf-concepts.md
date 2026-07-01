@@ -1,5 +1,7 @@
 # Perihelion "Reading Room" — T3 Shelf Concepts
 
+Status: **SHIPPED — the Accession Register** (`RegisterShelf`, PR #150). Note: shelf titles reference "Podkova" below, but the shipped display face is **Bricolage Grotesque Variable** (ADR-016 Decision 5). Ready to archive.
+
 Status: **CHOSEN — the Accession Register** (Justin, 2026-06-30, live). The
 toggle + the two losing layouts (Ledger, Lit Bay) are removed; the Register is
 refined and shipping on PR #150. Prior slate (three behind a live toggle) kept

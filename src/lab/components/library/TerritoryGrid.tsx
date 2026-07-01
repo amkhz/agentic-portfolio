@@ -3,12 +3,28 @@ import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
 import { upcomingGuides } from "@core/lab/upcoming";
-import { GuideCard } from "./GuideCard";
+import type { ShelfLayout } from "./guideShelfCommon";
+import { RegisterShelf } from "./RegisterShelf";
+import { LedgerShelf } from "./LedgerShelf";
+import { BayShelf } from "./BayShelf";
 import { TerritoryBadge } from "./TerritoryBadge";
 import { UpcomingCard } from "./UpcomingCard";
 
 interface TerritoryGridProps {
   guides: Guide[];
+  layout: ShelfLayout;
+}
+
+function ShelfBody({
+  guides,
+  layout,
+}: {
+  guides: Guide[];
+  layout: ShelfLayout;
+}) {
+  if (layout === "ledger") return <LedgerShelf guides={guides} />;
+  if (layout === "bay") return <BayShelf guides={guides} />;
+  return <RegisterShelf guides={guides} />;
 }
 
 function groupByTerritory(guides: Guide[]): Record<Territory, Guide[]> {
@@ -52,7 +68,7 @@ const LIFECYCLE_LABEL: Record<Lifecycle, string> = {
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
-export function TerritoryGrid({ guides }: TerritoryGridProps) {
+export function TerritoryGrid({ guides, layout }: TerritoryGridProps) {
   const grouped = groupByTerritory(guides);
   const groupedUpcoming = groupUpcomingByTerritory(upcomingGuides);
   const shouldReduce = useReducedMotion();
@@ -117,13 +133,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
             ) : (
               <>
                 {hasBuilt ? (
-                  <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    {territoryGuides.map((guide) => (
-                      <li key={guide.slug}>
-                        <GuideCard guide={guide} />
-                      </li>
-                    ))}
-                  </ul>
+                  <ShelfBody guides={territoryGuides} layout={layout} />
                 ) : null}
 
                 {hasUpcoming ? (

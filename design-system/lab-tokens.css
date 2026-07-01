@@ -24,7 +24,7 @@
 
    Font families are declared here but the actual font
    loading happens in src/lab/main.tsx (@fontsource for
-   Podkova and JetBrains Mono; Georgia is a system font).
+   Bricolage Grotesque, Newsreader, and JetBrains Mono).
    ============================================ */
 
 @layer theme {
@@ -101,10 +101,12 @@
     --lab-mark-spark: var(--guide-accent);
 
     /* --- Typography families ---
-       Loaded by src/lab/main.tsx. Newsreader is a variable reading
-       serif (opsz + wght axes); Georgia is the fallback. Podkova and
-       JetBrains Mono load as fixed weights. */
-    --lab-heading-font: 'Podkova', Georgia, serif;
+       Loaded by src/lab/main.tsx. Bricolage Grotesque (display) is a
+       variable editorial grotesque (opsz + wght), paired against the
+       Newsreader reading serif for serif/sans editorial contrast;
+       Newsreader is a variable reading serif (opsz + wght). JetBrains
+       Mono loads as fixed weights. */
+    --lab-heading-font: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
@@ -233,9 +235,9 @@
     --lab-mark-spark: oklch(0.4600 0.1150 60.96);
 
     /* --- Typography families ---
-       Families match dark mode (same Newsreader Variable body); only
-       the colors and the body WEIGHT flip. */
-    --lab-heading-font: 'Podkova', Georgia, serif;
+       Families match dark mode (Bricolage display, Newsreader body);
+       only the colors and the body WEIGHT flip. */
+    --lab-heading-font: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 

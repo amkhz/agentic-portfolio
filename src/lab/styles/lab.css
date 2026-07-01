@@ -99,7 +99,8 @@ body {
      (the variable body face). To change a serif element's weight, drive
      --lab-body-weight-strong or set font-variation-settings here -- a
      Tailwind font-medium/font-semibold class will no-op on Newsreader.
-     (Weight utilities still work on Podkova headings; it is non-variable.) */
+     (Weight utilities DO work on Bricolage Grotesque headings; it is a
+     variable face and maps font-weight to its wght axis. See below.) */
   font-variation-settings: "wght" var(--lab-body-weight, 400);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -111,8 +112,10 @@ h1, h2, h3, h4 {
   color: var(--lab-text-primary);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  /* Podkova loads as fixed weights; shed the inherited body wght axis. */
+  /* Shed the inherited body wght axis so font-weight utilities drive the
+     Bricolage wght axis directly; let its opsz axis track the display size. */
   font-variation-settings: normal;
+  font-optical-sizing: auto;
 }
 
 /* Emphasis steps up from the per-mode body weight (Newsreader variable). */

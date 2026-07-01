@@ -3,7 +3,7 @@
  * chosen shelf layout. A researcher's logged holdings: a per-guide accent margin
  * rule (the bound edge — present at rest so the guide's domain color reads), a
  * mono provenance gutter (call-number · year · status) against a hairline, a wide
- * entry field (kicker, full Podkova title, Newsreader dek, full mono authorship),
+ * entry field (kicker, full display title, Newsreader dek, full mono authorship),
  * and the source venue hung in the outer margin. Titles read horizontally and
  * never truncate.
  *

@@ -9,7 +9,7 @@ interface LibraryHeaderProps {
 }
 
 const MANIFESTO_PARAGRAPHS = [
-  "The future is already here. It's just not very evenly distributed. It's being built and shaped in peer-reviewed papers, NSF-funded labs, and private money think tanks. The kind of work that often happens in the dark, on the cutting edge of what's possible.",
+  "The future is already here. It's just not very evenly distributed. (William Gibson said that first. It's only gotten truer.) It's being built and shaped in peer-reviewed papers, NSF-funded labs, and private money think tanks. The kind of work that often happens in the dark, on the cutting edge of what's possible.",
   "This library is where I'm learning about it: deep-dive guides on the science behind vacuum engineering, UAP detection, and consciousness as technology. Science fiction becoming engineered reality.",
   "Written for designers who haven't found a reason to look here yet, but might. Pull up a chair.",
 ];

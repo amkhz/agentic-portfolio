@@ -24,7 +24,7 @@
 
    Font families are declared here but the actual font
    loading happens in src/lab/main.tsx (@fontsource for
-   Podkova and JetBrains Mono; Georgia is a system font).
+   Bricolage Grotesque, Newsreader, and JetBrains Mono).
    ============================================ */
 
 @layer theme {
@@ -101,10 +101,12 @@
     --lab-mark-spark: var(--guide-accent);
 
     /* --- Typography families ---
-       Loaded by src/lab/main.tsx. Newsreader is a variable reading
-       serif (opsz + wght axes); Georgia is the fallback. Podkova and
-       JetBrains Mono load as fixed weights. */
-    --lab-heading-font: 'Podkova', Georgia, serif;
+       Loaded by src/lab/main.tsx. Bricolage Grotesque (display) is a
+       variable editorial grotesque (opsz + wght), paired against the
+       Newsreader reading serif for serif/sans editorial contrast;
+       Newsreader is a variable reading serif (opsz + wght). JetBrains
+       Mono loads as fixed weights. */
+    --lab-heading-font: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
@@ -116,8 +118,10 @@
     --lab-body-weight-strong: 560;
 
     /* --- Academic preprint watermark ---
-       A graph-paper-under-ink texture: fine horizontal ruling every
-       28px plus a sparse vertical margin line every 128px. Alpha is
+       A ruled-paper-under-ink texture: fine horizontal ruling every
+       28px. (The sparse 128px vertical margin line was removed
+       2026-06-30 — it read as a stray artifact against the flat field;
+       the archival-paper background rework is a later phase.) Alpha is
        deliberately minimal so the surface reads as "on paper" rather
        than decorated. Pattern follows the same CSS-only layered
        gradient technique as ADR-005's portfolio textures but tuned
@@ -133,12 +137,6 @@
         oklch(0.40 0.014 75 / 0.045) 0px,
         transparent 1px,
         transparent 28px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        oklch(0.40 0.014 75 / 0.030) 0px,
-        transparent 1px,
-        transparent 128px
       );
   }
 
@@ -237,9 +235,9 @@
     --lab-mark-spark: oklch(0.4600 0.1150 60.96);
 
     /* --- Typography families ---
-       Families match dark mode (same Newsreader Variable body); only
-       the colors and the body WEIGHT flip. */
-    --lab-heading-font: 'Podkova', Georgia, serif;
+       Families match dark mode (Bricolage display, Newsreader body);
+       only the colors and the body WEIGHT flip. */
+    --lab-heading-font: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
     --lab-body-font: 'Newsreader Variable', Georgia, serif;
     --lab-mono-font: 'JetBrains Mono', ui-monospace, Menlo, monospace;
 
@@ -255,20 +253,14 @@
        cool slate, and alpha lifts slightly (0.04 to 0.05) so
        the grid stays perceptible without crushing contrast
        against the light field. Pattern geometry (28px
-       horizontal, 128px vertical) is preserved so texture
-       rhythm matches across themes. */
+       horizontal ruling) matches the dark theme; the 128px
+       vertical margin line was removed in both (see dark note). */
     --lab-texture:
       repeating-linear-gradient(
         180deg,
         oklch(0.45 0.020 70 / 0.045) 0px,
         transparent 1px,
         transparent 28px
-      ),
-      repeating-linear-gradient(
-        90deg,
-        oklch(0.45 0.020 70 / 0.032) 0px,
-        transparent 1px,
-        transparent 128px
       );
   }
 }

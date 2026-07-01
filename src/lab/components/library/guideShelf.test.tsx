@@ -1,0 +1,63 @@
+// @vitest-environment jsdom
+import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
+import type { Guide } from "@core/lab/guide-types";
+import { RegisterShelf } from "./RegisterShelf";
+
+const makeGuide = (accentLight?: string): Guide => ({
+  slug: "sample-guide",
+  frontmatter: {
+    slug: "sample-guide",
+    title: "Sample Guide",
+    kicker: "Research Guide Series",
+    source: { authors: "Author et al.", year: 2025, venue: "arXiv:0000.00000" },
+    accent: "#4ade80",
+    ...(accentLight !== undefined ? { accentLight } : {}),
+    territory: "T4",
+    status: "draft",
+    description: "A short description.",
+    figures: [],
+    glossary: {},
+  },
+  sections: [],
+  glossary: {},
+  figures: {},
+});
+
+// The Accession Register entry follows guideShelfCommon's accent publication and
+// the .lab-guide-spine resolution hook. Assert the ADR-009 contract: publish the
+// dual-var pair, never set --guide-accent, and carry the class that re-resolves
+// it per guide.
+const renderItem = (guide: Guide): HTMLElement | null =>
+  render(
+    <MemoryRouter>
+      <RegisterShelf guides={[guide]} />
+    </MemoryRouter>,
+  ).container.querySelector("a");
+
+describe("RegisterShelf accent publication", () => {
+  it("publishes both accent custom properties when accentLight is present", () => {
+    const link = renderItem(makeGuide("#6d28d9"));
+    expect(link).not.toBeNull();
+    expect(link!.style.getPropertyValue("--guide-accent-dark")).toBe("#4ade80");
+    expect(link!.style.getPropertyValue("--guide-accent-light")).toBe("#6d28d9");
+  });
+
+  it("omits --guide-accent-light when frontmatter lacks accentLight", () => {
+    const link = renderItem(makeGuide());
+    expect(link).not.toBeNull();
+    expect(link!.style.getPropertyValue("--guide-accent-dark")).toBe("#4ade80");
+    expect(link!.style.getPropertyValue("--guide-accent-light")).toBe("");
+  });
+
+  it("does not set --guide-accent directly (the cascade owns resolution)", () => {
+    const link = renderItem(makeGuide("#6d28d9"));
+    expect(link!.style.getPropertyValue("--guide-accent")).toBe("");
+  });
+
+  it("carries the lab-guide-spine class that re-resolves the accent per guide", () => {
+    const link = renderItem(makeGuide());
+    expect(link!.classList.contains("lab-guide-spine")).toBe(true);
+  });
+});

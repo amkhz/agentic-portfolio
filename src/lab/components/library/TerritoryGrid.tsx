@@ -3,9 +3,8 @@ import type { Guide, Territory } from "@core/lab/guide-types";
 import { territories } from "@core/lab/territories";
 import type { UpcomingGuide } from "@core/lab/upcoming";
 import { upcomingGuides } from "@core/lab/upcoming";
-import { GuideCard } from "./GuideCard";
+import { RegisterShelf, RegisterUpcomingShelf } from "./RegisterShelf";
 import { TerritoryBadge } from "./TerritoryBadge";
-import { UpcomingCard } from "./UpcomingCard";
 
 interface TerritoryGridProps {
   guides: Guide[];
@@ -35,8 +34,8 @@ function groupUpcomingByTerritory(
 }
 
 // The roadmap assigns a lifecycle state to each territory based on
-// its order. Active gets the pulsing badge; extending reads normal;
-// queued visually dims so the eye lands on live work first.
+// its order. The label reads Active / Extending / Queued; queued
+// sections visually dim so the eye lands on live work first.
 type Lifecycle = "active" | "extending" | "queued";
 function lifecycleFor(order: number): Lifecycle {
   if (order === 1) return "active";
@@ -91,10 +90,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
               }
             >
               <div className="flex items-center gap-4">
-                <TerritoryBadge
-                  id={territory.id}
-                  isActive={lifecycle === "active"}
-                />
+                <TerritoryBadge id={territory.id} />
                 <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
                   {LIFECYCLE_LABEL[lifecycle]}
                 </span>
@@ -117,13 +113,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
             ) : (
               <>
                 {hasBuilt ? (
-                  <ul className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                    {territoryGuides.map((guide) => (
-                      <li key={guide.slug}>
-                        <GuideCard guide={guide} />
-                      </li>
-                    ))}
-                  </ul>
+                  <RegisterShelf guides={territoryGuides} />
                 ) : null}
 
                 {hasUpcoming ? (
@@ -131,7 +121,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
                     <div
                       className={
                         hasBuilt
-                          ? "mt-12 flex items-center gap-3"
+                          ? "mt-14 flex items-center gap-3"
                           : "mt-8 flex items-center gap-3"
                       }
                     >
@@ -143,13 +133,7 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
                         className="h-px flex-1 bg-lab-border-subtle"
                       />
                     </div>
-                    <ul className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
-                      {territoryUpcoming.map((upcoming) => (
-                        <li key={upcoming.id}>
-                          <UpcomingCard upcoming={upcoming} />
-                        </li>
-                      ))}
-                    </ul>
+                    <RegisterUpcomingShelf guides={territoryUpcoming} />
                   </>
                 ) : null}
               </>

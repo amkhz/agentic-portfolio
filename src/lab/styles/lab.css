@@ -139,6 +139,27 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Archival-paper substrate. A single Wallace-generated sheet fixed to the
+   viewport (so it never tiles or stretches on tall pages), blended over the
+   humus/cream field via background-blend-mode with its own base color, then
+   composited at a low opacity. z-index -1 keeps it under all content, which
+   paints on top and stays crisp; the reader's Day/Night swaps the tile, blend,
+   and strength through the --lab-paper* tokens. Content surfaces (cards, the
+   rail) carry their own backgrounds and sit above it untouched. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--lab-bg-deep);
+  background-image: var(--lab-paper, none);
+  background-position: center;
+  background-size: cover;
+  background-blend-mode: var(--lab-paper-blend, normal);
+  opacity: var(--lab-paper-opacity, 0);
+}
+
 h1, h2, h3, h4 {
   font-family: var(--lab-heading-font);
   color: var(--lab-text-primary);

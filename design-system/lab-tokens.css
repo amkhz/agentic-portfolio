@@ -117,12 +117,17 @@
     --lab-body-weight: 330;
     --lab-body-weight-strong: 560;
 
-    /* Background substrate. The old ruled-paper gradient (28px horizontal
-       ruling) was removed 2026-06-30 — the faint horizontal lines read as an
-       artifact against the flat field, and CSS grain reads as TV static. The
-       archival-paper rework (Wallace-generated fibre, applied subtly) is its
-       own phase; flat warm humus until then. */
+    /* Background substrate — archival paper (Wallace-generated fibre scan).
+       CSS grain read as TV static and the old ruled gradient was a line
+       artifact; a real pressed-fibre scan reads as material instead. Applied
+       as a fixed sheet in lab.css (body::before), blended over the token
+       field so the humus color still drives the surface. Dark uses a plain
+       low-opacity composite — soft-light/multiply vanish on the L 0.17 floor
+       (confirmed live), so normal at 0.18 is what actually registers. */
     --lab-texture: none;
+    --lab-paper: url('/labs/textures/paper-dark.webp');
+    --lab-paper-blend: normal;
+    --lab-paper-opacity: 0.18;
   }
 
   /* ============================================
@@ -232,8 +237,13 @@
     --lab-body-weight: 400;
     --lab-body-weight-strong: 620;
 
-    /* Background substrate — flat cream. Ruled gradient removed with the dark
-       set (see note above); archival paper comes in the later rework. */
+    /* Background substrate — archival paper, cream mode. Foxed-manuscript scan
+       multiplied over the cream field so the token color reads through and the
+       specks/tooth sit as material. Multiply reads on the light floor where it
+       vanished on the dark one, so light keeps a blend where dark went plain. */
     --lab-texture: none;
+    --lab-paper: url('/labs/textures/paper-light.webp');
+    --lab-paper-blend: multiply;
+    --lab-paper-opacity: 0.30;
   }
 }

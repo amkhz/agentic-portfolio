@@ -60,7 +60,7 @@ export function ConstellationNode({
       onPointerDown={tuneMode ? (e) => onTuneDragStart?.(node.id, e) : undefined}
       className={cn(
         "group absolute -translate-x-1/2 -translate-y-1/2 m-0 appearance-none border-none bg-transparent p-0 leading-none",
-        "motion-safe:animate-[fadeIn_500ms_ease-out_both]",
+        "motion-safe:animate-[fadeIn_500ms_var(--ease-settle)_both]",
         tuneMode ? "cursor-grab active:cursor-grabbing" : node.status === "planned" && "cursor-default"
       )}
       style={{

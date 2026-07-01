@@ -136,7 +136,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
 
       {/* Mobile strip */}
       {isReading && (
-        <div className="motion-safe:animate-[fadeIn_200ms_ease-out]">
+        <div className="motion-safe:animate-[fadeIn_200ms_var(--ease-settle)]">
           <ConstellationStrip
             nodes={constellationNodes}
             selectedId={selectedId}

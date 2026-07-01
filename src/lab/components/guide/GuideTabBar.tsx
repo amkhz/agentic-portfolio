@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import type { KeyboardEvent } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import { springSnappy } from "@/components/effects/motionConfig";
 
 export type GuideMode = "guide" | "glossary";
 
@@ -14,6 +16,7 @@ const TABS: { id: GuideMode; label: string }[] = [
 ];
 
 export function GuideTabBar({ mode, onModeChange }: GuideTabBarProps) {
+  const shouldReduce = useReducedMotion();
   const refs = useRef<Record<GuideMode, HTMLButtonElement | null>>({
     guide: null,
     glossary: null,
@@ -54,11 +57,22 @@ export function GuideTabBar({ mode, onModeChange }: GuideTabBarProps) {
             onKeyDown={handleKeyDown}
             className={
               selected
-                ? "relative -mb-px flex min-h-11 items-center border-b-2 border-guide-accent px-1 font-lab-mono text-sm uppercase tracking-wider text-guide-accent"
-                : "relative -mb-px flex min-h-11 items-center border-b-2 border-transparent px-1 font-lab-mono text-sm uppercase tracking-wider text-lab-text-muted hover:text-lab-text-secondary"
+                ? "relative -mb-px flex min-h-11 items-center border-b-2 border-transparent px-1 font-lab-mono text-sm uppercase tracking-wider text-guide-accent transition-colors duration-[var(--duration-fast)]"
+                : "relative -mb-px flex min-h-11 items-center border-b-2 border-transparent px-1 font-lab-mono text-sm uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-lab-text-secondary"
             }
           >
             {tab.label}
+            {/* One shared underline slides between tabs on select (springSnappy)
+                instead of hard-cutting. Same layoutId across tabs = Motion
+                tweens its position; reduced-motion snaps it instantly. */}
+            {selected && (
+              <motion.span
+                layoutId="guide-tab-underline"
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 -bottom-px h-0.5 bg-guide-accent"
+                transition={shouldReduce ? { duration: 0 } : springSnappy}
+              />
+            )}
           </button>
         );
       })}

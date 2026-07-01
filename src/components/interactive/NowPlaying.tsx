@@ -19,11 +19,15 @@ function EqBars({ isPlaying }: { isPlaying: boolean }) {
       {BAR_CONFIG.map((bar, i) => (
         <span
           key={i}
-          className="inline-block w-[3.5px] rounded-full bg-accent-primary"
+          className="inline-block w-[3.5px] rounded-full"
           style={{
             height: "14px",
             transformOrigin: "bottom",
             willChange: isPlaying ? "transform" : "auto",
+            // Brass->sage gradient reads as living material, not an interaction
+            // color: it's constant across play states (motion carries the
+            // state), and green never touches the tab's hover/focus/active.
+            background: `linear-gradient(to top in oklch, var(--theme-accent-primary), var(--theme-secondary-primary))`,
             transform: isPlaying ? undefined : "scaleY(0.3)",
             transition: "transform 300ms ease-out",
             animation: isPlaying

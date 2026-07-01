@@ -191,65 +191,76 @@ function RailBody({
         )}
       </div>
 
-      {showBody && (
-        <>
-          {hasSections && (
-            <GuideSectionNav
-              sections={sections}
-              activeSection={activeSection}
-              onSelect={onSelect}
-            />
-          )}
+      {/* The whole collapsible body (section index + controls) springs open the
+          same way — height 0 -> auto + fade, springSoft (bounce 0). marginTop
+          animates too so the gap above it collapses cleanly instead of leaving
+          dead space; overflow clips during travel; reduced-motion is instant. */}
+      <AnimatePresence initial={false}>
+        {showBody && (
+          <motion.div
+            key="rail-body"
+            className="space-y-7 overflow-hidden"
+            initial={{ height: 0, opacity: 0, marginTop: 0 }}
+            animate={{ height: "auto", opacity: 1, marginTop: "1.75rem" }}
+            exit={{ height: 0, opacity: 0, marginTop: 0 }}
+            transition={shouldReduce ? { duration: 0 } : springSoft}
+          >
+            {hasSections && (
+              <GuideSectionNav
+                sections={sections}
+                activeSection={activeSection}
+                onSelect={onSelect}
+              />
+            )}
 
-          <div>
-            <button
-              type="button"
-              onClick={onToggleControls}
-              aria-expanded={controlsOpen}
-              aria-controls={controlsPanelId}
-              className="flex min-h-9 w-full items-center justify-between font-lab-mono text-[0.7rem] uppercase tracking-[0.16em] text-lab-text-secondary transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
-            >
-              <span>Reading controls</span>
-              <motion.span
-                aria-hidden="true"
-                className="inline-flex"
-                animate={{ rotate: controlsOpen ? 180 : 0 }}
-                transition={chevronSpring}
+            <div>
+              <button
+                type="button"
+                onClick={onToggleControls}
+                aria-expanded={controlsOpen}
+                aria-controls={controlsPanelId}
+                className="flex min-h-9 w-full items-center justify-between font-lab-mono text-[0.7rem] uppercase tracking-[0.16em] text-lab-text-secondary transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
               >
-                <ChevronDown className="h-4 w-4" />
-              </motion.span>
-            </button>
-            {/* The panel springs open (height 0 -> auto + fade) instead of
-                hard-mounting — the "just appears" was the reveal, not the
-                chevron. springSoft (bounce 0) keeps it calm; overflow clips the
-                content as it grows; reduced-motion collapses to an instant
-                show/hide. */}
-            <AnimatePresence initial={false}>
-              {controlsOpen && (
-                <motion.div
-                  id={controlsPanelId}
-                  key="controls"
-                  className="overflow-hidden"
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={shouldReduce ? { duration: 0 } : springSoft}
+                <span>Reading controls</span>
+                <motion.span
+                  aria-hidden="true"
+                  className="inline-flex"
+                  animate={{ rotate: controlsOpen ? 180 : 0 }}
+                  transition={chevronSpring}
                 >
-                  <div className="mt-4">
-                    <ReaderControls
-                      prefs={prefs}
-                      onChange={onPrefChange}
-                      onReset={onReset}
-                      isDefault={isDefault}
-                      idPrefix={idPrefix}
-                    />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </>
-      )}
+                  <ChevronDown className="h-4 w-4" />
+                </motion.span>
+              </button>
+              {/* The controls panel springs open the same way inside the body.
+                  Nesting is safe: the body settles to height:auto, so the inner
+                  reveal reflows it without clipping. */}
+              <AnimatePresence initial={false}>
+                {controlsOpen && (
+                  <motion.div
+                    id={controlsPanelId}
+                    key="controls"
+                    className="overflow-hidden"
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={shouldReduce ? { duration: 0 } : springSoft}
+                  >
+                    <div className="mt-4">
+                      <ReaderControls
+                        prefs={prefs}
+                        onChange={onPrefChange}
+                        onReset={onReset}
+                        isDefault={isDefault}
+                        idPrefix={idPrefix}
+                      />
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

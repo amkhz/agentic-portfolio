@@ -1,6 +1,6 @@
 # DESIGN.md — Portfolio Visual Direction
 
-> Source of truth for the portfolio's visual system: color, typography, motion, imagery, composition. Binds to **ADR-013 ("The Conservatory")**. Supersedes the brass+magenta "editorial craftsperson" direction (ADR-011) for all visual specifics. PRODUCT.md holds users, brand, tone, and principles; this file holds the design. The CSS implementation lives in `design-system/tokens.css` (the literal source for all color values). Perihelion (`labs.justinh.design`) follows its own register; see PRODUCT.md.
+> Source of truth for the portfolio's visual system: color, typography, motion, imagery, composition. Binds to **ADR-013 ("The Conservatory")**. Supersedes the brass+magenta "editorial craftsperson" direction (ADR-011) for all visual specifics. PRODUCT.md holds users, brand, tone, and principles; this file holds the design. The CSS implementation lives in `design-system/tokens.css` (the literal source for all color values). Perihelion (`labs.justinh.design`) follows its own register — "The Reading Room"; its locked visual system (Bricolage Grotesque display / Newsreader body / JetBrains mono, warm-humus palette, the reader rail, spring + `arc()` motion) is recorded in **ADR-016**, with brand context in PRODUCT.md.
 
 register: brand
 

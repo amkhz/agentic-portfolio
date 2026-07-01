@@ -6,7 +6,11 @@
 **Brief (source of truth):** `plans/perihelion-visual-recalibration-brief.md`
 **Predecessor standard:** ADR-013 ("The Conservatory"). **Recommended ADR:** ADR-016, written *after* P2 specimen locks live — not before.
 
-> **P1 is DONE.** Palette warming (hue 270 → 70 humus, L 0.17 floor held) shipped on branch `feat/perihelion-p1-palette` (`design-system/lab-tokens.css`, `scripts/wcag-check.py` LAB blocks). Every later pass designs against the warmed palette as the given baseline. Do not re-scope P1.
+> **✅ MISSION COMPLETE (2026-07-01).** All build passes shipped to main: **P1** palette (270 → 70 humus, L 0.17 held), **T2** Newsreader reading type + per-mode weight, **T3** the type-led **Accession Register** shelf (`RegisterShelf`) + library refresh, **T4** the reader rail + `--lab-reading-size` consolidation, **T6** spring/`arc()` motion (`motion` 12.42.2 app-wide). **T5 (Wallace materials) is DEFERRED** — the type-led shelf made material spines unnecessary; kept as a documented future enhancement.
+>
+> **Shipped reality vs. this plan — two divergences, both authoritative in ADR-016:** (1) the **display face is Bricolage Grotesque Variable**, not Podkova (it clashed with Newsreader; ADR-016 Decision 5 supersedes the ADR-012 lock). (2) T3 shipped **type-led** (the Accession Register), not "Wallace material spines" (ADR-016 Decision 6). The task bodies below are preserved as the historical plan; wherever they say "Podkova" or "material spines," **ADR-016 is authoritative.** This mission is ready to archive.
+>
+> **P1 was DONE first.** Palette warming (hue 270 → 70 humus, L 0.17 floor held) shipped on branch `feat/perihelion-p1-palette` (`design-system/lab-tokens.css`, `scripts/wcag-check.py` LAB blocks); every later pass designed against the warmed palette as the given baseline.
 
 ---
 
@@ -118,10 +122,10 @@ The recalibration is complete when:
 - Every pass passed four gates (lint, build, test, Roy) and merged to `main`.
 - **ADR-016 ("The Reading Room") is written** after the type specimen validates live, recording the convergent-but-distinct thesis, the warm-humus palette against the L 0.17 floor, the locked serif, the editorial-spine shelf, the margin-rail reader, the Wallace material scope, and the motion convergence.
 
-## Flat Task List
+## Flat Task List (final state)
 
-T2 feat/perihelion-p2-reading-type "Reading type — variable serif body (BLOCKED on live specimen lock)"
-T3 feat/perihelion-p3-shelf "The Shelf — card grid to editorial spine index"
-T4 feat/perihelion-p4-reader "The Reader — top nav strip to left-margin reader rail"
-T5 feat/perihelion-p5-wallace-materials "Wallace material pass — spine + cover surfaces"
-T6 feat/perihelion-p6-motion "Motion convergence — fixed bezier to spring/wave"
+- ✅ T2 feat/perihelion-p2-reading-type — Reading type: Newsreader Variable body + per-mode weight. **DONE** (specimen locked live).
+- ✅ T3 feat/perihelion-p3-shelf — The Shelf: shipped **type-led** as the Accession Register (not spines). **DONE.**
+- ✅ T4 feat/perihelion-p4-reader — The Reader: left-margin reader rail + `--lab-reading-size`. **DONE.**
+- ⏸ T5 feat/perihelion-p5-wallace-materials — Wallace materials. **DEFERRED** (type-led shelf made it unnecessary; future enhancement).
+- ✅ T6 feat/perihelion-p6-motion — Motion convergence: spring/wave + `arc()` sigil. **DONE.**

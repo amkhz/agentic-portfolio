@@ -42,7 +42,7 @@ Extract from Justin's request (ask only for what's genuinely missing):
 - **Medium** — photograph vs. illustration / 3d_render / painting / graphic_design (this determines the entire `style_description` shape — see schema doc)
 - **Format** — target use implies resolution and aspect ratio (hero = wide, phone wallpaper = 1024×1792, social banner = up to 6:1). Dimensions must be multiples of 16, range 256–2048.
 - **Palette** — explicit hexes, token references, or a mood to translate. Uppercase `#RRGGBB` only.
-- **Typography** — any literal in-image text, and where it sits
+- **Typography** — any literal in-image text, and where it sits. When a surface could carry text, settle **baked-in vs. real HTML labels with Justin up front**: baked text is fully allowed (Ideogram 4 spells reliably) and is right for type-as-hero / craft work; HTML labels win when accessibility, editability, or i18n matter more. Neither is the default — it's a per-render call.
 - **Layout intent** — if Justin describes spatial structure ("logo top-left, tagline lower third"), that becomes bboxes
 
 When Justin gives a plain-language art direction ("light flowing through the surface, not on top"; "like I'm standing a few feet away"), translate it with `references/direction-vocabulary.md` — a living table mapping his words to the exact caption mechanic, grounded in our own before/afters. His vivid sensory directions are the input, not a deficiency; the doc just speeds the mapping. **Add an entry to it whenever a direction lands or misses and we learn why.**

@@ -123,10 +123,11 @@ Craft** — font choice, kerning, spacing, and how type *integrates with the
 image* — 3.92 vs 3.34–3.50, and it was the only model to reach client-ready for
 type-driven work (3.55 vs 2.49–2.84). **The moat is craft, not spelling.** Reach
 for Ideogram on poster / kicker / wordmark / type-as-hero work; it's where this
-model wins. (Public-facing marks still prefer real HTML labels — for
-accessibility, editability, and i18n, not because the model can't spell. The
-type-craft moat applies to portfolio/lab/internal renders where we control the
-glyphs.)
+model wins. (Baking text into a render is allowed — Ideogram 4 spells
+reliably. Whether a given surface carries baked text or real HTML labels is a
+per-render call to settle with Justin at creation time: baked text for
+type-as-hero / craft, HTML labels when accessibility, editability, or i18n
+matter more. Neither is the default — align on it up front.)
 
 Two disciplines fall out of that, plus a finding about prompt shape:
 

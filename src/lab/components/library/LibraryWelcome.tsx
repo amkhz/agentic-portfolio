@@ -73,7 +73,7 @@ export function LibraryWelcome() {
           return (
             <motion.li
               key={note.numeral}
-              className="relative flex flex-col gap-4 px-6 py-7"
+              className="relative flex flex-col gap-4 px-6 py-7 [--fieldnote-mark-color:var(--theme-accent-primary)]"
               {...noteMotion}
             >
               <RegistrationMark />

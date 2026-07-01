@@ -86,7 +86,7 @@ function RegisterEntry({ guide, index }: { guide: Guide; index: number }) {
         <span className="block font-lab-mono text-[0.6rem] uppercase tracking-wider text-lab-text-muted">
           {kicker}
         </span>
-        <h3 className="mt-1.5 font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:font-bold group-hover:text-guide-accent md:text-2xl">
+        <h3 className="mt-1.5 font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:text-guide-accent md:text-2xl">
           {title}
         </h3>
         {description ? (
@@ -129,11 +129,7 @@ function UpcomingEntry({ guide }: { guide: UpcomingGuide }) {
   const { title, source, status, note } = guide;
 
   return (
-    <div
-      aria-disabled="true"
-      tabIndex={-1}
-      className="grid grid-cols-1 gap-x-6 gap-y-2 px-4 py-6 opacity-75 md:grid-cols-[7rem_minmax(0,1fr)_9rem] md:px-5"
-    >
+    <div className="grid grid-cols-1 gap-x-6 gap-y-2 px-4 py-6 opacity-75 md:grid-cols-[7rem_minmax(0,1fr)_9rem] md:px-5">
       {/* Un-accessioned: the call-number slot is a dash and the tab is a quiet
           neutral placeholder — no domain color yet. */}
       <div className="flex flex-col items-start gap-1.5 border-lab-border-subtle md:items-end md:border-r md:pr-6 md:text-right">

@@ -58,15 +58,18 @@ export function LibraryHeader({
           );
         })}
       </motion.div>
-      <p className="mt-10 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-        {counter}
-      </p>
-      <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-        {labStats.peerReviewedPapersCited} peer-reviewed papers cited
-      </p>
-      <p className="mt-2 font-lab-mono text-xs tracking-wide text-lab-text-muted">
-        Last updated {import.meta.env.VITE_BUILD_DATE}
-      </p>
+      {/* One masthead register line, not a stack of loose stat lines. */}
+      <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1 font-lab-mono text-xs tracking-wide text-lab-text-muted">
+        <span>{counter}</span>
+        <span aria-hidden className="text-lab-border-strong">
+          ·
+        </span>
+        <span>{labStats.peerReviewedPapersCited} peer-reviewed papers cited</span>
+        <span aria-hidden className="text-lab-border-strong">
+          ·
+        </span>
+        <span>Updated {import.meta.env.VITE_BUILD_DATE}</span>
+      </div>
       <ColophonNote />
     </header>
   );
@@ -75,7 +78,7 @@ export function LibraryHeader({
 function ColophonNote() {
   return (
     <details className="group mt-6 max-w-xl [&_summary::-webkit-details-marker]:hidden">
-      <summary className="inline-flex cursor-pointer list-none items-center gap-2 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent">
+      <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-sm py-1.5 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent">
         <Plus
           aria-hidden="true"
           strokeWidth={2}

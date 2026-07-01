@@ -34,8 +34,8 @@ function groupUpcomingByTerritory(
 }
 
 // The roadmap assigns a lifecycle state to each territory based on
-// its order. Active gets the pulsing badge; extending reads normal;
-// queued visually dims so the eye lands on live work first.
+// its order. The label reads Active / Extending / Queued; queued
+// sections visually dim so the eye lands on live work first.
 type Lifecycle = "active" | "extending" | "queued";
 function lifecycleFor(order: number): Lifecycle {
   if (order === 1) return "active";

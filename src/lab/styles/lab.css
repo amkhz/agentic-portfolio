@@ -82,6 +82,10 @@
   --radius-lg: 16px;
 
   --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Spring step-response curve (same sample as the portfolio's --ease-spring in
+     globals.css / motion.easing.spring). Drives the lab's transform micro-
+     interactions so they read wave-driven, not mechanical (DESIGN.md P4). */
+  --ease-spring: linear(0, 0.006, 0.025 2.8%, 0.101 6.1%, 0.539 18.9%, 0.721 25.3%, 0.849 31.5%, 0.937 38.1%, 0.968 41.8%, 0.991 45.7%, 1.006 50%, 1.015 54.8%, 1.017 63.4%, 1.001 85.7%, 1);
   --duration-fast: 100ms;
   --duration-normal: 200ms;
   --duration-slow: 400ms;

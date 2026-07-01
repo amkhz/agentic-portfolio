@@ -176,7 +176,7 @@ function RailBody({
             <ChevronDown
               aria-hidden="true"
               className={cn(
-                "h-4 w-4 transition-transform duration-[var(--duration-normal)] motion-reduce:transition-none",
+                "h-4 w-4 transition-transform duration-[var(--duration-normal)] ease-spring motion-reduce:transition-none",
                 !collapsed && "rotate-180",
               )}
             />
@@ -206,7 +206,7 @@ function RailBody({
               <ChevronDown
                 aria-hidden="true"
                 className={cn(
-                  "h-4 w-4 transition-transform duration-[var(--duration-normal)] motion-reduce:transition-none",
+                  "h-4 w-4 transition-transform duration-[var(--duration-normal)] ease-spring motion-reduce:transition-none",
                   controlsOpen && "rotate-180",
                 )}
               />

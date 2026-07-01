@@ -21,6 +21,14 @@ export const springSettle = { type: "spring", bounce: 0, duration: 0.9 } as cons
 export const springSoft = { type: "spring", bounce: 0, duration: 0.55 } as const;
 
 /**
+ * Snappy arrival for micro-reveals — a term popover or small card that should
+ * appear the instant it's summoned, not settle in like a page. Still bounce 0
+ * (informational surfaces arrive without overshoot per doctrine); just quicker
+ * than springSoft's page-entry cushion.
+ */
+export const springSnappy = { type: "spring", bounce: 0, duration: 0.3 } as const;
+
+/**
  * Interaction spring for hover/focus lift. Unlike the arrival springs above this
  * one carries a small `bounce` — a deliberate, lightly-damped wave so the lift
  * settles with life instead of ramping mechanically. Micro-interaction only;

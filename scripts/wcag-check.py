@@ -102,7 +102,7 @@ LAB_D = {
   "text-pri":   (0.9500, 0.0050, 80),
   "text-sec":   (0.7800, 0.0150, 78),
   "text-mut":   (0.6200, 0.0180, 76),
-  "border-st":  (0.4200, 0.0180, 72),
+  "border-st":  (0.5000, 0.0180, 72),
   "terr-t1":    (0.7400, 0.1500, 295),
   "terr-t2":    (0.7400, 0.1200, 240),
   "terr-t3":    (0.7200, 0.1400, 15),
@@ -117,7 +117,7 @@ LAB_L = {
   "text-pri":   (0.2200, 0.0150, 70),
   "text-sec":   (0.4000, 0.0200, 68),
   "text-mut":   (0.5200, 0.0220, 70),
-  "border-st":  (0.7000, 0.0260, 75),
+  "border-st":  (0.6200, 0.0260, 75),
   "terr-t1":    (0.4700, 0.1700, 295),
   "terr-t2":    (0.4800, 0.1400, 240),
   "terr-t3":    (0.4900, 0.1600, 15),
@@ -137,3 +137,51 @@ LAB_PAIRS = [
 
 run("LAB DARK", LAB_D, LAB_PAIRS)
 run("LAB LIGHT", LAB_L, LAB_PAIRS)
+
+# ============================================================
+# Per-guide accents — each guide's frontmatter `accent`/`accentLight`
+# renders as text (terms, links, active tab, catalog labels), so verify
+# each against the lab background it sits on. `accent` publishes
+# --guide-accent-dark (dark mode); `accentLight`, when curated, publishes
+# --guide-accent-light (light mode). A guide with no `accentLight` falls
+# back to the base --guide-accent-light token (checked elsewhere), so it
+# is only reported here, not failed. Closes the 2026-07-01 audit gap.
+# ============================================================
+import re, glob, os
+
+def hex_to_lum(hx):
+    hx = hx.lstrip('#')
+    srgb = [int(hx[i:i+2], 16) / 255 for i in (0, 2, 4)]
+    lin = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in srgb]
+    return 0.2126*lin[0] + 0.7152*lin[1] + 0.0722*lin[2]
+
+def contrast_lum(a, b):
+    hi, lo = max(a, b), min(a, b)
+    return (hi + 0.05) / (lo + 0.05)
+
+def check_guide_accents():
+    print("\n=== LAB PER-GUIDE ACCENTS ===")
+    bg_d, bg_l = wcag_lum(*LAB_D["bg-deep"]), wcag_lum(*LAB_L["bg-deep"])
+    guide_dir = os.path.join(os.path.dirname(__file__), "..", "core", "lab", "guides")
+    worst, uncurated = True, []
+    for path in sorted(glob.glob(os.path.join(guide_dir, "*.md"))):
+        parts = open(path, encoding="utf-8").read().split("---", 2)
+        front = parts[1] if len(parts) >= 3 else ""
+        slug = os.path.basename(path)[:-3]
+        m_acc = re.search(r'(?m)^accent:\s*["\']?(#[0-9a-fA-F]{6})', front)
+        m_lt = re.search(r'(?m)^accentLight:\s*["\']?(#[0-9a-fA-F]{6})', front)
+        if m_acc:
+            r = contrast_lum(hex_to_lum(m_acc.group(1)), bg_d)
+            ok = r >= 4.5; worst = worst and ok
+            print(f"  {'PASS' if ok else 'FAIL'}  {slug:<26} accent      {m_acc.group(1)} on dark   {r:5.2f}  (need 4.5)")
+        if m_lt:
+            r = contrast_lum(hex_to_lum(m_lt.group(1)), bg_l)
+            ok = r >= 4.5; worst = worst and ok
+            print(f"  {'PASS' if ok else 'FAIL'}  {slug:<26} accentLight {m_lt.group(1)} on light  {r:5.2f}  (need 4.5)")
+        elif m_acc:
+            uncurated.append(slug)
+    if uncurated:
+        print(f"  note: {len(uncurated)} guide(s) use the base light accent (no accentLight): {', '.join(uncurated)}")
+    print(f"  --> {'ALL PASS' if worst else 'HAS FAILURES'}")
+
+check_guide_accents()

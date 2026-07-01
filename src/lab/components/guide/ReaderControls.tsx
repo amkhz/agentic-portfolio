@@ -45,7 +45,7 @@ export function ReaderControls({
           type="button"
           onClick={onReset}
           disabled={isDefault}
-          className="font-lab-mono text-[0.65rem] uppercase tracking-[0.12em] text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent disabled:cursor-default disabled:opacity-40 disabled:hover:text-lab-text-muted"
+          className="-mr-2 inline-flex min-h-11 items-center px-2 font-lab-mono text-[0.65rem] uppercase tracking-[0.12em] text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent disabled:cursor-default disabled:opacity-40 disabled:hover:text-lab-text-muted"
         >
           Reset
         </button>

@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
+import { springSoft } from "@/components/effects/motionConfig";
 import { RegistrationMark } from "@/components/fieldnotebook/RegistrationMark";
 
 interface FieldNote {
@@ -31,7 +32,6 @@ const NOTES: FieldNote[] = [
 
 const NOTE_BASE_DELAY = 0.1;
 const NOTE_STAGGER = 0.08;
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 export function LibraryWelcome() {
   const shouldReduce = useReducedMotion();
@@ -66,8 +66,7 @@ export function LibraryWelcome() {
                 animate: { opacity: 1, y: 0 },
                 transition: {
                   delay: NOTE_BASE_DELAY + index * NOTE_STAGGER,
-                  duration: 0.5,
-                  ease: EASE_OUT,
+                  ...springSoft,
                 },
               };
           return (

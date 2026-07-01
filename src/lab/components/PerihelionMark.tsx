@@ -26,6 +26,7 @@
 // animation kill ends the transit instantly at its invisible state.
 import { useEffect, useId, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { springSoft, springHover } from "@/components/effects/motionConfig";
 
 interface PerihelionMarkProps {
   /** Rendered width in px; the viewBox is square, so height = width. */
@@ -34,8 +35,6 @@ interface PerihelionMarkProps {
   animated?: boolean;
   className?: string;
 }
-
-const EASE_OUT = [0.22, 1, 0.36, 1] as const;
 
 // Draw-in ends at 1.2s (perihelion pop 0.65 + 0.55); the first-load
 // transit fires just after as the sequence's final beat.
@@ -71,7 +70,7 @@ export function PerihelionMark({
     : {
         initial: { pathLength: 0 },
         animate: { pathLength: 1 },
-        transition: { delay: 0.15, duration: 0.52, ease: EASE_OUT },
+        transition: { delay: 0.15, ...springSoft },
       };
 
   // Opacity animates on a wrapper <g> so the circle's own opacity can
@@ -81,20 +80,18 @@ export function PerihelionMark({
     : {
         initial: { opacity: 0 },
         animate: { opacity: 1 },
-        transition: { delay: 0.55, duration: 0.4, ease: EASE_OUT },
+        transition: { delay: 0.55, ...springSoft },
       };
 
   const perihelion = isStatic
     ? { initial: { scale: 1, opacity: 1 }, animate: { scale: 1, opacity: 1 } }
     : {
         initial: { scale: 0, opacity: 0 },
-        animate: { scale: [0, 1.25, 1], opacity: [0, 1, 1] },
-        transition: {
-          delay: 0.65,
-          duration: 0.55,
-          times: [0, 0.55, 1],
-          ease: "easeOut" as const,
-        },
+        animate: { scale: 1, opacity: 1 },
+        // The pop's "slight overshoot" now comes from real spring physics
+        // (springHover carries the only sanctioned micro-overshoot) instead
+        // of a hand-keyed 1.25 scale beat.
+        transition: { delay: 0.65, ...springHover },
       };
 
   return (

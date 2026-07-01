@@ -160,6 +160,25 @@ body::before {
   opacity: var(--lab-paper-opacity, 0);
 }
 
+/* Bind vignette. A soft radial edge-shadow, fixed to the viewport and painted
+   just above the paper (both z-index -1; ::after paints after ::before), so the
+   page reads as a contained sheet rather than a raw field. Transparent across
+   the middle ~55% — the reading column never darkens — and only the outer
+   margins take the --lab-vignette tone. Per-mode strength via the tokens. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 120% 120% at 50% 45%,
+    transparent 55%,
+    var(--lab-vignette, transparent) 100%
+  );
+  opacity: var(--lab-vignette-opacity, 0);
+}
+
 h1, h2, h3, h4 {
   font-family: var(--lab-heading-font);
   color: var(--lab-text-primary);

@@ -5,7 +5,6 @@ import { groupIntoChapters } from "@core/content/codex";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
 import { Tag } from "@/components/interactive/Tag";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { CodexSpine } from "./CodexSpine";
 import { renderSection } from "./renderSection";
 
@@ -53,11 +52,6 @@ export function CodexPageTemplate({ slug }: CodexPageProps) {
 
           {study.heroMetric && (
             <div className="relative mt-8 flex items-baseline gap-3">
-              <GlowEffect
-                color="magenta"
-                size="sm"
-                className="-left-8 -top-8"
-              />
               <span className="relative font-display text-4xl leading-tight tracking-tight text-accent-primary">
                 {study.heroMetric.value}
               </span>

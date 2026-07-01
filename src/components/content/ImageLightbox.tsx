@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { cn } from "@core/utils";
 
 interface ImageLightboxProps {
@@ -9,26 +9,59 @@ interface ImageLightboxProps {
 
 /**
  * Full-screen image overlay. Click backdrop or press Escape to close.
+ *
+ * Accessibility: on open, focus moves to the close button and returns to the
+ * triggering element on close; Tab is trapped between the close button and the
+ * image; Escape closes; body scroll is locked. Mirrors the MobileMenu drawer.
  */
 export function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose]
-  );
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
+
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      const focusables = dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-  }, [handleKeyDown]);
+
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused?.focus();
+    };
+  }, [onClose]);
 
   return (
     <div
+      ref={dialogRef}
       className={cn(
         "fixed inset-0 z-[100] flex items-center justify-center",
         "bg-bg-deep/90 backdrop-blur-sm",
@@ -40,10 +73,11 @@ export function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
       aria-label={alt}
     >
       <button
+        ref={closeRef}
         type="button"
         onClick={onClose}
         className={cn(
-          "absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full",
+          "absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full",
           "bg-bg-elevated/80 text-text-secondary transition-colors duration-normal",
           "hover:bg-bg-elevated hover:text-text-primary",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary"

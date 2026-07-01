@@ -10,14 +10,12 @@ import { ComparisonBlock } from "./ComparisonBlock";
 import { QuoteBlock } from "./QuoteBlock";
 import { CalloutBlock } from "./CalloutBlock";
 import { CtaBlock } from "./CtaBlock";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 
 /** Brass accent line with ambient glow — used as a chapter break. */
 function ChapterBreak() {
   return (
     <div className="relative mb-10" aria-hidden="true">
-      <GlowEffect color="brass" size="sm" className="left-0 top-1/2 -translate-y-1/2" />
       <div className="relative h-px w-12 bg-accent-primary opacity-40" />
     </div>
   );

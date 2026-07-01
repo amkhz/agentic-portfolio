@@ -5,7 +5,6 @@ import { caseStudyContent } from "@core/content/case-studies";
 import { slugify } from "@core/utils/format";
 import { Container } from "@/components/layout/Container";
 import { ImageBlock } from "./ImageBlock";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { springSettle } from "@/components/effects/motionConfig";
 
 // Case-study entry choreography — the surface's deliberate moment (DESIGN.md).
@@ -146,7 +145,6 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
 
               {study.heroMetric && (
                 <motion.div className="relative mt-8 flex items-baseline gap-3" {...itemProps}>
-                  <GlowEffect color="brass" size="sm" className="-left-8 -top-8" />
                   <span className="relative font-display text-4xl leading-tight tracking-tight text-accent-primary">
                     {study.heroMetric.value}
                   </span>

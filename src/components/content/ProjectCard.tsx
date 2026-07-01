@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import type { CaseStudy } from "@core/content/case-studies";
 import { Container } from "@/components/layout/Container";
-import { GlowEffect } from "@/components/effects/GlowEffect";
 import { DossierFrame, DossierTags } from "@/components/fieldnotebook";
 import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 
@@ -66,12 +65,6 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
 
           {/* Type spread */}
           <div className="relative flex flex-col justify-center lg:col-span-5">
-            <GlowEffect
-              color="brass"
-              size="md"
-              className="-left-16 -top-12 opacity-50"
-            />
-
             <p className="relative font-mono text-xs uppercase tracking-wider text-accent-primary">
               {kicker}
             </p>

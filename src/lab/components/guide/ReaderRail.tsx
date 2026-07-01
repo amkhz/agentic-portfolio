@@ -187,17 +187,12 @@ function RailBody({
       {showBody && (
         <>
           {hasSections && (
-            <>
-              <div className="border-t border-lab-border-subtle" />
-              <GuideSectionNav
-                sections={sections}
-                activeSection={activeSection}
-                onSelect={onSelect}
-              />
-            </>
+            <GuideSectionNav
+              sections={sections}
+              activeSection={activeSection}
+              onSelect={onSelect}
+            />
           )}
-
-          <div className="border-t border-lab-border-subtle" />
 
           <div>
             <button

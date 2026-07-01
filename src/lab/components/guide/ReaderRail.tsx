@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import type { GuideSection } from "@core/lab/guide-types";
 import { cn } from "@core/utils";
-import { springHover } from "@/components/effects/motionConfig";
+import { springHover, springSoft } from "@/components/effects/motionConfig";
 import type { ReadingPrefs } from "@core/lab/reading-prefs";
 import { useTheme } from "@/lib/useTheme";
 import { GuideSectionNav } from "./GuideSectionNav";
@@ -219,17 +219,34 @@ function RailBody({
                 <ChevronDown className="h-4 w-4" />
               </motion.span>
             </button>
-            {controlsOpen && (
-              <div id={controlsPanelId} className="mt-4">
-                <ReaderControls
-                  prefs={prefs}
-                  onChange={onPrefChange}
-                  onReset={onReset}
-                  isDefault={isDefault}
-                  idPrefix={idPrefix}
-                />
-              </div>
-            )}
+            {/* The panel springs open (height 0 -> auto + fade) instead of
+                hard-mounting — the "just appears" was the reveal, not the
+                chevron. springSoft (bounce 0) keeps it calm; overflow clips the
+                content as it grows; reduced-motion collapses to an instant
+                show/hide. */}
+            <AnimatePresence initial={false}>
+              {controlsOpen && (
+                <motion.div
+                  id={controlsPanelId}
+                  key="controls"
+                  className="overflow-hidden"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={shouldReduce ? { duration: 0 } : springSoft}
+                >
+                  <div className="mt-4">
+                    <ReaderControls
+                      prefs={prefs}
+                      onChange={onPrefChange}
+                      onReset={onReset}
+                      isDefault={isDefault}
+                      idPrefix={idPrefix}
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </>
       )}

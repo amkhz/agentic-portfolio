@@ -245,7 +245,7 @@ input:focus-visible,
   .lab-reading-grid {
     display: grid;
     grid-template-columns: 15rem minmax(0, var(--lab-measure));
-    column-gap: 5.5rem;
+    column-gap: 6rem;
     justify-content: center;
   }
   /* In the grid the track caps the measure; let the column fill it. The

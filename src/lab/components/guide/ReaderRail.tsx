@@ -127,8 +127,14 @@ function RailBody({
   const controlsPanelId = `${idPrefix}-controls`;
   const showBody = !collapsed;
 
+  // IA (Justin, 2026-06-30): Theme, then progress, then the section index,
+  // then the reading controls. Theme + progress are the always-visible header;
+  // the collapse toggle hides everything below them (the section index and
+  // controls) down to that minimal state.
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
+      <ThemeRow />
+
       <div className="flex items-start gap-3">
         <div className="min-w-0 flex-1">
           {hasSections && <ReadingProgress value={progress} />}
@@ -153,11 +159,14 @@ function RailBody({
       {showBody && (
         <>
           {hasSections && (
-            <GuideSectionNav
-              sections={sections}
-              activeSection={activeSection}
-              onSelect={onSelect}
-            />
+            <>
+              <div className="border-t border-lab-border-subtle" />
+              <GuideSectionNav
+                sections={sections}
+                activeSection={activeSection}
+                onSelect={onSelect}
+              />
+            </>
           )}
 
           <div className="border-t border-lab-border-subtle" />
@@ -191,12 +200,8 @@ function RailBody({
               </div>
             )}
           </div>
-
-          <div className="border-t border-lab-border-subtle" />
         </>
       )}
-
-      <ThemeRow />
     </div>
   );
 }

@@ -25,13 +25,7 @@ export function LabLayout() {
       )}
 
       <header className="border-b border-lab-border-subtle">
-        <div
-          className={
-            onGuidePage
-              ? "mx-auto w-full px-6 py-5 md:px-10"
-              : "mx-auto flex max-w-6xl items-center px-6 py-5 md:px-10"
-          }
-        >
+        <div className="mx-auto flex max-w-6xl items-center px-6 py-5 md:px-10">
           {/* Masthead lockup (Workstream D, live-accepted "colophon rule"):
               mark + wordmark/kicker stack, then the tagline set off behind
               a hairline rule. Rule and tagline drop on mobile; the tagline
@@ -43,39 +37,26 @@ export function LabLayout() {
           {/* No aria-label: the structured content names the link, so
               screen readers receive the tagline (the name's one
               translation) on md+ where it lives inside the link. */}
-          {/* On guide pages the lockup rides the reading grid — spanning the
-              full group so its left edge meets the rail — so the masthead
-              lines up with the guide content instead of sitting at its own
-              width. Library/house pages keep the centered max-w-6xl lockup. */}
-          <div className={onGuidePage ? "lab-reading-grid" : "contents"}>
-            <a
-              href="/"
-              className={
-                onGuidePage
-                  ? "group col-span-full inline-flex items-center gap-4.5"
-                  : "group inline-flex items-center gap-4.5"
-              }
-            >
-              <span aria-hidden className="flex shrink-0 items-center justify-center">
-                <PerihelionMark width={44} animated />
+          <a href="/" className="group inline-flex items-center gap-4.5">
+            <span aria-hidden className="flex shrink-0 items-center justify-center">
+              <PerihelionMark width={44} animated />
+            </span>
+            <span className="flex flex-col gap-[3px]">
+              <span className="font-lab-heading text-[25px] font-normal leading-[1.1] tracking-[0.01em] text-lab-text-primary [font-variation-settings:'wght'_400]">
+                Perihelion
               </span>
-              <span className="flex flex-col gap-[3px]">
-                <span className="font-lab-heading text-[25px] font-normal leading-[1.1] tracking-[0.01em] text-lab-text-primary [font-variation-settings:'wght'_400]">
-                  Perihelion
-                </span>
-                <span className="font-lab-mono text-[11px] font-medium tracking-[0.22em] text-lab-text-muted">
-                  ARCHIVE
-                </span>
+              <span className="font-lab-mono text-[11px] font-medium tracking-[0.22em] text-lab-text-muted">
+                ARCHIVE
               </span>
-              <span
-                aria-hidden
-                className="my-[5px] hidden w-px self-stretch bg-lab-border-subtle md:block"
-              />
-              <span className="hidden max-w-[18ch] font-lab-mono text-xs leading-[1.55] tracking-[0.025em] text-lab-text-muted md:block">
-                closest approach to the frontier
-              </span>
-            </a>
-          </div>
+            </span>
+            <span
+              aria-hidden
+              className="my-[5px] hidden w-px self-stretch bg-lab-border-subtle md:block"
+            />
+            <span className="hidden max-w-[18ch] font-lab-mono text-xs leading-[1.55] tracking-[0.025em] text-lab-text-muted md:block">
+              closest approach to the frontier
+            </span>
+          </a>
         </div>
         <div className="mx-auto max-w-6xl px-6 pb-4 md:hidden">
           <span className="font-lab-mono text-xs tracking-[0.025em] text-lab-text-muted">

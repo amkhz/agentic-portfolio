@@ -27,10 +27,13 @@ export function GrainOverlay() {
         </defs>
       </svg>
 
-      {/* Full-screen grain overlay */}
+      {/* Full-screen grain overlay. Gated to >=sm: the fixed mix-blend-mode
+          layer repaints on every scroll frame, a real cost on mobile where INP
+          is the bottleneck. Desktop keeps the grain; the #paper-texture defs
+          above stay available to all viewports. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-40"
+        className="pointer-events-none fixed inset-0 z-40 hidden sm:block"
       >
         <svg
           className="h-full w-full"

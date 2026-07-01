@@ -1,15 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  ChevronDown,
-  ChevronsDownUp,
-  ChevronsUpDown,
-  SlidersHorizontal,
-  X,
-} from "lucide-react";
+import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import type { GuideSection } from "@core/lab/guide-types";
 import { cn } from "@core/utils";
 import type { ReadingPrefs } from "@core/lab/reading-prefs";
-import { LabThemeToggle } from "@lab/components/LabThemeToggle";
+import { useTheme } from "@/lib/useTheme";
 import { GuideSectionNav } from "./GuideSectionNav";
 import { ReaderControls } from "./ReaderControls";
 
@@ -80,13 +74,45 @@ function ReadingProgress({ value }: { value: number }) {
   );
 }
 
+// Theme as a Day/Night segmented control — same vocabulary as the Measure
+// control, so the rail carries no boxed glyph competing with the chevrons.
+// (The animated candle/sun toggle still lives on the global float elsewhere.)
 function ThemeRow() {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+  const select = (wantDark: boolean) => {
+    if (wantDark !== isDark) toggleTheme();
+  };
+
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-3">
       <span className="font-lab-mono text-[0.7rem] tracking-wide text-lab-text-secondary">
         Theme
       </span>
-      <LabThemeToggle className="rounded-md border border-lab-border-subtle bg-lab-bg-surface hover:border-lab-border-strong" />
+      <div role="group" aria-label="Theme" className="grid grid-cols-2 gap-1">
+        {[
+          { label: "Day", dark: false },
+          { label: "Night", dark: true },
+        ].map(({ label, dark }) => {
+          const selected = isDark === dark;
+          return (
+            <button
+              key={label}
+              type="button"
+              onClick={() => select(dark)}
+              aria-pressed={selected}
+              className={cn(
+                "min-h-9 rounded-sm px-3 py-1.5 font-lab-mono text-[0.65rem] uppercase tracking-[0.1em] transition-colors duration-[var(--duration-fast)]",
+                selected
+                  ? "bg-lab-bg-raised text-guide-accent"
+                  : "text-lab-text-muted hover:bg-lab-bg-surface hover:text-lab-text-secondary",
+              )}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -147,11 +173,13 @@ function RailBody({
             aria-label={collapsed ? "Expand reader rail" : "Collapse reader rail"}
             className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
           >
-            {collapsed ? (
-              <ChevronsUpDown aria-hidden="true" className="h-4 w-4" />
-            ) : (
-              <ChevronsDownUp aria-hidden="true" className="h-4 w-4" />
-            )}
+            <ChevronDown
+              aria-hidden="true"
+              className={cn(
+                "h-4 w-4 transition-transform duration-[var(--duration-normal)] motion-reduce:transition-none",
+                !collapsed && "rotate-180",
+              )}
+            />
           </button>
         )}
       </div>

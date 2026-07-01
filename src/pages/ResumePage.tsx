@@ -82,7 +82,7 @@ export function ResumePage() {
         <link rel="canonical" href="https://justinh.design/resume" />
       </Helmet>
 
-      <section className="py-24 sm:py-32 motion-safe:animate-[fadeIn_400ms_ease-out]">
+      <section className="py-24 sm:py-32 motion-safe:animate-[fadeIn_400ms_var(--ease-settle)]">
         <Container>
           <div className="mx-auto max-w-[920px] space-y-10">
             <DossierFrame kicker="Curriculum vitae" className="bg-bg-elevated">

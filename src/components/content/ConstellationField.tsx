@@ -41,7 +41,7 @@ function ConnectionLine({
       strokeWidth={isHighlighted ? 1.5 : compact ? 0.75 : 1}
       strokeOpacity={isHighlighted ? 0.6 : 0.3}
       strokeDasharray={1}
-      className="transition-[stroke,stroke-width,stroke-opacity] duration-normal motion-safe:animate-[drawLine_800ms_ease-out_both]"
+      className="transition-[stroke,stroke-width,stroke-opacity] duration-normal motion-safe:animate-[drawLine_800ms_var(--ease-settle)_both]"
       style={{ animationDelay: `${index * 120}ms` }}
     />
   );

@@ -32,7 +32,7 @@ export function ImageLightbox({ src, alt, onClose }: ImageLightboxProps) {
       className={cn(
         "fixed inset-0 z-[100] flex items-center justify-center",
         "bg-bg-deep/90 backdrop-blur-sm",
-        "motion-safe:animate-[fadeIn_200ms_ease-out]"
+        "motion-safe:animate-[fadeIn_200ms_var(--ease-settle)]"
       )}
       onClick={onClose}
       role="dialog"

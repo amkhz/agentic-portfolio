@@ -1,13 +1,16 @@
 /**
  * JS mirror of the motion tokens defined in `src/styles/globals.css` (@theme).
  *
- * motion/react needs literal numeric/array values (it can't read CSS custom
- * properties for its spring/bezier math), so the doctrine easing curve and the
- * duration bands are duplicated here intentionally. Keep these in sync with
- * `--ease-out-expo` and `--duration-*` if those ever change.
+ * motion/react needs literal numeric values (it can't read CSS custom
+ * properties for its spring math), so the spring presets and duration bands
+ * live here for JS-driven motion. Keep them in sync with the `--ease-*` /
+ * `--duration-*` tokens in globals.css if those change.
  *
- * Doctrine (VECTOR P4): ease-out-expo is the entrance/focus curve — a long
- * decelerating tail, no overshoot. No bounce, no elastic, ever.
+ * Doctrine (VECTOR P4 / DESIGN.md): motion is spring/wave-driven. The
+ * arrival/focus register is critically damped — bounce 0, no overshoot; only
+ * micro-interactions (hover/tap) may carry a small damped overshoot. Fixed
+ * cubic-beziers are the exception (trivial color/opacity crossfades), not the
+ * default entrance driver.
  */
 
 /**

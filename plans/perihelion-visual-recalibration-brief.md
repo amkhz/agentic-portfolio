@@ -127,7 +127,7 @@ Constraints from Justin: uncommon, genuinely readable, modern, not Fraunces, not
 
 - **Deliverables:** book-spine materials (binder cloth, pressed board, foil-stamp surfaces) and per-guide or per-territory cover textures for the shelf. Nothing else this batch.
 - **Restraint:** material accent at the shelf anchor only. No full scenes, no per-section illustration, no wallpaper. Over-imaging reads as AI slop, and the lab's whole posture is the calm reader.
-- **No baked text:** every generated surface forbids titles, labels, numbers, glyphs. Ideogram renders gibberish text; the real labels are HTML in the build.
+- **No baked text:** these are material surfaces (binder cloth, pressed board, foil-stamp), so titles, labels, and numbers don't belong on them — real labels are HTML in the build for accessibility and editability. This is a surface-appropriateness rule, not a model limit: Ideogram 4 renders text reliably (see the Wallace skill's typographic-craft notes), so text-bearing generation is fine on other surfaces.
 - **Palette:** generate against the warmed humus dark and the cream light so the materials read as the same room in both modes. Record the dark/light material pairings.
 - **Pipeline:** Wallace (local Ideogram 4) into the Impeccable review loop, the validated path. Playbook references in the Wallace skill.
 

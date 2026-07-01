@@ -64,6 +64,24 @@ describe('parseGuide', () => {
     expect(guide.sections[1]).toMatchObject({ id: 'hardware', heading: 'Hardware' });
   });
 
+  it('consumes standalone thematic breaks instead of rendering them as literal text', () => {
+    // Authors write `---` as a separator before section headings; it must not
+    // survive as a paragraph containing the visible characters "---".
+    const source = VALID_SOURCE.replace(
+      'Paragraph with an |ambiguity| and a **bold phrase**.',
+      'Paragraph with an |ambiguity| and a **bold phrase**.\n\n---',
+    ).replace('## Hardware', '---\n\n## Hardware');
+    const guide = parseGuide(source, 'sample-guide');
+
+    // Structure is unchanged: still two sections, no phantom divider block.
+    expect(guide.sections).toHaveLength(2);
+    expect(JSON.stringify(guide.sections)).not.toContain('---');
+    const overviewParagraphs = guide.sections[0].blocks.filter(
+      (b) => b.kind === 'paragraph',
+    );
+    expect(overviewParagraphs).toHaveLength(1);
+  });
+
   it('warns on emoji in a heading and keeps the heading text intact', () => {
     const source = VALID_SOURCE.replace('## Hardware', '## 🛰️ Hardware');
     const guide = parseGuide(source, 'sample-guide');

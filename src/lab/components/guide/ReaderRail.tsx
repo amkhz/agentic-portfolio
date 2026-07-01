@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import type { GuideSection } from "@core/lab/guide-types";
 import { cn } from "@core/utils";
+import { springHover } from "@/components/effects/motionConfig";
 import type { ReadingPrefs } from "@core/lab/reading-prefs";
 import { useTheme } from "@/lib/useTheme";
 import { GuideSectionNav } from "./GuideSectionNav";
@@ -152,6 +154,10 @@ function RailBody({
   const hasSections = sections.length > 0;
   const controlsPanelId = `${idPrefix}-controls`;
   const showBody = !collapsed;
+  const shouldReduce = useReducedMotion();
+  // The chevron flip rides real spring physics (springHover's bounce 0.3) so it
+  // reads wave-driven — the CSS linear() curve's ~1.7% overshoot was invisible.
+  const chevronSpring = shouldReduce ? { duration: 0 } : springHover;
 
   // IA (Justin, 2026-06-30): Theme, then progress, then the section index,
   // then the reading controls. Theme + progress are the always-visible header;
@@ -173,13 +179,14 @@ function RailBody({
             aria-label={collapsed ? "Expand reader rail" : "Collapse reader rail"}
             className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
           >
-            <ChevronDown
+            <motion.span
               aria-hidden="true"
-              className={cn(
-                "h-4 w-4 transition-transform duration-[var(--duration-normal)] ease-spring motion-reduce:transition-none",
-                !collapsed && "rotate-180",
-              )}
-            />
+              className="inline-flex"
+              animate={{ rotate: collapsed ? 0 : 180 }}
+              transition={chevronSpring}
+            >
+              <ChevronDown className="h-4 w-4" />
+            </motion.span>
           </button>
         )}
       </div>
@@ -203,13 +210,14 @@ function RailBody({
               className="flex min-h-9 w-full items-center justify-between font-lab-mono text-[0.7rem] uppercase tracking-[0.16em] text-lab-text-secondary transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
             >
               <span>Reading controls</span>
-              <ChevronDown
+              <motion.span
                 aria-hidden="true"
-                className={cn(
-                  "h-4 w-4 transition-transform duration-[var(--duration-normal)] ease-spring motion-reduce:transition-none",
-                  controlsOpen && "rotate-180",
-                )}
-              />
+                className="inline-flex"
+                animate={{ rotate: controlsOpen ? 180 : 0 }}
+                transition={chevronSpring}
+              >
+                <ChevronDown className="h-4 w-4" />
+              </motion.span>
             </button>
             {controlsOpen && (
               <div id={controlsPanelId} className="mt-4">

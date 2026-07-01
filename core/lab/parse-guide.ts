@@ -186,6 +186,11 @@ const TABLE_SEP_RE = /^\|[\s\-:|]+\|\s*$/;
 const BULLET_RE = /^[*-]\s+(.+)$/;
 const ORDERED_RE = /^(\d+)\.\s+(.+)$/;
 const BLOCKQUOTE_RE = /^>\s?(.*)$/;
+// Thematic break on its own line (`---`, `***`, `___`, 3+ markers). The guide
+// model has no divider block — section H2s carry the breaks — but authors write
+// these as separators before headings. Consume them; otherwise they fall
+// through to a paragraph and render as the literal characters "---".
+const THEMATIC_BREAK_RE = /^ {0,3}(?:-{3,}|\*{3,}|_{3,})\s*$/;
 
 function slugifyHeading(text: string): string {
   return text
@@ -486,6 +491,11 @@ function parseBody(body: string, slug: string): GuideSection[] {
       }
       current.blocks.push(parseBlockquote(bqLines));
       i = j - 1;
+      continue;
+    }
+    // Thematic break: end the current paragraph and drop the marker line.
+    if (THEMATIC_BREAK_RE.test(line)) {
+      flushParagraph();
       continue;
     }
     if (line.trim() === '') {

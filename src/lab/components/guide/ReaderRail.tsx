@@ -177,7 +177,7 @@ function RailBody({
             onClick={onToggleCollapsed}
             aria-expanded={!collapsed}
             aria-label={collapsed ? "Expand reader rail" : "Collapse reader rail"}
-            className="-mr-1 -mt-1 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
+            className="-mr-2 -mt-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
           >
             <motion.span
               aria-hidden="true"

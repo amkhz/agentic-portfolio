@@ -102,7 +102,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
         <button
           type="button"
           onClick={scrollToTop}
-          className="font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted hover:text-guide-accent"
+          className="inline-flex min-h-11 items-center px-3 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
         >
           ↑ Back to top
         </button>

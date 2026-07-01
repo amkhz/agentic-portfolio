@@ -58,12 +58,7 @@ function renderNodes(
       );
     }
     return (
-      <GuideTerm
-        key={key}
-        term={node.term}
-        active={false}
-        onToggle={() => {}}
-      />
+      <GuideTerm key={key} term={node.term} />
     );
   });
 }

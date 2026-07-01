@@ -2,11 +2,24 @@ import { termCardId } from "./termCardId";
 
 interface GuideTermProps {
   term: string;
-  active: boolean;
-  onToggle: (term: string) => void;
+  active?: boolean;
+  /** When omitted, the term isn't wired to a popover (lists, tables,
+   *  blockquotes) and renders as styled static text instead of a button. */
+  onToggle?: (term: string) => void;
 }
 
-export function GuideTerm({ term, active, onToggle }: GuideTermProps) {
+export function GuideTerm({ term, active = false, onToggle }: GuideTermProps) {
+  // Only paragraph terms open a definition card. Everywhere else, render the
+  // term as static marked text — not a focusable button with an aria-controls
+  // pointing at a card that is never rendered (a false affordance for AT).
+  if (!onToggle) {
+    return (
+      <span className="border-b border-dotted border-guide-accent/70 px-0.5 text-guide-accent/90">
+        {term}
+      </span>
+    );
+  }
+
   return (
     <button
       type="button"

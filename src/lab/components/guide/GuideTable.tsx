@@ -42,7 +42,7 @@ function renderNodes(
         </span>
       );
     }
-    return <GuideTerm key={key} term={node.term} active={false} onToggle={() => {}} />;
+    return <GuideTerm key={key} term={node.term} />;
   });
 }
 

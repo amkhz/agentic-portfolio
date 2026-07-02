@@ -14,7 +14,8 @@
     "generate:og": "tsx scripts/generate-og-images.ts",
     "generate:favicons": "tsx scripts/generate-favicons.ts",
     "generate:sitemap": "tsx scripts/generate-sitemap.ts",
-    "audit:orphans": "tsx scripts/report-orphan-terms.ts"
+    "audit:orphans": "tsx scripts/report-orphan-terms.ts",
+    "audit:skills": "tsx scripts/audit-skill-hygiene.ts"
   },
   "dependencies": {
     "@fontsource-variable/bricolage-grotesque": "^5.2.10",

@@ -1,6 +1,6 @@
 ---
 name: wallace
-description: Image generation compiler for Ideogram 4 running locally on Justin's M5 Max. Use this skill whenever Justin wants to generate, render, or create an image, asset, poster, hero image, texture, illustration, mockup graphic, or visual variant — even if he doesn't say "Ideogram" or "image model". Triggers on requests like "generate an image of", "render this", "make a hero for", "I need a poster", "visualize this concept", "batch out some variants", or any request where the deliverable is a generated raster image. Also use for Impeccable workflows: north-star hi-fi mocks, brand toolkit plates, and asset regeneration that would otherwise use GPT Image 2 — Wallace is the free local replacement. Wallace translates design intent into Ideogram 4's structured JSON caption schema, invokes the local runtime, and runs review/iteration loops. Also use when Justin wants to refine, re-palette, re-compose, or batch-vary a previously generated image.
+description: Image generation compiler for Ideogram 4 running locally. Use whenever Justin wants to generate, render, or create any raster image — asset, poster, hero, texture, illustration, mockup — even if he doesn't say "Ideogram", and when refining, re-paletting, re-composing, or batch-varying a previous render. Also serves Impeccable workflows (north-star mocks, brand plates).
 ---
 
 # Wallace: Ideogram 4 Caption Compiler & Render Director

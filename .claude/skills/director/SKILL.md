@@ -1,6 +1,6 @@
 ---
 name: director
-description: Portfolio maintainer and project director for Justin's portfolio. Use this skill when checking project status, planning next steps, prioritizing work, reviewing what has been built, updating the project roadmap, or tracking pitch-worthy items for the team. Triggers on requests about project status, what to work on next, roadmap updates, progress tracking, ADR review, or team pitch preparation. The Director maintains the living status document, tracks ADRs, and coordinates work across the other skills (Writer, Dreamer, Builder).
+description: Portfolio maintainer and project director. Use when checking project status, planning or prioritizing next steps, updating the roadmap, reviewing progress or ADRs, or tracking pitch-worthy items for the team. Maintains the living status document and coordinates work across the crew.
 ---
 
 # Director: Portfolio Maintainer & Project Director

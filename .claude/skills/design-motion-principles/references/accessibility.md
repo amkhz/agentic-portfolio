@@ -57,5 +57,5 @@
 
 This repo already ships the reduced-motion posture — match it, don't reinvent:
 - **Global CSS** — `@media (prefers-reduced-motion: reduce)` zeroes `transition-duration` / `animation-duration` and caps iteration to 1 (`src/styles/globals.css`).
-- **JS-driven effects** — check the query on mount and render the final or still state. See `src/components/effects/` (PageTransition, ParallaxImage, RevealOnScroll, DecryptedText) and `src/lab/components/` (PerihelionMark, PerihelionSigil freeze to static positions).
+- **JS-driven effects** — render the final or still state when reduced motion is on, via one of two house patterns: the reactive `useReducedMotion()` hook (PageTransition, ParallaxImage in `src/components/effects/`; PerihelionMark in `src/lab/components/`, PerihelionSigil in `src/lab/components/library/` — the sigil freezes to static positions) or a one-time query check on mount (RevealOnScroll, DecryptedText). Prefer the hook for new work; it tracks preference changes live.
 - **Doctrine** (`DESIGN.md`) — "the ambitious moments degrade to instant or to a still state."

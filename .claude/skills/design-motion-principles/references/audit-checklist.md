@@ -2,6 +2,8 @@
 
 Use this checklist when reviewing motion design in any UI code.
 
+> **Portfolio + Perihelion zones:** the House Anti-Patterns section of `anti-checklist.md` supersedes any line below that rewards custom beziers or height animation. In those zones springs are the mandate (not a nice-to-have): a fixed `cubic-bezier` driving arrival/interaction is a flag, animated height is always a flag, and spring-vs-ease is judged against `motion-cookbook.md` §0 tokens.
+
 ---
 
 ## Philosophy Check (Do First)

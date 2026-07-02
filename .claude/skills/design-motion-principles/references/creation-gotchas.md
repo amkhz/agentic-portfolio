@@ -37,9 +37,9 @@ Where Claude typically fails when **writing** motion (as opposed to auditing it)
 
 ## Portfolio-specific (this repo)
 
-- **Don't invent durations or beziers in the Portfolio zone.** Use the tokens in `motion-cookbook.md` §0 (`--ease-settle`, `--ease-organic`, `--ease-spring`, `--duration-reveal`, …). A fresh `cubic-bezier()` or a bare ms value is the tell you skipped the system.
+- **Don't invent durations, beziers, or spring configs in the Portfolio or Perihelion zones.** Use the CSS tokens in `motion-cookbook.md` §0 (`--ease-settle`, `--ease-organic`, `--ease-spring`, `--duration-reveal`, …) and import the JS presets from `src/components/effects/motionConfig.ts` (`springSettle`, `springSoft`, `springSnappy`, `springHover`, `scrollSpring`). A fresh `cubic-bezier()`, a bare ms value, or an inline `{ type: 'spring', ... }` object is the tell you skipped the system.
 - **Don't overshoot on arrival.** Section reveals / page transitions / parallax are critically damped (`bounce: 0`). Small overshoot is allowed ONLY on hover/focus/tap.
 - **Don't reach for glow.** No accent glow, glowing borders, or glow-pulse on interactive elements — interaction is brass weight-shift + ink. The one exception: slow ambient "glow-from-within" on tech-in-material accents (a material treatment, not interaction feedback).
 - **Don't stack ambitious motion.** One ambitious motion moment per major surface, max. Most things stay still.
 - **Match the house reduced-motion pattern.** Reuse the `effects/` approach (global CSS zeroing + JS mount-check → still state); don't hand-roll a new guard.
-- **Lab zone is exempt.** In `src/lab/**` / Perihelion / spikes these relax — that's the creative-license lane. Confirm the zone before applying portfolio rules.
+- **Only the Experiment zone is exempt.** Spikes, playgrounds, and explicitly-flagged play surfaces relax these rules — that's the creative-license lane. Shipped Perihelion (`src/lab/**`) is NOT exempt: ADR-016 converged it onto the same spring register. Confirm the zone before applying or relaxing anything.

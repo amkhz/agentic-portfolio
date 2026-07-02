@@ -1,6 +1,6 @@
 ---
 name: design-motion-principles
-description: "Motion and interaction design expert based on Emil Kowalski, Jakub Krehel, and Jhey Tompkins' techniques. Two modes — build interactive components with purposeful motion, or audit existing animations to catch AI-slop motion patterns (audit emits a branded HTML report with looping demos). Use when creating, adding, animating, or reviewing UI motion: transitions, hover states, micro-interactions, enter/exit animations, or any motion design work in React, Framer Motion, CSS, or HTML. Provides per-designer perspectives with context-aware weighting."
+description: "Motion and interaction design expert based on Emil Kowalski, Jakub Krehel, and Jhey Tompkins' techniques. Two modes — build components with purposeful motion, or audit existing animations for AI-slop patterns (branded HTML report with looping demos). Use when creating, animating, or reviewing UI motion: transitions, hover states, micro-interactions, enter/exit, in React, Motion, CSS, or HTML. Zone-aware for this repo: wave-driven doctrine on portfolio surfaces, creative license for experiments."
 ---
 
 # Design Motion Principles
@@ -32,18 +32,19 @@ Otherwise ask in plain text: "Should I build/improve the motion (Create mode), o
 
 ---
 
-## STEP 0.5: Detect Zone (portfolio vs lab)
+## STEP 0.5: Detect Zone (three registers)
 
-This is the **agentic-portfolio** repo. It has two motion registers — detect which the target lives in before weighting or generating anything.
+This is the **agentic-portfolio** repo. It has three motion registers — detect which the target lives in before weighting or generating anything.
 
 | Zone | Target lives in | Motion model |
 |------|-----------------|--------------|
 | **Portfolio** (default) | `src/` proper — homepage, case studies, nav, shared components; anything on justinh.design | **Wave doctrine governs.** Spring/wave-driven, critically-damped arrival, real tokens, `bounce: 0`. Motion is rare and earns its place. |
-| **Lab / Experiment** | `src/lab/**`, Perihelion surfaces (labs.justinh.design), `spike/*` branches, playground/experiment components | **Creative license.** The wave mandate relaxes to guidance, not law. Full range — Jhey weighted up, playful physics allowed. |
+| **Perihelion (shipped lab)** | `src/lab/**` as shipped — the live Archive at labs.justinh.design | **Same wave doctrine.** ADR-016 P6 deliberately converged the lab onto the shared spring presets (`motionConfig.ts`) — `bounce: 0` arrival, small overshoot on hover/tap only. Jhey weighted up ONLY for the signature moments (sigil-class); the reading surfaces stay restrained. |
+| **Experiment** | Spikes, playgrounds, prototypes, one-off explorations — or any surface Justin flags with a play signal | **Creative license.** The wave mandate relaxes to guidance, not law. Full range — Jhey primary, playful physics allowed. |
 
 **Detection order:**
-1. **Explicit override wins.** If the request carries a play signal — "play here", "creative license", "lab register", "let me play", "loosen it", "go experimental" — treat the surface as **Lab zone** for this invocation, even inside `src/`. The wave mandate is a portfolio constraint, not a hard limit on Justin.
-2. **Path match.** `src/lab/**` / Perihelion / spike branches → Lab. Everything else in `src/` → Portfolio.
+1. **Explicit override wins.** If the request carries a play signal — "play here", "creative license", "let me play", "loosen it", "go experimental" — or the work is explicitly framed as a spike/prototype, treat the surface as **Experiment** for this invocation, even inside `src/`. The wave mandate is a portfolio constraint, not a hard limit on Justin.
+2. **Path match.** `src/lab/**` → Perihelion (shipped). Everything else in `src/` → Portfolio. (Branch names are not reliable state — never infer zone from `git branch`; only the explicit framing in the request counts.)
 3. **Ask** only if genuinely ambiguous and no signal resolves it.
 
 The zone sets which motion model governs (see Motion Model below) and nudges the weighting. **State the detected zone in your inference block** so Justin can flip it in one word.
@@ -56,9 +57,9 @@ This repo has three motion tools. Keep the lanes clean:
 
 - **design-motion-principles (this skill)** — the three-designer critique lens + AI-slop gate (Audit), and greenfield motion on a *new* component (Create). Reach for it when you want *perspective* — should this move, through whose eyes — or a slop report.
 - **/impeccable animate** — enhancement pass on an *existing* feature inside the Impeccable pipeline.
-- **/interface-craft** — implementation-level tuning: Storyboard DSL, DialKit live value-dialing, spring-param dialing.
+- **/interface-craft** — implementation-level tuning: Storyboard DSL, DialKit live value-dialing, spring-param dialing. Its Design Critique module also reviews motion — that lane is *implementation review* (is this spring built right); this skill's audit is *judgment review* (should it move, whose lens, is it slop). Overlap is fine; pick by the question being asked.
 
-"Dial in the spring on this existing modal" → interface-craft. "Review this modal's motion" or "build motion for this new component" → here.
+"Dial in the spring on this existing modal" → interface-craft. "Is this spring implemented well" → interface-craft critique. "Review this surface's motion" (judgment + slop gate) or "build motion for this new component" → here.
 
 ---
 
@@ -86,9 +87,10 @@ Each designer answers a different question:
 | Zone | Primary | Secondary | Selective |
 |------|---------|-----------|-----------|
 | Portfolio (justinh.design) | Jakub | Jhey | Emil (high-freq interactions, nav) |
-| Lab / Experiment (Perihelion, spikes) | Jhey | Jakub | Emil (only where a surface goes utility-shaped) |
+| Perihelion shipped (labs.justinh.design) | Jakub | Emil (reading surfaces stay quick and quiet) | Jhey (signature moments only — sigil-class) |
+| Experiment (spikes, playgrounds) | Jhey | Jakub | Emil (only where a surface goes utility-shaped) |
 
-Portfolio keeps the polished-portfolio weighting but is *governed by the wave doctrine* below — polish expressed as restraint. Lab weights Jhey up: this is where invention is allowed to be loud.
+Portfolio keeps the polished-portfolio weighting but is *governed by the wave doctrine* below — polish expressed as restraint. Shipped Perihelion is a production reading surface with the same doctrine (ADR-016). Experiment weights Jhey up: this is where invention is allowed to be loud.
 
 **General fallback** (reference when a sub-surface doesn't fit the two rows above):
 
@@ -117,15 +119,15 @@ Before adding or approving any animation, ask how often the user triggers it:
 | Frequent (100s/day) | No animation or instant transition |
 | Keyboard-initiated | Never animate |
 
-### Motion Model — springs first (Portfolio zone)
+### Motion Model — springs first (Portfolio + Perihelion zones)
 
-**In the Portfolio zone the wave doctrine governs, not the millisecond tables.** Every animation is spring/wave-driven; fixed cubic-beziers are the exception (trivial color/opacity crossfades only). Measure against the real system — the tokens in `references/motion-cookbook.md` §0 — not invented durations:
+**In the Portfolio and Perihelion zones the wave doctrine governs, not the millisecond tables.** Every animation is spring/wave-driven; fixed cubic-beziers are the exception (trivial color/opacity crossfades only). Measure against the real system — CSS tokens in `references/motion-cookbook.md` §0, JS springs from `src/components/effects/motionConfig.ts` — never invented values:
 
-- **Arrival / focus** (section reveals, page transitions, parallax) — critically damped, **no overshoot** (`bounce: 0`). Curve `--ease-settle`; duration `--duration-reveal` (900ms desktop / 560ms mobile). Loft, never a mechanical ramp.
-- **Micro-interactions** (hover / focus / tap) — MAY carry a small damped overshoot. Curve `--ease-organic` or `--ease-spring`; duration `--duration-fast` / `--duration-normal`.
+- **Arrival / focus** (section reveals, page transitions, parallax) — critically damped, **no overshoot** (`bounce: 0`). CSS: `--ease-settle` + `--duration-reveal` (900ms desktop / 560ms mobile). JS: `springSettle` / `springSoft` / `springSnappy`. Loft, never a mechanical ramp.
+- **Micro-interactions** (hover / focus / tap) — MAY carry a small damped overshoot. CSS: `--ease-organic` or `--ease-spring` + `--duration-fast` / `--duration-normal`. JS: `springHover`.
 - **Material curves** (`--ease-default` / `-in` / `-out`) stay for short symmetric micro-transitions and theme/color crossfades.
 
-**In the Lab zone** the tables below are guidance, not law — reach for whatever serves the effect:
+**In the Experiment zone** the tables below are guidance, not law — reach for whatever serves the effect:
 
 | Context | Guideline |
 |---------|-----------|
@@ -139,7 +141,7 @@ Before adding or approving any animation, ask how often the user triggers it:
 
 > "The best animation is that which goes unnoticed."
 
-This *is* the portfolio's stated doctrine: "motion that announces itself as design has failed." One ambitious motion moment per major surface, no more; most things stay still. (Exception: the Lab zone, and playful contexts where delight IS the goal.)
+This *is* the portfolio's stated doctrine: "motion that announces itself as design has failed." One ambitious motion moment per major surface, no more; most things stay still. (Exception: the Experiment zone, and playful contexts where delight IS the goal.)
 
 ### Accessibility is NOT Optional
 

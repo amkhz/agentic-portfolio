@@ -6,12 +6,12 @@ The single source of truth for motion **recipes** — implementation patterns an
 
 ## 0. Portfolio motion system (use these tokens — do not invent values)
 
-**In the Portfolio zone, emit code against these real tokens.** They live in `src/styles/globals.css`. Never hand-roll a millisecond value or a fresh `cubic-bezier` when a token exists. (Lab zone: free to invent — this section is a reference, not a cage.)
+**In the Portfolio and Perihelion zones, emit code against these real tokens.** CSS tokens live in `src/styles/globals.css`; JS spring presets live in `src/components/effects/motionConfig.ts`. Never hand-roll a millisecond value, a fresh `cubic-bezier`, or an inline spring config when a token or preset exists. (Experiment zone: free to invent — this section is a reference, not a cage.)
 
 ### Easing tokens
 | Token | Character | Use |
 |-------|-----------|-----|
-| `--ease-out-expo` | `cubic-bezier(0.16, 1, 0.3, 1)` | default entrance/focus choreography |
+| `--ease-out-expo` | `cubic-bezier(0.16, 1, 0.3, 1)` | legacy entrance default — new arrivals use `--ease-settle` |
 | `--ease-settle` | spring-sampled `linear(…)`, no overshoot | cushioned arrival — section reveals, page transitions (critically damped) |
 | `--ease-organic` | spring-sampled `linear(…)`, no overshoot | interaction lift — hover/focus (quick response, soft tail) |
 | `--ease-spring` | spring-sampled `linear(…)`, peak ~1.006–1.017 | micro-interactions that may carry a small overshoot |
@@ -29,14 +29,27 @@ The `linear()` bodies are long — reference the token name in code (`transition
 | `--duration-reveal` | 900ms desktop / 560ms mobile | section-reveal settle (pair with `--ease-settle`) |
 | `--duration-ambient` | 1200ms | looping atmosphere only (grain, shader drift) — never one-shot UI |
 
-### Motion (framer) spring configs
-```tsx
-// Arrival / focus — critically damped, NO overshoot
-const arrival = { type: 'spring', bounce: 0, duration: 0.9 } // 0.56 on mobile / coarse pointer
+### Motion (framer) spring presets — import, never inline
 
-// Micro-interaction — small damped overshoot allowed
-const micro = { type: 'spring', bounce: 0.15, duration: 0.3 }
+The canonical JS presets are exported from `src/components/effects/motionConfig.ts` (the JS mirror of the CSS tokens). Import them; writing an inline `{ type: 'spring', ... }` object in portfolio code is the drift this section exists to prevent.
+
+```tsx
+import { springSettle, springSoft, springSnappy, springHover, scrollSpring } from "@/components/effects/motionConfig";
 ```
+
+| Preset | Value | Use |
+|--------|-------|-----|
+| `springSettle` | `bounce: 0, duration: 0.9` | slow cushioned arrival — hero settle, list cascade |
+| `springSoft` | `bounce: 0, duration: 0.55` | quicker settle — page entry |
+| `springSnappy` | `bounce: 0, duration: 0.3` | micro-reveals (popovers, small cards) — instant but still a spring |
+| `springHover` | `bounce: 0.3, duration: 0.4` | hover/focus lift — the ONLY preset with overshoot (micro-interaction exception) |
+| `scrollSpring` | `stiffness: 80, damping: 24, mass: 0.6` | smoothing scroll-linked values (parallax drift) |
+
+All arrival presets are `bounce: 0` per doctrine; only `springHover` carries the small damped overshoot.
+
+### Shadows
+
+Shadows come from the `--shadow-*` tokens in `globals.css` — never copy the literal `rgba()` shadow recipes that appear later in this file (upstream reference prose) into portfolio code.
 
 CSS side, prefer the tokens:
 ```css
@@ -45,7 +58,7 @@ CSS side, prefer the tokens:
 .lift:hover { transition: transform var(--duration-normal) var(--ease-organic); }
 ```
 
-**Reduced motion:** the global `@media (prefers-reduced-motion: reduce)` block zeroes durations; JS-driven effects check the query on mount and render the final / still state (see `src/components/effects/` — PageTransition, ParallaxImage, RevealOnScroll). Match that pattern; don't invent a new guard.
+**Reduced motion:** the global `@media (prefers-reduced-motion: reduce)` block zeroes durations; JS-driven effects render the final / still state — prefer the reactive `useReducedMotion()` hook (PageTransition, ParallaxImage) over a one-time mount check (RevealOnScroll, DecryptedText). Match those patterns in `src/components/effects/`; don't invent a new guard.
 
 ---
 

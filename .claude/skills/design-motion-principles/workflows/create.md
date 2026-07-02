@@ -27,6 +27,7 @@ Map the project type to a perspective weighting using the Context-to-Perspective
 
 ```
 Building: [what — e.g. "a notification toast, React + Framer Motion"]
+Zone: [Portfolio | Perihelion shipped | Experiment — per SKILL.md STEP 0.5]
 Project context: [inferred — e.g. "productivity SaaS dashboard"]
 Proposed weighting: Primary [Designer] · Secondary [Designer]
 ```
@@ -61,10 +62,10 @@ If the component involves complex or numerous animations, also read `references/
 Build the component. Apply, in order:
 
 1. **The frequency gate (Emil)** — Should this animate at all? High-frequency or keyboard-initiated interactions get minimal or no motion. Decide before adding anything.
-2. **Recipes from the cookbook** — Use the weighted designer's patterns. Enter = opacity + translateY + blur. Exit subtler than enter. Custom easing or springs, never bare `ease`.
+2. **Recipes from the cookbook** — Use the weighted designer's patterns. Enter = opacity + translateY + blur. Exit subtler than enter. **Portfolio + Perihelion zones: easing and springs come from cookbook §0 — CSS tokens and `motionConfig.ts` presets, never a fresh `cubic-bezier` or inline spring.** Experiment zone: custom easing or springs, never bare `ease`.
 3. **Accessibility** — Every animation ships with `prefers-reduced-motion` handling, in the same code. No exceptions, no follow-up.
 4. **Performance** — Animate `transform` / `opacity` / `filter` only. Never `width` / `height` / `top` / `left`.
-5. **Context-appropriate timing** — Emil-weighted → under 300ms. Jakub → 200-500ms polish. Jhey → whatever serves the effect.
+5. **Context-appropriate timing** — **Portfolio + Perihelion zones: durations come from the §0 tokens (`--duration-reveal` arrival is 900ms desktop — do not "correct" it downward to fit the bands below).** Experiment zone: Emil-weighted → under 300ms. Jakub → 200-500ms polish. Jhey → whatever serves the effect.
 
 ---
 
@@ -78,9 +79,10 @@ Then briefly tell the user the motion decisions you made and why — which desig
 
 ## Success Criteria
 
+- [ ] Zone detected (SKILL.md STEP 0.5) and stated in the inference block
 - [ ] Context and weighting confirmed (or inference stated for trivial requests)
 - [ ] Frequency gate applied — motion is purposeful, not decorative-by-default
-- [ ] Recipes drawn from the cookbook, matched to the designer weighting
+- [ ] Recipes drawn from the cookbook, matched to the designer weighting; Portfolio/Perihelion zones use §0 tokens + `motionConfig.ts` presets
 - [ ] `prefers-reduced-motion` handled in all generated motion
 - [ ] Only `transform` / `opacity` / `filter` animated
 - [ ] Code self-checked against creation-gotchas.md

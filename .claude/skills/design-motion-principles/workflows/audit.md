@@ -67,6 +67,7 @@ After gathering context, tell the user what you found and propose a weighting:
 ```
 ## Reconnaissance Complete
 
+**Zone**: [Portfolio | Perihelion shipped | Experiment — per SKILL.md STEP 0.5, with the path or signal that decided it]
 **Project type**: [What you inferred — e.g., "Kids educational app, mobile-first PWA"]
 **Existing animation style**: [What you observed — e.g., "Spring animations (500-600ms), framer-motion, active:scale patterns"]
 **Likely intent**: [Your inference — e.g., "Delight and engagement for young children"]
@@ -193,6 +194,7 @@ Common failure modes during HTML report generation. Most break silently or only 
 
 ## Success Criteria
 
+- [ ] Zone detected (SKILL.md STEP 0.5) and stated in the inference block; house anti-patterns applied in Portfolio + Perihelion zones
 - [ ] Context gathered (CLAUDE.md, package.json, existing animations, structure)
 - [ ] Motion gap analysis run — conditional renders checked for missing animation
 - [ ] Weighting proposed and confirmed by the user

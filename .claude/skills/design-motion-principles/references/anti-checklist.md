@@ -120,7 +120,7 @@ Entrance animations on headings, body paragraphs, navigation links, and other co
 
 ## Portfolio Zone — House Anti-Patterns (hard flags)
 
-**Applies in the Portfolio zone only** (skip in Lab, where these may be intentional experiments). Sourced from `DESIGN.md` + `VECTOR.md` P4 — the wave-driven motion mandate. Here these are not "usually slop," they are **house-banned**; flag every instance.
+**Applies in the Portfolio zone AND shipped Perihelion (`src/lab/**`)** — ADR-016 P6 converged the live lab onto the same spring register, so the bans hold there too. Skip only in the **Experiment zone** (spikes, playgrounds, explicit play signal), where these may be intentional experiments. Sourced from `DESIGN.md` + `VECTOR.md` P4 — the wave-driven motion mandate. Here these are not "usually slop," they are **house-banned**; flag every instance.
 
 ### Accent glow / glowing colored borders
 Neon accent glow, glowing brass/amber halos, glowing colored borders, glow-pulse on interactive elements. Interaction is expressed as **brass weight-shift + ink**, never a halo. Standing ban — reads as AI slop.

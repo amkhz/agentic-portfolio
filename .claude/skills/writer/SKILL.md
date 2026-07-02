@@ -1,6 +1,6 @@
 ---
 name: writer
-description: Case study builder and content refiner for Justin's portfolio. Use this skill when creating new case studies, refining existing case study content, editing case study Markdown files, structuring content sections, or writing any portfolio copy. Triggers on requests about case study writing, content editing, the meta case study, adding new work entries, or improving existing prose. The Writer directly edits Markdown content files (core/content/*.md) and metadata (core/tokens/index.ts) but does not modify UI components or infrastructure.
+description: Case study builder and content refiner for Justin's portfolio. Use when creating or refining case studies, editing content Markdown, structuring content sections, adding new work entries, or writing any portfolio copy. Edits core/content/*.md and core/tokens metadata only — never UI components or infrastructure.
 ---
 
 # Writer: Case Study Builder & Refiner

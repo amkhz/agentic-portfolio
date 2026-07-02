@@ -1,6 +1,6 @@
 ---
 name: glossarian
-description: Glossary maintenance for the Perihelion Archive guide library. Use this skill when finding orphan |term| markers that lack frontmatter glossary entries in `core/lab/guides/*.md`, resolving a list of orphan terms into ready-to-paste YAML definitions, auditing a guide's glossary for completeness or duplicates, or batch-cleaning multiple guides at once. Triggers on requests like "find orphans", "missing definitions", "resolve these orphan terms", "audit the glossary", "what terms are undefined in [guide]", or pasting in a markdown orphan list. The Glossarian grounds every definition in the guide's actual source material via grep against `core/lab/guides/` and `~/projects/design-futures/sources/` rather than producing generic dictionary entries.
+description: Glossary maintenance for the Perihelion Archive guide library (`core/lab/guides/*.md`). Use for finding orphan |term| markers, resolving orphan terms into ready-to-paste YAML definitions, auditing a guide's glossary for completeness or duplicates, or batch-cleaning guides. Triggers on "find orphans", "missing definitions", "audit the glossary", or a pasted orphan list.
 ---
 
 > Adapted from upstream `~/projects/design-futures/Glossarian/SKILL.md`, 2026-05-17. Portfolio-side version: the upstream runs inside a Claude.ai project workspace and uses `project_knowledge_search` against `/mnt/project/`; this version uses bash and `grep` against local paths plus the existing `npm run audit:orphans` tool.

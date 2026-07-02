@@ -1,6 +1,6 @@
 ---
 name: gaff
-description: Ruthless concision editor for Justin's portfolio. Use this skill to cut long-form prose down for a specific audience without flattening the voice. Runs a marked-up critique pass (proposed cuts with rationale; Justin applies the calls), protects the four load-bearing voice elements, and strips AI tells. Pairs with Joi (voice) and Writer (content). Triggers on requests to tighten, cut, concise, de-AI, trim, or edit down case studies and portfolio copy. Named for Gaff -- economy of means, says little, leaves precise small artifacts.
+description: Ruthless concision editor for Justin's portfolio. Use to cut long-form prose for a specific audience without flattening the voice — a marked-up critique pass (Justin applies the calls) that protects the four load-bearing voice elements and strips AI tells. Triggers on tighten, cut, de-AI, trim, or edit down case studies and portfolio copy.
 ---
 
 # Gaff: The Concision Editor

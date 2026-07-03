@@ -22,6 +22,7 @@
 - Wallace is sanctioned for Works (concept art, mood frames, probes); imagery restraint is portfolio/Archive doctrine only.
 - Colophon cites the dird-34 guide directly (`core/lab/guides/dird-34-cognitive-limits.md`, complete as of PR #169).
 - Home linking: evolve the Shelf (Works section, instrument-on-the-shelf register); foyer deferred to Works 02.
+- Boot ritual: **D+A blend, locked 2026-07-03.** Hold-to-start gesture, certification self-test grammar per instrument (sweep, lamp flash in severity order, caption, then data), completion lands as a one-breath deck settle (synchronized gauge overshoot, bench edge to operator channel), never a glow. One GSAP timeline; the hold scrubs the playhead, release runs it backward. Machine events `WAKE`/`ABORT_WAKE`/`BOOT_COMPLETE` already fit. Choreography reference: the riff-sheet artifact (2026-07-03 session).
 
 ## Build checklist
 
@@ -41,7 +42,6 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 ## Open build questions (resolve during build, record here)
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
-- Boot-ritual choreography (movement 1): Justin leaning **D+A blend** (hold-to-start gesture, certification self-test grammar per instrument) after the 2026-07-03 riff session; operable prototype on the riff-sheet artifact. Lock before the boot timeline is authored. Implementation note: one GSAP timeline, hold scrubs the playhead, release runs it backward; skeleton machine already supports it (`WAKE` / `ABORT_WAKE` / `BOOT_COMPLETE`).
 - Field-render spectral ramp (live WebGL calibration against AA; informed by Wallace probe).
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).

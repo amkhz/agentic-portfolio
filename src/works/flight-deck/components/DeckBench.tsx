@@ -1,38 +1,71 @@
-import { instruments } from "@core/works/flight-deck/instruments";
+import { instruments, type InstrumentId } from "@core/works/flight-deck/instruments";
+import { SEVERITY_ORDER } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { FieldPlate } from "./FieldPlate";
 
 interface DeckBenchProps {
   /** "plate" renders the reduced-motion / no-WebGL still; "live" is the session. */
   variant: "live" | "plate";
   onExitToColophon: () => void;
+  /**
+   * The live hero instrument (Field Integrity's canvas), owned by
+   * DeckSession so the boot timeline can hold its handle. The plate
+   * variant ignores this and renders the still.
+   */
+  hero?: React.ReactNode;
+}
+
+/** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
+function CertLamps() {
+  return (
+    <span className="deck-lamps" aria-hidden="true">
+      {SEVERITY_ORDER.map((severity) => (
+        <span key={severity} className={`deck-lamp deck-lamp--${severity}`} />
+      ))}
+    </span>
+  );
 }
 
 interface RegionProps {
   area: string;
   label: string;
   caption?: string;
+  /** Marks an instrument region as a boot-ritual certification target. */
+  bootId?: InstrumentId;
   children: React.ReactNode;
 }
 
-function Region({ area, label, caption, children }: RegionProps) {
+function Region({ area, label, caption, bootId, children }: RegionProps) {
   return (
-    <section className={`deck-region--${area}`} aria-label={label}>
-      <h2 className="text-xs font-medium uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
-        {label}
-      </h2>
+    <section
+      className={`deck-region--${area} js-gauge`}
+      aria-label={label}
+      data-boot-instrument={bootId}
+    >
+      <div className="flex items-baseline justify-between gap-4">
+        <h2 className="js-boot-name text-xs font-medium uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
+          {label}
+        </h2>
+        {bootId ? <CertLamps /> : null}
+      </div>
       {caption ? (
-        <p className="mt-1 font-[family-name:var(--deck-font-body)] text-sm italic text-[var(--deck-ink-dim)]">
+        <p className="js-boot-caption mt-1 font-[family-name:var(--deck-font-body)] text-sm italic text-[var(--deck-ink-dim)]">
           {caption}
         </p>
       ) : null}
-      <div className="mt-4">{children}</div>
+      <div className="deck-region-body mt-4">
+        {children}
+        {bootId ? <span className="deck-sweep" aria-hidden="true" /> : null}
+      </div>
     </section>
   );
 }
 
 function StandbyReading({ value }: { value: string }) {
   return (
-    <p className="text-2xl tabular-nums text-[var(--deck-ink)]">{value}</p>
+    <p className="js-boot-data js-emit text-2xl tabular-nums text-[var(--deck-ink)]">
+      {value}
+    </p>
   );
 }
 
@@ -40,15 +73,21 @@ const captions = new Map(instruments.map((i) => [i.id, i.caption]));
 const names = new Map(instruments.map((i) => [i.id, i.name]));
 
 /**
- * Phase 1 scaffold of the instrument bench. Every region is placed per the
- * shape brief's scan logic; real instruments replace the placeholder
- * readings in phases 2-4. The plate variant doubles as the reduced-motion
- * and no-WebGL fallback (one fallback serves both).
+ * The instrument bench. Regions are placed per the shape brief's scan
+ * logic; Field Integrity is live as of phase 2, the remaining instruments
+ * replace their placeholder readings in phases 3-4. The plate variant
+ * doubles as the reduced-motion and no-WebGL fallback (one fallback
+ * serves both). The js-* classes are the boot timeline's targets; on the
+ * plate they are inert and everything renders at its awake state.
  */
-export function DeckBench({ variant, onExitToColophon }: DeckBenchProps) {
+export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
   return (
     <div className="deck-bench">
-      <div className="deck-region--alert" role="status" aria-label="Alerts">
+      <div
+        className="deck-region--alert js-gauge js-deck-chrome"
+        role="status"
+        aria-label="Alerts"
+      >
         <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
           No active alerts
         </p>
@@ -58,20 +97,13 @@ export function DeckBench({ variant, onExitToColophon }: DeckBenchProps) {
         area="hero"
         label={names.get("field-integrity") ?? ""}
         caption={captions.get("field-integrity")}
+        bootId="field-integrity"
       >
-        <div
-          className="grid min-h-64 place-items-center border border-[var(--deck-line)]"
-          aria-hidden="true"
-        >
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
-            Field render arrives in phase 2
-          </p>
-        </div>
-        <StandbyReading value="WALL 1.00 · EVEN 1.00 · STRESS 0" />
+        {variant === "live" ? hero : <FieldPlate />}
       </Region>
 
       <Region area="panel" label="Translation layer">
-        <p className="text-sm text-[var(--deck-ink-dim)]">
+        <p className="js-deck-chrome text-sm text-[var(--deck-ink-dim)]">
           Intent fields, proposal cards, and the utilization meter dock here
           in phase 4.
         </p>
@@ -82,6 +114,7 @@ export function DeckBench({ variant, onExitToColophon }: DeckBenchProps) {
         area="vacuum"
         label={names.get("vacuum-energy") ?? ""}
         caption={captions.get("vacuum-energy")}
+        bootId="vacuum-energy"
       >
         <StandbyReading value="VAC 0.000" />
       </Region>
@@ -90,20 +123,24 @@ export function DeckBench({ variant, onExitToColophon }: DeckBenchProps) {
         area="horizon"
         label={names.get("synthetic-orientation") ?? ""}
         caption={captions.get("synthetic-orientation")}
+        bootId="synthetic-orientation"
       >
         <div
-          className="h-8 border-y border-[var(--deck-line)]"
+          className="js-boot-data h-8 border-y border-[var(--deck-line)]"
           aria-hidden="true"
         />
-        <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
+        <p className="js-boot-data mt-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
           Horizon level · flow fields arrive in phase 3
         </p>
       </Region>
 
-      <div className="deck-region--operator">
+      <div className="deck-region--operator js-gauge js-deck-chrome">
         <div className="flex items-baseline justify-between border-t border-[var(--deck-line)] pt-3">
-          <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
-            Operator state · blink — · respiration — · coherence —
+          <p className="flex items-baseline gap-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
+            <span className="js-ready-lamp" aria-hidden="true" />
+            <span>{deckCopy.readyLabel}</span>
+            <span aria-hidden="true">·</span>
+            <span>Operator state · blink — · respiration — · coherence —</span>
           </p>
           <button
             type="button"

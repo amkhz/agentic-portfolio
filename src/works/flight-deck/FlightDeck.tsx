@@ -5,8 +5,8 @@ import {
 } from "@core/works/flight-deck/machine";
 import { getWork } from "@core/works/works";
 import { useDeckCapabilities } from "./useDeckCapabilities";
-import { BootSequence } from "./components/BootSequence";
 import { DeckBench } from "./components/DeckBench";
+import { DeckSession } from "./components/DeckSession";
 import { DeclineCard } from "./components/DeclineCard";
 import { Colophon } from "./components/Colophon";
 import "./tokens.css";
@@ -14,9 +14,10 @@ import "./flight-deck.css";
 
 /**
  * Works 01 root (ADR-017 D1): full-bleed, outside LabLayout, one route.
- * Phase 1 skeleton: mode gating, session state machine, bench scaffold,
- * colophon chrome, decline card, static plate. Instruments, choreography,
- * and sound arrive in phases 2-6.
+ * Mode gating, session state machine, colophon chrome, decline card,
+ * static plate. As of phase 2 the full mode is a live session: the boot
+ * ritual and the Field Integrity hero run in DeckSession; the remaining
+ * instruments, the control panel, the drill, and sound arrive in 3-6.
  */
 export function FlightDeck() {
   const mode = useDeckCapabilities();
@@ -44,11 +45,10 @@ export function FlightDeck() {
               variant="plate"
               onExitToColophon={() => setSurface("colophon")}
             />
-          ) : state.phase === "dormant" || state.phase === "waking" ? (
-            <BootSequence phase={state.phase} dispatch={dispatch} />
           ) : (
-            <DeckBench
-              variant="live"
+            <DeckSession
+              state={state}
+              dispatch={dispatch}
               onExitToColophon={() => setSurface("colophon")}
             />
           )}

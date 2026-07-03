@@ -29,10 +29,24 @@
   /* Operator-state channel: one quiet hue, never confusable with vehicle telemetry */
   --deck-operator: oklch(0.75 0.06 150);
 
-  /* Field render ramp endpoints. Placeholder pair: the real spectral ramp is
-     calibrated live against AA in phase 2, informed by the Wallace probe. */
-  --deck-field-low: oklch(0.38 0.06 255);
-  --deck-field-high: oklch(0.84 0.11 85);
+  /* Field render spectral ramp (medical-imaging register, Wallace ramp
+     probe as reference). Direction locked 2026-07-03: blue -> violet ->
+     amber top; the ramp never enters red, which stays the warning's
+     monopoly. The shader interpolates these stops in OKLab (rectangular),
+     so the violet-to-amber passage desaturates through warm neutral
+     instead of detouring through red hue. Stops are draft values pending
+     the live AA gut-check on the WebGL render (open build question). */
+  --deck-field-stop-0: oklch(0.36 0.07 255); /* thin wall, deep cool blue */
+  --deck-field-stop-1: oklch(0.46 0.08 285);
+  --deck-field-stop-2: oklch(0.56 0.065 315); /* muted violet */
+  --deck-field-stop-3: oklch(0.7 0.05 70);
+  --deck-field-stop-4: oklch(0.86 0.13 88); /* densest energy, golden amber top */
+
+  /* Boot emission (locked ritual, 2026-07-03): bloom once, hold a quiet
+     glow. The ready light emits in the operator channel; gauges emit in
+     their own bone light, so telemetry and watcher stay unconfusable. */
+  --deck-emit-ready: oklch(0.75 0.06 150 / 0.45);
+  --deck-emit-gauge: oklch(0.94 0.008 84 / 0.16);
 
   /* Interaction */
   --deck-focus: oklch(0.78 0.13 72);

@@ -55,6 +55,151 @@
   grid-area: operator;
 }
 
+/* Field Integrity, the hero instrument. */
+.deck-field__stage {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  min-height: 22rem;
+}
+
+.deck-field__canvas {
+  position: relative;
+  flex: 1;
+}
+
+.deck-field__canvas canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-field__legend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.25rem;
+}
+
+.deck-field__legend-bar {
+  flex: 1;
+  width: 0.375rem;
+  border-radius: 999px;
+  background: linear-gradient(
+    to top in oklab,
+    var(--deck-field-stop-0),
+    var(--deck-field-stop-1),
+    var(--deck-field-stop-2),
+    var(--deck-field-stop-3),
+    var(--deck-field-stop-4)
+  );
+}
+
+.deck-field__legend-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-faint);
+}
+
+/* The static plate's ring: same ramp tokens as the shader, interpolated
+   in OKLab so the plate cannot drift warm through red either. */
+.deck-field-plate__ring {
+  position: absolute;
+  inset: 8%;
+  margin: auto;
+  aspect-ratio: 1;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 40deg in oklab,
+    var(--deck-field-stop-1),
+    var(--deck-field-stop-3) 18%,
+    var(--deck-field-stop-4) 32%,
+    var(--deck-field-stop-2) 58%,
+    var(--deck-field-stop-0) 78%,
+    var(--deck-field-stop-1)
+  );
+  mask: radial-gradient(
+    closest-side,
+    transparent 60%,
+    oklch(1 0 0) 68%,
+    oklch(1 0 0) 84%,
+    transparent 92%
+  );
+}
+
+/* Certification lamps: unlit at nominal, flashed in severity order by the
+   boot ritual. Decorative redundancy; severity semantics stay shape +
+   position + label. */
+.deck-lamps {
+  display: inline-flex;
+  gap: 0.375rem;
+}
+
+.deck-lamp {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  opacity: 0.18;
+}
+
+.deck-lamp--advisory {
+  background: var(--deck-advisory);
+}
+.deck-lamp--caution {
+  background: var(--deck-caution);
+}
+.deck-lamp--warning {
+  background: var(--deck-warning);
+}
+
+/* Certification sweep arm for the non-canvas instruments. */
+.deck-region-body {
+  position: relative;
+}
+
+.deck-sweep {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--deck-ink);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The wake overlay: while the deck is dormant this is the only light. */
+.deck-wake {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+/* Boot emission (locked ritual): bloom once, hold a quiet glow. GSAP
+   drives --emit; at rest (and on the static plate) it is 0. */
+.js-ready-lamp {
+  display: inline-block;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--deck-operator);
+  box-shadow:
+    0 0 calc(var(--emit, 0) * 14px) calc(var(--emit, 0) * 3px)
+    var(--deck-emit-ready);
+}
+
+.js-emit {
+  text-shadow: 0 0 calc(var(--emit, 0) * 12px) var(--deck-emit-gauge);
+}
+
 /* Movement 1, dormant: one breathing indicator, the only light. */
 .deck-breath {
   animation: deck-breath var(--deck-breath-duration) ease-in-out infinite;

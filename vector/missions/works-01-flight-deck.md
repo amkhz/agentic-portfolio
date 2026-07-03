@@ -2,7 +2,7 @@
 
 > The single source of "where are we" for this build. Every work session reads this first; every PR that advances the build updates the **Now** line and checklist in the same PR (that is the definition-of-done rule that keeps nothing from slipping). Keep it lean: current state, locked decisions, open threads. History lives in git and the PRs.
 
-**Now:** Phase 2 MERGED 2026-07-03 (PR #175, merge 672db18): Field Integrity hero live (ogl shader, amber-top ramp in OKLab from five token stops, readings HTML with sr mirror), boot ritual as one GSAP timeline per the locked score, gsap scoped to the deck chunk (49 of 350 KB gz). All phase gates closed same day: Justin's live review (ramp validated; hold feedback added; settle bounce cut for brightness exhale + traveling emission) and Roy's review (AA HOLD cured in-PR with `--deck-ink-label`; see checklist). Next up: **Phase 3 — Synthetic Orientation + Vacuum Energy** (Roy reviews again at phase 5).
+**Now:** Phase 2 MERGED 2026-07-03 (PR #175, merge 672db18): Field Integrity hero live (ogl shader, amber-top ramp in OKLab from five token stops, readings HTML with sr mirror), boot ritual as one GSAP timeline per the locked score, gsap scoped to the deck chunk (49 of 350 KB gz). All phase gates closed same day: Justin's live review (ramp validated; hold feedback added; settle bounce cut for brightness exhale + traveling emission) and Roy's review (AA HOLD cured in-PR with `--deck-ink-label`; see checklist). Same-day motion pass after Justin's live note (a static-reading bubble undercuts the live thesis): field render gained living speckle, a circulation crest (~12s lap), watchable drift rates (10-30s cycles), and a faint ring breath; telemetry model untouched. Justin-approved live. Next up: **Phase 3 — Synthetic Orientation + Vacuum Energy** (Roy reviews again at phase 5). Wanted for future tuning sessions: DialKit-style dev controls on the shader params (see parking lot).
 
 ## Reading order for a fresh session
 
@@ -48,7 +48,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
 ## Fast-follow parking lot
 
-Spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup).
+Spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup); dev-only DialKit panel (`/interface-craft`) exposing the field shader's motion params as live controls, stripped from production (Justin, 2026-07-03).
 
 ## Rules of engagement (every session)
 

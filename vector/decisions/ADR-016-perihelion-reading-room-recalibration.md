@@ -1,7 +1,7 @@
 # ADR-016: Perihelion Visual Recalibration ("The Reading Room")
 
 **Date:** 2026-06-30 (accepted) · 2026-07-01 (completed, reconciled to shipped state)
-**Status:** accepted — shipped in full (P1–P4, P6); P5 / Wallace materials deferred
+**Status:** accepted — shipped in full (P1–P4, P6); P5 / Wallace materials deferred. Amended in part by ADR-017 (2026-07-03): motion convergence governs Archive surfaces only; Works surfaces follow the two-lane rule (reactive = motion springs, authored = GSAP).
 **Deciders:** Justin (operator) + Tyrell
 
 ## Context

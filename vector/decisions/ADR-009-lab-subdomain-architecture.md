@@ -1,7 +1,7 @@
 # ADR-009: Lab subdomain architecture — two Vite builds, one repo
 
 **Date:** 2026-04-20
-**Status:** proposed
+**Status:** proposed — implemented; amended in part by ADR-017 (2026-07-03): Works routes (`/w/:slug`) render standalone outside LabLayout, and per-work scoped token files are sanctioned alongside `lab-tokens.css`. The import boundary and multi-entry build stand unchanged.
 **Deciders:** Justin Hernandez, Dreamer (Tyrell to review before implementation)
 
 ## Context

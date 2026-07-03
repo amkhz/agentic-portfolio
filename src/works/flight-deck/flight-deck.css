@@ -101,7 +101,7 @@
   font-size: 0.625rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--deck-ink-faint);
+  color: var(--deck-ink-label);
 }
 
 /* The static plate's ring: same ramp tokens as the shader, interpolated
@@ -126,8 +126,8 @@
   mask: radial-gradient(
     closest-side,
     transparent 60%,
-    oklch(1 0 0) 68%,
-    oklch(1 0 0) 84%,
+    var(--deck-mask-opaque) 68%,
+    var(--deck-mask-opaque) 84%,
     transparent 92%
   );
 }

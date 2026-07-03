@@ -12,7 +12,7 @@ export function DeclineCard() {
   return (
     <main className="grid min-h-dvh place-items-center px-6 py-16">
       <div className="max-w-md">
-        <p className="text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-faint)]">
+        <p className="text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
           {deckCopy.colophon.kicker}
         </p>
         <h1 className="mt-4 font-[family-name:var(--deck-font-display)] text-3xl text-[var(--deck-ink)]">

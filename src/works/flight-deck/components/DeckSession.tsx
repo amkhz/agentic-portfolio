@@ -336,7 +336,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             <p className="js-wake-copy mt-8 font-[family-name:var(--deck-font-body)] text-base text-[var(--deck-ink-dim)]">
               {deckCopy.invitation}
             </p>
-            <p className="js-wake-copy mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-faint)]">
+            <p className="js-wake-copy mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
               {deckCopy.wakeHold}
             </p>
           </div>

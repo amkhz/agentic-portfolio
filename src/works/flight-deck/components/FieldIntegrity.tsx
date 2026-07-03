@@ -188,6 +188,13 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
     sweep: 0,
     reveal: 0,
   });
+  // One clock for the shader and the readings, so both sample the field
+  // model at the same instant and the mirror can never contradict the render.
+  const epochRef = useRef<number | null>(null);
+  const clock = () => {
+    epochRef.current ??= performance.now();
+    return (performance.now() - epochRef.current) / 1000;
+  };
   const uniformsRef = useRef<Record<string, { value: number }>>({});
   const [readings, setReadings] = useState(() =>
     formatFieldReadings(sampleFieldTelemetry(0)),
@@ -274,10 +281,9 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
     let frame = 0;
     let running = false;
     let inView = true;
-    const start = performance.now();
 
-    const update = (now: number) => {
-      const t = (now - start) / 1000;
+    const update = () => {
+      const t = clock();
       const field = sampleFieldTelemetry(t);
       program.uniforms.uTime.value = t;
       program.uniforms.uWall.value = field.wall;
@@ -337,13 +343,8 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
   // shader reads the same pure model every frame, so they cannot diverge.
   useEffect(() => {
     if (!live) return;
-    const start = performance.now();
     const interval = window.setInterval(() => {
-      setReadings(
-        formatFieldReadings(
-          sampleFieldTelemetry((performance.now() - start) / 1000),
-        ),
-      );
+      setReadings(formatFieldReadings(sampleFieldTelemetry(clock())));
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);

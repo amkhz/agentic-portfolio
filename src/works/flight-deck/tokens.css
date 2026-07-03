@@ -19,7 +19,8 @@
   /* Nominal instrument ink: pale warm bone-white, avionics "everything is fine" */
   --deck-ink: oklch(0.94 0.008 84); /* ~15:1 on --deck-bg */
   --deck-ink-dim: oklch(0.73 0.012 80); /* ~7.5:1 on --deck-bg */
-  --deck-ink-faint: oklch(0.55 0.014 76); /* large/decorative only */
+  --deck-ink-label: oklch(0.64 0.014 76); /* ~5.9:1: the quiet small-label ink, AA-safe */
+  --deck-ink-faint: oklch(0.55 0.014 76); /* decorative marks only, never text */
 
   /* Severity triad */
   --deck-advisory: oklch(0.85 0.025 84); /* restrained, near-ink */
@@ -49,6 +50,10 @@
   --deck-emit-gauge: oklch(0.94 0.008 84 / 0.16);
   /* The wake lamp's under-the-finger glow while the hold charges. */
   --deck-emit-wake: oklch(0.78 0.13 72 / 0.35);
+
+  /* Mask-only plumbing (alpha, never rendered): keeps literal color
+     values out of every file but this one. */
+  --deck-mask-opaque: oklch(1 0 0);
 
   /* Interaction */
   --deck-focus: oklch(0.78 0.13 72);

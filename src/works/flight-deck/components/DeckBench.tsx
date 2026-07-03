@@ -88,7 +88,7 @@ export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
         role="status"
         aria-label="Alerts"
       >
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
+        <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-label)]">
           No active alerts
         </p>
       </div>
@@ -129,7 +129,7 @@ export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
           className="js-boot-data h-8 border-y border-[var(--deck-line)]"
           aria-hidden="true"
         />
-        <p className="js-boot-data mt-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-faint)]">
+        <p className="js-boot-data mt-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-label)]">
           Horizon level · flow fields arrive in phase 3
         </p>
       </Region>

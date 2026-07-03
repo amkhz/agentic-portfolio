@@ -11,7 +11,10 @@ dist/
 .impeccable/
 
 # Wallace render output (local image generation; self-ignored, kept out of the repo).
-/mocks/
+# Exception: the Flight Deck direction probes are a versioned design record
+# (Works 01 phase gate; sidecar captions are the spec phase 2 reads).
+/mocks/*
+!/mocks/flight-deck-probes/
 
 # Scratchpad — local working files, internal receipts, temp specimens. Never commit
 # (the repo is public; internal PR/ADR numbers and metrics must stay out).

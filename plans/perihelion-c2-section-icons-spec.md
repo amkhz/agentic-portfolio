@@ -242,6 +242,33 @@ sectionIcons:
   design-implications: pencil-ruler
 ```
 
+### dird-34-cognitive-limits
+
+> Added 2026-07-03 with the guide itself (order 12, the supervisory-control cognition
+> brief, T1). All seven picks reuse the locked vocabulary — no new glyphs, no registry
+> change. Reuse rationale: `telescope` and `pencil-ruler` follow the structural-spine
+> conventions for `#big-picture` and `#design-implications`; `activity` shares the
+> curve/vitals register with dird-14 `#morningbird` (the workload-performance curve as
+> the guide's vital sign); `gauge` deliberately links the measurement register of
+> dird-15 `#speed-of-light` and dird-28 `#g-force-revolution` (here, instruments that
+> measure minds); `radar` shares the state-detection register with uapx
+> `#instrument-stack` and government-efforts `#international` — and is literal here,
+> the air traffic control evidence base; `joystick` deliberately links dird-28
+> `#control-paradigms` (the same control-paradigms register, from cockpit to fleet
+> supervision); `binary` deliberately links dird-28 `#new-information` (the numbers
+> register — 16, 7, or 4). Provisional pending Justin's live review.
+
+```yaml
+sectionIcons:
+  big-picture: telescope
+  workload-curve: activity
+  measuring-minds: gauge
+  atc-evidence: radar
+  supervising-fleets: joystick
+  the-numbers: binary
+  design-implications: pencil-ruler
+```
+
 ## Build-mission scope (not this session)
 
 1. `guide-types.ts`: `sectionIcons?: Record<string, string>` on the guide frontmatter

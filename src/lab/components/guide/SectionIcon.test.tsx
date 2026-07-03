@@ -52,11 +52,11 @@ describe('SectionIcon', () => {
     );
     // C.2 spec: 63 anchors across 8 guides, plus government-efforts-uap
     // (7 anchors, locked-vocabulary reuse), wendt-duvall-sovereignty
-    // (8 anchors), and dird-36-quantum-tomography (8 anchors) added
-    // with those guides.
+    // (8 anchors), dird-36-quantum-tomography (8 anchors), and
+    // dird-34-cognitive-limits (7 anchors) added with those guides.
     const sectionCount = guides.reduce((n, g) => n + g.sections.length, 0);
-    expect(guides).toHaveLength(11);
-    expect(sectionCount).toBe(86);
+    expect(guides).toHaveLength(12);
+    expect(sectionCount).toBe(93);
     expect(iconNames.size).toBeGreaterThan(0);
     for (const name of iconNames) {
       const { container, unmount } = render(<SectionIcon name={name} size={26} />);

@@ -143,14 +143,14 @@ void main() {
      breathes faintly. Rates are watchable (10-30s cycles), never nervous. */
   float uneven = 1.0 - uEven;
   float R = 0.74
-    + 0.006 * sin(t * 0.45)
-    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * 0.26)
-    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * 0.19 + 1.3);
+    + 0.006 * sin(t * 0.6)
+    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * 0.38)
+    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * 0.28 + 1.3);
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
   float thickness = 0.085 * uWall * (1.0
-    + 0.38 * sin(3.0 * theta + t * 0.24 + 0.7)
-    + 0.22 * sin(5.0 * theta - t * 0.17 + 2.1));
+    + 0.38 * sin(3.0 * theta + t * 0.35 + 0.7)
+    + 0.22 * sin(5.0 * theta - t * 0.25 + 2.1));
   thickness = max(thickness, 0.02);
 
   float d = (r - R) / thickness;
@@ -164,11 +164,11 @@ void main() {
 
   /* Circulation: a low crest of energy traveling the wall, the bubble
      visibly holding itself. Periodic in theta, so no seam. */
-  density += 0.05 * sin(2.0 * theta - t * 0.5 + 1.0);
+  density += 0.05 * sin(2.0 * theta - t * 0.7 + 1.0);
 
   /* Living speckle, drifting through the field in cartesian space (no
      angular seam): two octaves, +/-6%, the medium alive under calm data. */
-  vec2 sp = p * 9.0 + vec2(t * 0.22, -t * 0.34);
+  vec2 sp = p * 9.0 + vec2(t * 0.32, -t * 0.5);
   float speckle = vnoise(sp) * 0.6 + vnoise(sp * 2.3 + 7.7) * 0.4;
   density *= 1.0 + 0.12 * (speckle - 0.5);
 

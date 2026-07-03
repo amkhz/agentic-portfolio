@@ -6,3 +6,4 @@
 !.gitignore
 !flight-deck-probes/
 !flight-deck-probes/**
+flight-deck-probes/.impeccable/

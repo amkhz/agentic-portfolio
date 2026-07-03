@@ -2,7 +2,7 @@
 
 > The single source of "where are we" for this build. Every work session reads this first; every PR that advances the build updates the **Now** line and checklist in the same PR (that is the definition-of-done rule that keeps nothing from slipping). Keep it lean: current state, locked decisions, open threads. History lives in git and the PRs.
 
-**Now:** Phase 1 skeleton landed 2026-07-03 (route, scoped tokens, manifest, state machine, colophon, decline card, static plate; boot cadence is placeholder). Boot-ritual riffs delivered, direction pending Justin. Next up: **Wallace direction probes**, then **Phase 2 — Field Integrity.**
+**Now:** Phase 1 merged + boot ritual locked + Wallace probes complete, all 2026-07-03. Ramp direction locked: amber top, red stays the warning's monopoly. Next up: **Phase 2 — Field Integrity** (hero instrument, ogl shaders, boot timeline vs the riff sheet; Roy reviews after).
 
 ## Reading order for a fresh session
 
@@ -28,7 +28,7 @@
 
 Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
-- [ ] **Wallace direction probes** (before phase 2): instrument-bench material study; field-render spectral-ramp study; consciousness-chamber end state. Baked-text call per render with Justin.
+- [x] **Wallace direction probes** (before phase 2): instrument-bench material study; field-render spectral-ramp study; consciousness-chamber end state. Baked-text call per render with Justin. Record in `mocks/flight-deck-probes/` (6 renders + caption sidecars, 2026-07-03; bench + ramp re-rendered same day under strict typography-craft captions, strict validation on). Outcomes: bench register validated (bench s11 is the direction reference; s47's physical needles noted as retro drift, not the lane); readings-are-HTML confirmed (incidental baked micro-text garbles, deliberate mono strings render perfectly, 12/12 across both passes); chamber s47 is the movement-5 end-state reference. Ramp finding: Ideogram's perfusion prior resists a fully red-free ramp (two palette passes, red still bleeds in below the amber top), so the probes stand as register references, not color specs; the amber-top ramp is enforced exactly by the WebGL shader in phase 2.
 - [x] **Phase 1 — Skeleton:** route + lazy chunk, scoped tokens, `core/works/` manifest, state machine, colophon chrome, mobile decline card, reduced-motion/no-WebGL static plate scaffold.
 - [ ] **Phase 2 — Field Integrity** (hero instrument, ogl shaders). → **Roy review.**
 - [ ] **Phase 3 — Synthetic Orientation + Vacuum Energy.**
@@ -42,7 +42,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 ## Open build questions (resolve during build, record here)
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
-- Field-render spectral ramp (live WebGL calibration against AA; informed by Wallace probe).
+- Field-render spectral ramp: direction locked 2026-07-03 from the Wallace probe — **amber top** (blue -> violet -> amber, never entering red; the drill's warning keeps the deck's only red). Still open: exact stops calibrated live in WebGL against AA in phase 2, probes as reference.
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).
 

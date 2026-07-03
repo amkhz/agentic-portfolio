@@ -1,0 +1,9 @@
+# Throwaway Wallace test renders and sidecar captions.
+# Not case-study artifacts — where project renders live is TBD after the neo-mirai test.
+# Exception (2026-07-03): flight-deck-probes/ is a versioned design record — the
+# Works 01 phase-2 gate; its sidecar captions are the spec the build reads.
+*
+!.gitignore
+!flight-deck-probes/
+!flight-deck-probes/**
+flight-deck-probes/.impeccable/

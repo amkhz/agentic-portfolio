@@ -41,7 +41,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 ## Open build questions (resolve during build, record here)
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
-- Boot-ritual choreography (movement 1): four riffs on the table (certification self-test, calibration sweep, light-follows-power, held-to-start); pick or blend before the boot timeline is authored. Skeleton ships a placeholder stagger; the machine already supports early release (`ABORT_WAKE`).
+- Boot-ritual choreography (movement 1): Justin leaning **D+A blend** (hold-to-start gesture, certification self-test grammar per instrument) after the 2026-07-03 riff session; operable prototype on the riff-sheet artifact. Lock before the boot timeline is authored. Implementation note: one GSAP timeline, hold scrubs the playhead, release runs it backward; skeleton machine already supports it (`WAKE` / `ABORT_WAKE` / `BOOT_COMPLETE`).
 - Field-render spectral ramp (live WebGL calibration against AA; informed by Wallace probe).
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).

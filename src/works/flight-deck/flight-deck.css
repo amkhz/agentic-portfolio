@@ -183,6 +183,53 @@
   text-align: center;
 }
 
+/* Hold-to-start control: the hold charges the lamp (glow swells under
+   the finger) while the ring strokes in as an honest playhead readout.
+   Both scrub with the timeline, so an early release visibly drains. */
+.deck-wake__control {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.deck-wake__lamp {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--deck-caution);
+  box-shadow:
+    0 0 calc(var(--emit, 0) * 18px) calc(var(--emit, 0) * 4px)
+    var(--deck-emit-wake);
+}
+
+.deck-wake__ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+
+.deck-wake__ring-track {
+  fill: none;
+  stroke: var(--deck-line);
+  stroke-width: 1.5;
+}
+
+.deck-wake__ring-progress {
+  fill: none;
+  stroke: var(--deck-caution);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
 /* Boot emission (locked ritual): bloom once, hold a quiet glow. GSAP
    drives --emit; at rest (and on the static plate) it is 0. */
 .js-ready-lamp {

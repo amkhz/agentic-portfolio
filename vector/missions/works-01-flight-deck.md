@@ -2,7 +2,7 @@
 
 > The single source of "where are we" for this build. Every work session reads this first; every PR that advances the build updates the **Now** line and checklist in the same PR (that is the definition-of-done rule that keeps nothing from slipping). Keep it lean: current state, locked decisions, open threads. History lives in git and the PRs.
 
-**Now:** Phase 2 built 2026-07-03: Field Integrity hero is live (ogl shader, amber-top ramp interpolated in OKLab from five token stops, readings HTML with sr sentence mirror) and the boot ritual runs as one GSAP timeline per the locked score (hold scrubs the playhead, release runs it backward, certification per instrument, settle + emission). gsap/@gsap/react installed, scoped to the deck chunk (49 KB gz total, budget 350). Next: **Roy review of phase 2** plus Justin's live ramp gut-check, then **Phase 3 — Synthetic Orientation + Vacuum Energy**.
+**Now:** Phase 2 built 2026-07-03: Field Integrity hero is live (ogl shader, amber-top ramp interpolated in OKLab from five token stops, readings HTML with sr sentence mirror) and the boot ritual runs as one GSAP timeline per the locked score (hold scrubs the playhead, release runs it backward, certification per instrument, settle + emission). gsap/@gsap/react installed, scoped to the deck chunk (49 KB gz total, budget 350). Live review done same day: ramp validated, hold feedback added (progress ring + lamp charge), settle bounce cut (brightness exhale + traveling emission). Next: **Roy review of phase 2**, then **Phase 3 — Synthetic Orientation + Vacuum Energy**.
 
 ## Reading order for a fresh session
 
@@ -22,7 +22,7 @@
 - Wallace is sanctioned for Works (concept art, mood frames, probes); imagery restraint is portfolio/Archive doctrine only.
 - Colophon cites the dird-34 guide directly (`core/lab/guides/dird-34-cognitive-limits.md`, complete as of PR #169).
 - Home linking: evolve the Shelf (Works section, instrument-on-the-shelf register); foyer deferred to Works 02.
-- Boot ritual: **D+A blend, locked 2026-07-03.** Hold-to-start gesture, certification self-test grammar per instrument (sweep, lamp flash in severity order, caption, then data), completion lands as a one-breath deck settle (synchronized gauge overshoot, bench edge to operator channel) plus a subtle emission on ready light and gauges (bloom once, hold a quiet glow: an awake deck gives off its own light; ready light emits in the operator channel, gauges in their own bone light so telemetry and watcher stay unconfusable). One GSAP timeline; the hold scrubs the playhead, release runs it backward. Machine events `WAKE`/`ABORT_WAKE`/`BOOT_COMPLETE` already fit. Choreography reference: the riff-sheet artifact (2026-07-03 session). Doctrine note, per Justin same day: slop bans are overridable anywhere when the move has meaningful use, not just for show.
+- Boot ritual: **D+A blend, locked 2026-07-03.** Hold-to-start gesture, certification self-test grammar per instrument (sweep, lamp flash in severity order, caption, then data), completion lands as a one-breath deck settle (synchronized gauge overshoot, bench edge to operator channel) plus a subtle emission on ready light and gauges (bloom once, hold a quiet glow: an awake deck gives off its own light; ready light emits in the operator channel, gauges in their own bone light so telemetry and watcher stay unconfusable). One GSAP timeline; the hold scrubs the playhead, release runs it backward. Machine events `WAKE`/`ABORT_WAKE`/`BOOT_COMPLETE` already fit. Choreography reference: the riff-sheet artifact (2026-07-03 session). Doctrine note, per Justin same day: slop bans are overridable anywhere when the move has meaningful use, not just for show. Execution amendments from live review of the built ritual (2026-07-03, PR #175): the settle's positional overshoot read as a bounce and was cut; the one-breath settle is carried by a single brightness exhale plus the emission bloom traveling bench edge to operator channel. Hold-to-start gained visible charge feedback: progress ring strokes in with the playhead, lamp glow swells under the finger, both drain on early release.
 
 ## Build checklist
 
@@ -42,7 +42,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 ## Open build questions (resolve during build, record here)
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
-- Field-render spectral ramp: direction locked 2026-07-03 from the Wallace probe — **amber top** (blue -> violet -> amber, never entering red; the drill's warning keeps the deck's only red). Phase 2 landed five draft stops as tokens (`--deck-field-stop-0..4`), OKLab-interpolated in-shader. Still open: Justin's live gut-check of the exact stops on the WebGL render (fold into the Roy review pass), then mark them calibrated.
+- Field-render spectral ramp: **resolved 2026-07-03.** Amber top locked from the Wallace probe; phase 2 landed five stops as tokens (`--deck-field-stop-0..4`), OKLab-interpolated in-shader, and Justin validated the color live on the WebGL render ("the color tokens look right"). Formal contrast re-check rides the phase 7 `/audit`.
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).
 

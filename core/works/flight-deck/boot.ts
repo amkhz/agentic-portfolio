@@ -28,7 +28,11 @@ export const bootScore = {
     dataMs: 360,
     betweenInstrumentsMs: 160,
   },
-  /** The one-breath deck settle: synchronized gauge overshoot. */
+  /**
+   * The one-breath deck settle: a single brightness exhale, with
+   * staggerMs pacing the emission wave bench edge -> operator channel
+   * (live review 2026-07-03 cut the positional overshoot as a bounce).
+   */
   settle: { durationMs: 640, staggerMs: 70 },
   /** Bloom once, hold a quiet glow: an awake deck gives off its own light. */
   emission: { bloomMs: 480, holdMs: 720 },

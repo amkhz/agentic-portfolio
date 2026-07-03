@@ -87,7 +87,20 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       });
 
       // Wake segment [0, holdS]: scrubbed by the hold, never auto-played.
-      tl.to(q(".js-wake-lamp"), { scale: 1.4, duration: holdS, ease: "none" }, 0);
+      // The CSS breath animation would mask GSAP's transform, so the first
+      // touch of the playhead silences it (scrubbing back past 0 restores).
+      tl.set(q(".js-wake-lamp"), { animation: "none" }, 0.001);
+      tl.to(
+        q(".js-wake-lamp"),
+        { scale: 1.3, "--emit": 1, duration: holdS, ease: "none" },
+        0,
+      );
+      tl.to(
+        q(".js-wake-ring"),
+        { strokeDashoffset: 0, duration: holdS, ease: "none" },
+        0,
+      );
+      tl.to(q(".js-wake-copy"), { opacity: 0.55, duration: holdS, ease: "none" }, 0);
       tl.to(q(".deck-bench"), { opacity: 1, duration: holdS, ease: "none" }, 0);
 
       // Commit: the overlay hands the room to the deck.
@@ -192,7 +205,9 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
         at += seconds(certificationDurationMs() + c.betweenInstrumentsMs);
       }
 
-      // The one-breath deck settle: synchronized gauge overshoot, bench
+      // The one-breath deck settle. Live review 2026-07-03 cut the
+      // positional overshoot (read as a bounce): the breath is carried by
+      // a single brightness exhale and the emission bloom traveling bench
       // edge to operator channel (DOM order matches the scan top-down).
       tl.addLabel("settle", at + 0.05);
       tl.to(
@@ -200,34 +215,38 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
         { opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out" },
         "settle",
       );
-      tl.to(
-        q(".js-gauge"),
+      tl.fromTo(
+        q(".deck-bench"),
+        { filter: "brightness(1.06)" },
         {
-          keyframes: { y: [0, 5, -2, 0] },
+          filter: "brightness(1)",
           duration: seconds(bootScore.settle.durationMs),
-          ease: "power2.inOut",
-          stagger: seconds(bootScore.settle.staggerMs),
+          ease: "power2.out",
+          immediateRender: false,
         },
         "settle",
       );
 
-      // Emission: bloom once, settle to a quiet held glow. Ready light in
-      // the operator channel, gauges in their own bone light.
+      // Emission: bloom once, settle to a quiet held glow, the wave running
+      // top of the bench down to the ready light in the operator channel.
+      const travel = seconds(bootScore.settle.staggerMs);
       tl.fromTo(
-        q(".js-ready-lamp, .js-emit"),
+        q(".js-emit, .js-ready-lamp"),
         { "--emit": 0 },
         {
           "--emit": 1.6,
           duration: seconds(bootScore.emission.bloomMs),
           ease: "power2.out",
+          stagger: travel,
           immediateRender: false,
         },
-        "settle+=0.3",
+        "settle+=0.15",
       );
-      tl.to(q(".js-ready-lamp, .js-emit"), {
+      tl.to(q(".js-emit, .js-ready-lamp"), {
         "--emit": 1,
         duration: seconds(bootScore.emission.holdMs),
         ease: "power1.inOut",
+        stagger: travel,
       });
       tl.call(() => setAnnouncement(deckCopy.deckReady));
 
@@ -285,7 +304,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             <button
               type="button"
               aria-label={deckCopy.wakeHold}
-              className="js-wake-lamp deck-breath mx-auto block size-4 rounded-full bg-[var(--deck-caution)]"
+              className="deck-wake__control mx-auto"
               onPointerDown={beginHold}
               onPointerUp={releaseHold}
               onPointerLeave={releaseHold}
@@ -297,11 +316,27 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
                 if (e.key === " " || e.key === "Enter") releaseHold();
               }}
               onBlur={releaseHold}
-            />
-            <p className="mt-8 font-[family-name:var(--deck-font-body)] text-base text-[var(--deck-ink-dim)]">
+            >
+              <svg
+                className="deck-wake__ring"
+                viewBox="0 0 44 44"
+                aria-hidden="true"
+              >
+                <circle className="deck-wake__ring-track" cx="22" cy="22" r="20" />
+                <circle
+                  className="js-wake-ring deck-wake__ring-progress"
+                  cx="22"
+                  cy="22"
+                  r="20"
+                  pathLength={1}
+                />
+              </svg>
+              <span className="js-wake-lamp deck-breath deck-wake__lamp" />
+            </button>
+            <p className="js-wake-copy mt-8 font-[family-name:var(--deck-font-body)] text-base text-[var(--deck-ink-dim)]">
               {deckCopy.invitation}
             </p>
-            <p className="mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-faint)]">
+            <p className="js-wake-copy mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-faint)]">
               {deckCopy.wakeHold}
             </p>
           </div>

@@ -47,6 +47,8 @@
      their own bone light, so telemetry and watcher stay unconfusable. */
   --deck-emit-ready: oklch(0.75 0.06 150 / 0.45);
   --deck-emit-gauge: oklch(0.94 0.008 84 / 0.16);
+  /* The wake lamp's under-the-finger glow while the hold charges. */
+  --deck-emit-wake: oklch(0.78 0.13 72 / 0.35);
 
   /* Interaction */
   --deck-focus: oklch(0.78 0.13 72);

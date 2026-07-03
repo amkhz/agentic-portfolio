@@ -5,7 +5,9 @@
 **Register:** brand (design IS the product; per ADR-017 D3 the register inversion makes this doubly true).
 **Upstream:** `vector/briefs/works-01-flight-deck-2026-07-03.md` (invest brief), `vector/decisions/ADR-017-perihelion-works-arm.md`, `plans/works-01-the-flight-deck.md`, `plans/dird-34-source-extraction.md` (final section).
 
-> Discovery note: the interview inputs (purpose, audience, success, content, constraints, anti-goals) are answered directly by the documents above; no interview rounds were run. Visual direction probes skipped: no built-in image generation in this harness, and generated cockpit mood frames would violate the imagery-restraint doctrine before build direction exists.
+> Discovery note: the interview inputs (purpose, audience, success, content, constraints, anti-goals) are answered directly by the documents above; no interview rounds were run.
+>
+> **Wallace is sanctioned for Works exploration (Justin, 2026-07-03).** The imagery-restraint doctrine is portfolio/Archive doctrine and does not apply to Works projects. Concept art, cockpit mood frames, and visual direction probes run through Wallace freely before and during build. Probe plan: 2-4 direction tests before phase 2 (instrument-bench material/composition study; field-render spectral-ramp study on the medical-imaging lane; consciousness-chamber end state). Probes are direction tests, not final designs; baked-text vs HTML labels decided with Justin per render, per the Wallace intake convention.
 
 ---
 
@@ -43,7 +45,7 @@ All OKLCH by token name in `src/works/flight-deck/tokens.css` (ADR-017 D2). WCAG
 ## 4. Scope
 
 - **Fidelity:** production-ready; this is flagship work and the Works template.
-- **Breadth:** one route (`/w/flight-deck`), the full five-movement session, plus colophon chrome, decline card, and reduced-motion plate.
+- **Breadth:** one route (`/w/flight-deck`), the full five-movement session, plus colophon chrome, decline card, and reduced-motion plate. **Out of scope but open (Justin, 2026-07-03): how Works links from the Perihelion home.** The deck needs at least one entry point on the lab home so the piece is not orphaned; whether the home evolves into a two-arm foyer is deferred (see §10).
 - **Interactivity:** shipped-quality operable piece; state machine per plan (preflight → nominal → drill → recovery, plus paradigm position).
 - **Time intent:** polish until it ships, phased per the plan's seven PRs; Roy at phases 2, 5, 6.
 
@@ -114,7 +116,7 @@ All copy: plain language, no physics credentials assumed, no permission framing 
 - Operator-state strip labels (blink, respiration, coherence) + promotion caption at the consciousness end.
 - Paradigm regime names (instrumented / hybrid / consciousness) + one line each.
 - Decline card copy ("this instrument wants a wider bench" + thesis).
-- Colophon: title, thesis paragraph (film FUI is read in 3 seconds, this is operated), source lines: DIRD 28 guide (direct link), DIRD 13, DIRD 15, and the interim DIRD 34 line (cite via DIRD 28 §Control Paradigms with "DIRD 34 guide forthcoming"; no dird-34 guide exists in `core/lab/guides/` at shape time). Works arm line candidate (Q6/ADR-017 D7) drafted here.
+- Colophon: title, thesis paragraph (film FUI is read in 3 seconds, this is operated), source lines: DIRD 28 guide, **DIRD 34 guide (direct link — `core/lab/guides/dird-34-cognitive-limits.md` landed via PR #166, superseding the interim DIRD 28 posture)**, DIRD 13, DIRD 15. A grammar and glossary pass on the dird-34 guide merges soon; write colophon copy after it lands. Works arm line candidate (Q6/ADR-017 D7) drafted here.
 - Full text-mirror strings for every instrument reading and every audio event.
 
 Writer + Gaff pass on all of it before ship; Joi profile gates the colophon voice.
@@ -128,8 +130,10 @@ Writer + Gaff pass on all of it before ship; Joi profile gates the colophon voic
 
 ## 10. Open Questions
 
-- **For Justin at confirmation:** the piece's name (working title stands in ADR-017); the audio call (alert grammar ships, soundscape parks) since it moves build budget; the drill-tone line if he wants it braver; Works arm tagline candidate direction (D7).
-- **For build:** display face selection via the font procedure; the exact spectral ramp for the field render (needs live WebGL calibration against AA); whether the drill re-arms for repeat visitors or stays once-per-session; decline-card capture format (static frame vs short clip, weight budget).
+- **Resolved at confirmation (2026-07-03):** name = The Flight Deck; audio = alert grammar ships, spatial soundscape parks; Wallace probes sanctioned for Works.
+- **Open, needs Justin: how Works links from the Perihelion home.** Do the arms coexist on the current home (the Shelf gains a Works section) or does the home become a two-arm foyer routing to Archive and Works? Recommendation: evolve, don't rebuild. With one Works piece, a foyer over-weights an arm with a single entry; peers-not-pipeline argues Works gets a real section on the existing home (distinct register from the guide shelf: the Flight Deck's sigil + thesis line, an instrument on the shelf of books, not another book spine), with the masthead already carrying the house identity and each arm's line per D7. Revisit a true foyer when Works 02 exists. This touches Archive-side surfaces (LabLayout home), so it ships as its own small shape + PR, not inside the deck's phases.
+- **For Justin, still open:** the drill-tone line if he wants it braver; Works arm tagline candidate direction (D7).
+- **For build:** display face selection via the font procedure; the exact spectral ramp for the field render (needs live WebGL calibration against AA, informed by the Wallace ramp probe); whether the drill re-arms for repeat visitors or stays once-per-session; decline-card capture format (static frame vs short clip, weight budget).
 
 ---
 

@@ -21,7 +21,7 @@ export function Colophon({ onReturn }: ColophonProps) {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-faint)]">
+      <p className="text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
         {deckCopy.colophon.kicker}
       </p>
       <h1 className="mt-4 font-[family-name:var(--deck-font-display)] text-4xl text-[var(--deck-ink)]">

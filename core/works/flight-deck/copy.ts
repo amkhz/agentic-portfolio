@@ -8,8 +8,12 @@
 export const deckCopy = {
   /** Dormant state: the single invitation line beside the breathing indicator. */
   invitation: "The deck is asleep. Wake it.",
+  /** The hold-to-start gesture, spelled out (also the wake control's name). */
+  wakeHold: "Hold to wake the deck.",
   /** Movement 1 close: the deck-ready line. */
   deckReady: "All instruments up. The deck is yours.",
+  /** The ready light's label in the operator channel. */
+  readyLabel: "Deck ready",
   decline: {
     heading: "This instrument wants a wider bench.",
     body: "The Flight Deck is an operable cockpit built for a desktop screen. Every instrument is live and every control does something, which is exactly why it will not squeeze down to a phone.",

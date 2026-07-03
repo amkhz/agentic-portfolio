@@ -2,7 +2,7 @@
 
 > The single source of "where are we" for this build. Every work session reads this first; every PR that advances the build updates the **Now** line and checklist in the same PR (that is the definition-of-done rule that keeps nothing from slipping). Keep it lean: current state, locked decisions, open threads. History lives in git and the PRs.
 
-**Now:** gates all closed 2026-07-03. Nothing built. Next up: **Phase 1 — Skeleton.**
+**Now:** Phase 1 skeleton landed 2026-07-03 (route, scoped tokens, manifest, state machine, colophon, decline card, static plate; boot cadence is placeholder). Boot-ritual riffs delivered, direction pending Justin. Next up: **Wallace direction probes**, then **Phase 2 — Field Integrity.**
 
 ## Reading order for a fresh session
 
@@ -28,7 +28,7 @@
 Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
 - [ ] **Wallace direction probes** (before phase 2): instrument-bench material study; field-render spectral-ramp study; consciousness-chamber end state. Baked-text call per render with Justin.
-- [ ] **Phase 1 — Skeleton:** route + lazy chunk, scoped tokens, `core/works/` manifest, state machine, colophon chrome, mobile decline card, reduced-motion/no-WebGL static plate scaffold.
+- [x] **Phase 1 — Skeleton:** route + lazy chunk, scoped tokens, `core/works/` manifest, state machine, colophon chrome, mobile decline card, reduced-motion/no-WebGL static plate scaffold.
 - [ ] **Phase 2 — Field Integrity** (hero instrument, ogl shaders). → **Roy review.**
 - [ ] **Phase 3 — Synthetic Orientation + Vacuum Energy.**
 - [ ] **Phase 4 — Control panel:** intent fields, proposal cards, utilization meter (A2 band), commit-moment choreography.
@@ -41,6 +41,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 ## Open build questions (resolve during build, record here)
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
+- Boot-ritual choreography (movement 1): four riffs on the table (certification self-test, calibration sweep, light-follows-power, held-to-start); pick or blend before the boot timeline is authored. Skeleton ships a placeholder stagger; the machine already supports early release (`ABORT_WAKE`).
 - Field-render spectral ramp (live WebGL calibration against AA; informed by Wallace probe).
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).

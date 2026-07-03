@@ -1,0 +1,80 @@
+/*
+  The Flight Deck, structural styles. Scoped under .flight-deck like the
+  tokens. Composition discipline per the shape brief: an instrument bench,
+  not a dashboard of cards. Regions are bezel-less, separated by space and
+  alignment. No boxed tiles, no severity side-stripes, no glassmorphism.
+*/
+
+.flight-deck {
+  min-height: 100dvh;
+  background: var(--deck-bg);
+  color: var(--deck-ink);
+  font-family: var(--deck-font-mono);
+}
+
+.flight-deck :focus-visible {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 3px;
+}
+
+/* Bench scan layout: hero center-left, panel right, vacuum small and
+   dense lower-left, horizon strip slim, operator strip docked bottom. */
+.deck-bench {
+  display: grid;
+  min-height: 100dvh;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 22rem);
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  grid-template-areas:
+    "alert alert"
+    "hero panel"
+    "vacuum panel"
+    "horizon horizon"
+    "operator operator";
+  gap: 2rem 3rem;
+  padding: 1.5rem 2.5rem 1rem;
+}
+
+.deck-region--alert {
+  grid-area: alert;
+  justify-self: center;
+}
+.deck-region--hero {
+  grid-area: hero;
+}
+.deck-region--panel {
+  grid-area: panel;
+}
+.deck-region--vacuum {
+  grid-area: vacuum;
+  max-width: 20rem;
+}
+.deck-region--horizon {
+  grid-area: horizon;
+}
+.deck-region--operator {
+  grid-area: operator;
+}
+
+/* Movement 1, dormant: one breathing indicator, the only light. */
+.deck-breath {
+  animation: deck-breath var(--deck-breath-duration) ease-in-out infinite;
+}
+
+@keyframes deck-breath {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-breath {
+    animation: none;
+    opacity: 0.8;
+  }
+}

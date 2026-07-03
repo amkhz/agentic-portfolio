@@ -1,6 +1,12 @@
 # DIRD 34 Source Extraction
 
-> Extracted 2026-07-02 from the Black Vault FOIA copy (full text, OCR layer). Companion to `plans/dird-34-prework.md`. Two purposes: (1) a diffable extraction to compare against Justin's local copy, (2) prep material for the upstream authoring instance in the shape the guide format expects. **This also materially upgrades Flight Deck movement 3 — see the final section.**
+> Extracted 2026-07-02 from the Black Vault FOIA copy (full text, OCR layer). Companion to `plans/dird-34-prework.md`.
+>
+> **Canonical home:** design-futures, alongside `guide-library-tracker.md`. The portfolio copy is a snapshot mirror (format-rules convention) so the Flight Deck build can read the final section without leaving its repo.
+>
+> **Role in the guide-builder pipeline:** independent replication, not reader input. Produced by an outside session over the FOIA OCR copy — Phase 3 chunk readers work the clean local PDF *blind* to this file; a dedicated verification reader takes the OCR diff notes below as its chunk; the Phase 4 assembler receives this file as a labeled secondary input and reconciles. Divergence between this extraction and the blind digests is signal, not error.
+>
+> **Cross-repo contract:** the Flight Deck (Works 01) colophon depends on the three Design Hooks below surviving into the delivered guide in some form.
 
 ---
 

@@ -1,0 +1,52 @@
+/*
+  The Flight Deck, per-work tokens (ADR-017 D2).
+
+  Scoped to .flight-deck so nothing leaks into lab or portfolio surfaces;
+  these are deliberately NOT bridged into the shared Tailwind theme.
+  Components reference them by name via var().
+
+  Palette per the shape brief: instrument-lit warm dark, deeper than the
+  Archive's graphite reading floor, never blue-black, never pure black.
+  Severity is never color-only; every severity token pairs with shape,
+  position, and label. WCAG 2.2 AA holds within the deck's own surfaces.
+*/
+.flight-deck {
+  /* Surfaces */
+  --deck-bg: oklch(0.125 0.01 68);
+  --deck-surface: oklch(0.16 0.012 68);
+  --deck-line: oklch(0.31 0.016 70); /* bench separations: space and alignment, no bezels */
+
+  /* Nominal instrument ink: pale warm bone-white, avionics "everything is fine" */
+  --deck-ink: oklch(0.94 0.008 84); /* ~15:1 on --deck-bg */
+  --deck-ink-dim: oklch(0.73 0.012 80); /* ~7.5:1 on --deck-bg */
+  --deck-ink-faint: oklch(0.55 0.014 76); /* large/decorative only */
+
+  /* Severity triad */
+  --deck-advisory: oklch(0.85 0.025 84); /* restrained, near-ink */
+  --deck-caution: oklch(0.78 0.13 72); /* warm amber, technology-and-light lineage */
+  --deck-warning: oklch(0.66 0.17 30); /* dusty signal red, the deck's one red moment */
+
+  /* Operator-state channel: one quiet hue, never confusable with vehicle telemetry */
+  --deck-operator: oklch(0.75 0.06 150);
+
+  /* Field render ramp endpoints. Placeholder pair: the real spectral ramp is
+     calibrated live against AA in phase 2, informed by the Wallace probe. */
+  --deck-field-low: oklch(0.38 0.06 255);
+  --deck-field-high: oklch(0.84 0.11 85);
+
+  /* Interaction */
+  --deck-focus: oklch(0.78 0.13 72);
+
+  /* Type. Mono is the instrument voice; captions speak in the Archive's body
+     face (the human voice on the deck). Display face is an open build
+     question (font procedure: calibrated, patient, luminous); the heading
+     face below is interim only and must not be treated as chosen. */
+  --deck-font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --deck-font-body: "Newsreader Variable", Georgia, serif;
+  --deck-font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Motion scaffold: authored timelines (GSAP) arrive in later phases;
+     these hold the reactive lane's baseline durations. */
+  --deck-breath-duration: 4.8s;
+  --deck-settle-duration: 0.4s;
+}

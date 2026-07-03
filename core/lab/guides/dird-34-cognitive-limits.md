@@ -6,7 +6,7 @@ order: 12
 accent: "#c4a1f5"
 accentLight: "#6b3fb8"
 territory: T1
-status: draft
+status: complete
 description: How many spacecraft can one human mind fly at once? A 2010 DIA brief triangulates from air traffic control and drone research to a hard answer (16, 7, or 4, depending on complexity) and to the physiological instruments that can see overload coming.
 source:
   authors: "Genik (attributed; author redacted in release)"

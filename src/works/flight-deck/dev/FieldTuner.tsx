@@ -21,6 +21,10 @@ type Dial = [def: number, min: number, max: number];
 type DialGroup = Record<string, Dial>;
 
 const DIALS: Record<string, DialGroup> = {
+  frame: {
+    centerX: [FIELD_MOTION_DEFAULTS.centerX, -1.2, 0.6],
+    zoom: [FIELD_MOTION_DEFAULTS.zoom, 1.4, 3.4],
+  },
   speckle: {
     speckleAmp: [FIELD_MOTION_DEFAULTS.speckleAmp, 0, 0.4],
     speckleDriftX: [FIELD_MOTION_DEFAULTS.speckleDriftX, -1, 1],

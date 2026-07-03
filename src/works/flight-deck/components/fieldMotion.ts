@@ -6,6 +6,9 @@
  */
 
 export interface FieldMotionParams {
+  /** Frame: where the bubble sits in the canvas and how much it fills. */
+  centerX: number;
+  zoom: number;
   speckleAmp: number;
   speckleDriftX: number;
   speckleDriftY: number;
@@ -22,6 +25,8 @@ export interface FieldMotionParams {
 }
 
 export const FIELD_MOTION_DEFAULTS: FieldMotionParams = {
+  centerX: 0,
+  zoom: 2.3,
   speckleAmp: 0.12,
   speckleDriftX: 0.32,
   speckleDriftY: -0.5,
@@ -38,6 +43,8 @@ export const FIELD_MOTION_DEFAULTS: FieldMotionParams = {
 };
 
 export const MOTION_UNIFORMS: Record<keyof FieldMotionParams, string> = {
+  centerX: "uCenterX",
+  zoom: "uZoom",
   speckleAmp: "uSpeckleAmp",
   speckleDriftX: "uSpeckleDriftX",
   speckleDriftY: "uSpeckleDriftY",

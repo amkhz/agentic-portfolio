@@ -79,6 +79,8 @@ uniform vec3 uStop4;
 uniform vec3 uInk; // bone ink, OKLab: the sweep arm
 
 /* Motion parameters (FIELD_MOTION_DEFAULTS; dev tuner drives them live). */
+uniform float uCenterX;
+uniform float uZoom;
 uniform float uSpeckleAmp;
 uniform float uSpeckleDriftX;
 uniform float uSpeckleDriftY;
@@ -156,7 +158,8 @@ float stressBump(float theta, vec3 s) {
 }
 
 void main() {
-  vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0) * 2.3;
+  vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0) * uZoom;
+  p.x -= uCenterX;
   float r = length(p);
   float theta = atan(p.y, p.x);
   float t = uTime;

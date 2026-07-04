@@ -31,6 +31,19 @@ describe("FlightDeck", () => {
     expect(screen.getByText(deckCopy.staticPlate.note)).toBeInTheDocument();
   });
 
+  it("shows all three instruments at nominal on the static plate", () => {
+    setViewportWidth(1440);
+    renderDeck();
+    expect(screen.getByText(/^WALL 0\.\d{2} · EVEN/)).toBeInTheDocument();
+    expect(screen.getByText(/^BANK [LR]\d\.\d · PITCH/)).toBeInTheDocument();
+    expect(screen.getByText(/^VAC 0\.\d{3} · DRAW/)).toBeInTheDocument();
+    // The plate keeps the sentence mirrors the a11y contract requires.
+    expect(
+      screen.getByText(/^Synthetic orientation nominal\./),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/^Vacuum energy nominal\./)).toBeInTheDocument();
+  });
+
   it("declines below the minimum bench width with the designed card", () => {
     setViewportWidth(500);
     renderDeck();

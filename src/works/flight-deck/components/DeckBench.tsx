@@ -2,17 +2,21 @@ import { instruments, type InstrumentId } from "@core/works/flight-deck/instrume
 import { SEVERITY_ORDER } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { FieldPlate } from "./FieldPlate";
+import { OrientationPlate } from "./OrientationPlate";
+import { VacuumPlate } from "./VacuumPlate";
 
 interface DeckBenchProps {
   /** "plate" renders the reduced-motion / no-WebGL still; "live" is the session. */
   variant: "live" | "plate";
   onExitToColophon: () => void;
   /**
-   * The live hero instrument (Field Integrity's canvas), owned by
-   * DeckSession so the boot timeline can hold its handle. The plate
-   * variant ignores this and renders the still.
+   * The live instruments, owned by DeckSession so the boot timeline can
+   * hold their handles and gate their readings on the machine phase.
+   * The plate variant ignores these and renders the stills.
    */
   hero?: React.ReactNode;
+  orientation?: React.ReactNode;
+  vacuum?: React.ReactNode;
 }
 
 /** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
@@ -80,7 +84,13 @@ const names = new Map(instruments.map((i) => [i.id, i.name]));
  * serves both). The js-* classes are the boot timeline's targets; on the
  * plate they are inert and everything renders at its awake state.
  */
-export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
+export function DeckBench({
+  variant,
+  onExitToColophon,
+  hero,
+  orientation,
+  vacuum,
+}: DeckBenchProps) {
   return (
     <div className="deck-bench">
       <div
@@ -116,7 +126,7 @@ export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
         caption={captions.get("vacuum-energy")}
         bootId="vacuum-energy"
       >
-        <StandbyReading value="VAC 0.000" />
+        {variant === "live" ? vacuum : <VacuumPlate />}
       </Region>
 
       <Region
@@ -125,13 +135,7 @@ export function DeckBench({ variant, onExitToColophon, hero }: DeckBenchProps) {
         caption={captions.get("synthetic-orientation")}
         bootId="synthetic-orientation"
       >
-        <div
-          className="js-boot-data h-8 border-y border-[var(--deck-line)]"
-          aria-hidden="true"
-        />
-        <p className="js-boot-data mt-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-label)]">
-          Horizon level · flow fields arrive in phase 3
-        </p>
+        {variant === "live" ? orientation : <OrientationPlate />}
       </Region>
 
       <div className="deck-region--operator js-gauge js-deck-chrome">

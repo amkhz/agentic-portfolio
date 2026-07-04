@@ -197,6 +197,64 @@
   );
 }
 
+/* Synthetic Orientation: the slim synthetic-horizon strip (phase 3).
+   The shader draws the banking horizon and its flow streaks; the plate
+   variant rebuilds the still with the two spans below. Bone ink only:
+   this instrument is felt before it is looked at. */
+.deck-orientation__canvas {
+  position: relative;
+  height: 6rem;
+  overflow: hidden;
+}
+
+.deck-orientation__canvas canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Plate still: ladder lines in the bench frame, horizon at the model's
+   t=0 attitude (transform set inline from the same pure model). */
+.deck-orientation-plate__ladder {
+  position: absolute;
+  inset: 25% 0;
+  border-top: 1px solid var(--deck-line);
+  border-bottom: 1px solid var(--deck-line);
+}
+
+.deck-orientation-plate__horizon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--deck-ink-dim);
+}
+
+/* Vacuum Energy: the invented lattice gauge (phase 3). Extraction is
+   the accumulated hairlines, demand the one firm line floating in the
+   lattice, margin the gap between them. */
+.deck-vacuum__gauge {
+  width: 4rem;
+  height: 6rem;
+}
+
+.deck-vacuum__tick,
+.deck-vacuum__frame {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-vacuum__lattice {
+  stroke: var(--deck-ink-faint);
+  stroke-width: 1;
+}
+
+.deck-vacuum__demand {
+  stroke: var(--deck-ink);
+  stroke-width: 1.5;
+}
+
 /* Certification lamps: unlit at nominal, flashed in severity order by the
    boot ritual. Decorative redundancy; severity semantics stay shape +
    position + label. */

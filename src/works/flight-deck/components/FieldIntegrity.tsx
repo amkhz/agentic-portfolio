@@ -11,7 +11,6 @@ import {
   formatStressLanes,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
-import { oklchToOklab, parseOklch } from "@core/works/oklch";
 import {
   annotationPresence,
   LANE_GAP_PX,
@@ -25,6 +24,7 @@ import {
   type FieldMotionParams,
 } from "./fieldMotion";
 import { FieldLegend } from "./FieldLegend";
+import { readOklabToken } from "./oklabTokens";
 
 /**
  * Field Integrity, the hero instrument (Design Hook 1: the field health
@@ -249,12 +249,6 @@ const RAMP_TOKENS = [
   "--deck-field-stop-3",
   "--deck-field-stop-4",
 ] as const;
-
-function readOklabToken(style: CSSStyleDeclaration, token: string): number[] {
-  const parsed = parseOklch(style.getPropertyValue(token).trim());
-  // tokens.css owns these; a parse miss is a build error, not a runtime state.
-  return parsed ? [...oklchToOklab(parsed)] : [0, 0, 0];
-}
 
 const READINGS_INTERVAL_MS = 400;
 

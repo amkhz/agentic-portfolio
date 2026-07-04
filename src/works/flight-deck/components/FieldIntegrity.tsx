@@ -109,6 +109,25 @@ float angDist(float a, float b) {
   return abs(mod(a - b + PI, TAU) - PI);
 }
 
+/* Cheap value noise for the living speckle: computed data never sits
+   still, the way an ultrasound image shimmers even over calm anatomy. */
+float hash21(vec2 p) {
+  p = fract(p * vec2(234.34, 435.345));
+  p += dot(p, p + 34.23);
+  return fract(p.x * p.y);
+}
+
+float vnoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash21(i), hash21(i + vec2(1.0, 0.0)), u.x),
+    mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x),
+    u.y
+  );
+}
+
 float stressBump(float theta, vec3 s) {
   float d = angDist(theta, s.x) / max(s.y, 1e-3);
   return s.z * exp(-d * d);
@@ -120,16 +139,18 @@ void main() {
   float theta = atan(p.y, p.x);
   float t = uTime;
 
-  /* Wall centerline: wobble grows as evenness drops. */
+  /* Wall centerline: wobble grows as evenness drops; the ring itself
+     breathes faintly. Rates are watchable (10-30s cycles), never nervous. */
   float uneven = 1.0 - uEven;
   float R = 0.74
-    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * 0.13)
-    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * 0.09 + 1.3);
+    + 0.006 * sin(t * 0.6)
+    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * 0.38)
+    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * 0.28 + 1.3);
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
   float thickness = 0.085 * uWall * (1.0
-    + 0.38 * sin(3.0 * theta + t * 0.11 + 0.7)
-    + 0.22 * sin(5.0 * theta - t * 0.07 + 2.1));
+    + 0.38 * sin(3.0 * theta + t * 0.35 + 0.7)
+    + 0.22 * sin(5.0 * theta - t * 0.25 + 2.1));
   thickness = max(thickness, 0.02);
 
   float d = (r - R) / thickness;
@@ -140,6 +161,16 @@ void main() {
   density += stressBump(theta, uStressA);
   density += stressBump(theta, uStressB);
   density += stressBump(theta, uStressC);
+
+  /* Circulation: a low crest of energy traveling the wall, the bubble
+     visibly holding itself. Periodic in theta, so no seam. */
+  density += 0.05 * sin(2.0 * theta - t * 0.7 + 1.0);
+
+  /* Living speckle, drifting through the field in cartesian space (no
+     angular seam): two octaves, +/-6%, the medium alive under calm data. */
+  vec2 sp = p * 9.0 + vec2(t * 0.32, -t * 0.5);
+  float speckle = vnoise(sp) * 0.6 + vnoise(sp * 2.3 + 7.7) * 0.4;
+  density *= 1.0 + 0.12 * (speckle - 0.5);
 
   /* Blue-noise-ish dither so the ramp never bands. */
   float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);

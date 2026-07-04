@@ -3,6 +3,7 @@ import { SEVERITY_ORDER } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { FieldPlate } from "./FieldPlate";
 import { OrientationPlate } from "./OrientationPlate";
+import { PanelPlate } from "./PanelPlate";
 import { VacuumPlate } from "./VacuumPlate";
 
 interface DeckBenchProps {
@@ -17,6 +18,7 @@ interface DeckBenchProps {
   hero?: React.ReactNode;
   orientation?: React.ReactNode;
   vacuum?: React.ReactNode;
+  panel?: React.ReactNode;
 }
 
 /** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
@@ -65,14 +67,6 @@ function Region({ area, label, caption, bootId, children }: RegionProps) {
   );
 }
 
-function StandbyReading({ value }: { value: string }) {
-  return (
-    <p className="js-boot-data js-emit text-2xl tabular-nums text-[var(--deck-ink)]">
-      {value}
-    </p>
-  );
-}
-
 const captions = new Map(instruments.map((i) => [i.id, i.caption]));
 const names = new Map(instruments.map((i) => [i.id, i.name]));
 
@@ -90,6 +84,7 @@ export function DeckBench({
   hero,
   orientation,
   vacuum,
+  panel,
 }: DeckBenchProps) {
   return (
     <div className="deck-bench">
@@ -113,11 +108,7 @@ export function DeckBench({
       </Region>
 
       <Region area="panel" label="Translation layer">
-        <p className="js-deck-chrome text-sm text-[var(--deck-ink-dim)]">
-          Intent fields, proposal cards, and the utilization meter dock here
-          in phase 4.
-        </p>
-        <StandbyReading value="UTIL 0.00" />
+        {variant === "live" ? panel : <PanelPlate />}
       </Region>
 
       <Region

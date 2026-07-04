@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -6,12 +6,22 @@ import {
   certificationDurationMs,
   SEVERITY_ORDER,
 } from "@core/works/flight-deck/boot";
+import {
+  COMMIT_HOLD_GLOW,
+  commitScore,
+  type CommitTrim,
+} from "@core/works/flight-deck/commit";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { instruments } from "@core/works/flight-deck/instruments";
 import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
+import type {
+  Proposal,
+  UtilizationEvent,
+} from "@core/works/flight-deck/translation";
 import { DeckBench } from "./DeckBench";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
 import { SyntheticOrientation } from "./SyntheticOrientation";
+import { TranslationPanel } from "./TranslationPanel";
 import { VacuumEnergy } from "./VacuumEnergy";
 
 gsap.registerPlugin(useGSAP);
@@ -55,6 +65,22 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
 
   const dispatchRef = useRef(dispatch);
   dispatchRef.current = dispatch;
+
+  // One deck clock for every instrument and the panel, so a commit
+  // trim's timestamp means the same instant on all of them.
+  const deckClock = useMemo(() => {
+    let epoch: number | null = null;
+    return () => {
+      epoch ??= performance.now();
+      return (performance.now() - epoch) / 1000;
+    };
+  }, []);
+
+  // The riding maneuver and the operator's activity ledger (phase 4).
+  const [trim, setTrim] = useState<CommitTrim | null>(null);
+  const [committing, setCommitting] = useState(false);
+  const committingRef = useRef(false);
+  const utilEventsRef = useRef<UtilizationEvent[]>([]);
 
   // A remount mid-ritual has no hold to resume: put the machine back to
   // dormant so the gesture and the playhead agree.
@@ -267,6 +293,80 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     { scope: containerRef },
   );
 
+  // The commit moment (locked 2026-07-03): tighten, substance-transfer
+  // handoff (never a crossfade), lagged consequence; one timeline owns
+  // both layers. The route trace retracts while the identical value
+  // lights the field's arrival glow; at handoff's end the trim lands and
+  // every instrument derives its consequence from the shared envelope,
+  // which begins with the lag the choreography holds open on purpose.
+  const runCommit = contextSafe((proposal: Proposal) => {
+    const container = containerRef.current;
+    if (!container || committingRef.current) return;
+    const card = container.querySelector<HTMLElement>(
+      `[data-proposal-id="${proposal.id}"]`,
+    );
+    if (!card) return;
+    const trace = card.querySelector<SVGPathElement>(".js-route-trace");
+    const others = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-proposal-id]"),
+    ).filter((el) => el !== card);
+
+    committingRef.current = true;
+    setCommitting(true);
+    setTrim(null); // a new maneuver supersedes whatever was riding
+    setAnnouncement(deckCopy.panel.committing);
+    const s = (ms: number) => ms / 1000;
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        committingRef.current = false;
+        setCommitting(false);
+      },
+    });
+    // 1. Tighten: the chosen card condenses, the others recede.
+    tl.to(card, { scale: 0.97, duration: s(commitScore.tightenMs), ease: "power2.in" }, 0);
+    tl.to(others, { opacity: 0.3, duration: s(commitScore.tightenMs), ease: "power2.out" }, 0);
+    // 2. Handoff: one value crosses the boundary. The trace is consumed
+    //    exactly as the field's arrival glow rises; substance conserved.
+    const hand = { v: 0 };
+    tl.to(hand, {
+      v: 1,
+      duration: s(commitScore.handoffMs),
+      ease: "none",
+      onUpdate: () => {
+        if (trace) trace.style.strokeDashoffset = String(hand.v);
+        fieldRef.current?.setCommit(proposal.bearing, COMMIT_HOLD_GLOW * hand.v);
+      },
+    });
+    // 3. The trim lands; the lag lives inside the shared envelope.
+    tl.call(() => {
+      utilEventsRef.current.push({ at: deckClock(), cost: 0.18 });
+      setTrim({
+        atSeconds: deckClock(),
+        bearing: proposal.bearing,
+        urgency: proposal.urgency,
+        draw: proposal.draw,
+      });
+      setAnnouncement(deckCopy.panel.translating);
+    });
+    // 4. After the lag beat, the panel releases: cards restore and the
+    //    trace redraws (the proposal is still a valid draft).
+    tl.to(
+      others,
+      { opacity: 1, duration: 0.45, ease: "power2.out" },
+      `+=${s(commitScore.lagMs)}`,
+    );
+    tl.to(card, { scale: 1, duration: 0.45, ease: "power2.out" }, "<");
+    tl.to(hand, {
+      v: 0,
+      duration: 0.3,
+      ease: "power1.out",
+      onUpdate: () => {
+        if (trace) trace.style.strokeDashoffset = String(hand.v);
+      },
+    });
+  });
+
   // Hold-to-start: the hold scrubs the playhead, release runs it backward.
   const beginHold = contextSafe(() => {
     const tl = timelineRef.current;
@@ -305,9 +405,27 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       <DeckBench
         variant="live"
         onExitToColophon={onExitToColophon}
-        hero={<FieldIntegrity ref={fieldRef} live={booted} />}
-        orientation={<SyntheticOrientation live={booted} />}
-        vacuum={<VacuumEnergy live={booted} />}
+        hero={
+          <FieldIntegrity
+            ref={fieldRef}
+            live={booted}
+            clock={deckClock}
+            trim={trim}
+          />
+        }
+        orientation={
+          <SyntheticOrientation live={booted} clock={deckClock} trim={trim} />
+        }
+        vacuum={<VacuumEnergy live={booted} clock={deckClock} trim={trim} />}
+        panel={
+          <TranslationPanel
+            live={booted}
+            clock={deckClock}
+            activity={utilEventsRef}
+            onCommit={runCommit}
+            committing={committing}
+          />
+        }
       />
       {!booted ? (
         <div className="deck-wake js-wake">

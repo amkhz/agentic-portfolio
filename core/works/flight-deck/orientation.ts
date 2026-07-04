@@ -6,9 +6,12 @@
  * deterministic like the field model, so the shader strip, the HTML
  * readings, and the text mirror can never disagree.
  *
- * Nominal drift only. The drill (phase 5) will push these out of band
- * by feeding the same shapes adversarial inputs, not by a second model.
+ * Nominal drift, plus the committed maneuver when a trim is riding
+ * (phase 4): the horizon banks into the turn on the shared commit
+ * envelope, deterministic in (t, trim). The drill (phase 5) will push
+ * these out of band the same way, adversarial inputs into pure shapes.
  */
+import { orientationCommitDelta, type CommitTrim } from "./commit";
 
 export interface OrientationTelemetry {
   /** Bank angle, degrees. Positive rolls right. Nominal stays inside ±3. */
@@ -24,12 +27,22 @@ function drift(t: number, freq: number, phase: number): number {
   return Math.sin(t * freq + phase);
 }
 
-export function sampleOrientation(tSeconds: number): OrientationTelemetry {
+export function sampleOrientation(
+  tSeconds: number,
+  trim?: CommitTrim | null,
+): OrientationTelemetry {
   const t = tSeconds;
+  const commit = orientationCommitDelta(t, trim);
   return {
-    bank: 1.9 * drift(t, 0.047, 0.6) + 0.8 * drift(t, 0.019, 2.3),
-    pitch: 0.9 * drift(t, 0.061, 1.4) + 0.4 * drift(t, 0.027, 0.2),
-    flow: 0.62 + 0.06 * drift(t, 0.053, 1.1) + 0.03 * drift(t, 0.023, 3.4),
+    bank:
+      1.9 * drift(t, 0.047, 0.6) + 0.8 * drift(t, 0.019, 2.3) + commit.bank,
+    pitch:
+      0.9 * drift(t, 0.061, 1.4) + 0.4 * drift(t, 0.027, 0.2) + commit.pitch,
+    flow: Math.min(
+      0.62 + 0.06 * drift(t, 0.053, 1.1) + 0.03 * drift(t, 0.023, 3.4) +
+        commit.flow,
+      0.95,
+    ),
   };
 }
 

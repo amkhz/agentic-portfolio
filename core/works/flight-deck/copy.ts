@@ -21,6 +21,28 @@ export const deckCopy = {
   staticPlate: {
     note: "You are reading the deck as a still instrument plate. Every instrument is shown at a legible nominal state.",
   },
+  panel: {
+    /** The intent group's legend. */
+    intentLegend: "Intent",
+    destinationLabel: "Destination",
+    timelineLabel: "Timeline",
+    riskLabel: "Risk tolerance",
+    proposalsLabel: "Proposals",
+    /** While the layer re-drafts (cadence slows past the ceiling). */
+    proposalPending: "The layer is drafting routes…",
+    /** The commit control on each proposal card. */
+    commit: "Commit",
+    /** Live region: the handoff is running. */
+    committing: "Handing off. The route is leaving the panel.",
+    /** Live region: the lag beat, held open on purpose. */
+    translating: "Field taking the route.",
+    utilizationLabel: "Utilization",
+    /** The one-sentence explainer on the 70 percent ceiling (DIRD 34). */
+    utilizationExplainer:
+      "Past 0.70 of your attention spoken for, the big picture starts to slip. The deck slows its asks before you get there.",
+    /** The text badge past the ceiling; never color alone. */
+    utilizationOver: "OVER",
+  },
   colophon: {
     title: "The Flight Deck",
     kicker: "Perihelion Works 01",

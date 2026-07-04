@@ -2,7 +2,7 @@
 
 > The single source of "where are we" for this build. Every work session reads this first; every PR that advances the build updates the **Now** line and checklist in the same PR (that is the definition-of-done rule that keeps nothing from slipping). Keep it lean: current state, locked decisions, open threads. History lives in git and the PRs.
 
-**Now:** Phase 2 MERGED 2026-07-03 (PR #175, merge 672db18): Field Integrity hero live (ogl shader, amber-top ramp in OKLab from five token stops, readings HTML with sr mirror), boot ritual as one GSAP timeline per the locked score, gsap scoped to the deck chunk (49 of 350 KB gz). All phase gates closed same day: Justin's live review (ramp validated; hold feedback added; settle bounce cut for brightness exhale + traveling emission) and Roy's review (AA HOLD cured in-PR with `--deck-ink-label`; see checklist). Same-day motion pass after Justin's live note (a static-reading bubble undercuts the live thesis): field render gained living speckle, a circulation crest (~12s lap), watchable drift rates (10-30s cycles), and a faint ring breath; telemetry model untouched. Justin-approved live. Next up: **Phase 3 — Synthetic Orientation + Vacuum Energy** (Roy reviews again at phase 5). Wanted for future tuning sessions: DialKit-style dev controls on the shader params (see parking lot).
+**Now:** Phase 2 MERGED 2026-07-03 (PR #175, merge 672db18): Field Integrity hero live (ogl shader, amber-top ramp in OKLab from five token stops, readings HTML with sr mirror), boot ritual as one GSAP timeline per the locked score, gsap scoped to the deck chunk (49 of 350 KB gz). All phase gates closed same day: Justin's live review (ramp validated; hold feedback added; settle bounce cut for brightness exhale + traveling emission) and Roy's review (AA HOLD cured in-PR with `--deck-ink-label`; see checklist). Same-day motion pass after Justin's live note (a static-reading bubble undercuts the live thesis): field render gained living speckle, a circulation crest (~12s lap), watchable drift rates (10-30s cycles), and a faint ring breath; telemetry model untouched. Justin-approved live. Next up: **the annotation layer** ("earn the width", locked 2026-07-04, see open questions): leader lines from the tracked stress concentrations to per-lane readouts, center-left anchor baked with it. Then **Phase 3 — Synthetic Orientation + Vacuum Energy** (Roy reviews again at phase 5). Boot-feel tuning still open (Justin sleeping on it). Dev tuning: `dialkit@1.3.0` (approved devDependency) drives the field shader's 15 params as live dials (`src/works/flight-deck/dev/FieldTuner.tsx`); dev-only, verified absent from production; "log values" copies JSON to the clipboard to bake back into `FIELD_MOTION_DEFAULTS`.
 
 ## Reading order for a fresh session
 
@@ -43,12 +43,13 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
 - Field-render spectral ramp: **resolved 2026-07-03.** Amber top locked from the Wallace probe; phase 2 landed five stops as tokens (`--deck-field-stop-0..4`), OKLab-interpolated in-shader, and Justin validated the color live on the WebGL render ("the color tokens look right"). Formal contrast re-check rides the phase 7 `/audit`.
+- Hero composition at wide widths: **resolved 2026-07-04, Justin locked "earn the width"** (option B of the 2026-07-03 comparison artifact). The field anchors center-left and the freed right side becomes an annotation layer: leader lines from the tracked stress concentrations to per-lane readouts (medical-imaging register; pre-builds the pointable anatomy phases 4-5 need). Ships as its own build item after PR #178 merges; the anchor bakes with it, judged via the tuner's frame dials.
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).
 
 ## Fast-follow parking lot
 
-Spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup); dev-only DialKit panel (`/interface-craft`) exposing the field shader's motion params as live controls, stripped from production (Justin, 2026-07-03).
+Spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup).
 
 ## Rules of engagement (every session)
 

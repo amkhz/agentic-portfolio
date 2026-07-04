@@ -11,6 +11,11 @@ import {
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
 import { oklchToOklab, parseOklch } from "@core/works/oklch";
+import {
+  FIELD_MOTION_DEFAULTS,
+  MOTION_UNIFORMS,
+  type FieldMotionParams,
+} from "./fieldMotion";
 import { FieldLegend } from "./FieldLegend";
 
 /**
@@ -32,6 +37,8 @@ export interface FieldIntegrityHandle {
   setSweep(value: number): void;
   /** Data presence, 0 to 1: how awake the render is after certification. */
   setReveal(value: number): void;
+  /** Live motion tuning (the dev tuner's hook; harmless in production). */
+  setMotion(params: FieldMotionParams): void;
 }
 
 interface FieldIntegrityProps {
@@ -70,6 +77,23 @@ uniform vec3 uStop2;
 uniform vec3 uStop3;
 uniform vec3 uStop4;
 uniform vec3 uInk; // bone ink, OKLab: the sweep arm
+
+/* Motion parameters (FIELD_MOTION_DEFAULTS; dev tuner drives them live). */
+uniform float uCenterX;
+uniform float uZoom;
+uniform float uSpeckleAmp;
+uniform float uSpeckleDriftX;
+uniform float uSpeckleDriftY;
+uniform float uCrestAmp;
+uniform float uCrestSpeed;
+uniform float uDriftCenter2;
+uniform float uDriftCenter3;
+uniform float uDriftThick3;
+uniform float uDriftThick5;
+uniform float uBreathAmp;
+uniform float uBreathRate;
+uniform float uWallBase;
+uniform float uShellFalloff;
 
 const float PI = 3.141592653589793;
 const float TAU = 6.283185307179586;
@@ -134,7 +158,11 @@ float stressBump(float theta, vec3 s) {
 }
 
 void main() {
-  vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0) * 2.3;
+  vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0) * uZoom;
+  /* Aspect guard on the baked anchor: full center-left offset on wide
+     benches, easing back to centered as the hero column narrows, so the
+     ring never clips the canvas edge at the 1024px end. */
+  p.x -= uCenterX * smoothstep(1.7, 2.6, uAspect);
   float r = length(p);
   float theta = atan(p.y, p.x);
   float t = uTime;
@@ -143,34 +171,34 @@ void main() {
      breathes faintly. Rates are watchable (10-30s cycles), never nervous. */
   float uneven = 1.0 - uEven;
   float R = 0.74
-    + 0.006 * sin(t * 0.6)
-    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * 0.38)
-    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * 0.28 + 1.3);
+    + uBreathAmp * sin(t * uBreathRate)
+    + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * uDriftCenter2)
+    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * uDriftCenter3 + 1.3);
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
-  float thickness = 0.085 * uWall * (1.0
-    + 0.38 * sin(3.0 * theta + t * 0.35 + 0.7)
-    + 0.22 * sin(5.0 * theta - t * 0.25 + 2.1));
+  float thickness = uWallBase * uWall * (1.0
+    + 0.38 * sin(3.0 * theta + t * uDriftThick3 + 0.7)
+    + 0.22 * sin(5.0 * theta - t * uDriftThick5 + 2.1));
   thickness = max(thickness, 0.02);
 
   float d = (r - R) / thickness;
-  float shell = exp(-d * d * 2.2);
+  float shell = exp(-d * d * uShellFalloff);
 
   /* Local energy density: thickness plus the tracked stress concentrations. */
-  float density = 0.30 + 0.42 * (thickness / 0.085 - 0.55);
+  float density = 0.30 + 0.42 * (thickness / uWallBase - 0.55);
   density += stressBump(theta, uStressA);
   density += stressBump(theta, uStressB);
   density += stressBump(theta, uStressC);
 
   /* Circulation: a low crest of energy traveling the wall, the bubble
      visibly holding itself. Periodic in theta, so no seam. */
-  density += 0.05 * sin(2.0 * theta - t * 0.7 + 1.0);
+  density += uCrestAmp * sin(2.0 * theta - t * uCrestSpeed + 1.0);
 
   /* Living speckle, drifting through the field in cartesian space (no
-     angular seam): two octaves, +/-6%, the medium alive under calm data. */
-  vec2 sp = p * 9.0 + vec2(t * 0.32, -t * 0.5);
+     angular seam): two octaves, the medium alive under calm data. */
+  vec2 sp = p * 9.0 + vec2(t * uSpeckleDriftX, t * uSpeckleDriftY);
   float speckle = vnoise(sp) * 0.6 + vnoise(sp * 2.3 + 7.7) * 0.4;
-  density *= 1.0 + 0.12 * (speckle - 0.5);
+  density *= 1.0 + uSpeckleAmp * (speckle - 0.5);
 
   /* Blue-noise-ish dither so the ramp never bands. */
   float n = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453);
@@ -244,6 +272,13 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         const u = uniformsRef.current.uReveal;
         if (u) u.value = value;
       },
+      setMotion(params: FieldMotionParams) {
+        const uniforms = uniformsRef.current;
+        for (const key of Object.keys(MOTION_UNIFORMS) as (keyof FieldMotionParams)[]) {
+          const u = uniforms[MOTION_UNIFORMS[key]];
+          if (u) u.value = params[key];
+        }
+      },
     }),
     [],
   );
@@ -292,6 +327,11 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         uStop3: { value: stops[3] },
         uStop4: { value: stops[4] },
         uInk: { value: ink },
+        ...Object.fromEntries(
+          (Object.keys(MOTION_UNIFORMS) as (keyof FieldMotionParams)[]).map(
+            (key) => [MOTION_UNIFORMS[key], { value: FIELD_MOTION_DEFAULTS[key] }],
+          ),
+        ),
       },
     });
     uniformsRef.current = program.uniforms as Record<string, { value: number }>;

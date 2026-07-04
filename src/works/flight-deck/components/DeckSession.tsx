@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -13,6 +13,13 @@ import { DeckBench } from "./DeckBench";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
 
 gsap.registerPlugin(useGSAP);
+
+// Dev-only field tuner (DialKit-style). The DEV gate is statically false
+// in production builds, so the import() is dead-code-eliminated and no
+// tuner chunk is ever emitted, let alone loaded.
+const FieldTuner = import.meta.env.DEV
+  ? lazy(() => import("../dev/FieldTuner"))
+  : null;
 
 interface DeckSessionProps {
   state: DeckState;
@@ -345,6 +352,13 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       <p className="sr-only" aria-live="polite">
         {announcement}
       </p>
+      {FieldTuner ? (
+        <Suspense fallback={null}>
+          <FieldTuner
+            onChange={(params) => fieldRef.current?.setMotion(params)}
+          />
+        </Suspense>
+      ) : null}
     </div>
   );
 }

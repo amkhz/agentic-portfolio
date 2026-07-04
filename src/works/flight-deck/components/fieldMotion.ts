@@ -25,21 +25,21 @@ export interface FieldMotionParams {
 }
 
 export const FIELD_MOTION_DEFAULTS: FieldMotionParams = {
-  centerX: 0,
-  zoom: 2.3,
-  speckleAmp: 0.12,
-  speckleDriftX: 0.32,
+  centerX: -1.1,
+  zoom: 2.1,
+  speckleAmp: 0.14,
+  speckleDriftX: 0.3,
   speckleDriftY: -0.5,
-  crestAmp: 0.05,
+  crestAmp: 0.07,
   crestSpeed: 0.7,
   driftCenter2: 0.38,
-  driftCenter3: 0.28,
-  driftThick3: 0.35,
+  driftCenter3: 0.31,
+  driftThick3: 0.34,
   driftThick5: 0.25,
-  breathAmp: 0.006,
-  breathRate: 0.6,
-  wallBase: 0.085,
-  shellFalloff: 2.2,
+  breathAmp: 0.01,
+  breathRate: 0.9,
+  wallBase: 0.1,
+  shellFalloff: 2.3,
 };
 
 export const MOTION_UNIFORMS: Record<keyof FieldMotionParams, string> = {

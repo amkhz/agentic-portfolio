@@ -159,7 +159,10 @@ float stressBump(float theta, vec3 s) {
 
 void main() {
   vec2 p = (vUv - 0.5) * vec2(uAspect, 1.0) * uZoom;
-  p.x -= uCenterX;
+  /* Aspect guard on the baked anchor: full center-left offset on wide
+     benches, easing back to centered as the hero column narrows, so the
+     ring never clips the canvas edge at the 1024px end. */
+  p.x -= uCenterX * smoothstep(1.7, 2.6, uAspect);
   float r = length(p);
   float theta = atan(p.y, p.x);
   float t = uTime;

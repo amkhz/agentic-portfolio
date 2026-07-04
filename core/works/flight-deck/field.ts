@@ -79,6 +79,52 @@ export interface FieldReadings {
   mirror: string;
 }
 
+/**
+ * Bearing as the operator reads it off the round display: 12 o'clock is
+ * zero, clockwise positive. Field angles are math-convention radians.
+ */
+export function bearingDegrees(angle: number): number {
+  const deg = Math.round(90 - (angle * 180) / Math.PI);
+  return ((deg % 360) + 360) % 360;
+}
+
+/**
+ * One annotation lane per tracked concentration, always in slot order.
+ * The visible lane is presentation; the mirror sentence is the reading's
+ * a11y contract, spoken whether or not the annotation layer has the
+ * width to draw.
+ */
+export interface StressLaneReading {
+  /** Stable slot label: "ST 1". */
+  label: string;
+  /** Three-digit bearing off 12 o'clock, clockwise: "038". */
+  bearing: string;
+  /** Intensity at two decimals: "0.42". */
+  intensity: string;
+  /** At or past STRESS_FLOOR: a counted reading, not background texture. */
+  onWatch: boolean;
+  /** The screen-reader sentence for this lane. */
+  mirror: string;
+}
+
+export function formatStressLanes(field: FieldTelemetry): StressLaneReading[] {
+  return field.stress.map((point, i) => {
+    const onWatch = point.intensity >= STRESS_FLOOR;
+    const deg = bearingDegrees(point.angle);
+    const intensity = point.intensity.toFixed(2);
+    return {
+      label: `ST ${i + 1}`,
+      bearing: String(deg).padStart(3, "0"),
+      intensity,
+      onWatch,
+      mirror:
+        `Stress concentration ${i + 1}: bearing ${deg} degrees, ` +
+        `intensity ${intensity}, ` +
+        `${onWatch ? "on watch" : "below the watch floor"}.`,
+    };
+  });
+}
+
 export function formatFieldReadings(field: FieldTelemetry): FieldReadings {
   const wall = field.wall.toFixed(2);
   const even = field.even.toFixed(2);

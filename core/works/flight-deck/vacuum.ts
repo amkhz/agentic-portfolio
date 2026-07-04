@@ -5,11 +5,13 @@
  * lose. Pure and deterministic like the field model, so the gauge, the
  * HTML readings, and the text mirror can never disagree.
  *
- * Nominal drift only: extraction rides above demand and the margin
- * breathes but never goes negative here. The drill (phase 5) will push
- * these out of band by feeding the same shapes adversarial inputs, not
- * by a second model.
+ * Nominal drift, plus the committed maneuver when a trim is riding
+ * (phase 4): demand steps up first and extraction catches up a beat
+ * later, so the margin visibly pinches toward the floor and recovers,
+ * never negative. The drill (phase 5) will push these out of band the
+ * same way, adversarial inputs into pure shapes.
  */
+import { vacuumCommitDelta, type CommitTrim } from "./commit";
 
 export interface VacuumTelemetry {
   /** Extraction level, fraction of rated draw currently harvested. */
@@ -28,15 +30,25 @@ function drift(t: number, freq: number, phase: number): number {
   return Math.sin(t * freq + phase);
 }
 
-export function sampleVacuumTelemetry(tSeconds: number): VacuumTelemetry {
+export function sampleVacuumTelemetry(
+  tSeconds: number,
+  trim?: CommitTrim | null,
+): VacuumTelemetry {
   const t = tSeconds;
+  const commit = vacuumCommitDelta(t, trim);
   const extraction =
-    0.318 + 0.022 * drift(t, 0.041, 0.9) + 0.009 * drift(t, 0.017, 2.8);
+    0.318 +
+    0.022 * drift(t, 0.041, 0.9) +
+    0.009 * drift(t, 0.017, 2.8) +
+    commit.extraction;
   // Demand shares extraction's slow term at a lag (the bubble draws what
   // the drive harvests, a breath behind), so the margin breathes but the
   // pair never scissors apart in nominal operation.
   const demand =
-    0.284 + 0.018 * drift(t - 2.5, 0.041, 0.9) + 0.007 * drift(t, 0.029, 1.3);
+    0.284 +
+    0.018 * drift(t - 2.5, 0.041, 0.9) +
+    0.007 * drift(t, 0.029, 1.3) +
+    commit.demand;
   return {
     extraction,
     demand,

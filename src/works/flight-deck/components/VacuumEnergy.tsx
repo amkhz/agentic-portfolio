@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
   formatVacuumReadings,
   sampleVacuumTelemetry,
@@ -29,6 +30,10 @@ import {
 interface VacuumEnergyProps {
   /** True once the deck is past the boot ritual: readings tick live. */
   live: boolean;
+  /** The shared deck clock; defaults to a local epoch outside a session. */
+  clock?: () => number;
+  /** The riding maneuver, if any: demand steps, the margin pinches. */
+  trim?: CommitTrim | null;
 }
 
 const READINGS_INTERVAL_MS = 400;
@@ -158,18 +163,27 @@ export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
   );
 }
 
-export function VacuumEnergy({ live }: VacuumEnergyProps) {
+export function VacuumEnergy({
+  live,
+  clock: clockProp,
+  trim,
+}: VacuumEnergyProps) {
   const epochRef = useRef<number | null>(null);
   const [v, setV] = useState(() => sampleVacuumTelemetry(0));
+  const trimRef = useRef<CommitTrim | null>(null);
+  trimRef.current = trim ?? null;
+  const clockRef = useRef<() => number>(() => 0);
+  clockRef.current =
+    clockProp ??
+    (() => {
+      epochRef.current ??= performance.now();
+      return (performance.now() - epochRef.current) / 1000;
+    });
 
   useEffect(() => {
     if (!live) return;
-    const clock = () => {
-      epochRef.current ??= performance.now();
-      return (performance.now() - epochRef.current) / 1000;
-    };
     const interval = window.setInterval(() => {
-      setV(sampleVacuumTelemetry(clock()));
+      setV(sampleVacuumTelemetry(clockRef.current(), trimRef.current));
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);

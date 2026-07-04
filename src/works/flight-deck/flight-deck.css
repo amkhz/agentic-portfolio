@@ -17,21 +17,27 @@
   outline-offset: 3px;
 }
 
-/* Bench scan layout: hero center-left, panel right, vacuum small and
-   dense lower-left, horizon strip slim, operator strip docked bottom. */
+/* Bench scan layout (option D, 2026-07-04): hero center-left with the
+   transient review space beneath it, the translation dock and the
+   vacuum gauge stacked in the right column, horizon strip slim,
+   operator strip docked bottom. The bench is exactly one viewport tall:
+   an instrument panel you scroll is a settings page. The review space
+   shares its band with the vacuum gauge, so the bench never reflows
+   mid-commit; when the drafts are consumed the space simply goes quiet
+   (and stays reserved for the drill's attention in phase 5). */
 .deck-bench {
   display: grid;
-  min-height: 100dvh;
+  height: 100dvh;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 22rem);
   grid-template-rows: auto minmax(0, 1fr) auto auto auto;
   grid-template-areas:
     "alert alert"
     "hero panel"
-    "vacuum panel"
+    "review vacuum"
     "horizon horizon"
     "operator operator";
-  gap: 2rem 3rem;
-  padding: 1.5rem 2.5rem 1rem;
+  gap: 1.25rem 3rem;
+  padding: 1.25rem 2.5rem 1rem;
 }
 
 .deck-region--alert {
@@ -40,13 +46,25 @@
 }
 .deck-region--hero {
   grid-area: hero;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.deck-region--hero .deck-region-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 .deck-region--panel {
   grid-area: panel;
+  min-height: 0;
+}
+.deck-region--review {
+  grid-area: review;
 }
 .deck-region--vacuum {
   grid-area: vacuum;
-  max-width: 20rem;
 }
 .deck-region--horizon {
   grid-area: horizon;
@@ -55,12 +73,22 @@
   grid-area: operator;
 }
 
-/* Field Integrity, the hero instrument. */
+/* Field Integrity, the hero instrument. The stage fills whatever height
+   the bench gives the hero row: room to breathe when the review space
+   is quiet, a graceful compression while drafts sit on the bench. */
+.deck-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
 .deck-field__stage {
   display: flex;
   align-items: stretch;
   gap: 1.25rem;
-  min-height: 22rem;
+  flex: 1;
+  min-height: 13rem;
 }
 
 .deck-field__canvas {
@@ -203,7 +231,7 @@
    this instrument is felt before it is looked at. */
 .deck-orientation__canvas {
   position: relative;
-  height: 6rem;
+  height: 5rem;
   overflow: hidden;
 }
 
@@ -267,6 +295,245 @@
   font-family: var(--deck-font-mono);
   font-size: 10px;
   letter-spacing: 0.1em;
+}
+
+/* Translation layer panel (phase 4): intent fields, proposal cards,
+   utilization meter. Bench discipline holds: no boxed tiles, cards
+   separated by hairlines and space. Reactive lane styling only; the
+   commit choreography is GSAP-owned in DeckSession. */
+.deck-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+.deck-panel__status {
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+/* The meter docks at the base of the column, where the operator's eye
+   rests between decisions (shape brief). */
+.deck-panel__meter {
+  margin-top: auto;
+}
+
+/* The review space: a transient row of drafted routes beside the field
+   render. Quiet when empty; the grid row collapses and the hero takes
+   the room back. */
+.deck-review {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.deck-review__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 2rem;
+}
+
+.deck-intent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.deck-intent__legend,
+.deck-intent__label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-intent__legend {
+  padding: 0;
+  margin-bottom: 0.25rem;
+}
+
+.deck-intent__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.deck-intent__row .deck-intent__label {
+  flex: 0 0 5.5rem;
+}
+
+.deck-intent__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.375rem;
+}
+
+.deck-intent__option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.deck-intent__option span {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--deck-ink-label);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.deck-intent__option input:checked + span {
+  color: var(--deck-ink);
+  border-color: var(--deck-line);
+}
+
+.deck-intent__option input:focus-visible + span {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 2px;
+}
+
+.deck-proposal {
+  border-top: 1px solid var(--deck-line);
+  padding-top: 0.625rem;
+}
+
+.deck-proposal__style {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-proposal__summary {
+  margin-top: 0.25rem;
+  font-family: var(--deck-font-body);
+  font-size: 0.875rem;
+  color: var(--deck-ink-dim);
+}
+
+.deck-proposal__trace-box {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  margin-top: 0.375rem;
+}
+
+.deck-proposal__trace {
+  fill: none;
+  stroke: var(--deck-ink-dim);
+  stroke-width: 1.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.deck-proposal__mark {
+  fill: none;
+  stroke: var(--deck-ink-faint);
+  stroke-width: 1;
+}
+
+.deck-proposal__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.375rem;
+}
+
+.deck-proposal__cost {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink-label);
+}
+
+.deck-commit {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-dim);
+  border: 1px solid var(--deck-line);
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+}
+
+.deck-commit:hover:not(:disabled) {
+  color: var(--deck-ink);
+  border-color: var(--deck-ink-dim);
+}
+
+.deck-commit:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* Utilization meter: the A2 band annotated, the ceiling marked; past it
+   the needle warms and the OVER text appears (never color alone). */
+.deck-panel__meter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.deck-meter {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.deck-meter__track {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-meter__band {
+  stroke: var(--deck-ink-faint);
+  stroke-width: 3;
+}
+
+.deck-meter__band-label,
+.deck-meter__over {
+  fill: var(--deck-ink-label);
+  font-family: var(--deck-font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+}
+
+.deck-meter__tick {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-meter__ceiling {
+  stroke: var(--deck-ink-dim);
+  stroke-width: 1.5;
+}
+
+.deck-meter__needle {
+  stroke: var(--deck-ink);
+  stroke-width: 1.5;
+}
+
+.deck-meter[data-over] .deck-meter__needle {
+  stroke: var(--deck-caution);
+}
+
+.deck-meter[data-over] .deck-meter__over {
+  fill: var(--deck-caution);
+}
+
+.deck-panel__explainer {
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  color: var(--deck-ink-label);
 }
 
 /* Certification lamps: unlit at nominal, flashed in severity order by the

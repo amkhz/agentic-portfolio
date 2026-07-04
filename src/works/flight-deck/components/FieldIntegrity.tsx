@@ -6,6 +6,7 @@ import {
   type Ref,
 } from "react";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
+import { commitGlow, type CommitTrim } from "@core/works/flight-deck/commit";
 import {
   formatFieldReadings,
   formatStressLanes,
@@ -56,12 +57,22 @@ export interface FieldIntegrityHandle {
   setReveal(value: number): void;
   /** Live motion tuning (the dev tuner's hook; harmless in production). */
   setMotion(params: FieldMotionParams): void;
+  /**
+   * The commit handoff's field side (phase 4): the timeline drives the
+   * arrival glow here while the panel's route retracts; once the trim
+   * lands, the render loop owns the glow from the shared envelope.
+   */
+  setCommit(bearing: number, glow: number): void;
 }
 
 interface FieldIntegrityProps {
   ref?: Ref<FieldIntegrityHandle>;
   /** True once the deck is past the boot ritual: readings tick live. */
   live: boolean;
+  /** The shared deck clock; defaults to a local epoch outside a session. */
+  clock?: () => number;
+  /** The riding maneuver, if any: the commit's consequence on the wall. */
+  trim?: CommitTrim | null;
 }
 
 const vertex = /* glsl */ `
@@ -94,6 +105,8 @@ uniform vec3 uStop2;
 uniform vec3 uStop3;
 uniform vec3 uStop4;
 uniform vec3 uInk; // bone ink, OKLab: the sweep arm
+uniform float uCommitAngle; // committed heading, radians
+uniform float uCommitGlow;  // the maneuver's envelope, 0 to 1
 
 /* Motion parameters (FIELD_MOTION_DEFAULTS; dev tuner drives them live). */
 uniform float uCenterX;
@@ -187,10 +200,15 @@ void main() {
   /* Wall centerline: wobble grows as evenness drops; the ring itself
      breathes faintly. Rates are watchable (10-30s cycles), never nervous. */
   float uneven = 1.0 - uEven;
+  /* The committed maneuver (phase 4): the wall leans toward the heading
+     the operator handed off, on the shared commit envelope. */
+  float commitBump = uCommitGlow
+    * exp(-pow(angDist(theta, uCommitAngle) / 0.55, 2.0));
   float R = 0.74
     + uBreathAmp * sin(t * uBreathRate)
     + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * uDriftCenter2)
-    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * uDriftCenter3 + 1.3);
+    + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * uDriftCenter3 + 1.3)
+    + 0.035 * commitBump;
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
   float thickness = uWallBase * uWall * (1.0
@@ -210,6 +228,9 @@ void main() {
   /* Circulation: a low crest of energy traveling the wall, the bubble
      visibly holding itself. Periodic in theta, so no seam. */
   density += uCrestAmp * sin(2.0 * theta - t * uCrestSpeed + 1.0);
+
+  /* The committed route lights up where the wall inherited it. */
+  density += 0.45 * commitBump;
 
   /* Living speckle, drifting through the field in cartesian space (no
      angular seam): two octaves, the medium alive under calm data. */
@@ -252,19 +273,38 @@ const RAMP_TOKENS = [
 
 const READINGS_INTERVAL_MS = 400;
 
-export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
+export function FieldIntegrity({
+  ref,
+  live,
+  clock: clockProp,
+  trim,
+}: FieldIntegrityProps) {
   const hostRef = useRef<HTMLDivElement>(null);
-  const glStateRef = useRef<{ sweep: number; reveal: number }>({
+  const glStateRef = useRef<{
+    sweep: number;
+    reveal: number;
+    commitAngle: number;
+    commitGlow: number;
+  }>({
     sweep: 0,
     reveal: 0,
+    commitAngle: 0,
+    commitGlow: 0,
   });
   // One clock for the shader and the readings, so both sample the field
-  // model at the same instant and the mirror can never contradict the render.
+  // model at the same instant and the mirror can never contradict the
+  // render. A session passes the shared deck clock so commit trims mean
+  // the same instant on every instrument.
   const epochRef = useRef<number | null>(null);
-  const clock = () => {
+  const localClock = () => {
     epochRef.current ??= performance.now();
     return (performance.now() - epochRef.current) / 1000;
   };
+  const clockRef = useRef(localClock);
+  clockRef.current = clockProp ?? localClock;
+  const clock = () => clockRef.current();
+  const trimRef = useRef<CommitTrim | null>(null);
+  trimRef.current = trim ?? null;
   const uniformsRef = useRef<Record<string, { value: number }>>({});
   const [readings, setReadings] = useState(() =>
     formatFieldReadings(sampleFieldTelemetry(0)),
@@ -305,6 +345,14 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
           const u = uniforms[MOTION_UNIFORMS[key]];
           if (u) u.value = params[key];
         }
+      },
+      setCommit(bearing: number, glow: number) {
+        glStateRef.current.commitAngle = bearing;
+        glStateRef.current.commitGlow = glow;
+        const angle = uniformsRef.current.uCommitAngle;
+        if (angle) angle.value = bearing;
+        const g = uniformsRef.current.uCommitGlow;
+        if (g) g.value = glow;
       },
     }),
     [],
@@ -354,6 +402,8 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         uStop3: { value: stops[3] },
         uStop4: { value: stops[4] },
         uInk: { value: ink },
+        uCommitAngle: { value: glStateRef.current.commitAngle },
+        uCommitGlow: { value: glStateRef.current.commitGlow },
         ...Object.fromEntries(
           (Object.keys(MOTION_UNIFORMS) as (keyof FieldMotionParams)[]).map(
             (key) => [MOTION_UNIFORMS[key], { value: FIELD_MOTION_DEFAULTS[key] }],
@@ -403,6 +453,18 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         field.stress[2].width,
         field.stress[2].intensity,
       ];
+
+      // Once a trim is riding, the loop owns the commit glow from the
+      // shared envelope (it starts at the hold value the handoff left,
+      // so the takeover is seamless). Before that, only setCommit writes.
+      const riding = trimRef.current;
+      if (riding) {
+        const glow = commitGlow(t - riding.atSeconds);
+        glStateRef.current.commitAngle = riding.bearing;
+        glStateRef.current.commitGlow = glow;
+        program.uniforms.uCommitAngle.value = riding.bearing;
+        program.uniforms.uCommitGlow.value = glow;
+      }
 
       // Annotation anchors, glued to the same sample the shader just drew.
       const layer = annotLayerRef.current;

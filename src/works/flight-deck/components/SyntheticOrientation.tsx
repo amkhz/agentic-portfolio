@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
+import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
   formatOrientationReadings,
   sampleOrientation,
@@ -23,6 +24,10 @@ import { readOklabToken } from "./oklabTokens";
 interface SyntheticOrientationProps {
   /** True once the deck is past the boot ritual: readings tick live. */
   live: boolean;
+  /** The shared deck clock; defaults to a local epoch outside a session. */
+  clock?: () => number;
+  /** The riding maneuver, if any: the horizon banks into the commit. */
+  trim?: CommitTrim | null;
 }
 
 const vertex = /* glsl */ `
@@ -130,14 +135,23 @@ const DEG2RAD = Math.PI / 180;
 /** Degrees of pitch that would move the horizon a full half-strip. */
 export const PITCH_FULL_SCALE_DEG = 6;
 
-export function SyntheticOrientation({ live }: SyntheticOrientationProps) {
+export function SyntheticOrientation({
+  live,
+  clock: clockProp,
+  trim,
+}: SyntheticOrientationProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   // One clock for the shader and the readings, same contract as the field.
   const epochRef = useRef<number | null>(null);
-  const clock = () => {
+  const localClock = () => {
     epochRef.current ??= performance.now();
     return (performance.now() - epochRef.current) / 1000;
   };
+  const clockRef = useRef(localClock);
+  clockRef.current = clockProp ?? localClock;
+  const clock = () => clockRef.current();
+  const trimRef = useRef<CommitTrim | null>(null);
+  trimRef.current = trim ?? null;
   const [readings, setReadings] = useState(() =>
     formatOrientationReadings(sampleOrientation(0)),
   );
@@ -195,7 +209,7 @@ export function SyntheticOrientation({ live }: SyntheticOrientationProps) {
 
     const update = () => {
       const t = clock();
-      const o = sampleOrientation(t);
+      const o = sampleOrientation(t, trimRef.current);
       program.uniforms.uTime.value = t;
       program.uniforms.uBank.value = o.bank * DEG2RAD;
       program.uniforms.uPitch.value = (o.pitch / PITCH_FULL_SCALE_DEG) * 0.5;
@@ -240,7 +254,9 @@ export function SyntheticOrientation({ live }: SyntheticOrientationProps) {
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
-      setReadings(formatOrientationReadings(sampleOrientation(clock())));
+      setReadings(
+        formatOrientationReadings(sampleOrientation(clock(), trimRef.current)),
+      );
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);

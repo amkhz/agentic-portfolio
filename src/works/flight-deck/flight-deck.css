@@ -257,6 +257,18 @@
   stroke-width: 1.5;
 }
 
+.deck-vacuum__wedge {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-vacuum__scale-note {
+  fill: var(--deck-ink-label);
+  font-family: var(--deck-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
 /* Certification lamps: unlit at nominal, flashed in severity order by the
    boot ritual. Decorative redundancy; severity semantics stay shape +
    position + label. */

@@ -22,6 +22,10 @@ interface FieldTunerProps {
 }
 
 export default function FieldTuner({ onChange }: FieldTunerProps) {
+  const latestRef = useRef<FieldMotionParams | null>(null);
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+
   const params = useDialKit(
     "Field Integrity",
     {
@@ -57,10 +61,15 @@ export default function FieldTuner({ onChange }: FieldTunerProps) {
     {
       persist: { storage: "sessionStorage" },
       onAction: (action) => {
-        if (action === "logValues" && latestRef.current) {
-          // The bake-back path: paste over FIELD_MOTION_DEFAULTS.
-          console.log(JSON.stringify(latestRef.current, null, 2));
-        }
+        // The bake-back path: JSON to the clipboard, paste over
+        // FIELD_MOTION_DEFAULTS (console.log as the fallback receipt).
+        if (!action.includes("logValues") || !latestRef.current) return;
+        const json = JSON.stringify(latestRef.current, null, 2);
+        console.log(json);
+        navigator.clipboard
+          ?.writeText(json)
+          .then(() => console.log("field motion params copied to clipboard"))
+          .catch(() => console.log("clipboard unavailable; copy from above"));
       },
     },
   );
@@ -83,15 +92,11 @@ export default function FieldTuner({ onChange }: FieldTunerProps) {
     shellFalloff: params.wall.falloff,
   };
 
-  const latestRef = useRef<FieldMotionParams>(flat);
   latestRef.current = flat;
-
-  const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
 
   const signature = JSON.stringify(flat);
   useEffect(() => {
-    onChangeRef.current(latestRef.current);
+    if (latestRef.current) onChangeRef.current(latestRef.current);
   }, [signature]);
 
   return <DialRoot position="top-right" defaultOpen theme="dark" />;

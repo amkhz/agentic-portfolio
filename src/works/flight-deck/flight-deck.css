@@ -104,6 +104,71 @@
   color: var(--deck-ink-label);
 }
 
+/* Annotation layer ("earn the width", locked 2026-07-04): caliper arcs
+   on the tracked stress concentrations, hairline leaders to per-lane
+   readouts in the width the center-left anchor frees. Medical-imaging
+   register: marks sit on the image the way ultrasound calipers do, in
+   faint ink, no glow. Presence is aspect-driven (no timed entrance),
+   riding the same regime as the shader's anchor guard; a square hero
+   has no width to earn and the layer stays dark. */
+.deck-annot {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: var(--annot-presence, 0);
+  pointer-events: none;
+}
+
+.deck-annot__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-annot__arc {
+  fill: none;
+  stroke: var(--deck-ink-faint);
+  stroke-width: 1.5;
+}
+
+.deck-annot__leader {
+  stroke: var(--deck-ink-faint);
+  stroke-width: 1;
+}
+
+.deck-annot__lane {
+  position: absolute;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+  white-space: nowrap;
+}
+
+.deck-annot__label,
+.deck-annot__state {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-annot__value {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink-label);
+}
+
+/* On watch the lane firms up; state is text either way, never color-only. */
+.deck-annot__lane[data-watch] .deck-annot__value {
+  color: var(--deck-ink-dim);
+}
+
+.deck-annot__lane[data-watch] .deck-annot__state {
+  color: var(--deck-ink);
+}
+
 /* The static plate's ring: same ramp tokens as the shader, interpolated
    in OKLab so the plate cannot drift warm through red either. */
 .deck-field-plate__ring {

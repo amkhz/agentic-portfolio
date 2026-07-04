@@ -8,9 +8,17 @@ import {
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 import {
   formatFieldReadings,
+  formatStressLanes,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
 import { oklchToOklab, parseOklch } from "@core/works/oklch";
+import {
+  annotationPresence,
+  LANE_GAP_PX,
+  LANE_X,
+  LANE_YS,
+  projectStressAnchors,
+} from "./fieldAnnotation";
 import {
   FIELD_MOTION_DEFAULTS,
   MOTION_UNIFORMS,
@@ -30,6 +38,15 @@ import { FieldLegend } from "./FieldLegend";
  * violet-to-amber passage desaturates through warm neutral instead of
  * detouring through red hue. Readings stay HTML (probe outcome, 2026-07-03)
  * with a screen-reader sentence mirror.
+ *
+ * The annotation layer ("earn the width", locked 2026-07-04) rides the
+ * width the center-left anchor frees: caliper arcs hug the wall at the
+ * three tracked stress concentrations, hairline leaders run to per-lane
+ * readouts on the right. Anchors are projected by inverting the shader's
+ * own transform from the same clock and pure field model, so the arc and
+ * the rendered concentration cannot disagree. Presence is aspect-driven,
+ * not timed: the layer fades in across the same regime where the anchor
+ * guard frees the width, and a square hero never shows it.
  */
 
 export interface FieldIntegrityHandle {
@@ -258,6 +275,21 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
   const [readings, setReadings] = useState(() =>
     formatFieldReadings(sampleFieldTelemetry(0)),
   );
+  const [lanes, setLanes] = useState(() =>
+    formatStressLanes(sampleFieldTelemetry(0)),
+  );
+
+  // The annotation layer only exists over a live canvas; jsdom and lost
+  // contexts fall back to the readings line alone.
+  const [glReady, setGlReady] = useState(false);
+  // The projection tracks the tuner's frame dials live, same as the shader.
+  const motionRef = useRef<FieldMotionParams>(FIELD_MOTION_DEFAULTS);
+  const sizeRef = useRef({ width: 0, height: 0 });
+  const presenceRef = useRef(0);
+  const annotLayerRef = useRef<HTMLDivElement>(null);
+  const arcRefs = useRef<(SVGPathElement | null)[]>([]);
+  const leaderRefs = useRef<(SVGLineElement | null)[]>([]);
+  const groupRefs = useRef<(SVGGElement | null)[]>([]);
 
   useImperativeHandle(
     ref,
@@ -273,6 +305,7 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         if (u) u.value = value;
       },
       setMotion(params: FieldMotionParams) {
+        motionRef.current = params;
         const uniforms = uniformsRef.current;
         for (const key of Object.keys(MOTION_UNIFORMS) as (keyof FieldMotionParams)[]) {
           const u = uniforms[MOTION_UNIFORMS[key]];
@@ -343,6 +376,8 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
       if (!clientWidth || !clientHeight) return;
       renderer.setSize(clientWidth, clientHeight);
       program.uniforms.uAspect.value = clientWidth / clientHeight;
+      sizeRef.current = { width: clientWidth, height: clientHeight };
+      presenceRef.current = annotationPresence(clientWidth / clientHeight);
     };
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(host);
@@ -374,6 +409,49 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
         field.stress[2].width,
         field.stress[2].intensity,
       ];
+
+      // Annotation anchors, glued to the same sample the shader just drew.
+      const layer = annotLayerRef.current;
+      if (layer) {
+        const presence = presenceRef.current;
+        layer.style.setProperty("--annot-presence", presence.toFixed(3));
+        if (presence > 0) {
+          const { width, height } = sizeRef.current;
+          const anchors = projectStressAnchors(
+            field,
+            t,
+            motionRef.current,
+            width,
+            height,
+          );
+          anchors.forEach((a, i) => {
+            const group = groupRefs.current[i];
+            const arc = arcRefs.current[i];
+            const leader = leaderRefs.current[i];
+            if (!group || !arc || !leader) return;
+            // Quadratic through the three wall samples: the caliper
+            // hugging the arc of the concentration it measures.
+            const cx = 2 * a.at.x - (a.from.x + a.to.x) / 2;
+            const cy = 2 * a.at.y - (a.from.y + a.to.y) / 2;
+            arc.setAttribute(
+              "d",
+              `M ${a.from.x.toFixed(1)} ${a.from.y.toFixed(1)} ` +
+                `Q ${cx.toFixed(1)} ${cy.toFixed(1)} ` +
+                `${a.to.x.toFixed(1)} ${a.to.y.toFixed(1)}`,
+            );
+            leader.setAttribute("x1", a.at.x.toFixed(1));
+            leader.setAttribute("y1", a.at.y.toFixed(1));
+            leader.setAttribute("x2", (LANE_X * width - LANE_GAP_PX).toFixed(1));
+            leader.setAttribute("y2", (LANE_YS[i] * height).toFixed(1));
+            // The mark firms with the reading; watch-floor crossings
+            // stay smooth because intensity itself is smooth.
+            group.style.opacity = (
+              0.2 + 0.6 * Math.min(a.intensity, 1)
+            ).toFixed(3);
+          });
+        }
+      }
+
       renderer.render({ scene: mesh });
       frame = requestAnimationFrame(update);
     };
@@ -395,6 +473,7 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
     const onVisibility = () => syncLoop();
     document.addEventListener("visibilitychange", onVisibility);
     syncLoop();
+    setGlReady(true);
 
     return () => {
       running = false;
@@ -412,10 +491,13 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
 
   // Readings tick on their own slow cadence once the deck is live; the
   // shader reads the same pure model every frame, so they cannot diverge.
+  // Lane text shares the tick and the sample: one instant, every surface.
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
-      setReadings(formatFieldReadings(sampleFieldTelemetry(clock())));
+      const field = sampleFieldTelemetry(clock());
+      setReadings(formatFieldReadings(field));
+      setLanes(formatStressLanes(field));
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);
@@ -423,7 +505,56 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
   return (
     <div className="deck-field">
       <div className="deck-field__stage js-boot-data">
-        <div ref={hostRef} className="deck-field__canvas" aria-hidden="true" />
+        <div ref={hostRef} className="deck-field__canvas" aria-hidden="true">
+          {glReady ? (
+            <div ref={annotLayerRef} className="deck-annot">
+              <svg className="deck-annot__lines">
+                {lanes.map((lane, i) => (
+                  <g
+                    key={lane.label}
+                    style={{ opacity: 0 }}
+                    ref={(el) => {
+                      groupRefs.current[i] = el;
+                    }}
+                  >
+                    <path
+                      className="deck-annot__arc"
+                      ref={(el) => {
+                        arcRefs.current[i] = el;
+                      }}
+                    />
+                    <line
+                      className="deck-annot__leader"
+                      ref={(el) => {
+                        leaderRefs.current[i] = el;
+                      }}
+                    />
+                  </g>
+                ))}
+              </svg>
+              {lanes.map((lane, i) => (
+                <p
+                  key={lane.label}
+                  className="deck-annot__lane"
+                  data-watch={lane.onWatch ? "" : undefined}
+                  style={{
+                    left: `${LANE_X * 100}%`,
+                    top: `${LANE_YS[i] * 100}%`,
+                  }}
+                >
+                  <span className="deck-annot__label">{lane.label}</span>
+                  <span className="deck-annot__value">BRG {lane.bearing}</span>
+                  <span className="deck-annot__value">
+                    INT {lane.intensity}
+                  </span>
+                  <span className="deck-annot__state">
+                    {lane.onWatch ? "WATCH" : "QUIET"}
+                  </span>
+                </p>
+              ))}
+            </div>
+          ) : null}
+        </div>
         <FieldLegend />
       </div>
       <p
@@ -432,7 +563,9 @@ export function FieldIntegrity({ ref, live }: FieldIntegrityProps) {
       >
         {readings.line}
       </p>
-      <p className="sr-only">{readings.mirror}</p>
+      <p className="sr-only">
+        {[readings.mirror, ...lanes.map((lane) => lane.mirror)].join(" ")}
+      </p>
     </div>
   );
 }

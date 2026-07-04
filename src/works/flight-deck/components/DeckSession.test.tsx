@@ -94,4 +94,16 @@ describe("DeckSession", () => {
     const events = renderSession({ ...initialDeckState, phase: "waking" });
     expect(events).toEqual([{ type: "ABORT_WAKE" }]);
   });
+
+  it("renders the phase 3 instruments with readings and sr mirrors", () => {
+    renderSession();
+    // Synthetic Orientation: bench line + sentence mirror (t=0 sample).
+    expect(screen.getByText(/^BANK [LR]\d\.\d · PITCH/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/^Synthetic orientation nominal\./),
+    ).toBeInTheDocument();
+    // Vacuum Energy: lattice gauge readings + sentence mirror.
+    expect(screen.getByText(/^VAC 0\.\d{3} · DRAW/)).toBeInTheDocument();
+    expect(screen.getByText(/^Vacuum energy nominal\./)).toBeInTheDocument();
+  });
 });

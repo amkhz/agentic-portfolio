@@ -197,6 +197,78 @@
   );
 }
 
+/* Synthetic Orientation: the slim synthetic-horizon strip (phase 3).
+   The shader draws the banking horizon and its flow streaks; the plate
+   variant rebuilds the still with the two spans below. Bone ink only:
+   this instrument is felt before it is looked at. */
+.deck-orientation__canvas {
+  position: relative;
+  height: 6rem;
+  overflow: hidden;
+}
+
+.deck-orientation__canvas canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Plate still: ladder lines in the bench frame, horizon at the model's
+   t=0 attitude (transform set inline from the same pure model). */
+.deck-orientation-plate__ladder {
+  position: absolute;
+  inset: 25% 0;
+  border-top: 1px solid var(--deck-line);
+  border-bottom: 1px solid var(--deck-line);
+}
+
+.deck-orientation-plate__horizon {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--deck-ink-dim);
+}
+
+/* Vacuum Energy: the wide lattice bed (phase 3, form picked by Justin
+   2026-07-04). Extraction accumulates hairlines from the left along a
+   full-width ruler, demand is the one firm line the lattice must stay
+   past, and the empty bed is honest headroom. */
+.deck-vacuum__gauge {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.deck-vacuum__tick,
+.deck-vacuum__frame {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-vacuum__lattice {
+  stroke: var(--deck-ink-faint);
+  stroke-width: 1;
+}
+
+.deck-vacuum__demand {
+  stroke: var(--deck-ink);
+  stroke-width: 1.5;
+}
+
+.deck-vacuum__wedge {
+  stroke: var(--deck-line);
+  stroke-width: 1;
+}
+
+.deck-vacuum__scale-note {
+  fill: var(--deck-ink-label);
+  font-family: var(--deck-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+
 /* Certification lamps: unlit at nominal, flashed in severity order by the
    boot ritual. Decorative redundancy; severity semantics stay shape +
    position + label. */

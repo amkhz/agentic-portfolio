@@ -11,6 +11,8 @@ import { instruments } from "@core/works/flight-deck/instruments";
 import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
 import { DeckBench } from "./DeckBench";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
+import { SyntheticOrientation } from "./SyntheticOrientation";
+import { VacuumEnergy } from "./VacuumEnergy";
 
 gsap.registerPlugin(useGSAP);
 
@@ -304,6 +306,8 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
         variant="live"
         onExitToColophon={onExitToColophon}
         hero={<FieldIntegrity ref={fieldRef} live={booted} />}
+        orientation={<SyntheticOrientation live={booted} />}
+        vacuum={<VacuumEnergy live={booted} />}
       />
       {!booted ? (
         <div className="deck-wake js-wake">

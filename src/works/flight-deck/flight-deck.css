@@ -231,12 +231,14 @@
   border-top: 1px solid var(--deck-ink-dim);
 }
 
-/* Vacuum Energy: the invented lattice gauge (phase 3). Extraction is
-   the accumulated hairlines, demand the one firm line floating in the
-   lattice, margin the gap between them. */
+/* Vacuum Energy: the wide lattice bed (phase 3, form picked by Justin
+   2026-07-04). Extraction accumulates hairlines from the left along a
+   full-width ruler, demand is the one firm line the lattice must stay
+   past, and the empty bed is honest headroom. */
 .deck-vacuum__gauge {
-  width: 4rem;
-  height: 6rem;
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .deck-vacuum__tick,

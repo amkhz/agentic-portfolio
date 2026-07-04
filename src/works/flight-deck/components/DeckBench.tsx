@@ -19,6 +19,8 @@ interface DeckBenchProps {
   orientation?: React.ReactNode;
   vacuum?: React.ReactNode;
   panel?: React.ReactNode;
+  /** The transient review surface: drafted routes beside the render. */
+  review?: React.ReactNode;
 }
 
 /** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
@@ -85,6 +87,7 @@ export function DeckBench({
   orientation,
   vacuum,
   panel,
+  review,
 }: DeckBenchProps) {
   return (
     <div className="deck-bench">
@@ -110,6 +113,12 @@ export function DeckBench({
       <Region area="panel" label="Translation layer">
         {variant === "live" ? panel : <PanelPlate />}
       </Region>
+
+      {/* The review space: quiet until the layer drafts, consumed by a
+          commit, and reserved for the drill's attention in phase 5. */}
+      <section className="deck-region--review" aria-label="Route review">
+        {variant === "live" ? review : null}
+      </section>
 
       <Region
         area="vacuum"

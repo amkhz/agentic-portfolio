@@ -20,8 +20,10 @@ import type {
 } from "@core/works/flight-deck/translation";
 import { DeckBench } from "./DeckBench";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
+import { ProposalRow } from "./ProposalRow";
 import { SyntheticOrientation } from "./SyntheticOrientation";
 import { TranslationPanel } from "./TranslationPanel";
+import { useTranslationLayer } from "./useTranslationLayer";
 import { VacuumEnergy } from "./VacuumEnergy";
 
 gsap.registerPlugin(useGSAP);
@@ -81,6 +83,9 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   const [committing, setCommitting] = useState(false);
   const committingRef = useRef(false);
   const utilEventsRef = useRef<UtilizationEvent[]>([]);
+  const translation = useTranslationLayer(deckClock, utilEventsRef);
+  const translationRef = useRef(translation);
+  translationRef.current = translation;
 
   // A remount mid-ritual has no hold to resume: put the machine back to
   // dormant so the gesture and the playhead agree.
@@ -349,21 +354,22 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       });
       setAnnouncement(deckCopy.panel.translating);
     });
-    // 4. After the lag beat, the panel releases: cards restore and the
-    //    trace redraws (the proposal is still a valid draft).
+    // 4. After the lag beat, the review space returns to quiet: the
+    //    commit consumed the drafts, so the whole row takes its leave
+    //    on the same timeline and the state clears behind it.
     tl.to(
-      others,
-      { opacity: 1, duration: 0.45, ease: "power2.out" },
+      [card, ...others],
+      {
+        opacity: 0,
+        y: 8,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: "power2.in",
+      },
       `+=${s(commitScore.lagMs)}`,
     );
-    tl.to(card, { scale: 1, duration: 0.45, ease: "power2.out" }, "<");
-    tl.to(hand, {
-      v: 0,
-      duration: 0.3,
-      ease: "power1.out",
-      onUpdate: () => {
-        if (trace) trace.style.strokeDashoffset = String(hand.v);
-      },
+    tl.call(() => {
+      translationRef.current.clearProposals(proposal);
     });
   });
 
@@ -422,6 +428,17 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             live={booted}
             clock={deckClock}
             activity={utilEventsRef}
+            intent={translation.intent}
+            onIntentChange={translation.changeIntent}
+            drafting={translation.drafting}
+            draftedCount={translation.proposals.length}
+            enRoute={translation.enRoute}
+          />
+        }
+        review={
+          <ProposalRow
+            live={booted}
+            proposals={translation.drafting ? [] : translation.proposals}
             onCommit={runCommit}
             committing={committing}
           />

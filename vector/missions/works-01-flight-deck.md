@@ -43,7 +43,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
 - Display face (font procedure; voice words: calibrated, patient, luminous).
 - Field-render spectral ramp: **resolved 2026-07-03.** Amber top locked from the Wallace probe; phase 2 landed five stops as tokens (`--deck-field-stop-0..4`), OKLab-interpolated in-shader, and Justin validated the color live on the WebGL render ("the color tokens look right"). Formal contrast re-check rides the phase 7 `/audit`.
-- Hero composition at wide widths (Justin, 2026-07-03): dead deck to the left of the field render on wide screens. Tuner gained `frame` dials (centerX, zoom) so the anchor can be judged live; option comparison in the 2026-07-03 session artifact. Candidates: anchor the bubble center-left (cheap, scan-logic-honest); earn the width with an annotation layer (leader lines + per-stress readouts, medical-imaging register, pairs with phases 4-5); rebalance the bench grid ratio at ultra-wide. Decide after Justin's break, bake via the tuner.
+- Hero composition at wide widths: **resolved 2026-07-04, Justin locked "earn the width"** (option B of the 2026-07-03 comparison artifact). The field anchors center-left and the freed right side becomes an annotation layer: leader lines from the tracked stress concentrations to per-lane readouts (medical-imaging register; pre-builds the pointable anatomy phases 4-5 need). Ships as its own build item after PR #178 merges; the anchor bakes with it, judged via the tuner's frame dials.
 - Drill re-arm for repeat visitors, or once per session.
 - Decline-card capture format (static frame vs short clip, weight budget).
 

@@ -8,6 +8,10 @@ import {
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 import { commitGlow, type CommitTrim } from "@core/works/flight-deck/commit";
 import {
+  drillFieldDelta,
+  type DrillTimeline,
+} from "@core/works/flight-deck/drill";
+import {
   formatFieldReadings,
   formatStressLanes,
   sampleFieldTelemetry,
@@ -73,6 +77,8 @@ interface FieldIntegrityProps {
   clock?: () => number;
   /** The riding maneuver, if any: the commit's consequence on the wall. */
   trim?: CommitTrim | null;
+  /** The drill's beat marks (phase 5): adversarial inputs, same shapes. */
+  drill?: { current: DrillTimeline } | null;
 }
 
 const vertex = /* glsl */ `
@@ -124,6 +130,9 @@ uniform float uBreathAmp;
 uniform float uBreathRate;
 uniform float uWallBase;
 uniform float uShellFalloff;
+uniform float uThinGain;
+uniform float uNeckDepth;
+uniform float uThinCool;
 
 const float PI = 3.141592653589793;
 const float TAU = 6.283185307179586;
@@ -214,13 +223,33 @@ void main() {
   float thickness = uWallBase * uWall * (1.0
     + 0.38 * sin(3.0 * theta + t * uDriftThick3 + 0.7)
     + 0.22 * sin(5.0 * theta - t * uDriftThick5 + 2.1));
+
+  /* Out-of-band wall deficit (phase 5, Justin's live pass): when the
+     drill pushes the wall below the same band floor the readings call
+     off nominal (0.94, core WALL_BAND_FLOOR), the render shows it: the
+     shell gaunts everywhere and necks hardest where the stress
+     concentrates, the danger picture of a bright concentration on a
+     thinning wall. Nominal telemetry never reaches this; deficit is
+     zero anywhere above the floor. Centerline R is untouched, so the
+     annotation projection stays glued. */
+  float deficit = clamp((0.94 - uWall) / 0.05, 0.0, 1.0);
+  float hot = clamp(
+    stressBump(theta, uStressA) + stressBump(theta, uStressB)
+      + stressBump(theta, uStressC),
+    0.0, 1.0);
+  thickness *= (1.0 - uThinGain * deficit)
+    * (1.0 - uNeckDepth * deficit * hot);
   thickness = max(thickness, 0.02);
 
   float d = (r - R) / thickness;
   float shell = exp(-d * d * uShellFalloff);
 
-  /* Local energy density: thickness plus the tracked stress concentrations. */
-  float density = 0.30 + 0.42 * (thickness / uWallBase - 0.55);
+  /* Local energy density: thickness plus the tracked stress
+     concentrations. The gaunt thickness already pulls density toward
+     the ramp's cool bottom; uThinCool adds a direct chill on top (thin
+     reads cool, per the legend). */
+  float density = 0.30 + 0.42 * (thickness / uWallBase - 0.55)
+    - uThinCool * deficit;
   density += stressBump(theta, uStressA);
   density += stressBump(theta, uStressB);
   density += stressBump(theta, uStressC);
@@ -272,12 +301,15 @@ const RAMP_TOKENS = [
 ] as const;
 
 const READINGS_INTERVAL_MS = 400;
+/** How far back the lane trend looks, seconds. */
+const TREND_LOOKBACK_S = 1.6;
 
 export function FieldIntegrity({
   ref,
   live,
   clock: clockProp,
   trim,
+  drill,
 }: FieldIntegrityProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const glStateRef = useRef<{
@@ -305,6 +337,8 @@ export function FieldIntegrity({
   const clock = () => clockRef.current();
   const trimRef = useRef<CommitTrim | null>(null);
   trimRef.current = trim ?? null;
+  const drillRef = useRef<{ current: DrillTimeline } | null>(null);
+  drillRef.current = drill ?? null;
   const uniformsRef = useRef<Record<string, { value: number }>>({});
   const [readings, setReadings] = useState(() =>
     formatFieldReadings(sampleFieldTelemetry(0)),
@@ -434,7 +468,10 @@ export function FieldIntegrity({
 
     const update = () => {
       const t = clock();
-      const field = sampleFieldTelemetry(t);
+      const field = sampleFieldTelemetry(
+        t,
+        drillFieldDelta(t, drillRef.current?.current),
+      );
       program.uniforms.uTime.value = t;
       program.uniforms.uWall.value = field.wall;
       program.uniforms.uEven.value = field.even;
@@ -548,12 +585,20 @@ export function FieldIntegrity({
   // Readings tick on their own slow cadence once the deck is live; the
   // shader reads the same pure model every frame, so they cannot diverge.
   // Lane text shares the tick and the sample: one instant, every surface.
+  // The trend word comes from the same model a moment earlier: the field
+  // is pure in time, so the derivative is real, never staged.
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
-      const field = sampleFieldTelemetry(clock());
+      const t = clock();
+      const timeline = drillRef.current?.current;
+      const field = sampleFieldTelemetry(t, drillFieldDelta(t, timeline));
+      const earlier = sampleFieldTelemetry(
+        t - TREND_LOOKBACK_S,
+        drillFieldDelta(t - TREND_LOOKBACK_S, timeline),
+      );
       setReadings(formatFieldReadings(field));
-      setLanes(formatStressLanes(field));
+      setLanes(formatStressLanes(field, earlier));
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);
@@ -598,10 +643,17 @@ export function FieldIntegrity({
                     top: `${LANE_YS[i] * 100}%`,
                   }}
                 >
+                  {/* Lane vocabulary decided with the drill's alert
+                      grammar (2026-07-05): plain words where the drill
+                      makes a visitor read under pressure, and a trend
+                      word from the model's real derivative. */}
                   <span className="deck-annot__label">{lane.label}</span>
-                  <span className="deck-annot__value">BRG {lane.bearing}</span>
                   <span className="deck-annot__value">
-                    INT {lane.intensity}
+                    BEARING {lane.bearing}
+                  </span>
+                  <span className="deck-annot__value">
+                    {lane.intensity}
+                    {lane.trend ? ` · ${lane.trend}` : ""}
                   </span>
                   <span className="deck-annot__state">
                     {lane.onWatch ? "WATCH" : "QUIET"}

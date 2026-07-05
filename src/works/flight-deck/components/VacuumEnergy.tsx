@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
+  drillVacuumDelta,
+  type DrillTimeline,
+} from "@core/works/flight-deck/drill";
+import {
   formatVacuumReadings,
   sampleVacuumTelemetry,
   type VacuumTelemetry,
@@ -34,6 +38,8 @@ interface VacuumEnergyProps {
   clock?: () => number;
   /** The riding maneuver, if any: demand steps, the margin pinches. */
   trim?: CommitTrim | null;
+  /** The drill's beat marks (phase 5): the surge that pegs the strip. */
+  drill?: { current: DrillTimeline } | null;
 }
 
 const READINGS_INTERVAL_MS = 400;
@@ -167,11 +173,14 @@ export function VacuumEnergy({
   live,
   clock: clockProp,
   trim,
+  drill,
 }: VacuumEnergyProps) {
   const epochRef = useRef<number | null>(null);
   const [v, setV] = useState(() => sampleVacuumTelemetry(0));
   const trimRef = useRef<CommitTrim | null>(null);
   trimRef.current = trim ?? null;
+  const drillRef = useRef<{ current: DrillTimeline } | null>(null);
+  drillRef.current = drill ?? null;
   const clockRef = useRef<() => number>(() => 0);
   clockRef.current =
     clockProp ??
@@ -183,7 +192,14 @@ export function VacuumEnergy({
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
-      setV(sampleVacuumTelemetry(clockRef.current(), trimRef.current));
+      const t = clockRef.current();
+      setV(
+        sampleVacuumTelemetry(
+          t,
+          trimRef.current,
+          drillVacuumDelta(t, drillRef.current?.current),
+        ),
+      );
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);

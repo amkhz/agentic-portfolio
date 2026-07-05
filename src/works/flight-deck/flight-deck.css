@@ -40,9 +40,15 @@
   padding: 1.25rem 2.5rem 1rem;
 }
 
+/* Master-caution position. The row is reserved at the POSTED size (a
+   posting speaks at instrument scale, the quiet line is a whisper inside
+   the same height), so an alert never reflows the bench. */
 .deck-region--alert {
   grid-area: alert;
   justify-self: center;
+  min-height: 1.625rem;
+  display: flex;
+  align-items: center;
 }
 .deck-region--hero {
   grid-area: hero;
@@ -536,6 +542,235 @@
   color: var(--deck-ink-label);
 }
 
+/* The alert grammar, visual side (phase 5; annunciator design from
+   Justin's live pass 2026-07-05). One line: lamp, severity word, label,
+   plain-language line. A posted alert speaks at instrument scale (the
+   quiet line stays a whisper in the same reserved row); its lamp holds
+   a severity-colored emission (--emit, the boot's glow grammar, driven
+   by the posting choreography and released on resolution). Severity is
+   light + grammar, always redundant with the words; no side-stripes,
+   no flooding, no shake. */
+.deck-alert__quiet {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-alert {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.deck-alert__lamp {
+  width: 0.5625rem;
+  height: 0.5625rem;
+  border-radius: 50%;
+  align-self: center;
+  box-shadow:
+    0 0 calc(var(--emit, 0) * 12px) calc(var(--emit, 0) * 3px)
+    var(--deck-alert-emit, transparent);
+}
+
+.deck-alert__word,
+.deck-alert__label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.deck-alert__word {
+  color: var(--deck-ink);
+}
+
+.deck-alert__label {
+  color: var(--deck-ink-dim);
+}
+
+.deck-alert__plain {
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--deck-ink-dim);
+  white-space: normal;
+}
+
+.deck-alert[data-severity="advisory"] {
+  --deck-alert-emit: var(--deck-emit-advisory);
+}
+.deck-alert[data-severity="advisory"] .deck-alert__lamp {
+  background: var(--deck-advisory);
+}
+.deck-alert[data-severity="caution"] {
+  --deck-alert-emit: var(--deck-emit-caution);
+}
+.deck-alert[data-severity="caution"] .deck-alert__lamp {
+  background: var(--deck-caution);
+}
+.deck-alert[data-severity="caution"] .deck-alert__word {
+  color: var(--deck-caution);
+}
+.deck-alert[data-severity="warning"] {
+  --deck-alert-emit: var(--deck-emit-warning);
+}
+.deck-alert[data-severity="warning"] .deck-alert__lamp {
+  background: var(--deck-warning);
+}
+.deck-alert[data-severity="warning"] .deck-alert__word {
+  color: var(--deck-warning);
+}
+
+/* The guided procedure (ECAM posture): unfolds in the review space
+   beside the render it reads against, never a modal. Bench discipline
+   holds: hairline and space, no boxed tile. */
+.deck-drill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  border-top: 1px solid var(--deck-line);
+  padding-top: 0.625rem;
+  max-width: 42rem;
+}
+
+.deck-drill__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+}
+
+.deck-drill__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-dim);
+}
+
+.deck-drill__steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.deck-drill__step {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.deck-drill__step-text {
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+.deck-drill__step[data-state="done"] .deck-drill__step-text {
+  color: var(--deck-ink-label);
+}
+
+.deck-drill__step[data-state="judgment"] .deck-drill__step-text {
+  color: var(--deck-ink);
+}
+
+.deck-drill__step-state {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-drill__choices {
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+/* Beat 2's verify panel: the claim beside the render, mono, tabular,
+   the disagreement left to speak for itself. */
+.deck-drill__crosscheck {
+  display: flex;
+  gap: 2rem;
+  padding: 0.375rem 0;
+}
+
+.deck-drill__crosscheck-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+  margin-right: 0.625rem;
+}
+
+.deck-drill__crosscheck-value {
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink);
+}
+
+.deck-drill__response,
+.deck-drill__resolved,
+.deck-drill__settling {
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+.deck-drill__resolved {
+  color: var(--deck-ink-label);
+}
+
+/* Beat 6: the residual status, an ECAM after-state in the same space. */
+.deck-residual__rows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.deck-residual__rows > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.875rem;
+}
+
+.deck-residual__rows dt {
+  flex: 0 0 9rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-residual__rows dd {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+.deck-residual__margin {
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink);
+}
+
+.deck-residual__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.deck-residual__warm {
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
 /* Certification lamps: unlit at nominal, flashed in severity order by the
    boot ritual. Decorative redundancy; severity semantics stay shape +
    position + label. */
@@ -549,6 +784,28 @@
   height: 0.4375rem;
   border-radius: 50%;
   opacity: 0.18;
+  transition:
+    opacity 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* The local echo (phase 5): while an alert is active, the affected
+   instrument's own cert lamp holds lit in the severity color, tying the
+   master line to the place the procedure reads against. !important is
+   deliberate: the boot timeline leaves inline opacity on these lamps
+   and the held state must outrank it without touching GSAP's cleanup. */
+.deck-lamp[data-held] {
+  opacity: 1 !important;
+}
+
+.deck-lamp--advisory[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-advisory);
+}
+.deck-lamp--caution[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-caution);
+}
+.deck-lamp--warning[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-warning);
 }
 
 .deck-lamp--advisory {

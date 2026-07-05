@@ -55,6 +55,40 @@ describe("formatFieldReadings", () => {
     const two = formatFieldReadings({ ...base, activeStress: 2 });
     expect(two.mirror).toContain("2 stress concentrations on watch");
   });
+
+  it("speaks off nominal when a disturbance crosses the bands", () => {
+    const nominal = sampleFieldTelemetry(10);
+    expect(formatFieldReadings(nominal).mirror).toContain(
+      "Field integrity nominal.",
+    );
+    const thinned = sampleFieldTelemetry(10, {
+      wall: -0.09,
+      even: 0,
+      stress: [0, 0, 0],
+    });
+    expect(formatFieldReadings(thinned).mirror).toContain(
+      "Field integrity off nominal.",
+    );
+  });
+});
+
+describe("sampleFieldTelemetry with a disturbance", () => {
+  it("adds the delta onto the same nominal shape and clamps intensity", () => {
+    const t = 33;
+    const base = sampleFieldTelemetry(t);
+    const pushed = sampleFieldTelemetry(t, {
+      wall: -0.05,
+      even: -0.03,
+      stress: [0, 2, 0],
+    });
+    expect(pushed.wall).toBeCloseTo(base.wall - 0.05, 12);
+    expect(pushed.even).toBeCloseTo(base.even - 0.03, 12);
+    expect(pushed.stress[1].intensity).toBe(1);
+    expect(pushed.stress[0].intensity).toBeCloseTo(
+      base.stress[0].intensity,
+      12,
+    );
+  });
 });
 
 describe("bearingDegrees", () => {
@@ -94,6 +128,25 @@ describe("formatStressLanes", () => {
     expect(lanes.filter((lane) => lane.onWatch).length).toBe(
       field.activeStress,
     );
+  });
+
+  it("lights the trend from an earlier sample of the same model", () => {
+    const now = sampleFieldTelemetry(20);
+    const noTrend = formatStressLanes(now);
+    expect(noTrend[0].trend).toBeUndefined();
+    const earlier = {
+      ...now,
+      stress: [
+        { ...now.stress[0], intensity: now.stress[0].intensity - 0.05 },
+        { ...now.stress[1], intensity: now.stress[1].intensity + 0.05 },
+        { ...now.stress[2] },
+      ] as typeof now.stress,
+    };
+    const lanes = formatStressLanes(now, earlier);
+    expect(lanes[0].trend).toBe("rising");
+    expect(lanes[1].trend).toBe("easing");
+    expect(lanes[2].trend).toBe("steady");
+    expect(lanes[0].mirror).toContain("and rising");
   });
 
   it("mirrors each lane as a full sentence", () => {

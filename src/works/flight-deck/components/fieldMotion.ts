@@ -22,6 +22,14 @@ export interface FieldMotionParams {
   breathRate: number;
   wallBase: number;
   shellFalloff: number;
+  /**
+   * Out-of-band response (phase 5): how hard the render leans into a
+   * wall deficit the drill pushes below the readings' band floor.
+   * Nominal telemetry never engages these.
+   */
+  thinGain: number;
+  neckDepth: number;
+  thinCool: number;
 }
 
 export const FIELD_MOTION_DEFAULTS: FieldMotionParams = {
@@ -40,6 +48,9 @@ export const FIELD_MOTION_DEFAULTS: FieldMotionParams = {
   breathRate: 0.9,
   wallBase: 0.1,
   shellFalloff: 2.3,
+  thinGain: 0.38,
+  neckDepth: 0.55,
+  thinCool: 0.08,
 };
 
 export const MOTION_UNIFORMS: Record<keyof FieldMotionParams, string> = {
@@ -58,4 +69,7 @@ export const MOTION_UNIFORMS: Record<keyof FieldMotionParams, string> = {
   breathRate: "uBreathRate",
   wallBase: "uWallBase",
   shellFalloff: "uShellFalloff",
+  thinGain: "uThinGain",
+  neckDepth: "uNeckDepth",
+  thinCool: "uThinCool",
 };

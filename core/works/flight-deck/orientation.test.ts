@@ -54,4 +54,29 @@ describe("formatOrientationReadings", () => {
     expect(right.mirror).toContain("2.1 degrees right");
     expect(right.mirror).toContain("0.8 degrees up");
   });
+
+  it("speaks off nominal only when the caller marks the attitude upset", () => {
+    const o = sampleOrientation(0);
+    expect(formatOrientationReadings(o).mirror).toContain(
+      "Synthetic orientation nominal.",
+    );
+    expect(formatOrientationReadings(o, true).mirror).toContain(
+      "Synthetic orientation off nominal.",
+    );
+  });
+});
+
+describe("sampleOrientation with a disturbance", () => {
+  it("rides the adversarial delta on the same nominal shape", () => {
+    const t = 47;
+    const base = sampleOrientation(t);
+    const pushed = sampleOrientation(t, null, {
+      bank: 2.4,
+      pitch: -0.9,
+      flow: 0.06,
+    });
+    expect(pushed.bank).toBeCloseTo(base.bank + 2.4, 12);
+    expect(pushed.pitch).toBeCloseTo(base.pitch - 0.9, 12);
+    expect(pushed.flow).toBeCloseTo(Math.min(base.flow + 0.06, 0.95), 12);
+  });
 });

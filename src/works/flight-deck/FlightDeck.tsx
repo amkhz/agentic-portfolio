@@ -15,9 +15,10 @@ import "./flight-deck.css";
 /**
  * Works 01 root (ADR-017 D1): full-bleed, outside LabLayout, one route.
  * Mode gating, session state machine, colophon chrome, decline card,
- * static plate. As of phase 2 the full mode is a live session: the boot
- * ritual and the Field Integrity hero run in DeckSession; the remaining
- * instruments, the control panel, the drill, and sound arrive in 3-6.
+ * static plate. As of phase 5 the full mode is the whole working
+ * session: boot ritual, three instruments, the control panel and its
+ * commits, and the drill with its alert grammar (visual + opt-in
+ * aural). The paradigm slider (movement 5) arrives in phase 6.
  */
 export function FlightDeck() {
   const mode = useDeckCapabilities();

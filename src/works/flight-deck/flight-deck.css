@@ -415,6 +415,12 @@
   cursor: pointer;
 }
 
+/* Unchecked pills answer the pointer the way the chrome does: a quiet
+   ink lift, no border (the border is the checked state's word). */
+.deck-intent__option input:not(:checked) + span:hover {
+  color: var(--deck-ink-dim);
+}
+
 .deck-intent__option input:checked + span {
   color: var(--deck-ink);
   border-color: var(--deck-line);

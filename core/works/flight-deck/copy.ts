@@ -49,6 +49,44 @@ export const deckCopy = {
     /** The text badge past the ceiling; never color alone. */
     utilizationOver: "OVER",
   },
+  alerts: {
+    /** The alert region at quiet. */
+    quiet: "No active alerts",
+    /** The quiet line once the drill has been worked this session. */
+    quietAfterDrill: "No active alerts · drill worked",
+    /** Severity display words, shown beside the lamp (never color alone). */
+    severity: {
+      advisory: "ADVISORY",
+      caution: "CAUTION",
+      warning: "WARNING",
+    },
+    /** The procedure block's kicker in the review space. */
+    procedureKicker: "Procedure",
+    /** State words on checklist steps. */
+    stepWorking: "working",
+    stepDone: "done",
+    /** The cross-check panel's row labels (beat 2, the verify step). */
+    crossCheckLaneB: "SENSOR LANE B · WALL",
+    crossCheckRender: "FIELD RENDER · WALL",
+    /** Beat 5, while the systems settle in sequence. */
+    settling: "Systems settling in sequence.",
+    residual: {
+      kicker: "Residual status",
+      trippedLabel: "What tripped",
+      workedLabel: "What was done",
+      marginLabel: "Margin remaining",
+      /** The control that puts the deck back on watch. */
+      acknowledge: "Return to watch",
+    },
+  },
+  sound: {
+    /** The opt-in toggle in the deck chrome (ADR-017 D5: default off). */
+    label: "Sound",
+    on: "on",
+    off: "off",
+    /** One line on what opting in buys; alerts are captioned either way. */
+    hint: "Alert tones are synthesized on the deck. Everything audible is also written.",
+  },
   colophon: {
     title: "The Flight Deck",
     kicker: "Perihelion Works 01",

@@ -56,4 +56,29 @@ describe("formatVacuumReadings", () => {
     });
     expect(pinched.line).toContain("MGN -0.030");
   });
+
+  it("speaks the honest status at the floor and below zero", () => {
+    expect(
+      formatVacuumReadings({ extraction: 0.3, demand: 0.295, margin: 0.005 })
+        .mirror,
+    ).toContain("Vacuum energy margin pinched.");
+    expect(
+      formatVacuumReadings({ extraction: 0.28, demand: 0.31, margin: -0.03 })
+        .mirror,
+    ).toContain("Vacuum energy demand over extraction.");
+  });
+});
+
+describe("sampleVacuumTelemetry with a disturbance", () => {
+  it("rides the adversarial delta on the same nominal shape", () => {
+    const t = 47;
+    const base = sampleVacuumTelemetry(t);
+    const pushed = sampleVacuumTelemetry(t, null, {
+      demand: 0.1,
+      extraction: 0.04,
+    });
+    expect(pushed.demand).toBeCloseTo(base.demand + 0.1, 12);
+    expect(pushed.extraction).toBeCloseTo(base.extraction + 0.04, 12);
+    expect(pushed.margin).toBeCloseTo(base.margin - 0.06, 12);
+  });
 });

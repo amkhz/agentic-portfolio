@@ -8,10 +8,12 @@
  * Nominal drift, plus the committed maneuver when a trim is riding
  * (phase 4): demand steps up first and extraction catches up a beat
  * later, so the margin visibly pinches toward the floor and recovers,
- * never negative. The drill (phase 5) will push these out of band the
- * same way, adversarial inputs into pure shapes.
+ * never negative. The drill (phase 5) pushes these out of band the same
+ * way: an adversarial VacuumDelta from the drill's pure envelopes rides
+ * on top, and the warning's surge is allowed to cross the floor and go
+ * negative on purpose (the designed-in drama the commit is barred from).
  */
-import { vacuumCommitDelta, type CommitTrim } from "./commit";
+import { vacuumCommitDelta, type CommitTrim, type VacuumDelta } from "./commit";
 
 export interface VacuumTelemetry {
   /** Extraction level, fraction of rated draw currently harvested. */
@@ -33,6 +35,7 @@ function drift(t: number, freq: number, phase: number): number {
 export function sampleVacuumTelemetry(
   tSeconds: number,
   trim?: CommitTrim | null,
+  disturb?: VacuumDelta | null,
 ): VacuumTelemetry {
   const t = tSeconds;
   const commit = vacuumCommitDelta(t, trim);
@@ -40,7 +43,8 @@ export function sampleVacuumTelemetry(
     0.318 +
     0.022 * drift(t, 0.041, 0.9) +
     0.009 * drift(t, 0.017, 2.8) +
-    commit.extraction;
+    commit.extraction +
+    (disturb?.extraction ?? 0);
   // Demand shares extraction's slow term at a lag (the bubble draws what
   // the drive harvests, a breath behind), so the margin breathes but the
   // pair never scissors apart in nominal operation.
@@ -48,7 +52,8 @@ export function sampleVacuumTelemetry(
     0.284 +
     0.018 * drift(t - 2.5, 0.041, 0.9) +
     0.007 * drift(t, 0.029, 1.3) +
-    commit.demand;
+    commit.demand +
+    (disturb?.demand ?? 0);
   return {
     extraction,
     demand,
@@ -63,6 +68,15 @@ export interface VacuumReadings {
   mirror: string;
 }
 
+/** The status the mirror opens with; honest to the floor the drill crosses. */
+export function vacuumStatus(
+  v: VacuumTelemetry,
+): "nominal" | "margin pinched" | "demand over extraction" {
+  if (v.margin < 0) return "demand over extraction";
+  if (v.margin < MARGIN_FLOOR) return "margin pinched";
+  return "nominal";
+}
+
 export function formatVacuumReadings(v: VacuumTelemetry): VacuumReadings {
   const extraction = v.extraction.toFixed(3);
   const demand = v.demand.toFixed(3);
@@ -70,7 +84,7 @@ export function formatVacuumReadings(v: VacuumTelemetry): VacuumReadings {
   return {
     line: `VAC ${extraction} · DRAW ${demand} · MGN ${margin}`,
     mirror:
-      `Vacuum energy nominal. Extraction ${extraction} of rated draw, ` +
+      `Vacuum energy ${vacuumStatus(v)}. Extraction ${extraction} of rated draw, ` +
       `bubble demand ${demand}, margin ${margin}.`,
   };
 }

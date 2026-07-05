@@ -70,6 +70,16 @@ export default defineConfig({
           if (id.includes('/motion/') || id.includes('/motion-dom/') || id.includes('/framer-motion/')) {
             return 'motion';
           }
+          // Tone is reached only by dynamic import behind the deck's sound
+          // toggle (ADR-017 D5); naming its chunk keeps the opt-in budget
+          // (<= 160 KB gz) auditable at a glance in the build output.
+          if (
+            id.includes('/node_modules/tone/') ||
+            id.includes('/node_modules/standardized-audio-context/') ||
+            id.includes('/node_modules/automation-events/')
+          ) {
+            return 'tone';
+          }
         },
       },
     },

@@ -7,22 +7,33 @@ import {
   SEVERITY_ORDER,
 } from "@core/works/flight-deck/boot";
 import {
+  alertSignatures,
+  confirmationTone,
+} from "@core/works/flight-deck/alertGrammar";
+import type { Severity } from "@core/works/flight-deck/boot";
+import {
   COMMIT_HOLD_GLOW,
   commitScore,
   type CommitTrim,
 } from "@core/works/flight-deck/commit";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { drillScore } from "@core/works/flight-deck/drill";
 import { instruments } from "@core/works/flight-deck/instruments";
 import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
 import type {
   Proposal,
   UtilizationEvent,
 } from "@core/works/flight-deck/translation";
+import { enableDeckAudio, playSignature } from "../audio/deckAudio";
+import { AlertRegion } from "./AlertRegion";
 import { DeckBench } from "./DeckBench";
+import { DrillProcedure } from "./DrillProcedure";
+import { DrillResidual } from "./DrillResidual";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
 import { ProposalRow } from "./ProposalRow";
 import { SyntheticOrientation } from "./SyntheticOrientation";
 import { TranslationPanel } from "./TranslationPanel";
+import { useDrill } from "./useDrill";
 import { useTranslationLayer } from "./useTranslationLayer";
 import { VacuumEnergy } from "./VacuumEnergy";
 
@@ -86,6 +97,43 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   const translation = useTranslationLayer(deckClock, utilEventsRef);
   const translationRef = useRef(translation);
   translationRef.current = translation;
+
+  // The aural alert grammar (phase 5, ADR-017 D5): opt-in, synthesized,
+  // Tone loaded only inside the toggle's own gesture. Everything the
+  // deck can sound is also written, so off is a complete experience.
+  const soundOnRef = useRef(state.soundOn);
+  soundOnRef.current = state.soundOn;
+  const toggleSound = async () => {
+    if (soundOnRef.current) {
+      dispatchRef.current({ type: "SET_SOUND", on: false });
+      return;
+    }
+    const ok = await enableDeckAudio();
+    if (!ok) return;
+    dispatchRef.current({ type: "SET_SOUND", on: true });
+    playSignature(confirmationTone);
+  };
+
+  // The drill (phase 5): pure script and reducer in core, timers and
+  // beat marks in the hook, authored recovery choreography below.
+  const drill = useDrill({
+    phase: state.phase,
+    clock: deckClock,
+    dispatch,
+    announce: setAnnouncement,
+    playSeverity: (severity: Severity) => {
+      if (soundOnRef.current) playSignature(alertSignatures[severity]);
+    },
+    playConfirmation: () => {
+      if (soundOnRef.current) playSignature(confirmationTone);
+    },
+  });
+  const drillRef = useRef(drill);
+  drillRef.current = drill;
+  const drillShowing =
+    drill.progress.stage === "alerts" ||
+    drill.progress.stage === "settling" ||
+    drill.progress.stage === "residual";
 
   // A remount mid-ritual has no hold to resume: put the machine back to
   // dormant so the gesture and the playhead agree.
@@ -370,8 +418,58 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     );
     tl.call(() => {
       translationRef.current.clearProposals(proposal);
+      // The commit landed and the review space is quiet: the machine may
+      // now arm movement 4 (the first successful commit fires the drill,
+      // once; afterwards this dispatch is a no-op by design).
+      dispatchRef.current({ type: "COMMIT_SUCCEEDED" });
     });
   });
+
+  // Beat 5, the recovery settle (authored lane): the reverse boot echo.
+  // One brightness inhale-and-return while the emission wave runs the
+  // bench backward, operator channel up to the bench edge; when it lands
+  // the residual status takes the review space.
+  const runRecoverySettle = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container) {
+      drillRef.current.settleComplete();
+      return;
+    }
+    const q = gsap.utils.selector(container);
+    const seconds = (ms: number) => ms / 1000;
+    const tl = gsap.timeline({
+      onComplete: () => drillRef.current.settleComplete(),
+    });
+    tl.fromTo(
+      q(".deck-bench"),
+      { filter: "brightness(0.955)" },
+      {
+        filter: "brightness(1)",
+        duration: seconds(drillScore.settle.durationMs),
+        ease: "power2.out",
+        immediateRender: false,
+      },
+      0,
+    );
+    tl.fromTo(
+      q(".js-emit, .js-ready-lamp"),
+      { "--emit": 0.45 },
+      {
+        "--emit": 1,
+        duration: seconds(drillScore.settle.durationMs),
+        ease: "power1.inOut",
+        stagger: { each: seconds(drillScore.settle.staggerMs), from: "end" },
+        immediateRender: false,
+      },
+      0.1,
+    );
+  });
+  const settling = drill.progress.stage === "settling";
+  useEffect(() => {
+    if (settling) runRecoverySettle();
+    // runRecoverySettle is contextSafe-stable for the component's life.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settling]);
 
   // Hold-to-start: the hold scrubs the playhead, release runs it backward.
   const beginHold = contextSafe(() => {
@@ -411,18 +509,44 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       <DeckBench
         variant="live"
         onExitToColophon={onExitToColophon}
+        alert={<AlertRegion progress={drill.progress} />}
+        soundControl={
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={state.soundOn}
+            title={deckCopy.sound.hint}
+            className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+          >
+            {deckCopy.sound.label}{" "}
+            {state.soundOn ? deckCopy.sound.on : deckCopy.sound.off}
+          </button>
+        }
         hero={
           <FieldIntegrity
             ref={fieldRef}
             live={booted}
             clock={deckClock}
             trim={trim}
+            drill={drill.timelineRef}
           />
         }
         orientation={
-          <SyntheticOrientation live={booted} clock={deckClock} trim={trim} />
+          <SyntheticOrientation
+            live={booted}
+            clock={deckClock}
+            trim={trim}
+            drill={drill.timelineRef}
+          />
         }
-        vacuum={<VacuumEnergy live={booted} clock={deckClock} trim={trim} />}
+        vacuum={
+          <VacuumEnergy
+            live={booted}
+            clock={deckClock}
+            trim={trim}
+            drill={drill.timelineRef}
+          />
+        }
         panel={
           <TranslationPanel
             live={booted}
@@ -436,12 +560,30 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
           />
         }
         review={
-          <ProposalRow
-            live={booted}
-            proposals={translation.drafting ? [] : translation.proposals}
-            onCommit={runCommit}
-            committing={committing}
-          />
+          drillShowing ? (
+            drill.progress.stage === "residual" ? (
+              <DrillResidual
+                progress={drill.progress}
+                clock={deckClock}
+                timeline={drill.timelineRef}
+                onAcknowledge={drill.acknowledge}
+              />
+            ) : (
+              <DrillProcedure
+                progress={drill.progress}
+                clock={deckClock}
+                timeline={drill.timelineRef}
+                onJudge={drill.judge}
+              />
+            )
+          ) : (
+            <ProposalRow
+              live={booted}
+              proposals={translation.drafting ? [] : translation.proposals}
+              onCommit={runCommit}
+              committing={committing}
+            />
+          )
         }
       />
       {!booted ? (

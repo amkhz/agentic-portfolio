@@ -21,6 +21,10 @@ interface DeckBenchProps {
   panel?: React.ReactNode;
   /** The transient review surface: drafted routes beside the render. */
   review?: React.ReactNode;
+  /** The alert region's content (phase 5); quiet line when absent. */
+  alert?: React.ReactNode;
+  /** The opt-in sound toggle, deck chrome beside the colophon exit. */
+  soundControl?: React.ReactNode;
 }
 
 /** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
@@ -88,18 +92,24 @@ export function DeckBench({
   vacuum,
   panel,
   review,
+  alert,
+  soundControl,
 }: DeckBenchProps) {
   return (
     <div className="deck-bench">
-      <div
+      {/* Master-caution position, top of the scan. Not a live region:
+          postings speak through the session's single announcer, so the
+          drill is never double-spoken. */}
+      <section
         className="deck-region--alert js-gauge js-deck-chrome"
-        role="status"
         aria-label="Alerts"
       >
-        <p className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-label)]">
-          No active alerts
-        </p>
-      </div>
+        {variant === "live" && alert ? (
+          alert
+        ) : (
+          <p className="deck-alert__quiet">{deckCopy.alerts.quiet}</p>
+        )}
+      </section>
 
       <Region
         area="hero"
@@ -146,13 +156,16 @@ export function DeckBench({
             <span aria-hidden="true">·</span>
             <span>Operator state · blink — · respiration — · coherence —</span>
           </p>
-          <button
-            type="button"
-            onClick={onExitToColophon}
-            className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
-          >
-            Colophon
-          </button>
+          <span className="flex items-baseline gap-5">
+            {variant === "live" ? soundControl : null}
+            <button
+              type="button"
+              onClick={onExitToColophon}
+              className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+            >
+              Colophon
+            </button>
+          </span>
         </div>
         {variant === "plate" ? (
           <p className="mt-3 font-[family-name:var(--deck-font-body)] text-sm text-[var(--deck-ink-dim)]">

@@ -2,6 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Mesh, Program, Renderer, Triangle } from "ogl";
 import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
+  drillOrientationDelta,
+  orientationUpset,
+  type DrillTimeline,
+} from "@core/works/flight-deck/drill";
+import {
   formatOrientationReadings,
   sampleOrientation,
 } from "@core/works/flight-deck/orientation";
@@ -28,6 +33,8 @@ interface SyntheticOrientationProps {
   clock?: () => number;
   /** The riding maneuver, if any: the horizon banks into the commit. */
   trim?: CommitTrim | null;
+  /** The drill's beat marks (phase 5): the uncommanded lean rides here. */
+  drill?: { current: DrillTimeline } | null;
 }
 
 const vertex = /* glsl */ `
@@ -139,6 +146,7 @@ export function SyntheticOrientation({
   live,
   clock: clockProp,
   trim,
+  drill,
 }: SyntheticOrientationProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   // One clock for the shader and the readings, same contract as the field.
@@ -152,6 +160,8 @@ export function SyntheticOrientation({
   const clock = () => clockRef.current();
   const trimRef = useRef<CommitTrim | null>(null);
   trimRef.current = trim ?? null;
+  const drillRef = useRef<{ current: DrillTimeline } | null>(null);
+  drillRef.current = drill ?? null;
   const [readings, setReadings] = useState(() =>
     formatOrientationReadings(sampleOrientation(0)),
   );
@@ -209,7 +219,11 @@ export function SyntheticOrientation({
 
     const update = () => {
       const t = clock();
-      const o = sampleOrientation(t, trimRef.current);
+      const o = sampleOrientation(
+        t,
+        trimRef.current,
+        drillOrientationDelta(t, drillRef.current?.current),
+      );
       program.uniforms.uTime.value = t;
       program.uniforms.uBank.value = o.bank * DEG2RAD;
       program.uniforms.uPitch.value = (o.pitch / PITCH_FULL_SCALE_DEG) * 0.5;
@@ -254,8 +268,15 @@ export function SyntheticOrientation({
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
+      const t = clock();
+      // A commanded bank is nominal however steep; only the drill's
+      // uncommanded lean marks the attitude upset (orientation.ts).
+      const delta = drillOrientationDelta(t, drillRef.current?.current);
       setReadings(
-        formatOrientationReadings(sampleOrientation(clock(), trimRef.current)),
+        formatOrientationReadings(
+          sampleOrientation(t, trimRef.current, delta),
+          orientationUpset(delta),
+        ),
       );
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);

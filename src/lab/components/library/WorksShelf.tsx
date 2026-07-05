@@ -23,6 +23,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 import { springSoft } from "@/components/effects/motionConfig";
 import type { WorkEntry, WorkStatus } from "@core/works/works";
+import { worksArmLine } from "@core/works/works";
 import { workSigils } from "@/works/sigils";
 
 const WORK_STATUS_LABEL: Record<WorkStatus, string> = {
@@ -59,9 +60,8 @@ export function WorksNotice({ works }: { works: WorkEntry[] }) {
         <Sigil className="h-8 w-8 shrink-0 text-lab-text-secondary" />
       ) : null}
       <p className="min-w-0 flex-1 font-lab-body text-base leading-relaxed text-lab-text-secondary">
-        The Archive has an applied arm now:{" "}
-        <span className="text-lab-text-primary">Perihelion Works</span>,
-        opening with {work.title}.
+        Enter <span className="text-lab-text-primary">Perihelion Works</span>:
+        the applied arm, opening with {work.title}.
       </p>
       <span className="shrink-0 font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
         Skip to the bench <span aria-hidden>↓</span>
@@ -100,8 +100,9 @@ export function WorksShelf({ works }: { works: WorkEntry[] }) {
         >
           Perihelion Works
         </h2>
+        {/* The arm's own line (ADR-017 D7), doubling as the section premise. */}
         <p className="max-w-3xl font-lab-body text-base italic leading-relaxed text-lab-text-secondary md:text-lg">
-          Pieces built from the Archive's research, made to be operated.
+          {worksArmLine}
         </p>
       </header>
 

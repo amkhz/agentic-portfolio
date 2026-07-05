@@ -6,6 +6,16 @@
 
 export type WorkStatus = "in-progress" | "live";
 
+/**
+ * The Works arm line (ADR-017 D7, locked 2026-07-05 with the colophon
+ * copy pass): the applied arm's own line beneath the house umbrella,
+ * sibling of the Archive's "A reader's notebook. Designed to be prep,
+ * not product." Renders on the Works colophon and as the Shelf
+ * section's premise line; single source here.
+ */
+export const worksArmLine =
+  "A working bench. Designed to be operated, not watched.";
+
 export interface WorkEntry {
   slug: string;
   title: string;

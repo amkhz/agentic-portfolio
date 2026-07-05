@@ -11,7 +11,14 @@
  * with no published per-guide pair the cascade falls back to the house
  * brass, which is the right voice for the arm (amber-means-touchable is
  * the deck's own grammar). Deck tokens never appear here (ADR-017 D2).
+ *
+ * WorksNotice is the section's introduction near the masthead (Justin,
+ * 2026-07-05: the end-of-shelf placement stands, but visitors should not
+ * have to scroll blind to discover the arm): one sentence and a jump link
+ * that zips to the section, in the guide-anchor idiom (smooth scroll,
+ * reduced-motion honored, focus handed to the section).
  */
+import type { MouseEvent } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router";
 import { springSoft } from "@/components/effects/motionConfig";
@@ -22,6 +29,46 @@ const WORK_STATUS_LABEL: Record<WorkStatus, string> = {
   "in-progress": "In progress",
   live: "Live",
 };
+
+const WORKS_SECTION_ID = "works";
+
+export function WorksNotice({ works }: { works: WorkEntry[] }) {
+  const shouldReduce = useReducedMotion();
+  if (works.length === 0) return null;
+  const work = works[0];
+  const Sigil = workSigils[work.slug];
+
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    const target = document.getElementById(WORKS_SECTION_ID);
+    target?.scrollIntoView({
+      behavior: shouldReduce ? "auto" : "smooth",
+      block: "start",
+    });
+    target?.focus({ preventScroll: true });
+    window.history.replaceState(null, "", `#${WORKS_SECTION_ID}`);
+  };
+
+  return (
+    <a
+      href={`#${WORKS_SECTION_ID}`}
+      onClick={handleClick}
+      className="group mt-12 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-sm border-y border-lab-border-subtle px-1 py-4 transition-colors duration-[var(--duration-normal)] [--sigil-accent:var(--guide-accent)] [--sigil-halo:0.45] hover:bg-[color-mix(in_oklab,var(--guide-accent)_5%,transparent)] hover:[--sigil-halo:0.9] focus-visible:[--sigil-halo:0.9]"
+    >
+      {Sigil ? (
+        <Sigil className="h-8 w-8 shrink-0 text-lab-text-secondary" />
+      ) : null}
+      <p className="min-w-0 flex-1 font-lab-body text-base leading-relaxed text-lab-text-secondary">
+        The Archive has an applied arm now:{" "}
+        <span className="text-lab-text-primary">Perihelion Works</span>,
+        opening with {work.title}.
+      </p>
+      <span className="shrink-0 font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
+        Skip to the bench <span aria-hidden>↓</span>
+      </span>
+    </a>
+  );
+}
 
 export function WorksShelf({ works }: { works: WorkEntry[] }) {
   const shouldReduce = useReducedMotion();
@@ -37,8 +84,10 @@ export function WorksShelf({ works }: { works: WorkEntry[] }) {
 
   return (
     <motion.section
+      id={WORKS_SECTION_ID}
+      tabIndex={-1}
       aria-labelledby="works-heading"
-      className="mt-20 md:mt-28"
+      className="mt-20 scroll-mt-10 outline-none md:mt-28"
       {...sectionMotion}
     >
       <header className="flex flex-col gap-3 border-b border-lab-border-subtle pb-6">

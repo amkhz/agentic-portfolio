@@ -20,6 +20,14 @@ import {
  * the field render (the deck breathing with the operator) IS the
  * control, and the caption says so honestly.
  *
+ * The waveform draws on its own rAF loop (gated like the canvases:
+ * off-viewport and hidden-tab both pause, D6): the strip's readings
+ * cadence is right for a peripheral monitor, but a control surface
+ * that breathes must breathe smoothly, and the field render it is
+ * coupled to is already sampling the same model every frame. Numbers
+ * and the sr mirror stay on the readings cadence; only the trace is
+ * continuous.
+ *
  * Arrival and departure are authored by the session's crossing timeline
  * (.js-chamber-* targets); this component only renders the living data.
  */
@@ -55,7 +63,10 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
   const [t, setT] = useState(() => clock());
   const clockRef = useRef(clock);
   clockRef.current = clock;
+  const hostRef = useRef<HTMLElement>(null);
+  const polylineRef = useRef<SVGPolylineElement>(null);
 
+  // Numbers and the mirror on the readings cadence, like every gauge.
   useEffect(() => {
     const interval = window.setInterval(
       () => setT(clockRef.current()),
@@ -64,12 +75,60 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
     return () => window.clearInterval(interval);
   }, []);
 
+  // The waveform itself is continuous: an rAF loop writes the polyline
+  // imperatively (no React re-render per frame), gated twice per D6.
+  useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
+
+    let frame = 0;
+    let running = false;
+    let inView = true;
+
+    const update = () => {
+      polylineRef.current?.setAttribute(
+        "points",
+        breathPoints(clockRef.current(), drillRef.current?.current),
+      );
+      frame = requestAnimationFrame(update);
+    };
+    const syncLoop = () => {
+      const shouldRun = inView && !document.hidden;
+      if (shouldRun && !running) {
+        running = true;
+        frame = requestAnimationFrame(update);
+      } else if (!shouldRun && running) {
+        running = false;
+        cancelAnimationFrame(frame);
+      }
+    };
+    const intersection = new IntersectionObserver((entries) => {
+      inView = entries[0]?.isIntersecting ?? true;
+      syncLoop();
+    });
+    intersection.observe(host);
+    const onVisibility = () => syncLoop();
+    document.addEventListener("visibilitychange", onVisibility);
+    syncLoop();
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(frame);
+      intersection.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, []);
+
   const timeline = drillRef.current?.current;
   const now = sampleOperator(t, drillOperatorDelta(t, timeline));
   const readings = formatOperatorReadings(now, true);
 
   return (
-    <section className="deck-chamber" aria-label={deckCopy.paradigm.chamberKicker}>
+    <section
+      ref={hostRef}
+      className="deck-chamber"
+      aria-label={deckCopy.paradigm.chamberKicker}
+    >
       <p className="deck-chamber__kicker js-chamber-part">
         {deckCopy.paradigm.chamberKicker}
       </p>
@@ -79,7 +138,7 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
           viewBox={`0 0 ${TRACE_W} ${TRACE_H}`}
           preserveAspectRatio="none"
         >
-          <polyline points={breathPoints(t, timeline)} />
+          <polyline ref={polylineRef} points={breathPoints(t, timeline)} />
         </svg>
         <span className="deck-chamber__coherence">
           <span className="deck-chamber__coherence-label">

@@ -410,20 +410,21 @@
   padding: 0.25rem 0.5rem;
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
-  color: var(--deck-ink-label);
+  color: var(--deck-control);
   border: 1px solid transparent;
   cursor: pointer;
+  transition: color 0.15s ease-out;
 }
 
-/* Unchecked pills answer the pointer the way the chrome does: a quiet
-   ink lift, no border (the border is the checked state's word). */
+/* Unchecked pills answer the pointer with the brass lift; the border
+   stays the checked state's word. */
 .deck-intent__option input:not(:checked) + span:hover {
-  color: var(--deck-ink-dim);
+  color: var(--deck-caution);
 }
 
 .deck-intent__option input:checked + span {
-  color: var(--deck-ink);
-  border-color: var(--deck-line);
+  color: var(--deck-caution);
+  border-color: var(--deck-control-line);
 }
 
 .deck-intent__option input:focus-visible + span {
@@ -505,7 +506,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--deck-ink-dim);
+  color: var(--deck-control);
   border: 1px solid var(--deck-line);
   padding: 0.25rem 0.75rem;
   cursor: pointer;
@@ -530,8 +531,8 @@
 }
 
 .deck-commit:hover:not(:disabled) {
-  color: var(--deck-ink);
-  border-color: var(--deck-ink-dim);
+  color: var(--deck-caution);
+  border-color: var(--deck-control);
 }
 
 .deck-commit:disabled {

@@ -67,6 +67,15 @@
 
   /* Interaction */
   --deck-focus: oklch(0.78 0.13 72);
+  /* Control ink (treatment B, 2026-07-05): brass owns interaction, so
+     everything pressable speaks a quieter amber at rest and lifts to
+     full amber (--deck-caution) under the hand. Same lightness class as
+     --deck-ink-dim, so controls gain a hue signal, not extra weight;
+     labels stay bone. AA on --deck-bg: ~8.3:1. */
+  --deck-control: oklch(0.74 0.085 72);
+  /* The checked pill's border: brass at line weight, paired with full
+     amber text (never color alone carrying the state). */
+  --deck-control-line: oklch(0.45 0.05 72);
 
   /* Type. Mono is the instrument voice; captions speak in the Archive's body
      face (the human voice on the deck). Display face is an open build

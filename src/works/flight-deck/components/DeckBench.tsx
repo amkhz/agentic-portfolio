@@ -202,7 +202,7 @@ export function DeckBench({
             <button
               type="button"
               onClick={onExitToColophon}
-              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
             >
               Colophon
             </button>

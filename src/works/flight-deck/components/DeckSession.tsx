@@ -509,7 +509,7 @@ export function DeckSession({
             onClick={toggleSound}
             aria-pressed={state.soundOn}
             title={deckCopy.sound.hint}
-            className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+            className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
           >
             {deckCopy.sound.label}{" "}
             {state.soundOn ? deckCopy.sound.on : deckCopy.sound.off}
@@ -521,7 +521,7 @@ export function DeckSession({
               type="button"
               onClick={runShutdown}
               title={deckCopy.shutdown.hint}
-              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
             >
               {deckCopy.shutdown.label}
             </button>

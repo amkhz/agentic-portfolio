@@ -53,6 +53,10 @@ export function buildChamberArrivalTimeline(
   const q = gsap.utils.selector(container);
   const c = paradigmScore.chamber;
   const tl = gsap.timeline();
+  // A re-arrival may land on a half-departed chamber (the operator
+  // crossed back mid-fade): the root is reset before the parts bloom,
+  // so the arrival always starts from a whole room (Roy, phase 6).
+  tl.set(q(".deck-chamber"), { opacity: 1, y: 0 }, 0);
   // The handoff: the watcher's light leaves the strip...
   tl.fromTo(
     q(".deck-opstrip__trace"),

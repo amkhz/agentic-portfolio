@@ -4,6 +4,7 @@
  * Register: plain language, no physics credentials assumed, no
  * permission framing, mission test per line.
  */
+import { COUPLING_LAG_S } from "./paradigm";
 
 export const deckCopy = {
   /** Dormant state: the single invitation line beside the breathing indicator. */
@@ -118,12 +119,12 @@ export const deckCopy = {
     chamberKicker: "Consciousness chamber",
     /** The chamber's live line: what the coupling is doing, honestly. */
     chamberCoupled: "The field is breathing with you.",
-    /** Trace legend: the operator's line and the ship's answer. */
+    /** Trace legend: the operator's line and the ship's answer. The lag
+     *  is derived, so the label can never lie about the constant. */
     chamberBreathLabel: "BREATH",
-    chamberEchoLabel: "FIELD · 0.6S BEHIND",
+    chamberEchoLabel: `FIELD · ${COUPLING_LAG_S.toFixed(1)}S BEHIND`,
     /** The sr sentence for the echo, since the trace is visual only. */
-    chamberEchoMirror:
-      "The field's wall follows the breath six tenths of a second behind.",
+    chamberEchoMirror: `The field's wall follows the breath ${COUPLING_LAG_S.toFixed(1)} seconds behind.`,
   },
   sound: {
     /** The opt-in toggle in the deck chrome (ADR-017 D5: default off). */

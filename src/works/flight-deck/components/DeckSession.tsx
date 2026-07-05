@@ -358,9 +358,17 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       else if (chamberRef.current !== "down") setChamber("leaving");
     },
   );
+  // A departure in flight is killed by a re-arrival (kill never fires
+  // onComplete), so a fast double-crossing of the consciousness
+  // boundary can neither strand the regime chamberless nor leave the
+  // room half-faded (Roy, phase 6).
+  const departureRef = useRef<gsap.core.Timeline | null>(null);
   const runChamberArrival = contextSafe(() => {
     const container = containerRef.current;
-    if (container) buildChamberArrivalTimeline(container);
+    if (!container) return;
+    departureRef.current?.kill();
+    departureRef.current = null;
+    buildChamberArrivalTimeline(container);
   });
   const runChamberDeparture = contextSafe(() => {
     const container = containerRef.current;
@@ -368,7 +376,11 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       setChamber("down");
       return;
     }
-    buildChamberDepartureTimeline(container, () => setChamber("down"));
+    departureRef.current?.kill();
+    departureRef.current = buildChamberDepartureTimeline(container, () => {
+      departureRef.current = null;
+      setChamber("down");
+    });
   });
   useEffect(() => {
     if (chamber === "up") runChamberArrival();

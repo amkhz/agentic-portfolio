@@ -43,7 +43,11 @@ export function buildBootTimeline({
   // Asleep initial states. Set before paint by the caller's layout
   // effect, so the static plate never depends on these classes.
   gsap.set(q(".deck-bench"), { opacity: 0.3 });
-  gsap.set(q(".js-boot-name"), { opacity: 0.3 });
+  // Names hold at 0 until their certification beat: the dormant deck
+  // shows only the breathing indicator and the invitation (shape brief
+  // dormant state), and a ghosted label would sit below AA contrast for
+  // anyone who can barely see it (phase 7 audit; axe flags exactly this).
+  gsap.set(q(".js-boot-name"), { opacity: 0 });
   gsap.set(q(".js-boot-caption, .js-boot-data"), { opacity: 0, y: 6 });
   gsap.set(q(".js-deck-chrome"), { opacity: 0 });
 

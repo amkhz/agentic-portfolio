@@ -134,9 +134,10 @@ export function TranslationPanel({
         />
       </fieldset>
 
-      <p className="deck-panel__status js-deck-chrome" aria-live="polite">
-        {status}
-      </p>
+      {/* Visible status only: state changes speak through the session's
+          single announcer (the commit flow announces the standing order
+          on completion), so the deck never double-speaks. */}
+      <p className="deck-panel__status js-deck-chrome">{status}</p>
 
       {/* The 70% ceiling explainer is a hover reveal per the shape brief
           (and always in the mirror): the visible paragraph was crowding

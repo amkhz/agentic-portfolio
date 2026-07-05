@@ -92,6 +92,16 @@ export function DrillProcedure({
     if (judging) firstChoiceRef.current?.focus();
   }, [judging, alertIndex, stepIndex]);
 
+  // The judged step's buttons unmount with the choice; focus rides to
+  // the response read-back so the keyboard never drops to the body
+  // (phase 7 audit).
+  const responseRef = useRef<HTMLParagraphElement>(null);
+  const prevJudgingRef = useRef(false);
+  useEffect(() => {
+    if (prevJudgingRef.current && !judging) responseRef.current?.focus();
+    prevJudgingRef.current = judging;
+  }, [judging]);
+
   if (stage === "idle" || stage === "done" || stage === "residual" || !alert) {
     return null;
   }
@@ -158,7 +168,11 @@ export function DrillProcedure({
         })}
       </ol>
       {showCrossCheck ? <CrossCheck clock={clock} timeline={timeline} /> : null}
-      {response ? <p className="deck-drill__response">{response}</p> : null}
+      {response ? (
+        <p className="deck-drill__response" tabIndex={-1} ref={responseRef}>
+          {response}
+        </p>
+      ) : null}
       {betweenBeats ? (
         <p className="deck-drill__resolved">{alert.resolved}</p>
       ) : null}

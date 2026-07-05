@@ -759,6 +759,14 @@
   color: var(--deck-ink);
 }
 
+/* The response takes focus when the judged step's buttons unmount
+   (keyboard never drops to the body); the ring only shows for keyboard
+   focus, so a pointer judge stays quiet. */
+.deck-drill__response:focus-visible {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 2px;
+}
+
 .deck-drill__response,
 .deck-drill__resolved,
 .deck-drill__settling {

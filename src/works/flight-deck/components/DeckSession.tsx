@@ -234,6 +234,12 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       onComplete: () => {
         committingRef.current = false;
         setCommitting(false);
+        // The standing order, spoken once the trim lands: the panel's
+        // status line shows it, the announcer says it (single-announcer
+        // contract; the status line itself is not live).
+        setAnnouncement(
+          `${deckCopy.panel.enRoutePrefix} ${proposal.summary}`,
+        );
       },
     });
   });

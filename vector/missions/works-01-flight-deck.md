@@ -51,7 +51,7 @@ Each phase is a shippable PR. Tick items here in the same PR that lands them.
 
 ## Fast-follow parking lot
 
-Spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup).
+**Works 01.1 — Field slice plane + locator ghost** (first in line, planned 2026-07-05: `plans/works-01-field-slice-plane.md`; the ultrasound sweep answer to Justin's 3D/4D riff; Synthetic Orientation stays flat by the same plan's decision note — its 3D upgrade is the soundscape); spatial soundscape (Panner3D channel); tablet-landscape reduced deck (only if cheap); foyer question at Works 02; "tokenize lockup metrics when Works renders it a second time" (Director item, triggers when the colophon reuses the masthead lockup).
 
 ## Rules of engagement (every session)
 

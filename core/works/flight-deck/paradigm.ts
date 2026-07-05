@@ -80,6 +80,12 @@ export const paradigmScore = {
   /** The emission pulse acknowledging a crossing, boot's --emit grammar. */
   pulse: { toMs: 320, backMs: 640 },
   /**
+   * Crossing announcements debounce (trailing) so a rapid wiggle across
+   * a boundary speaks the settled regime once. The pulse never
+   * debounces: light answers every crossing, speech answers the last.
+   */
+  announceDebounceMs: 650,
+  /**
    * The chamber's arrival: the strip's traces hand their light to the
    * center (substance transfer, the deck's one handoff grammar), the
    * chamber blooms, the promotion caption lands last, at reading pace.
@@ -88,6 +94,20 @@ export const paradigmScore = {
 } as const;
 
 export { paradigmRegime, type ParadigmRegime };
+
+/** Regime order along the spectrum, instrumented to consciousness. */
+export const REGIME_ORDER = [
+  "instrumented",
+  "hybrid",
+  "consciousness",
+] as const satisfies readonly ParadigmRegime[];
+
+/** Regime segment centers along the spectrum, fractions of the run. */
+export const REGIME_CENTERS: Record<ParadigmRegime, number> = {
+  instrumented: 1 / 6,
+  hybrid: 0.5,
+  consciousness: 5 / 6,
+};
 
 /** Regime boundary between two slider positions, if one was crossed. */
 export function crossedRegime(

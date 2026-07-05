@@ -70,6 +70,17 @@
   min-height: 0;
   overflow: clip;
 }
+
+/* Short-viewport escape (Roy, phase 6 note): once the bench is squeezed
+   enough that the panel column clips, a clipped radio must never take
+   invisible focus. The y-axis opens to scroll so the browser can bring
+   a focused control into view; x stays clipped, so the never-overlap
+   guarantee holds. */
+@media (max-height: 45rem) {
+  .deck-region--panel {
+    overflow-y: auto;
+  }
+}
 .deck-region--review {
   grid-area: review;
 }
@@ -378,10 +389,13 @@
   flex: 0 0 5.5rem;
 }
 
+/* Option pills sized for WCAG 2.5.8: each target is ~21px tall, and the
+   row gap keeps the offset to the adjacent target past 24px on both
+   axes, which is the spacing exception the tight pill layout rides. */
 .deck-intent__options {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 0.375rem;
+  gap: 0.375rem 0.5rem;
 }
 
 .deck-intent__option input {
@@ -393,7 +407,7 @@
 
 .deck-intent__option span {
   display: inline-block;
-  padding: 0.15rem 0.45rem;
+  padding: 0.25rem 0.5rem;
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   color: var(--deck-ink-label);
@@ -466,6 +480,7 @@
 }
 
 .deck-commit {
+  position: relative;
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -473,6 +488,21 @@
   border: 1px solid var(--deck-line);
   padding: 0.25rem 0.75rem;
   cursor: pointer;
+}
+
+/* The visual stays a quiet bordered label; the pointer target grows to
+   44px vertically through an invisible overlay. Vertical only: choice
+   rows sit 8px apart horizontally and must not trade mis-clicks for
+   target size. Nothing interactive sits within 44px above or below a
+   commit control. */
+.deck-commit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2.75rem;
+  transform: translateY(-50%);
 }
 
 .deck-commit:hover:not(:disabled) {
@@ -483,6 +513,27 @@
 .deck-commit:disabled {
   cursor: default;
   opacity: 0.5;
+}
+
+.deck-commit:disabled::after {
+  content: none;
+}
+
+/* 44px hit targets for the text-size deck chrome (sound toggle,
+   colophon exit): same overlay move, both axes, since the operator row
+   has the room. */
+.deck-hit {
+  position: relative;
+}
+
+.deck-hit::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 2.75rem);
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
 }
 
 /* Utilization meter: the A2 band annotated, the ceiling marked; past it
@@ -994,11 +1045,18 @@
   pointer-events: none;
 }
 
+/* The input is the interaction surface and grows past its 24px track
+   box to a 44px hit target (Roy, phase 6 note), centered on the track
+   so the visual reads unchanged. The rows above and below it (regime
+   names, caption line) are not interactive, so the overhang costs
+   nothing. */
 .deck-paradigm__input {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 2.75rem;
+  transform: translateY(-50%);
   margin: 0;
   opacity: 0;
   cursor: ew-resize;

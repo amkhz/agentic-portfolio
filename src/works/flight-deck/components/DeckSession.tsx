@@ -14,6 +14,7 @@ import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
 import {
   dissolveAt,
   paradigmRegime,
+  paradigmScore,
   type ParadigmRegime,
 } from "@core/works/flight-deck/paradigm";
 import type {
@@ -347,13 +348,29 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   );
   const chamberRef = useRef(chamber);
   chamberRef.current = chamber;
+  // Speech debounces to the settled regime so a rapid boundary wiggle
+  // announces once; the pulse answers every crossing (Roy, phase 6:
+  // debounce announcements only, never the pulse).
+  const announceTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (announceTimerRef.current !== null)
+        window.clearTimeout(announceTimerRef.current);
+    },
+    [],
+  );
   const handleCrossing = contextSafe(
     (crossing: { from: ParadigmRegime; to: ParadigmRegime }) => {
       const container = containerRef.current;
       if (!container) return;
       buildCrossingPulseTimeline(container);
       const regimeCopy = deckCopy.paradigm.regimes[crossing.to];
-      setAnnouncement(`${regimeCopy.name}. ${regimeCopy.line}`);
+      if (announceTimerRef.current !== null)
+        window.clearTimeout(announceTimerRef.current);
+      announceTimerRef.current = window.setTimeout(() => {
+        announceTimerRef.current = null;
+        setAnnouncement(`${regimeCopy.name}. ${regimeCopy.line}`);
+      }, paradigmScore.announceDebounceMs);
       if (crossing.to === "consciousness") setChamber("up");
       else if (chamberRef.current !== "down") setChamber("leaving");
     },
@@ -441,7 +458,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             onClick={toggleSound}
             aria-pressed={state.soundOn}
             title={deckCopy.sound.hint}
-            className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+            className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
           >
             {deckCopy.sound.label}{" "}
             {state.soundOn ? deckCopy.sound.on : deckCopy.sound.off}

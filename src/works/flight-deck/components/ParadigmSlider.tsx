@@ -4,6 +4,8 @@ import { deckCopy } from "@core/works/flight-deck/copy";
 import {
   crossedRegime,
   paradigmRegime,
+  REGIME_CENTERS,
+  REGIME_ORDER,
   type ParadigmRegime,
 } from "@core/works/flight-deck/paradigm";
 import { deckSpringSoft } from "./deckMotion";
@@ -35,14 +37,6 @@ interface ParadigmSliderProps {
   /** Fired once per boundary as the thumb crosses it. */
   onCrossing: (crossing: { from: ParadigmRegime; to: ParadigmRegime }) => void;
 }
-
-const REGIME_ORDER = ["instrumented", "hybrid", "consciousness"] as const;
-/** Regime segment centers on the track, fractions. */
-const REGIME_CENTERS: Record<ParadigmRegime, number> = {
-  instrumented: 1 / 6,
-  hybrid: 0.5,
-  consciousness: 5 / 6,
-};
 
 /** Arrival critically damped: a control surface never wobbles. */
 const thumbSpring = { stiffness: 170, damping: 26, mass: 0.6 };

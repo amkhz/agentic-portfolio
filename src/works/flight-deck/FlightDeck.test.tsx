@@ -42,6 +42,14 @@ describe("FlightDeck", () => {
       screen.getByText(/^Synthetic orientation nominal\./),
     ).toBeInTheDocument();
     expect(screen.getByText(/^Vacuum energy nominal\./)).toBeInTheDocument();
+    // Movement 5 rides the plate too: the slider as an annotated still,
+    // resting at the instrumented end, with its sr sentence.
+    const instrumented = deckCopy.paradigm.regimes.instrumented;
+    expect(
+      screen.getByText(
+        `${deckCopy.paradigm.label}: ${instrumented.name}. ${instrumented.line}`,
+      ),
+    ).toBeInTheDocument();
   });
 
   it("declines below the minimum bench width with the designed card", () => {

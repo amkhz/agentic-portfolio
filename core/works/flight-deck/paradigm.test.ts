@@ -5,6 +5,8 @@ import {
   dissolveAt,
   LIGHT_FLOOR,
   paradigmScore,
+  REGIME_CENTERS,
+  REGIME_ORDER,
 } from "./paradigm";
 
 describe("dissolveAt", () => {
@@ -102,5 +104,26 @@ describe("paradigmScore", () => {
     const total = c.handoffMs + c.bloomMs + c.captionMs;
     expect(total).toBeGreaterThan(1200);
     expect(total).toBeLessThan(2400);
+  });
+
+  it("debounces speech shorter than the pulse's full breath", () => {
+    // Speech settles just after the last crossing's pulse peaks, so a
+    // wiggle never queues stale regime names behind the live one.
+    expect(paradigmScore.announceDebounceMs).toBeGreaterThan(
+      paradigmScore.pulse.toMs,
+    );
+    expect(paradigmScore.announceDebounceMs).toBeLessThan(
+      paradigmScore.pulse.toMs + paradigmScore.pulse.backMs,
+    );
+  });
+});
+
+describe("regime geometry", () => {
+  it("walks the spectrum in order, each center inside its own regime", () => {
+    expect(
+      REGIME_ORDER.map((r) => paradigmRegime(REGIME_CENTERS[r])),
+    ).toEqual([...REGIME_ORDER]);
+    const centers = REGIME_ORDER.map((r) => REGIME_CENTERS[r]);
+    expect([...centers].sort((a, b) => a - b)).toEqual(centers);
   });
 });

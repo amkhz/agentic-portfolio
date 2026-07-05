@@ -5,6 +5,7 @@ import { FieldPlate } from "./FieldPlate";
 import { OperatorStrip } from "./OperatorStrip";
 import { OrientationPlate } from "./OrientationPlate";
 import { PanelPlate } from "./PanelPlate";
+import { ParadigmPlate } from "./ParadigmPlate";
 import { VacuumPlate } from "./VacuumPlate";
 
 interface DeckBenchProps {
@@ -181,7 +182,7 @@ export function DeckBench({
       </Region>
 
       <div className="deck-region--operator js-gauge">
-        {variant === "live" ? paradigm : null}
+        {variant === "live" ? paradigm : <ParadigmPlate />}
         <div className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3">
           <p className="flex items-baseline gap-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
             <span className="js-ready-lamp" aria-hidden="true" />
@@ -197,7 +198,7 @@ export function DeckBench({
             <button
               type="button"
               onClick={onExitToColophon}
-              className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
             >
               Colophon
             </button>

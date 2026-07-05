@@ -1,8 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  axialRidgeMarks,
   bearingDegrees,
+  describeSlicePlane,
+  fieldStatus,
   formatFieldReadings,
+  formatSlicePlane,
   formatStressLanes,
+  ringScale,
   sampleFieldTelemetry,
   STRESS_FLOOR,
 } from "./field";
@@ -45,7 +50,20 @@ describe("formatFieldReadings", () => {
   it("formats the bench line with tabular two-decimal readings", () => {
     const field = sampleFieldTelemetry(0);
     const { line } = formatFieldReadings(field);
-    expect(line).toMatch(/^WALL \d\.\d{2} · EVEN \d\.\d{2} · STRESS \d$/);
+    expect(line).toMatch(
+      /^WALL \d\.\d{2} · EVEN \d\.\d{2} · STRESS \d · PLANE REF$/,
+    );
+  });
+
+  it("names the displayed plane on the line and speaks it in the mirror", () => {
+    const fore = formatFieldReadings(sampleFieldTelemetry(5, null, 0.3));
+    expect(fore.line).toContain("PLANE +0.30");
+    expect(fore.mirror).toContain("0.30 toward the bow.");
+    const aft = formatFieldReadings(sampleFieldTelemetry(5, null, -0.3));
+    expect(aft.line).toContain("PLANE -0.30");
+    expect(aft.mirror).toContain("0.30 toward the stern.");
+    const ref = formatFieldReadings(sampleFieldTelemetry(5));
+    expect(ref.mirror).toContain("At the reference plane.");
   });
 
   it("mirrors the readings as a full sentence and pluralizes", () => {
@@ -88,6 +106,118 @@ describe("sampleFieldTelemetry with a disturbance", () => {
       base.stress[0].intensity,
       12,
     );
+  });
+});
+
+describe("the slice plane (Works 01.1)", () => {
+  it("ringScale is 1 at the reference plane, floored at the poles", () => {
+    expect(ringScale(0)).toBe(1);
+    expect(ringScale(1)).toBe(0.35);
+    expect(ringScale(-1)).toBe(0.35);
+    let prev = ringScale(0);
+    for (let s = 0.05; s <= 1; s += 0.05) {
+      const scale = ringScale(s);
+      expect(scale).toBeLessThanOrEqual(prev);
+      expect(scale).toBeGreaterThanOrEqual(0.35);
+      expect(scale).toBe(ringScale(-s));
+      prev = scale;
+    }
+  });
+
+  it("the reference plane is exactly today's display (s = 0 identity)", () => {
+    for (let t = 0; t < 200; t += 3.3) {
+      const legacy = sampleFieldTelemetry(t, {
+        wall: -0.02,
+        even: -0.01,
+        stress: [0.1, 0, 0.2],
+      });
+      const sliced = sampleFieldTelemetry(
+        t,
+        { wall: -0.02, even: -0.01, stress: [0.1, 0, 0.2] },
+        0,
+      );
+      expect(sliced.wall).toBe(legacy.wall);
+      expect(sliced.even).toBe(legacy.even);
+      expect(sliced.stress).toEqual(legacy.stress);
+      expect(sliced.activeStress).toBe(legacy.activeStress);
+    }
+  });
+
+  it("a nominal session never reads off nominal at any plane", () => {
+    for (let t = 0; t < 400; t += 7.1) {
+      for (let s = -1; s <= 1; s += 0.2) {
+        const field = sampleFieldTelemetry(t, null, s);
+        expect(fieldStatus(field)).toBe("nominal");
+        expect(field.wall).toBeLessThanOrEqual(1.005);
+        expect(field.even).toBeLessThanOrEqual(0.995);
+      }
+    }
+  });
+
+  it("the flank ridge is invisible at the reference plane", () => {
+    for (let t = 0; t < 400; t += 5.3) {
+      expect(sampleFieldTelemetry(t).flank.intensity).toBeLessThan(0.05);
+    }
+  });
+
+  it("sweeping finds the flank ridge above the watch floor", () => {
+    for (let t = 0; t < 200; t += 23) {
+      let max = 0;
+      for (let s = -1; s <= 1; s += 0.05) {
+        max = Math.max(max, sampleFieldTelemetry(t, null, s).flank.intensity);
+      }
+      expect(max).toBeGreaterThanOrEqual(STRESS_FLOOR);
+    }
+  });
+
+  it("tracked ridges die out along the axis", () => {
+    // Far from every ridge's axial home, tracked intensity falls well
+    // below its midship value (the sweep shows the ridges are local).
+    for (let t = 0; t < 100; t += 11) {
+      const mid = sampleFieldTelemetry(t);
+      const fore = sampleFieldTelemetry(t, null, 1);
+      // Slot 1's home is aft (-0.32): at the fore pole it reads a
+      // fraction of midship.
+      expect(fore.stress[1].intensity).toBeLessThan(
+        Math.max(mid.stress[1].intensity * 0.25, 0.02),
+      );
+    }
+  });
+
+  it("speaks the flank in the mirror only when the cut shows it", () => {
+    const t = 30;
+    const marks = axialRidgeMarks(t);
+    const flankCenter = marks[3].center;
+    const onFlank = formatFieldReadings(
+      sampleFieldTelemetry(t, null, flankCenter),
+    );
+    expect(onFlank.mirror).toContain("untracked concentration");
+    const ref = formatFieldReadings(sampleFieldTelemetry(t));
+    expect(ref.mirror).not.toContain("untracked");
+  });
+
+  it("axialRidgeMarks carries three tracked ticks and the flank", () => {
+    const marks = axialRidgeMarks(12);
+    expect(marks).toHaveLength(4);
+    expect(marks.map((m) => m.tracked)).toEqual([true, true, true, false]);
+    for (const mark of marks) {
+      expect(mark.center).toBeGreaterThanOrEqual(-1);
+      expect(mark.center).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("clamps the slice into the bubble", () => {
+    expect(sampleFieldTelemetry(9, null, 4).slice).toBe(1);
+    expect(sampleFieldTelemetry(9, null, -4).slice).toBe(-1);
+  });
+
+  it("formats and describes the plane consistently", () => {
+    expect(formatSlicePlane(0)).toBe("REF");
+    expect(formatSlicePlane(0.3)).toBe("+0.30");
+    expect(formatSlicePlane(-0.85)).toBe("-0.85");
+    expect(describeSlicePlane(0)).toBe("At the reference plane");
+    expect(describeSlicePlane(0.5)).toBe("0.50 toward the bow");
+    expect(describeSlicePlane(-0.25)).toBe("0.25 toward the stern");
   });
 });
 

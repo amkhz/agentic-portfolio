@@ -1,8 +1,10 @@
 import {
+  axialRidgeMarks,
   formatFieldReadings,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
 import { FieldLegend } from "./FieldLegend";
+import { LocatorGhost } from "./LocatorGhost";
 
 /**
  * Field Integrity at a legible nominal state, no WebGL and no motion:
@@ -19,7 +21,11 @@ export function FieldPlate() {
         <div className="deck-field__canvas" aria-hidden="true">
           <div className="deck-field-plate__ring" />
         </div>
-        <FieldLegend />
+        {/* The ghost still at the reference plane: one still serves
+            both plates, the vacuum-gauge precedent (Works 01.1). */}
+        <FieldLegend
+          ghost={<LocatorGhost slice={0} marks={axialRidgeMarks(0)} />}
+        />
       </div>
       <p
         className="mt-3 text-2xl tabular-nums text-[var(--deck-ink)]"

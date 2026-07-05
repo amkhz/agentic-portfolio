@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { sampleFieldTelemetry } from "@core/works/flight-deck/field";
+import { ringScale, sampleFieldTelemetry } from "@core/works/flight-deck/field";
 import {
   annotationPresence,
   ANNOT_ASPECT_FOOT,
@@ -114,6 +114,49 @@ describe("projectStressAnchors", () => {
   it("is deterministic in time, like the field itself", () => {
     const field = sampleFieldTelemetry(12.5);
     expect(projectStressAnchors(field, 12.5, m, 1200, 400)).toEqual(
+      projectStressAnchors(field, 12.5, m, 1200, 400),
+    );
+  });
+
+  it("stays glued to the sliced ring: scale contracts anchors toward center (Works 01.1)", () => {
+    // The projection identity off the reference plane: an anchor at
+    // slice s must sit exactly ringScale(s) of the way from the ring
+    // center to its reference-plane position (the shader multiplies
+    // the whole centerline by the same core function).
+    const t = 30;
+    const s = 0.6;
+    const scale = ringScale(s);
+    const sliced = sampleFieldTelemetry(t, null, s);
+    const width = 1200;
+    const height = 400;
+    const center = projectFieldPoint(0, 0, m, width, height);
+    // Same sample, unscaled: isolates the scale term exactly (the
+    // sliced sample's own evenness drives the wobble in both).
+    const refAnchors = projectStressAnchors(sliced, t, m, width, height, 1);
+    const slicedAnchors = projectStressAnchors(
+      sliced,
+      t,
+      m,
+      width,
+      height,
+      scale,
+    );
+    slicedAnchors.forEach((anchor, i) => {
+      // Angles are slice-independent, so the contraction is exact.
+      expect(anchor.at.x - center.x).toBeCloseTo(
+        (refAnchors[i].at.x - center.x) * scale,
+        8,
+      );
+      expect(anchor.at.y - center.y).toBeCloseTo(
+        (refAnchors[i].at.y - center.y) * scale,
+        8,
+      );
+    });
+  });
+
+  it("keeps the reference plane exactly as before (scale default 1)", () => {
+    const field = sampleFieldTelemetry(12.5);
+    expect(projectStressAnchors(field, 12.5, m, 1200, 400, 1)).toEqual(
       projectStressAnchors(field, 12.5, m, 1200, 400),
     );
   });

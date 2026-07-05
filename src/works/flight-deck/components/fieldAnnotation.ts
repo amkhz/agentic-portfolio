@@ -34,19 +34,23 @@ export function annotationPresence(aspect: number): number {
   return smoothstep(ANNOT_ASPECT_FOOT, ANNOT_ASPECT_FULL, aspect);
 }
 
-/** Ring centerline radius at angle theta: the shader's R, line for line. */
+/** Ring centerline radius at angle theta: the shader's R, line for line.
+    The slice plane's scale (core ringScale) multiplies the whole
+    centerline, exactly as uRingScale does in the shader (Works 01.1). */
 export function ringRadius(
   theta: number,
   t: number,
   even: number,
   m: FieldMotionParams,
+  scale = 1,
 ): number {
   const uneven = 1 - even;
   return (
-    0.74 +
-    m.breathAmp * Math.sin(t * m.breathRate) +
-    (0.018 + 0.5 * uneven) * Math.sin(2 * theta + t * m.driftCenter2) +
-    (0.01 + 0.3 * uneven) * Math.sin(3 * theta - t * m.driftCenter3 + 1.3)
+    scale *
+    (0.74 +
+      m.breathAmp * Math.sin(t * m.breathRate) +
+      (0.018 + 0.5 * uneven) * Math.sin(2 * theta + t * m.driftCenter2) +
+      (0.01 + 0.3 * uneven) * Math.sin(3 * theta - t * m.driftCenter3 + 1.3))
   );
 }
 
@@ -92,11 +96,12 @@ export function projectStressAnchors(
   m: FieldMotionParams,
   width: number,
   height: number,
+  scale = 1,
 ): StressAnchor[] {
   return field.stress.map((s) => {
     const pointAt = (theta: number) =>
       projectFieldPoint(
-        ringRadius(theta, t, field.even, m),
+        ringRadius(theta, t, field.even, m, scale),
         theta,
         m,
         width,

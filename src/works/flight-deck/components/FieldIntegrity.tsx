@@ -14,8 +14,10 @@ import {
 } from "@core/works/flight-deck/drillEnvelopes";
 import { COUPLING_LAG_S } from "@core/works/flight-deck/paradigm";
 import {
+  axialRidgeMarks,
   formatFieldReadings,
   formatStressLanes,
+  ringScale,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
 import { sampleOperator } from "@core/works/flight-deck/operator";
@@ -32,7 +34,9 @@ import {
   type FieldMotionParams,
 } from "./fieldMotion";
 import { FieldLegend } from "./FieldLegend";
+import { LocatorGhost } from "./LocatorGhost";
 import { readOklabToken } from "./oklabTokens";
+import { SliceScrubber } from "./SliceScrubber";
 
 /**
  * Field Integrity, the hero instrument (Design Hook 1: the field health
@@ -89,6 +93,12 @@ interface FieldIntegrityProps {
   trim?: CommitTrim | null;
   /** The drill's beat marks (phase 5): adversarial inputs, same shapes. */
   drill?: { current: DrillTimeline } | null;
+  /**
+   * True while a drill alert is posted (Works 01.1): the slice plane
+   * snaps home and the scrubber rests, because procedures read against
+   * the reference plane (ECAM posture, Justin's call 2026-07-05).
+   */
+  alertActive?: boolean;
 }
 
 const vertex = /* glsl */ `
@@ -115,6 +125,8 @@ uniform float uEven;
 uniform vec3 uStressA; // angle, half-width, intensity
 uniform vec3 uStressB;
 uniform vec3 uStressC;
+uniform vec3 uStressD; // the flank ridge: reads only off the reference plane
+uniform float uRingScale; // core ringScale(slice): the cut ring at this plane
 uniform vec3 uStop0; // spectral ramp stops, OKLab
 uniform vec3 uStop1;
 uniform vec3 uStop2;
@@ -228,7 +240,11 @@ void main() {
      the operator handed off, on the shared commit envelope. */
   float commitBump = uCommitGlow
     * exp(-pow(angDist(theta, uCommitAngle) / 0.55, 2.0));
-  float R = 0.74
+  /* The whole centerline scales with the slice plane (Works 01.1): the
+     cut ring shrinks toward the bubble's poles. uRingScale comes from
+     core ringScale(s), the same function the annotation projection
+     reads, so the calipers stay glued at every plane. */
+  float R = uRingScale * (0.74
     + uBreathAmp * sin(t * uBreathRate)
     + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * uDriftCenter2)
     + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * uDriftCenter3 + 1.3)
@@ -236,7 +252,7 @@ void main() {
     /* Coupled, the bubble breathes with the operator: the whole ring
        swells and settles on the human cadence, unmistakably not the
        field's own slow drift. */
-    + uCoupling * 0.022 * uOpBreath;
+    + uCoupling * 0.022 * uOpBreath);
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
   float thickness = uWallBase * uWall * (1.0
@@ -254,7 +270,7 @@ void main() {
   float deficit = clamp((0.94 - uWall) / 0.05, 0.0, 1.0);
   float hot = clamp(
     stressBump(theta, uStressA) + stressBump(theta, uStressB)
-      + stressBump(theta, uStressC),
+      + stressBump(theta, uStressC) + stressBump(theta, uStressD),
     0.0, 1.0);
   thickness *= (1.0 - uThinGain * deficit)
     * (1.0 - uNeckDepth * deficit * hot);
@@ -272,6 +288,7 @@ void main() {
   density += stressBump(theta, uStressA);
   density += stressBump(theta, uStressB);
   density += stressBump(theta, uStressC);
+  density += stressBump(theta, uStressD);
 
   /* Circulation: a low crest of energy traveling the wall, the bubble
      visibly holding itself. Periodic in theta, so no seam. */
@@ -334,6 +351,7 @@ export function FieldIntegrity({
   clock: clockProp,
   trim,
   drill,
+  alertActive = false,
 }: FieldIntegrityProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const glStateRef = useRef<{
@@ -372,6 +390,29 @@ export function FieldIntegrity({
   const [lanes, setLanes] = useState(() =>
     formatStressLanes(sampleFieldTelemetry(0)),
   );
+
+  // The slice plane (Works 01.1). The range input owns the value as
+  // state; the per-frame consumers (shader uniform, render loop sample,
+  // annotation scale) read the ref so a sweep never re-renders the
+  // canvas host. The ghost's ticks re-sample on the readings cadence.
+  const [slice, setSlice] = useState(0);
+  const sliceRef = useRef(0);
+  // The input value is state; the model and uniform follow the
+  // scrubber's SPRING via onSweep (per frame, no re-render), so the cut
+  // eases between planes with the same damped feel as the thumb.
+  const applySlice = (value: number) => {
+    sliceRef.current = value;
+    const u = uniformsRef.current.uRingScale;
+    if (u) u.value = ringScale(value);
+  };
+  const [ghostMarks, setGhostMarks] = useState(() => axialRidgeMarks(0));
+
+  // Snap home when an alert posts: procedures read against the
+  // reference plane, so the display and the copy can never disagree.
+  // The scrubber's spring carries the travel home.
+  useEffect(() => {
+    if (alertActive) setSlice(0);
+  }, [alertActive]);
 
   // The annotation layer only exists over a live canvas; jsdom and lost
   // contexts fall back to the readings line alone.
@@ -461,6 +502,8 @@ export function FieldIntegrity({
         uStressA: { value: [0, 0.3, 0] },
         uStressB: { value: [0, 0.3, 0] },
         uStressC: { value: [0, 0.3, 0] },
+        uStressD: { value: [0, 0.3, 0] },
+        uRingScale: { value: ringScale(sliceRef.current) },
         uStop0: { value: stops[0] },
         uStop1: { value: stops[1] },
         uStop2: { value: stops[2] },
@@ -505,6 +548,7 @@ export function FieldIntegrity({
       const field = sampleFieldTelemetry(
         t,
         drillFieldDelta(t, drillRef.current?.current),
+        sliceRef.current,
       );
       program.uniforms.uTime.value = t;
       program.uniforms.uWall.value = field.wall;
@@ -523,6 +567,11 @@ export function FieldIntegrity({
         field.stress[2].angle,
         field.stress[2].width,
         field.stress[2].intensity,
+      ];
+      program.uniforms.uStressD.value = [
+        field.flank.angle,
+        field.flank.width,
+        field.flank.intensity,
       ];
 
       // The consciousness coupling: while the dissolve holds the gain
@@ -565,6 +614,7 @@ export function FieldIntegrity({
             motionRef.current,
             width,
             height,
+            ringScale(sliceRef.current),
           );
           anchors.forEach((a, i) => {
             const group = groupRefs.current[i];
@@ -641,13 +691,16 @@ export function FieldIntegrity({
     const interval = window.setInterval(() => {
       const t = clock();
       const timeline = drillRef.current?.current;
-      const field = sampleFieldTelemetry(t, drillFieldDelta(t, timeline));
+      const s = sliceRef.current;
+      const field = sampleFieldTelemetry(t, drillFieldDelta(t, timeline), s);
       const earlier = sampleFieldTelemetry(
         t - TREND_LOOKBACK_S,
         drillFieldDelta(t - TREND_LOOKBACK_S, timeline),
+        s,
       );
       setReadings(formatFieldReadings(field));
       setLanes(formatStressLanes(field, earlier));
+      setGhostMarks(axialRidgeMarks(t));
     }, READINGS_INTERVAL_MS);
     return () => window.clearInterval(interval);
   }, [live]);
@@ -712,8 +765,16 @@ export function FieldIntegrity({
             </div>
           ) : null}
         </div>
-        <FieldLegend />
+        <FieldLegend
+          ghost={<LocatorGhost slice={slice} marks={ghostMarks} />}
+        />
       </div>
+      <SliceScrubber
+        value={slice}
+        onChange={setSlice}
+        onSweep={applySlice}
+        disabled={!live || alertActive}
+      />
       <p
         className="js-boot-data mt-3 text-2xl tabular-nums text-[var(--deck-ink)]"
         aria-hidden="true"

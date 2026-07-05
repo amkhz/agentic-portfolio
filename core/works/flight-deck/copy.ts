@@ -86,9 +86,12 @@ export const deckCopy = {
     /** State words on checklist steps. */
     stepWorking: "working",
     stepDone: "done",
-    /** The cross-check panel's row labels (beat 2, the verify step). */
-    crossCheckLaneB: "SENSOR LANE B · WALL",
-    crossCheckRender: "FIELD RENDER · WALL",
+    /** The cross-check panel's row labels (beat 2, the verify step).
+        Both name the reference plane (Works 01.1): the drill's numbers
+        are read against s = 0, and the scrubber snaps home when an
+        alert posts so the display can never disagree with the copy. */
+    crossCheckLaneB: "SENSOR LANE B · WALL · REF PLANE",
+    crossCheckRender: "FIELD RENDER · WALL · REF PLANE",
     /** Beat 5, while the systems settle in sequence. */
     settling: "Systems settling in sequence.",
     residual: {
@@ -99,6 +102,16 @@ export const deckCopy = {
       /** The control that puts the deck back on watch. */
       acknowledge: "Return to watch",
     },
+  },
+  /** The slice-plane scrubber (Works 01.1), under the hero render. */
+  slice: {
+    label: "Plane",
+    aft: "AFT",
+    fore: "FORE",
+    /** The range input's accessible name. */
+    control: "Slice plane",
+    /** One line on what the sweep is; shown as the control's hint. */
+    hint: "Sweep the cut fore and aft through the bubble. Alerts read against the reference plane.",
   },
   operator: {
     /** The strip's region label in the operator channel. */

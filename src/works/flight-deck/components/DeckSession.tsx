@@ -560,6 +560,7 @@ export function DeckSession({
             clock={deckClock}
             trim={trim}
             drill={drill.timelineRef}
+            alertActive={activeAlert !== null}
           />
         }
         orientation={

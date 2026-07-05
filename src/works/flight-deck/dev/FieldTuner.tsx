@@ -56,6 +56,11 @@ export default function FieldTuner({ onChange }: FieldTunerProps) {
         base: [D.wallBase, 0.03, 0.2] as [number, number, number],
         falloff: [D.shellFalloff, 0.5, 6] as [number, number, number],
       },
+      deficit: {
+        thinGain: [D.thinGain, 0, 0.8] as [number, number, number],
+        neckDepth: [D.neckDepth, 0, 0.9] as [number, number, number],
+        thinCool: [D.thinCool, 0, 0.3] as [number, number, number],
+      },
       logValues: { type: "action" as const, label: "Log values" },
     },
     {
@@ -90,6 +95,9 @@ export default function FieldTuner({ onChange }: FieldTunerProps) {
     breathRate: params.breath.rate,
     wallBase: params.wall.base,
     shellFalloff: params.wall.falloff,
+    thinGain: params.deficit.thinGain,
+    neckDepth: params.deficit.neckDepth,
+    thinCool: params.deficit.thinCool,
   };
 
   latestRef.current = flat;

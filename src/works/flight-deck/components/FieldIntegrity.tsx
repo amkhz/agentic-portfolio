@@ -130,6 +130,9 @@ uniform float uBreathAmp;
 uniform float uBreathRate;
 uniform float uWallBase;
 uniform float uShellFalloff;
+uniform float uThinGain;
+uniform float uNeckDepth;
+uniform float uThinCool;
 
 const float PI = 3.141592653589793;
 const float TAU = 6.283185307179586;
@@ -220,13 +223,33 @@ void main() {
   float thickness = uWallBase * uWall * (1.0
     + 0.38 * sin(3.0 * theta + t * uDriftThick3 + 0.7)
     + 0.22 * sin(5.0 * theta - t * uDriftThick5 + 2.1));
+
+  /* Out-of-band wall deficit (phase 5, Justin's live pass): when the
+     drill pushes the wall below the same band floor the readings call
+     off nominal (0.94, core WALL_BAND_FLOOR), the render shows it: the
+     shell gaunts everywhere and necks hardest where the stress
+     concentrates, the danger picture of a bright concentration on a
+     thinning wall. Nominal telemetry never reaches this; deficit is
+     zero anywhere above the floor. Centerline R is untouched, so the
+     annotation projection stays glued. */
+  float deficit = clamp((0.94 - uWall) / 0.05, 0.0, 1.0);
+  float hot = clamp(
+    stressBump(theta, uStressA) + stressBump(theta, uStressB)
+      + stressBump(theta, uStressC),
+    0.0, 1.0);
+  thickness *= (1.0 - uThinGain * deficit)
+    * (1.0 - uNeckDepth * deficit * hot);
   thickness = max(thickness, 0.02);
 
   float d = (r - R) / thickness;
   float shell = exp(-d * d * uShellFalloff);
 
-  /* Local energy density: thickness plus the tracked stress concentrations. */
-  float density = 0.30 + 0.42 * (thickness / uWallBase - 0.55);
+  /* Local energy density: thickness plus the tracked stress
+     concentrations. The gaunt thickness already pulls density toward
+     the ramp's cool bottom; uThinCool adds a direct chill on top (thin
+     reads cool, per the legend). */
+  float density = 0.30 + 0.42 * (thickness / uWallBase - 0.55)
+    - uThinCool * deficit;
   density += stressBump(theta, uStressA);
   density += stressBump(theta, uStressB);
   density += stressBump(theta, uStressC);

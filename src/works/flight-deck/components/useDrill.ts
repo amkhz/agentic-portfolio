@@ -8,8 +8,8 @@ import {
   drillScore,
   initialDrillProgress,
   type DrillProgress,
-  type DrillTimeline,
 } from "@core/works/flight-deck/drill";
+import type { DrillTimeline } from "@core/works/flight-deck/drillEnvelopes";
 import type { DeckEvent, DeckPhase } from "@core/works/flight-deck/machine";
 
 /**

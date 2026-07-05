@@ -95,6 +95,41 @@ describe("DeckSession", () => {
     expect(events).toEqual([{ type: "ABORT_WAKE" }]);
   });
 
+  it("carries the operator-state strip from boot (phase 6: promoted, not introduced)", () => {
+    renderSession();
+    expect(screen.getByText(deckCopy.operator.label)).toBeInTheDocument();
+    expect(screen.getByText(/^Operator state steady\./)).toBeInTheDocument();
+  });
+
+  it("keeps the paradigm slider unrevealed until the drill is worked", () => {
+    renderSession();
+    expect(
+      screen.queryByRole("slider", { name: deckCopy.paradigm.label }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("reveals the final instrument once the drill has been worked", () => {
+    renderSession({ ...initialDeckState, phase: "nominal", drillArmed: false });
+    expect(
+      screen.getByRole("slider", { name: deckCopy.paradigm.label }),
+    ).toBeInTheDocument();
+  });
+
+  it("rests the consciousness chamber at the deep end of the paradigm", () => {
+    renderSession({
+      ...initialDeckState,
+      phase: "nominal",
+      drillArmed: false,
+      paradigm: 0.9,
+    });
+    expect(
+      screen.getByText(deckCopy.paradigm.chamberKicker),
+    ).toBeInTheDocument();
+    expect(screen.getByText(deckCopy.paradigm.promotion)).toBeInTheDocument();
+    // The strip below and the chamber at center mirror the same model.
+    expect(screen.getAllByText(/holding the controls/)).toHaveLength(2);
+  });
+
   it("renders the phase 3 instruments with readings and sr mirrors", () => {
     renderSession();
     // Synthetic Orientation: bench line + sentence mirror (t=0 sample).

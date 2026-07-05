@@ -6,8 +6,8 @@ import {
   drillAlerts,
   initialDrillProgress,
   type DrillProgress,
-  type DrillTimeline,
 } from "@core/works/flight-deck/drill";
+import type { DrillTimeline } from "@core/works/flight-deck/drillEnvelopes";
 import { AlertRegion } from "./AlertRegion";
 import { DrillProcedure } from "./DrillProcedure";
 import { DrillResidual } from "./DrillResidual";

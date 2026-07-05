@@ -3,7 +3,7 @@ import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
   drillVacuumDelta,
   type DrillTimeline,
-} from "@core/works/flight-deck/drill";
+} from "@core/works/flight-deck/drillEnvelopes";
 import {
   formatVacuumReadings,
   sampleVacuumTelemetry,

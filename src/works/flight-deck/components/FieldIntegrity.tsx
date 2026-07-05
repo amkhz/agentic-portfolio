@@ -9,13 +9,15 @@ import { Mesh, Program, Renderer, Triangle } from "ogl";
 import { commitGlow, type CommitTrim } from "@core/works/flight-deck/commit";
 import {
   drillFieldDelta,
+  drillOperatorDelta,
   type DrillTimeline,
-} from "@core/works/flight-deck/drill";
+} from "@core/works/flight-deck/drillEnvelopes";
 import {
   formatFieldReadings,
   formatStressLanes,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
+import { sampleOperator } from "@core/works/flight-deck/operator";
 import {
   annotationPresence,
   LANE_GAP_PX,
@@ -67,6 +69,13 @@ export interface FieldIntegrityHandle {
    * lands, the render loop owns the glow from the shared envelope.
    */
   setCommit(bearing: number, glow: number): void;
+  /**
+   * The consciousness coupling (phase 6): with gain above zero the
+   * render loop samples the operator model on the shared clock and the
+   * bubble breathes with the operator's respiration, its density
+   * leaning with coherence. The paradigm dissolve drives the gain.
+   */
+  setCoupling(gain: number): void;
 }
 
 interface FieldIntegrityProps {
@@ -113,6 +122,11 @@ uniform vec3 uStop4;
 uniform vec3 uInk; // bone ink, OKLab: the sweep arm
 uniform float uCommitAngle; // committed heading, radians
 uniform float uCommitGlow;  // the maneuver's envelope, 0 to 1
+
+/* The consciousness coupling (phase 6): operator state as input. */
+uniform float uCoupling;    // dissolve envelope gain, 0 to 1
+uniform float uOpBreath;    // the operator's breath waveform, -1 to 1
+uniform float uOpCoherence; // coherence, 0 to 1
 
 /* Motion parameters (FIELD_MOTION_DEFAULTS; dev tuner drives them live). */
 uniform float uCenterX;
@@ -217,7 +231,11 @@ void main() {
     + uBreathAmp * sin(t * uBreathRate)
     + (0.018 + 0.5 * uneven) * sin(2.0 * theta + t * uDriftCenter2)
     + (0.010 + 0.3 * uneven) * sin(3.0 * theta - t * uDriftCenter3 + 1.3)
-    + 0.035 * commitBump;
+    + 0.035 * commitBump
+    /* Coupled, the bubble breathes with the operator: the whole ring
+       swells and settles on the human cadence, unmistakably not the
+       field's own slow drift. */
+    + uCoupling * 0.022 * uOpBreath;
 
   /* Wall half-thickness varies around the ring: thin reads cool, dense hot. */
   float thickness = uWallBase * uWall * (1.0
@@ -260,6 +278,11 @@ void main() {
 
   /* The committed route lights up where the wall inherited it. */
   density += 0.45 * commitBump;
+
+  /* Coupled, coherence leans on the whole field's warmth: a steadier
+     operator reads as a steadier, slightly brighter bubble. Centered on
+     the model's nominal so the takeover never jolts. */
+  density += uCoupling * (0.16 * (uOpCoherence - 0.72) + 0.04 * uOpBreath);
 
   /* Living speckle, drifting through the field in cartesian space (no
      angular seam): two octaves, the medium alive under calm data. */
@@ -317,11 +340,13 @@ export function FieldIntegrity({
     reveal: number;
     commitAngle: number;
     commitGlow: number;
+    coupling: number;
   }>({
     sweep: 0,
     reveal: 0,
     commitAngle: 0,
     commitGlow: 0,
+    coupling: 0,
   });
   // One clock for the shader and the readings, so both sample the field
   // model at the same instant and the mirror can never contradict the
@@ -388,6 +413,11 @@ export function FieldIntegrity({
         const g = uniformsRef.current.uCommitGlow;
         if (g) g.value = glow;
       },
+      setCoupling(gain: number) {
+        glStateRef.current.coupling = gain;
+        const u = uniformsRef.current.uCoupling;
+        if (u) u.value = gain;
+      },
     }),
     [],
   );
@@ -438,6 +468,9 @@ export function FieldIntegrity({
         uInk: { value: ink },
         uCommitAngle: { value: glStateRef.current.commitAngle },
         uCommitGlow: { value: glStateRef.current.commitGlow },
+        uCoupling: { value: glStateRef.current.coupling },
+        uOpBreath: { value: 0 },
+        uOpCoherence: { value: 0.72 },
         ...Object.fromEntries(
           (Object.keys(MOTION_UNIFORMS) as (keyof FieldMotionParams)[]).map(
             (key) => [MOTION_UNIFORMS[key], { value: FIELD_MOTION_DEFAULTS[key] }],
@@ -490,6 +523,16 @@ export function FieldIntegrity({
         field.stress[2].width,
         field.stress[2].intensity,
       ];
+
+      // The consciousness coupling: while the dissolve holds the gain
+      // open, the loop reads the operator on the same clock the chamber
+      // and strip sample, so the breathing they show is the breathing
+      // the bubble does.
+      if (glStateRef.current.coupling > 0) {
+        const op = sampleOperator(t, drillOperatorDelta(t, drillRef.current?.current));
+        program.uniforms.uOpBreath.value = op.breath;
+        program.uniforms.uOpCoherence.value = op.coherence;
+      }
 
       // Once a trim is riding, the loop owns the commit glow from the
       // shared envelope (it starts at the hold value the handoff left,

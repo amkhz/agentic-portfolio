@@ -3,11 +3,13 @@ import { motion } from "motion/react";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import {
   drillAlerts,
-  drillFieldDelta,
   laneBClaimedWall,
   type DrillProgress,
-  type DrillTimeline,
 } from "@core/works/flight-deck/drill";
+import {
+  drillFieldDelta,
+  type DrillTimeline,
+} from "@core/works/flight-deck/drillEnvelopes";
 import { sampleFieldTelemetry } from "@core/works/flight-deck/field";
 import { deckSpringSoft } from "./deckMotion";
 

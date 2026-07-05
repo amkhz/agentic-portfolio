@@ -834,6 +834,269 @@
   pointer-events: none;
 }
 
+/* The paradigm dissolve (phase 6). The slider's spring drives
+   --dissolve and --promotion on the session root every frame; the room
+   darkens toward the chamber floor by color-mix (in oklab, so the warm
+   dark never detours cool), instrument regions dim by their envelope's
+   presence (inline opacity from the same pure model), and the operator
+   channel keeps its full ink: at the consciousness end it is the light
+   that remains. */
+.deck-session {
+  --dissolve: 0;
+  --promotion: 0;
+  min-height: 100dvh;
+  background: color-mix(
+    in oklab,
+    var(--deck-bg),
+    var(--deck-bg-deep) calc(var(--dissolve) * 100%)
+  );
+}
+
+/* The operator channel's row: ready lamp, the strip, deck chrome. */
+.deck-operator__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+/* The operator-state strip: the system watching the watcher, in the
+   channel's own quiet hue (never confusable with vehicle telemetry).
+   Promotion raises its ink and emission; the traces' --emit rides the
+   boot glow grammar during crossings and the chamber handoff. */
+.deck-opstrip {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.deck-opstrip__label,
+.deck-opstrip__channel-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-opstrip__channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.deck-opstrip__trace {
+  width: 100%;
+  max-width: 7rem;
+  height: 1.125rem;
+  filter: drop-shadow(
+    0 0 calc((var(--emit, 0) + var(--promotion, 0)) * 5px)
+    var(--deck-emit-ready)
+  );
+}
+
+.deck-opstrip__trace polyline {
+  fill: none;
+  stroke: var(--deck-operator);
+  stroke-width: 1;
+  opacity: calc(0.45 + 0.5 * var(--promotion, 0));
+}
+
+.deck-opstrip__value {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink-dim);
+}
+
+.deck-opstrip[data-promoted] .deck-opstrip__value {
+  color: var(--deck-ink);
+}
+
+.deck-opstrip[data-promoted] .deck-opstrip__channel-label {
+  color: var(--deck-ink-dim);
+}
+
+/* The paradigm slider, the final instrument: one continuous track over
+   three staged regimes. The interaction surface is a real range input
+   (keyboard for free); the visible thumb spring-follows it. Starts
+   unlit; the reveal timeline blooms it in once, after the drill. */
+.deck-paradigm {
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding-bottom: 0.875rem;
+}
+
+.deck-paradigm__head {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+}
+
+.deck-paradigm__label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-paradigm__names {
+  position: relative;
+  flex: 1;
+  height: 1rem;
+}
+
+.deck-paradigm__name {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+  transition: color 0.4s ease;
+}
+
+.deck-paradigm__name[data-active] {
+  color: var(--deck-ink);
+}
+
+.deck-paradigm__track-box {
+  position: relative;
+  height: 1.5rem;
+}
+
+.deck-paradigm__track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--deck-line);
+}
+
+.deck-paradigm__boundary {
+  position: absolute;
+  top: -0.3125rem;
+  height: 0.625rem;
+  border-left: 1px solid var(--deck-ink-faint);
+}
+
+.deck-paradigm__thumb {
+  position: absolute;
+  top: 50%;
+  width: 0.875rem;
+  height: 0.875rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--deck-caution);
+  box-shadow: 0 0 10px 2px var(--deck-emit-wake);
+  pointer-events: none;
+}
+
+.deck-paradigm__input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+.deck-paradigm__track-box:has(.deck-paradigm__input:focus-visible)
+  .deck-paradigm__thumb {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 3px;
+}
+
+.deck-paradigm__line {
+  min-height: 1.25rem;
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+/* The consciousness chamber: the promoted channel at center, in the
+   review space the drill once held. Same hue, same pure model, sampled
+   large; the caption carries the arc's proof. Parts start unlit for
+   the authored arrival (the strip hands its light to the center). */
+.deck-chamber {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 42rem;
+  border-top: 1px solid var(--deck-line);
+  padding-top: 0.625rem;
+}
+
+.deck-chamber .js-chamber-part,
+.deck-chamber .js-chamber-caption {
+  opacity: 0;
+}
+
+.deck-chamber__kicker {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-chamber__traces {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.deck-chamber__breath {
+  flex: 1;
+  height: 3.25rem;
+  filter: drop-shadow(0 0 8px var(--deck-emit-ready));
+}
+
+.deck-chamber__breath polyline {
+  fill: none;
+  stroke: var(--deck-operator);
+  stroke-width: 1.5;
+}
+
+.deck-chamber__coherence {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.125rem;
+}
+
+.deck-chamber__coherence-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-chamber__coherence-value {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink);
+}
+
+.deck-chamber__coupled {
+  font-family: var(--deck-font-body);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--deck-ink-dim);
+}
+
+.deck-chamber__caption {
+  font-family: var(--deck-font-body);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--deck-ink-dim);
+}
+
 /* The wake overlay: while the deck is dormant this is the only light. */
 .deck-wake {
   position: fixed;

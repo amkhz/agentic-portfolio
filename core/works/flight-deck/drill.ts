@@ -329,11 +329,31 @@ export const drillScore = {
   introMs: 4200,
   /** One system step working, before it reports done. */
   stepMs: 1600,
-  /** Resolved line showing plus the escalation gap before the next beat. */
-  betweenBeatsMs: 3400,
+  /**
+   * The resolved beat's dwell scales with what there is to read (Justin,
+   * live pass 2026-07-05: the false-alarm caption is the drill's payoff
+   * and a fixed gap flashed it). Base covers the settle; per-word paces
+   * a calm read; the cap keeps escalation from stalling.
+   */
+  betweenBeats: { baseMs: 2200, perWordMs: 240, maxMs: 12000 },
   /** Beat 5, the reverse boot echo: one exhale, emission wave reversed. */
   settle: { durationMs: 900, staggerMs: 90 },
 } as const;
+
+/**
+ * How long a resolved beat holds before the next one posts: reading
+ * time for the deck's reply plus the resolved line, never a flash.
+ */
+export function betweenBeatsDwellMs(
+  alert: DrillAlert,
+  response: string | null,
+): number {
+  const words = `${response ?? ""} ${alert.resolved}`
+    .split(/\s+/)
+    .filter(Boolean).length;
+  const { baseMs, perWordMs, maxMs } = drillScore.betweenBeats;
+  return Math.min(baseMs + words * perWordMs, maxMs);
+}
 
 /* ------------------------------------------------------------------ */
 /* Disturbances: adversarial inputs into the pure instrument shapes.   */

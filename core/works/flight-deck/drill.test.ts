@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
+  betweenBeatsDwellMs,
   drillAlerts,
   drillFieldDelta,
   drillOrientationDelta,
   drillReducer,
   drillResidual,
+  drillScore,
   drillVacuumDelta,
   falseAlarmCaption,
   initialDrillProgress,
@@ -125,6 +127,29 @@ describe("drillReducer", () => {
     expect(
       drillReducer(begun, { type: "JUDGE", choiceId: "recalibrate" }),
     ).toBe(begun);
+  });
+});
+
+describe("betweenBeatsDwellMs", () => {
+  it("holds the false alarm's caption long enough to actually read", () => {
+    const falseAlarm = drillAlerts[1];
+    const dwell = betweenBeatsDwellMs(falseAlarm, falseAlarmCaption);
+    expect(dwell).toBeGreaterThanOrEqual(10000);
+    expect(dwell).toBeLessThanOrEqual(drillScore.betweenBeats.maxMs);
+  });
+
+  it("scales with reading load and never flashes or stalls", () => {
+    for (const alert of drillAlerts) {
+      const judgment = alert.steps.find((s) => s.kind === "judgment");
+      for (const choice of judgment?.choices ?? []) {
+        if (choice.holds) continue;
+        const dwell = betweenBeatsDwellMs(alert, choice.response);
+        expect(dwell).toBeGreaterThanOrEqual(drillScore.betweenBeats.baseMs);
+        expect(dwell).toBeLessThanOrEqual(drillScore.betweenBeats.maxMs);
+        // Longer replies always earn at least as much time.
+        expect(dwell).toBeGreaterThanOrEqual(betweenBeatsDwellMs(alert, null));
+      }
+    }
   });
 });
 

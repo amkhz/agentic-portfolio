@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef } from "react";
 import type { Severity } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import {
+  betweenBeatsDwellMs,
   drillAlerts,
   drillReducer,
   drillScore,
@@ -94,16 +95,20 @@ export function useDrill({
     return () => window.clearTimeout(timer);
   }, [stage, alertIndex, stepIndex, betweenBeats, step?.kind]);
 
-  // The resolved line holds through the escalation gap, then the next
-  // beat posts (or the drill hands the machine to recovery).
+  // The resolved line holds for its reading time (the false alarm's
+  // caption is the drill's payoff, never a flash), then the next beat
+  // posts (or the drill hands the machine to recovery).
   useEffect(() => {
     if (stage !== "alerts" || !betweenBeats) return;
     const timer = window.setTimeout(
       () => act({ type: "BEAT_SETTLED" }),
-      drillScore.betweenBeatsMs,
+      betweenBeatsDwellMs(
+        drillAlerts[alertIndex],
+        progressRef.current.response,
+      ),
     );
     return () => window.clearTimeout(timer);
-  }, [stage, betweenBeats]);
+  }, [stage, betweenBeats, alertIndex]);
 
   // Stage boundaries dispatch to the deck machine.
   useEffect(() => {

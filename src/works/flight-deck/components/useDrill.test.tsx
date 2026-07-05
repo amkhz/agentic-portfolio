@@ -78,7 +78,7 @@ describe("useDrill", () => {
       result.current.timelineRef.current.resolvedAt["advisory-drift"],
     ).toBe(100);
     expect(confirmations.count).toBe(1);
-    act(() => vi.advanceTimersByTime(drillScore.betweenBeatsMs));
+    act(() => vi.advanceTimersByTime(drillScore.betweenBeats.maxMs));
     expect(result.current.progress.alertIndex).toBe(1);
     expect(severities).toEqual(["advisory", "advisory"]);
   });
@@ -90,7 +90,7 @@ describe("useDrill", () => {
     act(() => vi.advanceTimersByTime(drillScore.stepMs));
     act(() => vi.advanceTimersByTime(drillScore.stepMs));
     act(() => result.current.judge("recalibrate"));
-    act(() => vi.advanceTimersByTime(drillScore.betweenBeatsMs));
+    act(() => vi.advanceTimersByTime(drillScore.betweenBeats.maxMs));
     // Beat 2, to the verify judgment.
     act(() => vi.advanceTimersByTime(drillScore.stepMs));
     act(() => vi.advanceTimersByTime(drillScore.stepMs));
@@ -117,7 +117,7 @@ describe("useDrill", () => {
           act(() => result.current.judge(resolutions[i]));
         }
       }
-      act(() => vi.advanceTimersByTime(drillScore.betweenBeatsMs));
+      act(() => vi.advanceTimersByTime(drillScore.betweenBeats.maxMs));
     });
     expect(result.current.progress.stage).toBe("settling");
     expect(dispatched).toContainEqual({ type: "DRILL_RESOLVED" });

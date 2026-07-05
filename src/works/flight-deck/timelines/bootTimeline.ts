@@ -101,11 +101,15 @@ export function buildBootTimeline({
         at,
       );
     } else {
+      // The sweep travels on transform, not left: a layout write per
+      // frame during the showpiece ritual is the wrong bill to pay
+      // (phase 7 motion audit). Width resolves when the beat plays.
       tl.fromTo(
         q(`${root} .deck-sweep`),
-        { left: "0%", opacity: 1 },
+        { x: 0, opacity: 1 },
         {
-          left: "100%",
+          x: (_i: number, target: unknown) =>
+            (target as HTMLElement).offsetParent?.clientWidth ?? 0,
           duration: seconds(c.sweepMs),
           ease: "none",
           immediateRender: false,
@@ -183,6 +187,14 @@ export function buildBootTimeline({
   tl.to(
     q(".js-deck-chrome"),
     { opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out" },
+    "settle",
+  );
+  // Region names without a certification beat (the panel is a layer,
+  // not an instrument) land with the settle; the instrument names are
+  // already lit, so this is idempotent for them.
+  tl.to(
+    q(".js-boot-name"),
+    { opacity: 1, duration: 0.4, ease: "power2.out" },
     "settle",
   );
   tl.fromTo(

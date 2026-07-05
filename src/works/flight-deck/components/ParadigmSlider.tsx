@@ -1,9 +1,16 @@
 import { useEffect, useRef } from "react";
-import { AnimatePresence, motion, useMotionValueEvent, useSpring, useTransform } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useSpring,
+} from "motion/react";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import {
   crossedRegime,
   paradigmRegime,
+  paradigmScore,
   REGIME_CENTERS,
   REGIME_ORDER,
   type ParadigmRegime,
@@ -48,10 +55,29 @@ export function ParadigmSlider({
   onCrossing,
 }: ParadigmSliderProps) {
   const spring = useSpring(value, thumbSpring);
-  const left = useTransform(spring, (v) => `${(v * 100).toFixed(2)}%`);
   const io = useRef({ onDissolve, onCrossing });
   io.current = { onDissolve, onCrossing };
   const springPrevRef = useRef(value);
+
+  // The thumb travels on transform, not left: a layout write per spring
+  // frame on the deck's hottest interaction is the wrong bill to pay
+  // (phase 7 motion audit). The track is measured on mount and resize.
+  const thumbX = useMotionValue(0);
+  const trackBoxRef = useRef<HTMLDivElement>(null);
+  const trackWidthRef = useRef(0);
+  useEffect(() => {
+    const el = trackBoxRef.current;
+    if (!el) return;
+    const measure = () => {
+      trackWidthRef.current = el.clientWidth;
+      thumbX.set(spring.get() * trackWidthRef.current);
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return; // jsdom
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [spring, thumbX]);
 
   useEffect(() => {
     spring.set(value);
@@ -61,6 +87,7 @@ export function ParadigmSlider({
   // presence carry the same damped feel as the thumb; crossings fire as
   // the thumb passes the boundary, mid-drag.
   useMotionValueEvent(spring, "change", (v) => {
+    thumbX.set(v * trackWidthRef.current);
     io.current.onDissolve(v);
     const crossing = crossedRegime(springPrevRef.current, v);
     springPrevRef.current = v;
@@ -87,7 +114,7 @@ export function ParadigmSlider({
           ))}
         </span>
       </div>
-      <div className="deck-paradigm__track-box">
+      <div className="deck-paradigm__track-box" ref={trackBoxRef}>
         <span className="deck-paradigm__track" aria-hidden="true">
           <span className="deck-paradigm__boundary" style={{ left: `${100 / 3}%` }} />
           <span className="deck-paradigm__boundary" style={{ left: `${200 / 3}%` }} />
@@ -95,7 +122,7 @@ export function ParadigmSlider({
         <motion.span
           className="deck-paradigm__thumb"
           aria-hidden="true"
-          style={{ left }}
+          style={{ x: thumbX }}
         />
         <input
           type="range"
@@ -115,7 +142,17 @@ export function ParadigmSlider({
           className="deck-paradigm__line"
           initial={{ opacity: 0, y: 3 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -3 }}
+          // The old line leaves at the score's pace: a symmetric spring
+          // exit held the swap ~1s on copy that answers the hand
+          // mid-drag (phase 7 motion audit; paradigmScore.caption).
+          exit={{
+            opacity: 0,
+            y: -3,
+            transition: {
+              duration: paradigmScore.caption.outMs / 1000,
+              ease: "easeIn",
+            },
+          }}
           transition={deckSpringSoft}
         >
           {regimeCopy.line}

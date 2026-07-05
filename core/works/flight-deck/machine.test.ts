@@ -69,6 +69,24 @@ describe("deckReducer", () => {
     const on = deckReducer(initialDeckState, { type: "SET_SOUND", on: true });
     expect(on.soundOn).toBe(true);
   });
+
+  it("shuts down to a fresh session from any awake phase", () => {
+    // Deep into a worked session: drill spent, paradigm out, sound on.
+    let s = deckReducer(initialDeckState, { type: "WAKE" });
+    s = deckReducer(s, { type: "BOOT_COMPLETE" });
+    s = deckReducer(s, { type: "COMMIT_SUCCEEDED" });
+    s = deckReducer(s, { type: "SET_PARADIGM", value: 0.9 });
+    s = deckReducer(s, { type: "SET_SOUND", on: true });
+    expect(deckReducer(s, { type: "SHUT_DOWN" })).toEqual(initialDeckState);
+    // The drill re-arms with the fresh session.
+    expect(deckReducer(s, { type: "SHUT_DOWN" }).drillArmed).toBe(true);
+  });
+
+  it("has nothing to shut down when dormant (same-reference no-op)", () => {
+    expect(deckReducer(initialDeckState, { type: "SHUT_DOWN" })).toBe(
+      initialDeckState,
+    );
+  });
 });
 
 describe("paradigmRegime", () => {

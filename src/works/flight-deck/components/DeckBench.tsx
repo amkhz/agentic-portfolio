@@ -5,6 +5,7 @@ import { FieldPlate } from "./FieldPlate";
 import { OperatorStrip } from "./OperatorStrip";
 import { OrientationPlate } from "./OrientationPlate";
 import { PanelPlate } from "./PanelPlate";
+import { ParadigmPlate } from "./ParadigmPlate";
 import { VacuumPlate } from "./VacuumPlate";
 
 interface DeckBenchProps {
@@ -31,6 +32,14 @@ interface DeckBenchProps {
   alertEcho?: { instrument: InstrumentId; severity: Severity } | null;
   /** The opt-in sound toggle, deck chrome beside the colophon exit. */
   soundControl?: React.ReactNode;
+  /** The shutdown control (phase 7): power down, restart the sequence. */
+  shutdownControl?: React.ReactNode;
+  /**
+   * True while the chrome is hidden (pre-boot): the row goes inert so
+   * its invisible controls can never take focus under the wake overlay
+   * (phase 7 Roy note).
+   */
+  chromeInert?: boolean;
   /**
    * The operator-state strip (phase 6): the system watching the
    * watcher, on the deck from boot. The plate variant renders its
@@ -119,6 +128,8 @@ export function DeckBench({
   alert,
   alertEcho,
   soundControl,
+  shutdownControl,
+  chromeInert,
   operator,
   paradigm,
 }: DeckBenchProps) {
@@ -181,8 +192,11 @@ export function DeckBench({
       </Region>
 
       <div className="deck-region--operator js-gauge">
-        {variant === "live" ? paradigm : null}
-        <div className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3">
+        {variant === "live" ? paradigm : <ParadigmPlate />}
+        <div
+          className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3"
+          inert={chromeInert || undefined}
+        >
           <p className="flex items-baseline gap-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
             <span className="js-ready-lamp" aria-hidden="true" />
             <span>{deckCopy.readyLabel}</span>
@@ -194,10 +208,11 @@ export function DeckBench({
           )}
           <span className="flex items-baseline gap-5">
             {variant === "live" ? soundControl : null}
+            {variant === "live" ? shutdownControl : null}
             <button
               type="button"
               onClick={onExitToColophon}
-              className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
             >
               Colophon
             </button>

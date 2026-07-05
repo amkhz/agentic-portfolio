@@ -70,6 +70,17 @@
   min-height: 0;
   overflow: clip;
 }
+
+/* Short-viewport escape (Roy, phase 6 note): once the bench is squeezed
+   enough that the panel column clips, a clipped radio must never take
+   invisible focus. The y-axis opens to scroll so the browser can bring
+   a focused control into view; x stays clipped, so the never-overlap
+   guarantee holds. */
+@media (max-height: 45rem) {
+  .deck-region--panel {
+    overflow-y: auto;
+  }
+}
 .deck-region--review {
   grid-area: review;
 }
@@ -378,10 +389,13 @@
   flex: 0 0 5.5rem;
 }
 
+/* Option pills sized for WCAG 2.5.8: each target is ~21px tall, and the
+   row gap keeps the offset to the adjacent target past 24px on both
+   axes, which is the spacing exception the tight pill layout rides. */
 .deck-intent__options {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.25rem 0.375rem;
+  gap: 0.375rem 0.5rem;
 }
 
 .deck-intent__option input {
@@ -393,17 +407,24 @@
 
 .deck-intent__option span {
   display: inline-block;
-  padding: 0.15rem 0.45rem;
+  padding: 0.25rem 0.5rem;
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
-  color: var(--deck-ink-label);
+  color: var(--deck-control);
   border: 1px solid transparent;
   cursor: pointer;
+  transition: color 0.15s ease-out;
+}
+
+/* Unchecked pills answer the pointer with the brass lift; the border
+   stays the checked state's word. */
+.deck-intent__option input:not(:checked) + span:hover {
+  color: var(--deck-caution);
 }
 
 .deck-intent__option input:checked + span {
-  color: var(--deck-ink);
-  border-color: var(--deck-line);
+  color: var(--deck-caution);
+  border-color: var(--deck-control-line);
 }
 
 .deck-intent__option input:focus-visible + span {
@@ -414,6 +435,21 @@
 .deck-proposal {
   border-top: 1px solid var(--deck-line);
   padding-top: 0.625rem;
+}
+
+/* Standing orders: the first-watch brief on the dormant overlay, read
+   before the hands touch the controls. Human voice, body face. */
+.deck-orders {
+  max-width: 26rem;
+  margin: 3rem auto 0;
+}
+
+.deck-orders__line {
+  margin-top: 0.375rem;
+  font-family: var(--deck-font-body);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--deck-ink-dim);
 }
 
 .deck-proposal__style {
@@ -466,23 +502,63 @@
 }
 
 .deck-commit {
+  position: relative;
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--deck-ink-dim);
+  color: var(--deck-control);
   border: 1px solid var(--deck-line);
   padding: 0.25rem 0.75rem;
   cursor: pointer;
+  transition:
+    color 0.15s ease-out,
+    border-color 0.15s ease-out;
+}
+
+/* The visual stays a quiet bordered label; the pointer target grows to
+   44px vertically through an invisible overlay. Vertical only: choice
+   rows sit 8px apart horizontally and must not trade mis-clicks for
+   target size. Nothing interactive sits within 44px above or below a
+   commit control. */
+.deck-commit::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 2.75rem;
+  transform: translateY(-50%);
 }
 
 .deck-commit:hover:not(:disabled) {
-  color: var(--deck-ink);
-  border-color: var(--deck-ink-dim);
+  color: var(--deck-caution);
+  border-color: var(--deck-control);
 }
 
 .deck-commit:disabled {
   cursor: default;
   opacity: 0.5;
+}
+
+.deck-commit:disabled::after {
+  content: none;
+}
+
+/* 44px hit targets for the text-size deck chrome (sound toggle,
+   colophon exit): same overlay move, both axes, since the operator row
+   has the room. */
+.deck-hit {
+  position: relative;
+}
+
+.deck-hit::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100%, 2.75rem);
+  height: 2.75rem;
+  transform: translate(-50%, -50%);
 }
 
 /* Utilization meter: the A2 band annotated, the ceiling marked; past it
@@ -560,6 +636,10 @@
   align-items: baseline;
   gap: 0.75rem;
   white-space: nowrap;
+  /* Rest state is unlit: the posting timeline blooms it in from an
+     effect after mount, and without this a posting could paint fully
+     visible for one frame first (same move as the chamber parts). */
+  opacity: 0;
 }
 
 .deck-alert__lamp {
@@ -708,6 +788,14 @@
   color: var(--deck-ink);
 }
 
+/* The response takes focus when the judged step's buttons unmount
+   (keyboard never drops to the body); the ring only shows for keyboard
+   focus, so a pointer judge stays quiet. */
+.deck-drill__response:focus-visible {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 2px;
+}
+
 .deck-drill__response,
 .deck-drill__resolved,
 .deck-drill__settling {
@@ -777,11 +865,19 @@
   gap: 0.375rem;
 }
 
+/* Cert lamps flash in the boot's emission grammar: --emit drives a
+   severity-colored glow so the test flash gives off light, not just
+   lightens. The 0.4s transition is the drill's held-echo grammar; the
+   boot silences it inline (transition: none) for the 140ms flash score
+   and hands it back at the settle. */
 .deck-lamp {
   width: 0.4375rem;
   height: 0.4375rem;
   border-radius: 50%;
   opacity: 0.18;
+  --emit: 0;
+  box-shadow: 0 0 calc(var(--emit) * 12px) calc(var(--emit) * 3px)
+    var(--lamp-emit, var(--deck-emit-gauge));
   transition:
     opacity 0.4s ease,
     box-shadow 0.4s ease;
@@ -808,12 +904,15 @@
 
 .deck-lamp--advisory {
   background: var(--deck-advisory);
+  --lamp-emit: var(--deck-emit-advisory);
 }
 .deck-lamp--caution {
   background: var(--deck-caution);
+  --lamp-emit: var(--deck-emit-caution);
 }
 .deck-lamp--warning {
   background: var(--deck-warning);
+  --lamp-emit: var(--deck-emit-warning);
 }
 
 /* Certification sweep arm for the non-canvas instruments. */
@@ -955,7 +1054,8 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--deck-ink-label);
-  transition: color 0.4s ease;
+  /* Fires per crossing, mid-drag: a quick decel read, not a slow ease. */
+  transition: color 0.25s ease-out;
 }
 
 .deck-paradigm__name[data-active] {
@@ -985,20 +1085,31 @@
 .deck-paradigm__thumb {
   position: absolute;
   top: 50%;
+  left: 0;
   width: 0.875rem;
   height: 0.875rem;
+  /* Self-centering by margins, not transform: the slider's spring owns
+     the transform channel (compositor-only travel; phase 7 motion
+     audit). The plate's still thumb centers the same way. */
+  margin: -0.4375rem 0 0 -0.4375rem;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
   background: var(--deck-caution);
   box-shadow: 0 0 10px 2px var(--deck-emit-wake);
   pointer-events: none;
 }
 
+/* The input is the interaction surface and grows past its 24px track
+   box to a 44px hit target (Roy, phase 6 note), centered on the track
+   so the visual reads unchanged. The rows above and below it (regime
+   names, caption line) are not interactive, so the overhang costs
+   nothing. */
 .deck-paradigm__input {
   position: absolute;
-  inset: 0;
+  top: 50%;
+  left: 0;
   width: 100%;
-  height: 100%;
+  height: 2.75rem;
+  transform: translateY(-50%);
   margin: 0;
   opacity: 0;
   cursor: ew-resize;

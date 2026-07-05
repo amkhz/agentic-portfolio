@@ -21,6 +21,7 @@ function renderSession(state: DeckState = initialDeckState) {
       state={state}
       dispatch={(e) => events.push(e)}
       onExitToColophon={() => {}}
+      onShutDown={() => {}}
     />,
   );
   return events;

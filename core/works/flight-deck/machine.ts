@@ -35,7 +35,8 @@ export type DeckEvent =
   | { type: "DRILL_RESOLVED" }
   | { type: "RECOVERY_SETTLED" }
   | { type: "SET_PARADIGM"; value: number }
-  | { type: "SET_SOUND"; on: boolean };
+  | { type: "SET_SOUND"; on: boolean }
+  | { type: "SHUT_DOWN" };
 
 export const initialDeckState: DeckState = {
   phase: "dormant",
@@ -80,5 +81,10 @@ export function deckReducer(state: DeckState, event: DeckEvent): DeckState {
     }
     case "SET_SOUND":
       return event.on === state.soundOn ? state : { ...state, soundOn: event.on };
+    case "SHUT_DOWN":
+      // Powering the deck off is a fresh session: the drill re-arms,
+      // the paradigm rests, sound dies with the deck. A dormant deck
+      // has nothing to shut down.
+      return state.phase === "dormant" ? state : initialDeckState;
   }
 }

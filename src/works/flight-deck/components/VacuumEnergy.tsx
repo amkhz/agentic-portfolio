@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CommitTrim } from "@core/works/flight-deck/commit";
 import {
   drillVacuumDelta,
@@ -26,9 +26,12 @@ import {
  * 0.06 with demand centered, so margin reads as deviation from center;
  * nominal drift never pegs the window, the drill (phase 5) will.
  *
- * No canvas and no render loop: the model drifts on 10-30s cycles, so
- * the gauge re-samples on the bench readings cadence and the steps stay
- * under a pixel. The same markup serves the static plate at t=0.
+ * The gauge draws on a gated rAF loop (phase 7, Justin's call: the
+ * 400ms cadence stepped visibly when the drill surges the demand line
+ * and recenters the strip). Same discipline as the operator traces:
+ * React renders the line pools once, the loop owns their attributes
+ * imperatively, and readings text plus sr mirror stay on the cadence.
+ * The declarative markup at t=0 still serves the static plate.
  */
 
 interface VacuumEnergyProps {
@@ -55,6 +58,15 @@ const STRIP_STEP = 0.005;
 
 const xFor = (value: number) =>
   BED.left + (BED.right - BED.left) * Math.min(Math.max(value, 0), 1);
+
+/** Hairline presence: 0 above the harvested level, fading in over its slot. */
+const latticeOpacity = (level: number, extraction: number, step: number) => {
+  if (level > extraction) return 0;
+  return 0.35 + 0.65 * Math.min((extraction - level) / step + 0.5, 1);
+};
+
+/** Fixed strip pool: enough lines for the window at any demand phase. */
+const STRIP_POOL = Math.ceil((2 * WINDOW_HALF) / STRIP_STEP) + 2;
 
 export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
   const latticeStep = 1 / LATTICE_LINES;
@@ -89,26 +101,27 @@ export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
           y2={BED.axis + 5}
         />
       ))}
-      {/* The harvested lattice: one hairline per 1/25 of rated draw. */}
+      {/* The harvested lattice: one hairline per 1/25 of rated draw.
+          The full pool always renders (unfilled slots at opacity 0) so
+          the live rAF loop can own presence without mounting nodes. */}
       {Array.from({ length: LATTICE_LINES }, (_, i) => {
         const level = (i + 0.5) * latticeStep;
-        if (level > v.extraction) return null;
-        // The leading hairline fades with how much of its slot is filled.
-        const fill = Math.min((v.extraction - level) / latticeStep + 0.5, 1);
         return (
           <line
             key={i}
+            data-vac="bed"
             className="deck-vacuum__lattice"
             x1={xFor(level)}
             x2={xFor(level)}
             y1={BED.top}
             y2={BED.bottom}
-            style={{ opacity: 0.35 + 0.65 * fill }}
+            style={{ opacity: latticeOpacity(level, v.extraction, latticeStep) }}
           />
         );
       })}
       {/* Demand: the one firm line the lattice must stay past. */}
       <line
+        data-vac="demand"
         className="deck-vacuum__demand"
         x1={demandX}
         x2={demandX}
@@ -118,6 +131,7 @@ export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
 
       {/* The expanded margin strip: the window under magnification. */}
       <line
+        data-vac="wedge-lo"
         className="deck-vacuum__wedge"
         x1={demandX - windowPx}
         x2={BED.left}
@@ -125,6 +139,7 @@ export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
         y2={STRIP.top}
       />
       <line
+        data-vac="wedge-hi"
         className="deck-vacuum__wedge"
         x1={demandX + windowPx}
         x2={BED.right}
@@ -139,19 +154,25 @@ export function VacuumGauge({ v }: { v: VacuumTelemetry }) {
         height={STRIP.bottom - STRIP.top}
         fill="none"
       />
-      {Array.from({ length: stripTo - stripFrom + 1 }, (_, k) => {
+      {/* Fixed strip pool: per-index grid level assigned by the live
+          loop as the window recenters; unused lines rest at opacity 0. */}
+      {Array.from({ length: STRIP_POOL }, (_, k) => {
         const level = (stripFrom + k) * STRIP_STEP;
-        if (level > v.extraction) return null;
-        const fill = Math.min((v.extraction - level) / STRIP_STEP + 0.5, 1);
+        const inWindow = level <= stripTo * STRIP_STEP;
         return (
           <line
             key={k}
+            data-vac="strip"
             className="deck-vacuum__lattice"
             x1={xExp(level)}
             x2={xExp(level)}
             y1={STRIP.top + 3}
             y2={STRIP.bottom - 3}
-            style={{ opacity: 0.35 + 0.65 * fill }}
+            style={{
+              opacity: inWindow
+                ? latticeOpacity(level, v.extraction, STRIP_STEP)
+                : 0,
+            }}
           />
         );
       })}
@@ -189,6 +210,7 @@ export function VacuumEnergy({
       return (performance.now() - epochRef.current) / 1000;
     });
 
+  // Readings text and sr mirror stay on the bench cadence.
   useEffect(() => {
     if (!live) return;
     const interval = window.setInterval(() => {
@@ -204,12 +226,101 @@ export function VacuumEnergy({
     return () => window.clearInterval(interval);
   }, [live]);
 
+  // The gauge draws per frame: the loop owns the pooled lines'
+  // attributes imperatively (React renders them once, below), gated on
+  // viewport intersection and tab visibility like every deck loop.
+  const hostRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!live) return;
+    const host = hostRef.current;
+    if (!host) return;
+    const bed = Array.from(
+      host.querySelectorAll<SVGLineElement>('[data-vac="bed"]'),
+    );
+    const strip = Array.from(
+      host.querySelectorAll<SVGLineElement>('[data-vac="strip"]'),
+    );
+    const demand = host.querySelector<SVGLineElement>('[data-vac="demand"]');
+    const wedgeLo = host.querySelector<SVGLineElement>('[data-vac="wedge-lo"]');
+    const wedgeHi = host.querySelector<SVGLineElement>('[data-vac="wedge-hi"]');
+    const windowPx = (BED.right - BED.left) * WINDOW_HALF;
+    const latticeStep = 1 / LATTICE_LINES;
+
+    let frame = 0;
+    let running = false;
+    let inView = true;
+    const draw = () => {
+      const t = clockRef.current();
+      const s = sampleVacuumTelemetry(
+        t,
+        trimRef.current,
+        drillVacuumDelta(t, drillRef.current?.current),
+      );
+      bed.forEach((el, i) => {
+        el.style.opacity = latticeOpacity(
+          (i + 0.5) * latticeStep,
+          s.extraction,
+          latticeStep,
+        ).toFixed(3);
+      });
+      const demandX = xFor(s.demand);
+      demand?.setAttribute("x1", demandX.toFixed(2));
+      demand?.setAttribute("x2", demandX.toFixed(2));
+      wedgeLo?.setAttribute("x1", (demandX - windowPx).toFixed(2));
+      wedgeHi?.setAttribute("x1", (demandX + windowPx).toFixed(2));
+      const windowFloor = s.demand - WINDOW_HALF;
+      const stripFrom = Math.ceil(windowFloor / STRIP_STEP);
+      strip.forEach((el, k) => {
+        const level = (stripFrom + k) * STRIP_STEP;
+        const x =
+          BED.left +
+          ((level - windowFloor) / (2 * WINDOW_HALF)) * (BED.right - BED.left);
+        el.setAttribute("x1", x.toFixed(2));
+        el.setAttribute("x2", x.toFixed(2));
+        el.style.opacity = (
+          level <= s.demand + WINDOW_HALF
+            ? latticeOpacity(level, s.extraction, STRIP_STEP)
+            : 0
+        ).toFixed(3);
+      });
+      frame = window.requestAnimationFrame(draw);
+    };
+    const syncLoop = () => {
+      const should = inView && !document.hidden;
+      if (should && !running) {
+        running = true;
+        frame = window.requestAnimationFrame(draw);
+      } else if (!should && running) {
+        running = false;
+        window.cancelAnimationFrame(frame);
+      }
+    };
+    const io = new IntersectionObserver((entries) => {
+      inView = entries[0]?.isIntersecting ?? true;
+      syncLoop();
+    });
+    io.observe(host);
+    const onVisibility = () => syncLoop();
+    document.addEventListener("visibilitychange", onVisibility);
+    syncLoop();
+    return () => {
+      running = false;
+      window.cancelAnimationFrame(frame);
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [live]);
+
+  // Rendered once with the t=0 sample and held stable: the rAF loop
+  // owns the line attributes, so a cadence re-render must never write
+  // stale geometry over them.
+  const [initialV] = useState(() => sampleVacuumTelemetry(0));
+  const gauge = useMemo(() => <VacuumGauge v={initialV} />, [initialV]);
+
   const readings = formatVacuumReadings(v);
   return (
-    <div className="deck-vacuum">
-      <div className="js-boot-data">
-        <VacuumGauge v={v} />
-      </div>
+    <div className="deck-vacuum" ref={hostRef}>
+      <div className="js-boot-data">{gauge}</div>
       <p
         className="js-boot-data js-emit mt-3 text-sm tabular-nums text-[var(--deck-ink)]"
         aria-hidden="true"

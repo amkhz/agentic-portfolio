@@ -14,6 +14,7 @@ import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
 import {
   dissolveAt,
   paradigmRegime,
+  paradigmScore,
   type ParadigmRegime,
 } from "@core/works/flight-deck/paradigm";
 import type {
@@ -21,7 +22,10 @@ import type {
   UtilizationEvent,
 } from "@core/works/flight-deck/translation";
 import { enableDeckAudio, playSignature } from "../audio/deckAudio";
-import { buildBootTimeline } from "../timelines/bootTimeline";
+import {
+  buildBootTimeline,
+  buildShutdownTimeline,
+} from "../timelines/bootTimeline";
 import { buildCommitTimeline } from "../timelines/commitTimeline";
 import {
   buildAlertPostingTimeline,
@@ -43,6 +47,7 @@ import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
 import { OperatorStrip } from "./OperatorStrip";
 import { ParadigmSlider } from "./ParadigmSlider";
 import { ProposalRow } from "./ProposalRow";
+import { StandingOrders } from "./StandingOrders";
 import { SyntheticOrientation } from "./SyntheticOrientation";
 import { TranslationPanel } from "./TranslationPanel";
 import { useDrill } from "./useDrill";
@@ -62,6 +67,14 @@ interface DeckSessionProps {
   state: DeckState;
   dispatch: (event: DeckEvent) => void;
   onExitToColophon: () => void;
+  /** Fired when the power-down finishes: the parent resets and remounts. */
+  onShutDown: () => void;
+  /**
+   * True when this mount follows a shutdown: the operator's focus died
+   * with the old session's control, so the fresh mount hands it to the
+   * wake control (phase 7 Roy note).
+   */
+  focusWakeOnMount?: boolean;
 }
 
 /**
@@ -72,7 +85,13 @@ interface DeckSessionProps {
  * extracted per Roy's phase-6 pre-read; this file decides WHEN each
  * timeline runs and what state lands with it.
  */
-export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionProps) {
+export function DeckSession({
+  state,
+  dispatch,
+  onExitToColophon,
+  onShutDown,
+  focusWakeOnMount,
+}: DeckSessionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<FieldIntegrityHandle>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -161,6 +180,19 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // A mount that follows a shutdown hands focus to the wake control:
+  // the control the operator pressed died with the old session, and
+  // keyboard focus must never drop to the body (phase 7 Roy note).
+  useEffect(() => {
+    if (focusWakeOnMount && !booted) {
+      containerRef.current
+        ?.querySelector<HTMLButtonElement>(".deck-wake__control")
+        ?.focus();
+    }
+    // Mount-time handoff only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const { contextSafe } = useGSAP(
     () => {
       const container = containerRef.current;
@@ -233,6 +265,12 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       onComplete: () => {
         committingRef.current = false;
         setCommitting(false);
+        // The standing order, spoken once the trim lands: the panel's
+        // status line shows it, the announcer says it (single-announcer
+        // contract; the status line itself is not live).
+        setAnnouncement(
+          `${deckCopy.panel.enRoutePrefix} ${proposal.summary}`,
+        );
       },
     });
   });
@@ -311,23 +349,33 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   // pure envelope decides, this applies. Light is a color-mix var, the
   // regions dim by presence, the panel goes inert when it is gone, and
   // the field takes the coupling gain. No React re-render per frame.
+  // The bench regions are stable for the session; this runs per spring
+  // frame for the whole drag, so the lookups are cached (phase 7 review).
+  const dissolveRegionsRef = useRef<{
+    hero: HTMLElement | null;
+    horizon: HTMLElement | null;
+    vacuum: HTMLElement | null;
+    panel: HTMLElement | null;
+  } | null>(null);
   const applyDissolve = (p: number) => {
     const container = containerRef.current;
     if (!container) return;
     const env = dissolveAt(p);
     container.style.setProperty("--dissolve", (1 - env.light).toFixed(4));
     container.style.setProperty("--promotion", env.promotion.toFixed(4));
-    const setPresence = (selector: string, value: number) => {
-      const el = container.querySelector<HTMLElement>(selector);
-      if (el) el.style.opacity = value.toFixed(4);
+    dissolveRegionsRef.current ??= {
+      hero: container.querySelector<HTMLElement>(".deck-region--hero"),
+      horizon: container.querySelector<HTMLElement>(".deck-region--horizon"),
+      vacuum: container.querySelector<HTMLElement>(".deck-region--vacuum"),
+      panel: container.querySelector<HTMLElement>(".deck-region--panel"),
     };
-    setPresence(".deck-region--hero", env.hero);
-    setPresence(".deck-region--horizon", env.telemetry);
-    setPresence(".deck-region--vacuum", env.telemetry);
-    const panel = container.querySelector<HTMLElement>(".deck-region--panel");
-    if (panel) {
-      panel.style.opacity = env.panel.toFixed(4);
-      panel.toggleAttribute("inert", env.panel < 0.04);
+    const regions = dissolveRegionsRef.current;
+    if (regions.hero) regions.hero.style.opacity = env.hero.toFixed(4);
+    if (regions.horizon) regions.horizon.style.opacity = env.telemetry.toFixed(4);
+    if (regions.vacuum) regions.vacuum.style.opacity = env.telemetry.toFixed(4);
+    if (regions.panel) {
+      regions.panel.style.opacity = env.panel.toFixed(4);
+      regions.panel.toggleAttribute("inert", env.panel < 0.04);
     }
     fieldRef.current?.setCoupling(env.coupling);
   };
@@ -347,13 +395,29 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   );
   const chamberRef = useRef(chamber);
   chamberRef.current = chamber;
+  // Speech debounces to the settled regime so a rapid boundary wiggle
+  // announces once; the pulse answers every crossing (Roy, phase 6:
+  // debounce announcements only, never the pulse).
+  const announceTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (announceTimerRef.current !== null)
+        window.clearTimeout(announceTimerRef.current);
+    },
+    [],
+  );
   const handleCrossing = contextSafe(
     (crossing: { from: ParadigmRegime; to: ParadigmRegime }) => {
       const container = containerRef.current;
       if (!container) return;
       buildCrossingPulseTimeline(container);
       const regimeCopy = deckCopy.paradigm.regimes[crossing.to];
-      setAnnouncement(`${regimeCopy.name}. ${regimeCopy.line}`);
+      if (announceTimerRef.current !== null)
+        window.clearTimeout(announceTimerRef.current);
+      announceTimerRef.current = window.setTimeout(() => {
+        announceTimerRef.current = null;
+        setAnnouncement(`${regimeCopy.name}. ${regimeCopy.line}`);
+      }, paradigmScore.announceDebounceMs);
       if (crossing.to === "consciousness") setChamber("up");
       else if (chamberRef.current !== "down") setChamber("leaving");
     },
@@ -363,12 +427,17 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   // boundary can neither strand the regime chamberless nor leave the
   // room half-faded (Roy, phase 6).
   const departureRef = useRef<gsap.core.Timeline | null>(null);
+  // The arrival is held too: a fast out-and-back inside the ~1.6s bloom
+  // would otherwise leave two arrivals tweening the same chamber parts
+  // (the unmirrored half of the departure race; phase 7 review).
+  const arrivalRef = useRef<gsap.core.Timeline | null>(null);
   const runChamberArrival = contextSafe(() => {
     const container = containerRef.current;
     if (!container) return;
     departureRef.current?.kill();
     departureRef.current = null;
-    buildChamberArrivalTimeline(container);
+    arrivalRef.current?.kill();
+    arrivalRef.current = buildChamberArrivalTimeline(container);
   });
   const runChamberDeparture = contextSafe(() => {
     const container = containerRef.current;
@@ -376,6 +445,8 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       setChamber("down");
       return;
     }
+    arrivalRef.current?.kill();
+    arrivalRef.current = null;
     departureRef.current?.kill();
     departureRef.current = buildChamberDepartureTimeline(container, () => {
       departureRef.current = null;
@@ -424,10 +495,33 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     });
   });
 
+  // Shutdown: the boot's mirror plays, then the parent resets the
+  // machine and remounts this component fresh (drill re-armed, paradigm
+  // at rest, inline styles reverted by unmount) — the restart path that
+  // used to need a page reload.
+  const shuttingDownRef = useRef(false);
+  const onShutDownRef = useRef(onShutDown);
+  onShutDownRef.current = onShutDown;
+  const runShutdown = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container || shuttingDownRef.current) return;
+    shuttingDownRef.current = true;
+    setAnnouncement(deckCopy.shutdown.announced);
+    // A dying deck takes no orders: the bench goes inert for the
+    // power-down so nothing can start choreography the remount will
+    // hard-kill (phase 7 Roy note). The announcer sits outside the
+    // bench and keeps speaking; the fresh mount's DOM starts clean.
+    container.querySelector(".deck-bench")?.setAttribute("inert", "");
+    timelineRef.current?.kill();
+    scrubRef.current?.kill();
+    buildShutdownTimeline(container, () => onShutDownRef.current());
+  });
+
   return (
     <div ref={containerRef} className="deck-session">
       <DeckBench
         variant="live"
+        chromeInert={!booted}
         onExitToColophon={onExitToColophon}
         alert={<AlertRegion progress={drill.progress} />}
         alertEcho={
@@ -441,11 +535,23 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             onClick={toggleSound}
             aria-pressed={state.soundOn}
             title={deckCopy.sound.hint}
-            className="text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+            className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
           >
             {deckCopy.sound.label}{" "}
             {state.soundOn ? deckCopy.sound.on : deckCopy.sound.off}
           </button>
+        }
+        shutdownControl={
+          booted ? (
+            <button
+              type="button"
+              onClick={runShutdown}
+              title={deckCopy.shutdown.hint}
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
+            >
+              {deckCopy.shutdown.label}
+            </button>
+          ) : null
         }
         hero={
           <FieldIntegrity
@@ -579,6 +685,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             <p className="js-wake-copy mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
               {deckCopy.wakeHold}
             </p>
+            <StandingOrders />
           </div>
         </div>
       ) : null}

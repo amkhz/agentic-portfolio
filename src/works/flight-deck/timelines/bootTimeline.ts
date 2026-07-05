@@ -43,9 +43,17 @@ export function buildBootTimeline({
   // Asleep initial states. Set before paint by the caller's layout
   // effect, so the static plate never depends on these classes.
   gsap.set(q(".deck-bench"), { opacity: 0.3 });
-  gsap.set(q(".js-boot-name"), { opacity: 0.3 });
+  // Names hold at 0 until their certification beat: the dormant deck
+  // shows only the breathing indicator and the invitation (shape brief
+  // dormant state), and a ghosted label would sit below AA contrast for
+  // anyone who can barely see it (phase 7 audit; axe flags exactly this).
+  gsap.set(q(".js-boot-name"), { opacity: 0 });
   gsap.set(q(".js-boot-caption, .js-boot-data"), { opacity: 0, y: 6 });
   gsap.set(q(".js-deck-chrome"), { opacity: 0 });
+  // The lamps' 0.4s CSS transition is the drill's held-echo grammar;
+  // left on, it low-passes the 140ms flash score into a smear. Silence
+  // it for the ritual; the settle hands it back.
+  gsap.set(q(".deck-lamp"), { transition: "none" });
 
   const tl = gsap.timeline({ paused: true, onComplete });
 
@@ -68,9 +76,12 @@ export function buildBootTimeline({
 
   // Commit: the overlay hands the room to the deck.
   tl.addLabel("certify", holdS);
+  // autoAlpha ends the fade at visibility: hidden, so the dismissed
+  // overlay leaves the tab order and the accessibility tree for the
+  // whole certification (a reversed scrub restores it).
   tl.to(
     q(".js-wake"),
-    { opacity: 0, pointerEvents: "none", duration: 0.3 },
+    { autoAlpha: 0, pointerEvents: "none", duration: 0.3 },
     "certify",
   );
 
@@ -94,11 +105,15 @@ export function buildBootTimeline({
         at,
       );
     } else {
+      // The sweep travels on transform, not left: a layout write per
+      // frame during the showpiece ritual is the wrong bill to pay
+      // (phase 7 motion audit). Width resolves when the beat plays.
       tl.fromTo(
         q(`${root} .deck-sweep`),
-        { left: "0%", opacity: 1 },
+        { x: 0, opacity: 1 },
         {
-          left: "100%",
+          x: (_i: number, target: unknown) =>
+            (target as HTMLElement).offsetParent?.clientWidth ?? 0,
           duration: seconds(c.sweepMs),
           ease: "none",
           immediateRender: false,
@@ -112,14 +127,17 @@ export function buildBootTimeline({
       );
     }
 
-    // 2. Lamp flash, severity order: advisory, caution, warning.
+    // 2. Lamp flash, severity order: advisory, caution, warning. The
+    // flash carries its severity's emission (--emit drives the glow):
+    // a test flash gives off light, it does not just lighten.
     const lampsAt = at + seconds(c.sweepMs);
     SEVERITY_ORDER.forEach((severity, i) => {
       tl.fromTo(
         q(`${root} .deck-lamp--${severity}`),
-        { opacity: 0.18 },
+        { opacity: 0.18, "--emit": 0 },
         {
           opacity: 1,
+          "--emit": 1,
           duration: seconds(c.lampFlashMs) / 2,
           yoyo: true,
           repeat: 1,
@@ -178,6 +196,16 @@ export function buildBootTimeline({
     { opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out" },
     "settle",
   );
+  // Region names without a certification beat (the panel is a layer,
+  // not an instrument) land with the settle; the instrument names are
+  // already lit, so this is idempotent for them.
+  tl.to(
+    q(".js-boot-name"),
+    { opacity: 1, duration: 0.4, ease: "power2.out" },
+    "settle",
+  );
+  // The lamps' CSS transition returns for the drill's held-echo grammar.
+  tl.set(q(".deck-lamp"), { clearProps: "transition" }, "settle");
   tl.fromTo(
     q(".deck-bench"),
     { filter: "brightness(1.06)" },
@@ -213,5 +241,42 @@ export function buildBootTimeline({
   });
   tl.call(() => announce(deckCopy.deckReady));
 
+  return tl;
+}
+
+/**
+ * The boot's mirror: the deck gives its light back and goes dormant.
+ * Chrome and data first, then the emission drains (reverse travel:
+ * operator channel back up the bench is the recovery echo's direction;
+ * shutdown simply lets everything exhale together), then the names,
+ * then the bench settles to its sleeping level. onDone remounts the
+ * session fresh, so this timeline never needs to restore anything.
+ */
+export function buildShutdownTimeline(
+  container: HTMLElement,
+  onDone: () => void,
+): gsap.core.Timeline {
+  const q = gsap.utils.selector(container);
+  const tl = gsap.timeline({ onComplete: onDone });
+  tl.to(
+    q(".js-deck-chrome, .js-boot-caption, .js-boot-data"),
+    { opacity: 0, duration: 0.3, ease: "power1.in" },
+    0,
+  );
+  tl.to(
+    q(".js-emit, .js-ready-lamp, .deck-opstrip__trace"),
+    { "--emit": 0, duration: 0.35, ease: "power1.in" },
+    0.05,
+  );
+  tl.to(
+    q(".js-boot-name"),
+    { opacity: 0, duration: 0.3, ease: "power1.in" },
+    0.15,
+  );
+  tl.to(
+    q(".deck-bench"),
+    { opacity: 0.3, duration: 0.45, ease: "power2.inOut" },
+    0.25,
+  );
   return tl;
 }

@@ -37,6 +37,7 @@ export const deckCopy = {
     lines: [
       "Every instrument on this deck is live once it wakes. Nothing here is a picture.",
       "State an intent, commit a route, and watch the ship answer. The deck asks for your judgment when it matters.",
+      "Fly the watch and a final instrument appears: the control paradigm. At its consciousness end the deck goes dark and reads you instead.",
     ],
   },
   panel: {

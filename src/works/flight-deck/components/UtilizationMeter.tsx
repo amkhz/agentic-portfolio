@@ -1,8 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useSpring } from "motion/react";
 import {
   UTIL_A2,
   UTIL_CEILING,
+  utilizationAt,
+  type UtilizationEvent,
 } from "@core/works/flight-deck/translation";
 import { deckNeedleSpring } from "./deckMotion";
 
@@ -12,7 +14,11 @@ import { deckNeedleSpring } from "./deckMotion";
  * (DIRD 34 findings 2 and 4). Past the ceiling the needle warms and an
  * OVER badge appears beside it; state is text and geometry, never
  * color alone. The needle tracks on a spring: reactive lane, it is
- * following the operator.
+ * following the operator. Given a clock, the spring's target updates
+ * per frame from the same pure model (gated like every deck loop), so
+ * the needle tracks continuously instead of hopping between cadence
+ * samples (phase 7 smoothness sweep); without one it holds the sampled
+ * value, which is the static plate's still.
  */
 
 const TAPE = { left: 4, right: 296, y: 24 } as const;
@@ -20,15 +26,70 @@ const TAPE = { left: 4, right: 296, y: 24 } as const;
 const xFor = (value: number) =>
   TAPE.left + (TAPE.right - TAPE.left) * Math.min(Math.max(value, 0), 1);
 
-export function UtilizationMeter({ value }: { value: number }) {
+interface UtilizationMeterProps {
+  /** The cadence-sampled value: OVER state, and the still when not live. */
+  value: number;
+  /** The shared deck clock; with activity, drives the needle per frame. */
+  clock?: () => number;
+  /** The live activity ledger the pure model reads. */
+  activity?: { current: UtilizationEvent[] };
+}
+
+export function UtilizationMeter({
+  value,
+  clock,
+  activity,
+}: UtilizationMeterProps) {
   const needleX = useSpring(xFor(value), deckNeedleSpring);
   useEffect(() => {
     needleX.set(xFor(value));
   }, [value, needleX]);
   const over = value > UTIL_CEILING;
 
+  const hostRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    if (!clock || !activity) return;
+    const host = hostRef.current;
+    if (!host) return;
+    let frame = 0;
+    let running = false;
+    let inView = true;
+    const draw = () => {
+      needleX.set(xFor(utilizationAt(clock(), activity.current)));
+      frame = window.requestAnimationFrame(draw);
+    };
+    const syncLoop = () => {
+      const should = inView && !document.hidden;
+      if (should && !running) {
+        running = true;
+        frame = window.requestAnimationFrame(draw);
+      } else if (!should && running) {
+        running = false;
+        window.cancelAnimationFrame(frame);
+      }
+    };
+    const io =
+      typeof IntersectionObserver === "undefined"
+        ? null // jsdom
+        : new IntersectionObserver((entries) => {
+            inView = entries[0]?.isIntersecting ?? true;
+            syncLoop();
+          });
+    io?.observe(host);
+    const onVisibility = () => syncLoop();
+    document.addEventListener("visibilitychange", onVisibility);
+    syncLoop();
+    return () => {
+      running = false;
+      window.cancelAnimationFrame(frame);
+      io?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+  }, [clock, activity, needleX]);
+
   return (
     <svg
+      ref={hostRef}
       className="deck-meter"
       viewBox="0 0 300 40"
       aria-hidden="true"

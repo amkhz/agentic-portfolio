@@ -158,7 +158,11 @@ export function TranslationPanel({
             {reading.line}
           </span>
         </div>
-        <UtilizationMeter value={utilization} />
+        <UtilizationMeter
+          value={utilization}
+          clock={live ? clock : undefined}
+          activity={live ? activity : undefined}
+        />
         <p className="sr-only">
           {reading.mirror} {deckCopy.panel.utilizationExplainer}
         </p>

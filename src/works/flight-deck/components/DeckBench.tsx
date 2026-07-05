@@ -2,6 +2,7 @@ import { instruments, type InstrumentId } from "@core/works/flight-deck/instrume
 import { SEVERITY_ORDER, type Severity } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { FieldPlate } from "./FieldPlate";
+import { OperatorStrip } from "./OperatorStrip";
 import { OrientationPlate } from "./OrientationPlate";
 import { PanelPlate } from "./PanelPlate";
 import { VacuumPlate } from "./VacuumPlate";
@@ -30,6 +31,14 @@ interface DeckBenchProps {
   alertEcho?: { instrument: InstrumentId; severity: Severity } | null;
   /** The opt-in sound toggle, deck chrome beside the colophon exit. */
   soundControl?: React.ReactNode;
+  /**
+   * The operator-state strip (phase 6): the system watching the
+   * watcher, on the deck from boot. The plate variant renders its
+   * t=0 still.
+   */
+  operator?: React.ReactNode;
+  /** The final instrument (phase 6): the paradigm slider, post-drill. */
+  paradigm?: React.ReactNode;
 }
 
 /**
@@ -110,6 +119,8 @@ export function DeckBench({
   alert,
   alertEcho,
   soundControl,
+  operator,
+  paradigm,
 }: DeckBenchProps) {
   const heldFor = (id: InstrumentId) =>
     alertEcho?.instrument === id ? alertEcho.severity : null;
@@ -169,14 +180,18 @@ export function DeckBench({
         {variant === "live" ? orientation : <OrientationPlate />}
       </Region>
 
-      <div className="deck-region--operator js-gauge js-deck-chrome">
-        <div className="flex items-baseline justify-between border-t border-[var(--deck-line)] pt-3">
+      <div className="deck-region--operator js-gauge">
+        {variant === "live" ? paradigm : null}
+        <div className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3">
           <p className="flex items-baseline gap-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
             <span className="js-ready-lamp" aria-hidden="true" />
             <span>{deckCopy.readyLabel}</span>
-            <span aria-hidden="true">·</span>
-            <span>Operator state · blink — · respiration — · coherence —</span>
           </p>
+          {variant === "live" ? (
+            (operator ?? <OperatorStrip live={false} />)
+          ) : (
+            <OperatorStrip live={false} />
+          )}
           <span className="flex items-baseline gap-5">
             {variant === "live" ? soundControl : null}
             <button

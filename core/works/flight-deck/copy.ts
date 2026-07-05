@@ -4,6 +4,7 @@
  * Register: plain language, no physics credentials assumed, no
  * permission framing, mission test per line.
  */
+import { COUPLING_LAG_S } from "./paradigm";
 
 export const deckCopy = {
   /** Dormant state: the single invitation line beside the breathing indicator. */
@@ -78,6 +79,52 @@ export const deckCopy = {
       /** The control that puts the deck back on watch. */
       acknowledge: "Return to watch",
     },
+  },
+  operator: {
+    /** The strip's region label in the operator channel. */
+    label: "Operator state",
+    /** Trace labels, instrument grammar. */
+    blink: "BLINK",
+    respiration: "RESP",
+    coherence: "COH",
+  },
+  paradigm: {
+    /** The final instrument's name and control label. */
+    label: "Control paradigm",
+    /** Announced once, when the slider blooms in after the drill. */
+    revealed:
+      "Final instrument online: the control paradigm. Slide it and the deck hands over.",
+    /** Regime names + one plain line each (shape brief content list). */
+    regimes: {
+      instrumented: {
+        name: "Instrumented",
+        line: "Every reading on the bench. You fly the deck.",
+      },
+      hybrid: {
+        name: "Hybrid",
+        line: "The deck keeps the routine. You keep the picture.",
+      },
+      consciousness: {
+        name: "Consciousness",
+        line: "The instruments rest. Your own state is the input.",
+      },
+    },
+    /**
+     * The promotion caption at the consciousness end: the arc's proof,
+     * spelled out in one breath (biometrics promoted, never introduced).
+     */
+    promotion:
+      "These traces have been at the bottom of the bench since boot, watching you watch the ship. Out here they are not a readout anymore. They are the controls.",
+    /** The chamber's kicker over the promoted traces. */
+    chamberKicker: "Consciousness chamber",
+    /** The chamber's live line: what the coupling is doing, honestly. */
+    chamberCoupled: "The field is breathing with you.",
+    /** Trace legend: the operator's line and the ship's answer. The lag
+     *  is derived, so the label can never lie about the constant. */
+    chamberBreathLabel: "BREATH",
+    chamberEchoLabel: `FIELD · ${COUPLING_LAG_S.toFixed(1)}S BEHIND`,
+    /** The sr sentence for the echo, since the trace is visual only. */
+    chamberEchoMirror: `The field's wall follows the breath ${COUPLING_LAG_S.toFixed(1)} seconds behind.`,
   },
   sound: {
     /** The opt-in toggle in the deck chrome (ADR-017 D5: default off). */

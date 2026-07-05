@@ -1,35 +1,47 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import {
-  bootScore,
-  certificationDurationMs,
-  SEVERITY_ORDER,
-} from "@core/works/flight-deck/boot";
+import { bootScore } from "@core/works/flight-deck/boot";
 import {
   alertSignatures,
   confirmationTone,
 } from "@core/works/flight-deck/alertGrammar";
 import type { Severity } from "@core/works/flight-deck/boot";
-import {
-  COMMIT_HOLD_GLOW,
-  commitScore,
-  type CommitTrim,
-} from "@core/works/flight-deck/commit";
 import { deckCopy } from "@core/works/flight-deck/copy";
-import { drillAlerts, drillScore } from "@core/works/flight-deck/drill";
-import { instruments } from "@core/works/flight-deck/instruments";
+import { drillAlerts } from "@core/works/flight-deck/drill";
+import type { CommitTrim } from "@core/works/flight-deck/commit";
 import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
+import {
+  dissolveAt,
+  paradigmRegime,
+  type ParadigmRegime,
+} from "@core/works/flight-deck/paradigm";
 import type {
   Proposal,
   UtilizationEvent,
 } from "@core/works/flight-deck/translation";
 import { enableDeckAudio, playSignature } from "../audio/deckAudio";
+import { buildBootTimeline } from "../timelines/bootTimeline";
+import { buildCommitTimeline } from "../timelines/commitTimeline";
+import {
+  buildAlertPostingTimeline,
+  buildRecoverySettleTimeline,
+  releaseAlertLamp,
+} from "../timelines/drillTimelines";
+import {
+  buildChamberArrivalTimeline,
+  buildChamberDepartureTimeline,
+  buildCrossingPulseTimeline,
+  buildSliderRevealTimeline,
+} from "../timelines/paradigmTimelines";
 import { AlertRegion } from "./AlertRegion";
+import { ConsciousnessChamber } from "./ConsciousnessChamber";
 import { DeckBench } from "./DeckBench";
 import { DrillProcedure } from "./DrillProcedure";
 import { DrillResidual } from "./DrillResidual";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
+import { OperatorStrip } from "./OperatorStrip";
+import { ParadigmSlider } from "./ParadigmSlider";
 import { ProposalRow } from "./ProposalRow";
 import { SyntheticOrientation } from "./SyntheticOrientation";
 import { TranslationPanel } from "./TranslationPanel";
@@ -53,14 +65,12 @@ interface DeckSessionProps {
 }
 
 /**
- * The live session: the bench plus the boot ritual (locked 2026-07-03,
- * D+A blend). One GSAP timeline owns the whole ritual, authored lane per
- * ADR-017 D4. The hold-to-start gesture scrubs the wake segment's
- * playhead; releasing early runs it backward (ABORT_WAKE). Past the hold
- * threshold the timeline plays through each instrument's certification
- * self-test (sweep, lamp flash in severity order, caption, then data),
- * lands the one-breath deck settle from bench edge to operator channel,
- * and holds the quiet emission: an awake deck gives off its own light.
+ * The live session, orchestration only: machine dispatches, the shared
+ * deck clock, the drill hook, and the paradigm dissolve's imperative
+ * writes. The authored choreography lives in ../timelines (boot ritual,
+ * commit moment, drill postings and recovery, paradigm crossings),
+ * extracted per Roy's phase-6 pre-read; this file decides WHEN each
+ * timeline runs and what state lands with it.
  */
 export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -155,195 +165,23 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     () => {
       const container = containerRef.current;
       if (!container) return;
-      const q = gsap.utils.selector(container);
 
       if (initiallyBootedRef.current) {
         committedRef.current = true;
         fieldRef.current?.setReveal(1);
-        gsap.set(q(".js-ready-lamp, .js-emit"), { "--emit": 1 });
+        gsap.set(
+          gsap.utils.selector(container)(".js-ready-lamp, .js-emit"),
+          { "--emit": 1 },
+        );
         return;
       }
 
-      // Asleep initial states. Set here (layout effect, before paint), so
-      // the static plate never depends on these classes being styled.
-      gsap.set(q(".deck-bench"), { opacity: 0.3 });
-      gsap.set(q(".js-boot-name"), { opacity: 0.3 });
-      gsap.set(q(".js-boot-caption, .js-boot-data"), { opacity: 0, y: 6 });
-      gsap.set(q(".js-deck-chrome"), { opacity: 0 });
-
-      const seconds = (ms: number) => ms / 1000;
-      const c = bootScore.certification;
-      const holdS = seconds(bootScore.hold.durationMs);
-
-      const tl = gsap.timeline({
-        paused: true,
+      const tl = buildBootTimeline({
+        container,
+        field: fieldRef,
+        announce: setAnnouncement,
         onComplete: () => dispatchRef.current({ type: "BOOT_COMPLETE" }),
       });
-
-      // Wake segment [0, holdS]: scrubbed by the hold, never auto-played.
-      // The CSS breath animation would mask GSAP's transform, so the first
-      // touch of the playhead silences it (scrubbing back past 0 restores).
-      tl.set(q(".js-wake-lamp"), { animation: "none" }, 0.001);
-      tl.to(
-        q(".js-wake-lamp"),
-        { scale: 1.3, "--emit": 1, duration: holdS, ease: "none" },
-        0,
-      );
-      tl.to(
-        q(".js-wake-ring"),
-        { strokeDashoffset: 0, duration: holdS, ease: "none" },
-        0,
-      );
-      tl.to(q(".js-wake-copy"), { opacity: 0.55, duration: holdS, ease: "none" }, 0);
-      tl.to(q(".deck-bench"), { opacity: 1, duration: holdS, ease: "none" }, 0);
-
-      // Commit: the overlay hands the room to the deck.
-      tl.addLabel("certify", holdS);
-      tl.to(
-        q(".js-wake"),
-        { opacity: 0, pointerEvents: "none", duration: 0.3 },
-        "certify",
-      );
-
-      // Certification self-test per instrument, bench scan order.
-      let at = holdS + 0.15;
-      for (const instrument of instruments) {
-        const root = `[data-boot-instrument="${instrument.id}"]`;
-        tl.to(q(`${root} .js-boot-name`), { opacity: 1, duration: 0.25 }, at);
-
-        // 1. Sweep.
-        if (instrument.id === "field-integrity") {
-          const sweep = { v: 0 };
-          tl.to(
-            sweep,
-            {
-              v: 1,
-              duration: seconds(c.sweepMs),
-              ease: "none",
-              onUpdate: () => fieldRef.current?.setSweep(sweep.v),
-            },
-            at,
-          );
-        } else {
-          tl.fromTo(
-            q(`${root} .deck-sweep`),
-            { left: "0%", opacity: 1 },
-            {
-              left: "100%",
-              duration: seconds(c.sweepMs),
-              ease: "none",
-              immediateRender: false,
-            },
-            at,
-          );
-          tl.set(
-            q(`${root} .deck-sweep`),
-            { opacity: 0 },
-            at + seconds(c.sweepMs),
-          );
-        }
-
-        // 2. Lamp flash, severity order: advisory, caution, warning.
-        const lampsAt = at + seconds(c.sweepMs);
-        SEVERITY_ORDER.forEach((severity, i) => {
-          tl.fromTo(
-            q(`${root} .deck-lamp--${severity}`),
-            { opacity: 0.18 },
-            {
-              opacity: 1,
-              duration: seconds(c.lampFlashMs) / 2,
-              yoyo: true,
-              repeat: 1,
-              ease: "power1.inOut",
-              immediateRender: false,
-            },
-            lampsAt + i * seconds(c.lampFlashMs + c.lampGapMs),
-          );
-        });
-
-        // 3. Caption, then 4. data.
-        const captionAt =
-          lampsAt +
-          SEVERITY_ORDER.length * seconds(c.lampFlashMs) +
-          (SEVERITY_ORDER.length - 1) * seconds(c.lampGapMs);
-        tl.to(
-          q(`${root} .js-boot-caption`),
-          { opacity: 1, y: 0, duration: seconds(c.captionMs), ease: "power2.out" },
-          captionAt,
-        );
-        tl.call(
-          () => setAnnouncement(`${instrument.name} online. ${instrument.caption}`),
-          undefined,
-          captionAt,
-        );
-        const dataAt = captionAt + seconds(c.captionMs);
-        tl.to(
-          q(`${root} .js-boot-data`),
-          { opacity: 1, y: 0, duration: seconds(c.dataMs), ease: "power2.out" },
-          dataAt,
-        );
-        if (instrument.id === "field-integrity") {
-          const reveal = { v: 0 };
-          tl.to(
-            reveal,
-            {
-              v: 1,
-              duration: seconds(c.dataMs),
-              ease: "power1.inOut",
-              onUpdate: () => fieldRef.current?.setReveal(reveal.v),
-            },
-            dataAt,
-          );
-        }
-
-        at += seconds(certificationDurationMs() + c.betweenInstrumentsMs);
-      }
-
-      // The one-breath deck settle. Live review 2026-07-03 cut the
-      // positional overshoot (read as a bounce): the breath is carried by
-      // a single brightness exhale and the emission bloom traveling bench
-      // edge to operator channel (DOM order matches the scan top-down).
-      tl.addLabel("settle", at + 0.05);
-      tl.to(
-        q(".js-deck-chrome"),
-        { opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out" },
-        "settle",
-      );
-      tl.fromTo(
-        q(".deck-bench"),
-        { filter: "brightness(1.06)" },
-        {
-          filter: "brightness(1)",
-          duration: seconds(bootScore.settle.durationMs),
-          ease: "power2.out",
-          immediateRender: false,
-        },
-        "settle",
-      );
-
-      // Emission: bloom once, settle to a quiet held glow, the wave running
-      // top of the bench down to the ready light in the operator channel.
-      const travel = seconds(bootScore.settle.staggerMs);
-      tl.fromTo(
-        q(".js-emit, .js-ready-lamp"),
-        { "--emit": 0 },
-        {
-          "--emit": 1.6,
-          duration: seconds(bootScore.emission.bloomMs),
-          ease: "power2.out",
-          stagger: travel,
-          immediateRender: false,
-        },
-        "settle+=0.15",
-      );
-      tl.to(q(".js-emit, .js-ready-lamp"), {
-        "--emit": 1,
-        duration: seconds(bootScore.emission.holdMs),
-        ease: "power1.inOut",
-        stagger: travel,
-      });
-      tl.call(() => setAnnouncement(deckCopy.deckReady));
-
       timelineRef.current = tl;
       return () => {
         timelineRef.current = null;
@@ -353,11 +191,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   );
 
   // The commit moment (locked 2026-07-03): tighten, substance-transfer
-  // handoff (never a crossfade), lagged consequence; one timeline owns
-  // both layers. The route trace retracts while the identical value
-  // lights the field's arrival glow; at handoff's end the trim lands and
-  // every instrument derives its consequence from the shared envelope,
-  // which begins with the lag the choreography holds open on purpose.
+  // handoff, lagged consequence; buildCommitTimeline owns both layers.
   const runCommit = contextSafe((proposal: Proposal) => {
     const container = containerRef.current;
     if (!container || committingRef.current) return;
@@ -365,109 +199,53 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       `[data-proposal-id="${proposal.id}"]`,
     );
     if (!card) return;
-    const trace = card.querySelector<SVGPathElement>(".js-route-trace");
-    const others = Array.from(
-      container.querySelectorAll<HTMLElement>("[data-proposal-id]"),
-    ).filter((el) => el !== card);
 
     committingRef.current = true;
     setCommitting(true);
     setTrim(null); // a new maneuver supersedes whatever was riding
     setAnnouncement(deckCopy.panel.committing);
-    const s = (ms: number) => ms / 1000;
 
-    const tl = gsap.timeline({
+    buildCommitTimeline({
+      card,
+      others: Array.from(
+        container.querySelectorAll<HTMLElement>("[data-proposal-id]"),
+      ).filter((el) => el !== card),
+      trace: card.querySelector<SVGPathElement>(".js-route-trace"),
+      proposal,
+      field: fieldRef,
+      onTrimLand: () => {
+        utilEventsRef.current.push({ at: deckClock(), cost: 0.18 });
+        setTrim({
+          atSeconds: deckClock(),
+          bearing: proposal.bearing,
+          urgency: proposal.urgency,
+          draw: proposal.draw,
+        });
+        setAnnouncement(deckCopy.panel.translating);
+      },
+      onConsumed: () => {
+        translationRef.current.clearProposals(proposal);
+        // The commit landed and the review space is quiet: the machine
+        // may now arm movement 4 (the first successful commit fires the
+        // drill, once; afterwards this dispatch is a no-op by design).
+        dispatchRef.current({ type: "COMMIT_SUCCEEDED" });
+      },
       onComplete: () => {
         committingRef.current = false;
         setCommitting(false);
       },
     });
-    // 1. Tighten: the chosen card condenses, the others recede.
-    tl.to(card, { scale: 0.97, duration: s(commitScore.tightenMs), ease: "power2.in" }, 0);
-    tl.to(others, { opacity: 0.3, duration: s(commitScore.tightenMs), ease: "power2.out" }, 0);
-    // 2. Handoff: one value crosses the boundary. The trace is consumed
-    //    exactly as the field's arrival glow rises; substance conserved.
-    const hand = { v: 0 };
-    tl.to(hand, {
-      v: 1,
-      duration: s(commitScore.handoffMs),
-      ease: "none",
-      onUpdate: () => {
-        if (trace) trace.style.strokeDashoffset = String(hand.v);
-        fieldRef.current?.setCommit(proposal.bearing, COMMIT_HOLD_GLOW * hand.v);
-      },
-    });
-    // 3. The trim lands; the lag lives inside the shared envelope.
-    tl.call(() => {
-      utilEventsRef.current.push({ at: deckClock(), cost: 0.18 });
-      setTrim({
-        atSeconds: deckClock(),
-        bearing: proposal.bearing,
-        urgency: proposal.urgency,
-        draw: proposal.draw,
-      });
-      setAnnouncement(deckCopy.panel.translating);
-    });
-    // 4. After the lag beat, the review space returns to quiet: the
-    //    commit consumed the drafts, so the whole row takes its leave
-    //    on the same timeline and the state clears behind it.
-    tl.to(
-      [card, ...others],
-      {
-        opacity: 0,
-        y: 8,
-        duration: 0.4,
-        stagger: 0.05,
-        ease: "power2.in",
-      },
-      `+=${s(commitScore.lagMs)}`,
-    );
-    tl.call(() => {
-      translationRef.current.clearProposals(proposal);
-      // The commit landed and the review space is quiet: the machine may
-      // now arm movement 4 (the first successful commit fires the drill,
-      // once; afterwards this dispatch is a no-op by design).
-      dispatchRef.current({ type: "COMMIT_SUCCEEDED" });
-    });
   });
 
   // Beat 5, the recovery settle (authored lane): the reverse boot echo.
-  // One brightness inhale-and-return while the emission wave runs the
-  // bench backward, operator channel up to the bench edge; when it lands
-  // the residual status takes the review space.
   const runRecoverySettle = contextSafe(() => {
     const container = containerRef.current;
     if (!container) {
       drillRef.current.settleComplete();
       return;
     }
-    const q = gsap.utils.selector(container);
-    const seconds = (ms: number) => ms / 1000;
-    const tl = gsap.timeline({
-      onComplete: () => drillRef.current.settleComplete(),
-    });
-    tl.fromTo(
-      q(".deck-bench"),
-      { filter: "brightness(0.955)" },
-      {
-        filter: "brightness(1)",
-        duration: seconds(drillScore.settle.durationMs),
-        ease: "power2.out",
-        immediateRender: false,
-      },
-      0,
-    );
-    tl.fromTo(
-      q(".js-emit, .js-ready-lamp"),
-      { "--emit": 0.45 },
-      {
-        "--emit": 1,
-        duration: seconds(drillScore.settle.durationMs),
-        ease: "power1.inOut",
-        stagger: { each: seconds(drillScore.settle.staggerMs), from: "end" },
-        immediateRender: false,
-      },
-      0.1,
+    buildRecoverySettleTimeline(container, () =>
+      drillRef.current.settleComplete(),
     );
   });
   const settling = drill.progress.stage === "settling";
@@ -478,54 +256,14 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   }, [settling]);
 
   // The master-caution moment (authored lane; annunciator design from
-  // Justin's live pass 2026-07-05): when a beat posts, the bench exhales
-  // one breath darker while the alert line blooms in and its lamp's
-  // emission swells to a held glow (the boot's --emit grammar). Plays
-  // once per posting, never loops; severity color comes from the CSS.
+  // Justin's live pass 2026-07-05): plays once per posting, never loops.
   const runAlertPosting = contextSafe(() => {
     const container = containerRef.current;
-    if (!container) return;
-    const q = gsap.utils.selector(container);
-    const tl = gsap.timeline();
-    tl.fromTo(
-      q(".deck-bench"),
-      { filter: "brightness(1)" },
-      { filter: "brightness(0.955)", duration: 0.3, ease: "power2.out", immediateRender: false },
-      0,
-    );
-    tl.to(q(".deck-bench"), {
-      filter: "brightness(1)",
-      duration: 0.6,
-      ease: "power1.inOut",
-    });
-    tl.fromTo(
-      q(".deck-alert"),
-      { opacity: 0, y: -4 },
-      { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", immediateRender: false },
-      0.12,
-    );
-    tl.fromTo(
-      q(".deck-alert__lamp"),
-      { "--emit": 0 },
-      { "--emit": 1.6, duration: 0.48, ease: "power2.out", immediateRender: false },
-      0.12,
-    );
-    tl.to(q(".deck-alert__lamp"), {
-      "--emit": 1,
-      duration: 0.7,
-      ease: "power1.inOut",
-    });
+    if (container) buildAlertPostingTimeline(container);
   });
-  // The lamp's emission releases when the alert resolves (the beat's
-  // resolved line takes over; the light goes out before the next post).
-  const releaseAlertLamp = contextSafe(() => {
+  const runReleaseAlertLamp = contextSafe(() => {
     const container = containerRef.current;
-    if (!container) return;
-    gsap.to(gsap.utils.selector(container)(".deck-alert__lamp"), {
-      "--emit": 0,
-      duration: 0.5,
-      ease: "power1.out",
-    });
+    if (container) releaseAlertLamp(container);
   });
   const postedBeat =
     drill.progress.stage === "alerts" && !drill.progress.betweenBeats
@@ -538,9 +276,120 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postedBeat]);
   useEffect(() => {
-    if (resolvedBeat) releaseAlertLamp();
+    if (resolvedBeat) runReleaseAlertLamp();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolvedBeat]);
+
+  /* ---------------------------------------------------------------- */
+  /* Movement 5: the paradigm slider and the dissolve (phase 6).       */
+  /* ---------------------------------------------------------------- */
+
+  // The final instrument reveals once the drill has been worked and the
+  // deck is back on watch; it stays revealed for the rest of the session.
+  const [sliderRevealed, setSliderRevealed] = useState(
+    () => !state.drillArmed && state.phase === "nominal",
+  );
+  const drillWorked = !state.drillArmed && state.phase === "nominal";
+  useEffect(() => {
+    if (drillWorked) setSliderRevealed(true);
+  }, [drillWorked]);
+  const runSliderReveal = contextSafe(() => {
+    const container = containerRef.current;
+    if (container) buildSliderRevealTimeline(container);
+  });
+  const revealPlayedRef = useRef(false);
+  useEffect(() => {
+    if (!sliderRevealed || revealPlayedRef.current) return;
+    revealPlayedRef.current = true;
+    runSliderReveal();
+    setAnnouncement(deckCopy.paradigm.revealed);
+    // runSliderReveal is contextSafe-stable for the component's life.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sliderRevealed]);
+
+  // The dissolve's continuous writes, riding the slider's spring: the
+  // pure envelope decides, this applies. Light is a color-mix var, the
+  // regions dim by presence, the panel goes inert when it is gone, and
+  // the field takes the coupling gain. No React re-render per frame.
+  const applyDissolve = (p: number) => {
+    const container = containerRef.current;
+    if (!container) return;
+    const env = dissolveAt(p);
+    container.style.setProperty("--dissolve", (1 - env.light).toFixed(4));
+    container.style.setProperty("--promotion", env.promotion.toFixed(4));
+    const setPresence = (selector: string, value: number) => {
+      const el = container.querySelector<HTMLElement>(selector);
+      if (el) el.style.opacity = value.toFixed(4);
+    };
+    setPresence(".deck-region--hero", env.hero);
+    setPresence(".deck-region--horizon", env.telemetry);
+    setPresence(".deck-region--vacuum", env.telemetry);
+    const panel = container.querySelector<HTMLElement>(".deck-region--panel");
+    if (panel) {
+      panel.style.opacity = env.panel.toFixed(4);
+      panel.toggleAttribute("inert", env.panel < 0.04);
+    }
+    fieldRef.current?.setCoupling(env.coupling);
+  };
+  const applyDissolveRef = useRef(applyDissolve);
+  applyDissolveRef.current = applyDissolve;
+  // A remount mid-session restores the dissolve the machine remembers.
+  useEffect(() => {
+    if (state.paradigm > 0) applyDissolveRef.current(state.paradigm);
+    // Mount-time restoration only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // The chamber's lifecycle at the consciousness threshold: arrival and
+  // departure are authored; the dissolve keeps flowing underneath.
+  const [chamber, setChamber] = useState<"down" | "up" | "leaving">(() =>
+    paradigmRegime(state.paradigm) === "consciousness" ? "up" : "down",
+  );
+  const chamberRef = useRef(chamber);
+  chamberRef.current = chamber;
+  const handleCrossing = contextSafe(
+    (crossing: { from: ParadigmRegime; to: ParadigmRegime }) => {
+      const container = containerRef.current;
+      if (!container) return;
+      buildCrossingPulseTimeline(container);
+      const regimeCopy = deckCopy.paradigm.regimes[crossing.to];
+      setAnnouncement(`${regimeCopy.name}. ${regimeCopy.line}`);
+      if (crossing.to === "consciousness") setChamber("up");
+      else if (chamberRef.current !== "down") setChamber("leaving");
+    },
+  );
+  // A departure in flight is killed by a re-arrival (kill never fires
+  // onComplete), so a fast double-crossing of the consciousness
+  // boundary can neither strand the regime chamberless nor leave the
+  // room half-faded (Roy, phase 6).
+  const departureRef = useRef<gsap.core.Timeline | null>(null);
+  const runChamberArrival = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    departureRef.current?.kill();
+    departureRef.current = null;
+    buildChamberArrivalTimeline(container);
+  });
+  const runChamberDeparture = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container) {
+      setChamber("down");
+      return;
+    }
+    departureRef.current?.kill();
+    departureRef.current = buildChamberDepartureTimeline(container, () => {
+      departureRef.current = null;
+      setChamber("down");
+    });
+  });
+  useEffect(() => {
+    if (chamber === "up") runChamberArrival();
+    if (chamber === "leaving") runChamberDeparture();
+    // contextSafe handlers are stable for the component's life.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chamber]);
+
+  const regime = paradigmRegime(state.paradigm);
 
   // Hold-to-start: the hold scrubs the playhead, release runs it backward.
   const beginHold = contextSafe(() => {
@@ -635,6 +484,27 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             enRoute={translation.enRoute}
           />
         }
+        operator={
+          <OperatorStrip
+            live={booted}
+            clock={deckClock}
+            drill={drill.timelineRef}
+            trim={trim}
+            promoted={regime === "consciousness"}
+          />
+        }
+        paradigm={
+          sliderRevealed ? (
+            <ParadigmSlider
+              value={state.paradigm}
+              onChange={(value) =>
+                dispatchRef.current({ type: "SET_PARADIGM", value })
+              }
+              onDissolve={(p) => applyDissolveRef.current(p)}
+              onCrossing={handleCrossing}
+            />
+          ) : null
+        }
         review={
           drillShowing ? (
             drill.progress.stage === "residual" ? (
@@ -652,6 +522,12 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
                 onJudge={drill.judge}
               />
             )
+          ) : chamber !== "down" ? (
+            <ConsciousnessChamber
+              clock={deckClock}
+              drill={drill.timelineRef}
+              trim={trim}
+            />
           ) : (
             <ProposalRow
               live={booted}

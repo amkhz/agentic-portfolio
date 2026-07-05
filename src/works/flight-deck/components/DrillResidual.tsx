@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { drillResidual, type DrillProgress } from "@core/works/flight-deck/drill";
 import {
-  drillResidual,
   drillVacuumDelta,
-  type DrillProgress,
   type DrillTimeline,
-} from "@core/works/flight-deck/drill";
+} from "@core/works/flight-deck/drillEnvelopes";
 import { sampleVacuumTelemetry } from "@core/works/flight-deck/vacuum";
 import { deckSpringSoft } from "./deckMotion";
 

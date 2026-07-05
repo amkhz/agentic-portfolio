@@ -5,7 +5,7 @@ import {
   drillOrientationDelta,
   orientationUpset,
   type DrillTimeline,
-} from "@core/works/flight-deck/drill";
+} from "@core/works/flight-deck/drillEnvelopes";
 import {
   formatOrientationReadings,
   sampleOrientation,

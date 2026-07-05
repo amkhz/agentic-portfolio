@@ -15,6 +15,9 @@
   --deck-bg: oklch(0.125 0.01 68);
   --deck-surface: oklch(0.16 0.012 68);
   --deck-line: oklch(0.31 0.016 70); /* bench separations: space and alignment, no bezels */
+  /* The dissolve's floor (phase 6): the consciousness chamber's room,
+     nearly dark, still warm, never pure black (house hand). */
+  --deck-bg-deep: oklch(0.085 0.008 68);
 
   /* Nominal instrument ink: pale warm bone-white, avionics "everything is fine" */
   --deck-ink: oklch(0.94 0.008 84); /* ~15:1 on --deck-bg */

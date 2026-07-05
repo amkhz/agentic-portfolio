@@ -45,6 +45,9 @@ export function DrillResidual({
   useEffect(() => {
     const tick = () => {
       const t = clock();
+      // No trim passed: the commit envelope (26s) is always spent by the
+      // time the residual shows (the drill alone takes longer), so the
+      // gauge and this row cannot disagree. Revisit if the drill shortens.
       const v = sampleVacuumTelemetry(t, null, drillVacuumDelta(t, timeline.current));
       setMargin(`${v.margin < 0 ? "-" : "+"}${Math.abs(v.margin).toFixed(3)}`);
     };

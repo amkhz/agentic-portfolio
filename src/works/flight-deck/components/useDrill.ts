@@ -117,6 +117,9 @@ export function useDrill({
     const currentAlert = drillAlerts[now.alertIndex];
     const currentStep = currentAlert?.steps[now.stepIndex];
     if (now.stage !== "alerts" || currentStep?.kind !== "judgment") return;
+    // A beat resolves once: a late call must not re-announce, re-confirm,
+    // or restart the disturbance decay (Roy, 2026-07-05).
+    if (timelineRef.current.resolvedAt[currentAlert.beat] !== undefined) return;
     const choice = currentStep.choices?.find((c) => c.id === choiceId);
     if (!choice) return;
     act({ type: "JUDGE", choiceId });

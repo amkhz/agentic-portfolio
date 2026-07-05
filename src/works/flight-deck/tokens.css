@@ -54,7 +54,7 @@
      lamp gives off its own light in its severity's color, the same
      emission grammar the boot leaves on the ready light and gauges.
      Released when the alert resolves. */
-  --deck-emit-advisory: oklch(0.85 0.025 84 / 0.4);
+  --deck-emit-advisory: oklch(0.85 0.025 84 / 0.55);
   --deck-emit-caution: oklch(0.78 0.13 72 / 0.45);
   --deck-emit-warning: oklch(0.66 0.17 30 / 0.5);
 

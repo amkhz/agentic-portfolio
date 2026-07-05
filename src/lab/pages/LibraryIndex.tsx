@@ -1,9 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import { guides } from "@core/lab/guides";
 import { territories } from "@core/lab/territories";
+import { works } from "@core/works/works";
 import { LibraryHeader } from "@lab/components/library/LibraryHeader";
 import { LibraryWelcome } from "@lab/components/library/LibraryWelcome";
 import { TerritoryGrid } from "@lab/components/library/TerritoryGrid";
+import { WorksNotice, WorksShelf } from "@lab/components/library/WorksShelf";
 
 export function LibraryIndex() {
   return (
@@ -26,8 +28,10 @@ export function LibraryIndex() {
           guideCount={guides.length}
           territoryCount={territories.length}
         />
+        <WorksNotice works={works} />
         <LibraryWelcome />
         <TerritoryGrid guides={guides} />
+        <WorksShelf works={works} />
       </div>
     </>
   );

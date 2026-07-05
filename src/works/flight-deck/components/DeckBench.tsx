@@ -35,6 +35,12 @@ interface DeckBenchProps {
   /** The shutdown control (phase 7): power down, restart the sequence. */
   shutdownControl?: React.ReactNode;
   /**
+   * True while the chrome is hidden (pre-boot): the row goes inert so
+   * its invisible controls can never take focus under the wake overlay
+   * (phase 7 Roy note).
+   */
+  chromeInert?: boolean;
+  /**
    * The operator-state strip (phase 6): the system watching the
    * watcher, on the deck from boot. The plate variant renders its
    * t=0 still.
@@ -123,6 +129,7 @@ export function DeckBench({
   alertEcho,
   soundControl,
   shutdownControl,
+  chromeInert,
   operator,
   paradigm,
 }: DeckBenchProps) {
@@ -186,7 +193,10 @@ export function DeckBench({
 
       <div className="deck-region--operator js-gauge">
         {variant === "live" ? paradigm : <ParadigmPlate />}
-        <div className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3">
+        <div
+          className="deck-operator__row js-deck-chrome border-t border-[var(--deck-line)] pt-3"
+          inert={chromeInert || undefined}
+        >
           <p className="flex items-baseline gap-2 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
             <span className="js-ready-lamp" aria-hidden="true" />
             <span>{deckCopy.readyLabel}</span>

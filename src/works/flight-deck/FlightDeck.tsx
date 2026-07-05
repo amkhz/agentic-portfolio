@@ -55,6 +55,7 @@ export function FlightDeck() {
               key={sessionEpoch}
               state={state}
               dispatch={dispatch}
+              focusWakeOnMount={sessionEpoch > 0}
               onExitToColophon={() => setSurface("colophon")}
               onShutDown={() => {
                 dispatch({ type: "SHUT_DOWN" });

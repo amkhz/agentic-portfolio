@@ -69,6 +69,12 @@ interface DeckSessionProps {
   onExitToColophon: () => void;
   /** Fired when the power-down finishes: the parent resets and remounts. */
   onShutDown: () => void;
+  /**
+   * True when this mount follows a shutdown: the operator's focus died
+   * with the old session's control, so the fresh mount hands it to the
+   * wake control (phase 7 Roy note).
+   */
+  focusWakeOnMount?: boolean;
 }
 
 /**
@@ -84,6 +90,7 @@ export function DeckSession({
   dispatch,
   onExitToColophon,
   onShutDown,
+  focusWakeOnMount,
 }: DeckSessionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<FieldIntegrityHandle>(null);
@@ -170,6 +177,19 @@ export function DeckSession({
       dispatch({ type: "ABORT_WAKE" });
     }
     // Mount-time reconciliation only.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // A mount that follows a shutdown hands focus to the wake control:
+  // the control the operator pressed died with the old session, and
+  // keyboard focus must never drop to the body (phase 7 Roy note).
+  useEffect(() => {
+    if (focusWakeOnMount && !booted) {
+      containerRef.current
+        ?.querySelector<HTMLButtonElement>(".deck-wake__control")
+        ?.focus();
+    }
+    // Mount-time handoff only.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -487,6 +507,11 @@ export function DeckSession({
     if (!container || shuttingDownRef.current) return;
     shuttingDownRef.current = true;
     setAnnouncement(deckCopy.shutdown.announced);
+    // A dying deck takes no orders: the bench goes inert for the
+    // power-down so nothing can start choreography the remount will
+    // hard-kill (phase 7 Roy note). The announcer sits outside the
+    // bench and keeps speaking; the fresh mount's DOM starts clean.
+    container.querySelector(".deck-bench")?.setAttribute("inert", "");
     timelineRef.current?.kill();
     scrubRef.current?.kill();
     buildShutdownTimeline(container, () => onShutDownRef.current());
@@ -496,6 +521,7 @@ export function DeckSession({
     <div ref={containerRef} className="deck-session">
       <DeckBench
         variant="live"
+        chromeInert={!booted}
         onExitToColophon={onExitToColophon}
         alert={<AlertRegion progress={drill.progress} />}
         alertEcho={

@@ -72,9 +72,12 @@ export function buildBootTimeline({
 
   // Commit: the overlay hands the room to the deck.
   tl.addLabel("certify", holdS);
+  // autoAlpha ends the fade at visibility: hidden, so the dismissed
+  // overlay leaves the tab order and the accessibility tree for the
+  // whole certification (a reversed scrub restores it).
   tl.to(
     q(".js-wake"),
-    { opacity: 0, pointerEvents: "none", duration: 0.3 },
+    { autoAlpha: 0, pointerEvents: "none", duration: 0.3 },
     "certify",
   );
 

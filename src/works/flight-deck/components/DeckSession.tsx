@@ -318,23 +318,33 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   // pure envelope decides, this applies. Light is a color-mix var, the
   // regions dim by presence, the panel goes inert when it is gone, and
   // the field takes the coupling gain. No React re-render per frame.
+  // The bench regions are stable for the session; this runs per spring
+  // frame for the whole drag, so the lookups are cached (phase 7 review).
+  const dissolveRegionsRef = useRef<{
+    hero: HTMLElement | null;
+    horizon: HTMLElement | null;
+    vacuum: HTMLElement | null;
+    panel: HTMLElement | null;
+  } | null>(null);
   const applyDissolve = (p: number) => {
     const container = containerRef.current;
     if (!container) return;
     const env = dissolveAt(p);
     container.style.setProperty("--dissolve", (1 - env.light).toFixed(4));
     container.style.setProperty("--promotion", env.promotion.toFixed(4));
-    const setPresence = (selector: string, value: number) => {
-      const el = container.querySelector<HTMLElement>(selector);
-      if (el) el.style.opacity = value.toFixed(4);
+    dissolveRegionsRef.current ??= {
+      hero: container.querySelector<HTMLElement>(".deck-region--hero"),
+      horizon: container.querySelector<HTMLElement>(".deck-region--horizon"),
+      vacuum: container.querySelector<HTMLElement>(".deck-region--vacuum"),
+      panel: container.querySelector<HTMLElement>(".deck-region--panel"),
     };
-    setPresence(".deck-region--hero", env.hero);
-    setPresence(".deck-region--horizon", env.telemetry);
-    setPresence(".deck-region--vacuum", env.telemetry);
-    const panel = container.querySelector<HTMLElement>(".deck-region--panel");
-    if (panel) {
-      panel.style.opacity = env.panel.toFixed(4);
-      panel.toggleAttribute("inert", env.panel < 0.04);
+    const regions = dissolveRegionsRef.current;
+    if (regions.hero) regions.hero.style.opacity = env.hero.toFixed(4);
+    if (regions.horizon) regions.horizon.style.opacity = env.telemetry.toFixed(4);
+    if (regions.vacuum) regions.vacuum.style.opacity = env.telemetry.toFixed(4);
+    if (regions.panel) {
+      regions.panel.style.opacity = env.panel.toFixed(4);
+      regions.panel.toggleAttribute("inert", env.panel < 0.04);
     }
     fieldRef.current?.setCoupling(env.coupling);
   };
@@ -386,12 +396,17 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
   // boundary can neither strand the regime chamberless nor leave the
   // room half-faded (Roy, phase 6).
   const departureRef = useRef<gsap.core.Timeline | null>(null);
+  // The arrival is held too: a fast out-and-back inside the ~1.6s bloom
+  // would otherwise leave two arrivals tweening the same chamber parts
+  // (the unmirrored half of the departure race; phase 7 review).
+  const arrivalRef = useRef<gsap.core.Timeline | null>(null);
   const runChamberArrival = contextSafe(() => {
     const container = containerRef.current;
     if (!container) return;
     departureRef.current?.kill();
     departureRef.current = null;
-    buildChamberArrivalTimeline(container);
+    arrivalRef.current?.kill();
+    arrivalRef.current = buildChamberArrivalTimeline(container);
   });
   const runChamberDeparture = contextSafe(() => {
     const container = containerRef.current;
@@ -399,6 +414,8 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
       setChamber("down");
       return;
     }
+    arrivalRef.current?.kill();
+    arrivalRef.current = null;
     departureRef.current?.kill();
     departureRef.current = buildChamberDepartureTimeline(container, () => {
       departureRef.current = null;

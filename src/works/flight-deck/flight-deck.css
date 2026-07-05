@@ -611,6 +611,10 @@
   align-items: baseline;
   gap: 0.75rem;
   white-space: nowrap;
+  /* Rest state is unlit: the posting timeline blooms it in from an
+     effect after mount, and without this a posting could paint fully
+     visible for one frame first (same move as the chamber parts). */
+  opacity: 0;
 }
 
 .deck-alert__lamp {

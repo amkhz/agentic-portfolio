@@ -50,6 +50,13 @@
   --deck-emit-gauge: oklch(0.94 0.008 84 / 0.16);
   /* The wake lamp's under-the-finger glow while the hold charges. */
   --deck-emit-wake: oklch(0.78 0.13 72 / 0.35);
+  /* Annunciator emission (phase 5, Justin's live pass): an active alert
+     lamp gives off its own light in its severity's color, the same
+     emission grammar the boot leaves on the ready light and gauges.
+     Released when the alert resolves. */
+  --deck-emit-advisory: oklch(0.85 0.025 84 / 0.4);
+  --deck-emit-caution: oklch(0.78 0.13 72 / 0.45);
+  --deck-emit-warning: oklch(0.66 0.17 30 / 0.5);
 
   /* Mask-only plumbing (alpha, never rendered): keeps literal color
      values out of every file but this one. */

@@ -1,5 +1,5 @@
 import { instruments, type InstrumentId } from "@core/works/flight-deck/instruments";
-import { SEVERITY_ORDER } from "@core/works/flight-deck/boot";
+import { SEVERITY_ORDER, type Severity } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { FieldPlate } from "./FieldPlate";
 import { OrientationPlate } from "./OrientationPlate";
@@ -23,16 +23,29 @@ interface DeckBenchProps {
   review?: React.ReactNode;
   /** The alert region's content (phase 5); quiet line when absent. */
   alert?: React.ReactNode;
+  /**
+   * The local echo (phase 5): while an alert is active, the affected
+   * instrument's cert lamp holds lit in the severity color.
+   */
+  alertEcho?: { instrument: InstrumentId; severity: Severity } | null;
   /** The opt-in sound toggle, deck chrome beside the colophon exit. */
   soundControl?: React.ReactNode;
 }
 
-/** Certification lamp cluster: unlit at nominal, flashed by the boot ritual. */
-function CertLamps() {
+/**
+ * Certification lamp cluster: unlit at nominal, flashed by the boot
+ * ritual, and holding the severity of an active alert on the affected
+ * instrument (the local echo: the master line points somewhere).
+ */
+function CertLamps({ held }: { held?: Severity | null }) {
   return (
     <span className="deck-lamps" aria-hidden="true">
       {SEVERITY_ORDER.map((severity) => (
-        <span key={severity} className={`deck-lamp deck-lamp--${severity}`} />
+        <span
+          key={severity}
+          className={`deck-lamp deck-lamp--${severity}`}
+          data-held={held === severity ? "" : undefined}
+        />
       ))}
     </span>
   );
@@ -44,10 +57,12 @@ interface RegionProps {
   caption?: string;
   /** Marks an instrument region as a boot-ritual certification target. */
   bootId?: InstrumentId;
+  /** The active alert's severity when this instrument is its subject. */
+  heldLamp?: Severity | null;
   children: React.ReactNode;
 }
 
-function Region({ area, label, caption, bootId, children }: RegionProps) {
+function Region({ area, label, caption, bootId, heldLamp, children }: RegionProps) {
   return (
     <section
       className={`deck-region--${area} js-gauge`}
@@ -58,7 +73,7 @@ function Region({ area, label, caption, bootId, children }: RegionProps) {
         <h2 className="js-boot-name text-xs font-medium uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">
           {label}
         </h2>
-        {bootId ? <CertLamps /> : null}
+        {bootId ? <CertLamps held={heldLamp} /> : null}
       </div>
       {caption ? (
         <p className="js-boot-caption mt-1 font-[family-name:var(--deck-font-body)] text-sm italic text-[var(--deck-ink-dim)]">
@@ -93,8 +108,11 @@ export function DeckBench({
   panel,
   review,
   alert,
+  alertEcho,
   soundControl,
 }: DeckBenchProps) {
+  const heldFor = (id: InstrumentId) =>
+    alertEcho?.instrument === id ? alertEcho.severity : null;
   return (
     <div className="deck-bench">
       {/* Master-caution position, top of the scan. Not a live region:
@@ -116,6 +134,7 @@ export function DeckBench({
         label={names.get("field-integrity") ?? ""}
         caption={captions.get("field-integrity")}
         bootId="field-integrity"
+        heldLamp={heldFor("field-integrity")}
       >
         {variant === "live" ? hero : <FieldPlate />}
       </Region>
@@ -135,6 +154,7 @@ export function DeckBench({
         label={names.get("vacuum-energy") ?? ""}
         caption={captions.get("vacuum-energy")}
         bootId="vacuum-energy"
+        heldLamp={heldFor("vacuum-energy")}
       >
         {variant === "live" ? vacuum : <VacuumPlate />}
       </Region>
@@ -144,6 +164,7 @@ export function DeckBench({
         label={names.get("synthetic-orientation") ?? ""}
         caption={captions.get("synthetic-orientation")}
         bootId="synthetic-orientation"
+        heldLamp={heldFor("synthetic-orientation")}
       >
         {variant === "live" ? orientation : <OrientationPlate />}
       </Region>

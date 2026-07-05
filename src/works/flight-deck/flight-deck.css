@@ -40,14 +40,15 @@
   padding: 1.25rem 2.5rem 1rem;
 }
 
-/* Master-caution position. Fixed single-line height so a posting never
-   reflows the bench: the alert row is reserved, not borrowed. */
+/* Master-caution position. The row is reserved at the POSTED size (a
+   posting speaks at instrument scale, the quiet line is a whisper inside
+   the same height), so an alert never reflows the bench. */
 .deck-region--alert {
   grid-area: alert;
   justify-self: center;
-  min-height: 1.25rem;
+  min-height: 1.625rem;
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 .deck-region--hero {
   grid-area: hero;
@@ -541,9 +542,14 @@
   color: var(--deck-ink-label);
 }
 
-/* The alert grammar, visual side (phase 5). One line: lamp, severity
-   word, label, plain-language line. Severity is light + grammar, always
-   redundant with the words; no side-stripes, no flooding, no shake. */
+/* The alert grammar, visual side (phase 5; annunciator design from
+   Justin's live pass 2026-07-05). One line: lamp, severity word, label,
+   plain-language line. A posted alert speaks at instrument scale (the
+   quiet line stays a whisper in the same reserved row); its lamp holds
+   a severity-colored emission (--emit, the boot's glow grammar, driven
+   by the posting choreography and released on resolution). Severity is
+   light + grammar, always redundant with the words; no side-stripes,
+   no flooding, no shake. */
 .deck-alert__quiet {
   font-size: 0.75rem;
   letter-spacing: 0.2em;
@@ -559,16 +565,20 @@
 }
 
 .deck-alert__lamp {
-  width: 0.4375rem;
-  height: 0.4375rem;
+  width: 0.5625rem;
+  height: 0.5625rem;
   border-radius: 50%;
   align-self: center;
+  box-shadow:
+    0 0 calc(var(--emit, 0) * 12px) calc(var(--emit, 0) * 3px)
+    var(--deck-alert-emit, transparent);
 }
 
 .deck-alert__word,
 .deck-alert__label {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
@@ -583,19 +593,28 @@
 .deck-alert__plain {
   font-family: var(--deck-font-body);
   font-style: italic;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--deck-ink-dim);
   white-space: normal;
 }
 
+.deck-alert[data-severity="advisory"] {
+  --deck-alert-emit: var(--deck-emit-advisory);
+}
 .deck-alert[data-severity="advisory"] .deck-alert__lamp {
   background: var(--deck-advisory);
+}
+.deck-alert[data-severity="caution"] {
+  --deck-alert-emit: var(--deck-emit-caution);
 }
 .deck-alert[data-severity="caution"] .deck-alert__lamp {
   background: var(--deck-caution);
 }
 .deck-alert[data-severity="caution"] .deck-alert__word {
   color: var(--deck-caution);
+}
+.deck-alert[data-severity="warning"] {
+  --deck-alert-emit: var(--deck-emit-warning);
 }
 .deck-alert[data-severity="warning"] .deck-alert__lamp {
   background: var(--deck-warning);
@@ -765,6 +784,28 @@
   height: 0.4375rem;
   border-radius: 50%;
   opacity: 0.18;
+  transition:
+    opacity 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+/* The local echo (phase 5): while an alert is active, the affected
+   instrument's own cert lamp holds lit in the severity color, tying the
+   master line to the place the procedure reads against. !important is
+   deliberate: the boot timeline leaves inline opacity on these lamps
+   and the held state must outrank it without touching GSAP's cleanup. */
+.deck-lamp[data-held] {
+  opacity: 1 !important;
+}
+
+.deck-lamp--advisory[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-advisory);
+}
+.deck-lamp--caution[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-caution);
+}
+.deck-lamp--warning[data-held] {
+  box-shadow: 0 0 8px 2px var(--deck-emit-warning);
 }
 
 .deck-lamp--advisory {

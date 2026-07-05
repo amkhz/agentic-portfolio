@@ -17,7 +17,7 @@ import {
   type CommitTrim,
 } from "@core/works/flight-deck/commit";
 import { deckCopy } from "@core/works/flight-deck/copy";
-import { drillScore } from "@core/works/flight-deck/drill";
+import { drillAlerts, drillScore } from "@core/works/flight-deck/drill";
 import { instruments } from "@core/works/flight-deck/instruments";
 import type { DeckEvent, DeckState } from "@core/works/flight-deck/machine";
 import type {
@@ -134,6 +134,12 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     drill.progress.stage === "alerts" ||
     drill.progress.stage === "settling" ||
     drill.progress.stage === "residual";
+  // The active alert, for the local echo: the affected instrument's own
+  // cert lamp holds the severity while the alert is being worked.
+  const activeAlert =
+    drill.progress.stage === "alerts" && !drill.progress.betweenBeats
+      ? drillAlerts[drill.progress.alertIndex]
+      : null;
 
   // A remount mid-ritual has no hold to resume: put the machine back to
   // dormant so the gesture and the playhead agree.
@@ -471,6 +477,71 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settling]);
 
+  // The master-caution moment (authored lane; annunciator design from
+  // Justin's live pass 2026-07-05): when a beat posts, the bench exhales
+  // one breath darker while the alert line blooms in and its lamp's
+  // emission swells to a held glow (the boot's --emit grammar). Plays
+  // once per posting, never loops; severity color comes from the CSS.
+  const runAlertPosting = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const q = gsap.utils.selector(container);
+    const tl = gsap.timeline();
+    tl.fromTo(
+      q(".deck-bench"),
+      { filter: "brightness(1)" },
+      { filter: "brightness(0.955)", duration: 0.3, ease: "power2.out", immediateRender: false },
+      0,
+    );
+    tl.to(q(".deck-bench"), {
+      filter: "brightness(1)",
+      duration: 0.6,
+      ease: "power1.inOut",
+    });
+    tl.fromTo(
+      q(".deck-alert"),
+      { opacity: 0, y: -4 },
+      { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", immediateRender: false },
+      0.12,
+    );
+    tl.fromTo(
+      q(".deck-alert__lamp"),
+      { "--emit": 0 },
+      { "--emit": 1.6, duration: 0.48, ease: "power2.out", immediateRender: false },
+      0.12,
+    );
+    tl.to(q(".deck-alert__lamp"), {
+      "--emit": 1,
+      duration: 0.7,
+      ease: "power1.inOut",
+    });
+  });
+  // The lamp's emission releases when the alert resolves (the beat's
+  // resolved line takes over; the light goes out before the next post).
+  const releaseAlertLamp = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    gsap.to(gsap.utils.selector(container)(".deck-alert__lamp"), {
+      "--emit": 0,
+      duration: 0.5,
+      ease: "power1.out",
+    });
+  });
+  const postedBeat =
+    drill.progress.stage === "alerts" && !drill.progress.betweenBeats
+      ? drill.progress.alertIndex
+      : -1;
+  const resolvedBeat = drill.progress.betweenBeats;
+  useEffect(() => {
+    if (postedBeat >= 0) runAlertPosting();
+    // contextSafe handlers are stable for the component's life.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [postedBeat]);
+  useEffect(() => {
+    if (resolvedBeat) releaseAlertLamp();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resolvedBeat]);
+
   // Hold-to-start: the hold scrubs the playhead, release runs it backward.
   const beginHold = contextSafe(() => {
     const tl = timelineRef.current;
@@ -510,6 +581,11 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
         variant="live"
         onExitToColophon={onExitToColophon}
         alert={<AlertRegion progress={drill.progress} />}
+        alertEcho={
+          activeAlert
+            ? { instrument: activeAlert.instrument, severity: activeAlert.severity }
+            : null
+        }
         soundControl={
           <button
             type="button"

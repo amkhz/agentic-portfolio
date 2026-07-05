@@ -82,8 +82,15 @@ describe("TranslationPanel (dock)", () => {
     expect(
       screen.getByText(/^Operator utilization 0\.\d{2}/),
     ).toBeInTheDocument();
+    // The explainer is a hover reveal per the shape brief (the visible
+    // paragraph crowded the vacuum region, live pass 2026-07-05): title
+    // for pointers, always in the sr mirror.
+    expect(screen.getByTitle(deckCopy.panel.utilizationExplainer)).toBeInTheDocument();
     expect(
-      screen.getByText(deckCopy.panel.utilizationExplainer),
+      screen.getByText((_, el) =>
+        (el?.textContent ?? "").includes(deckCopy.panel.utilizationExplainer) &&
+        el?.classList.contains("sr-only") === true,
+      ),
     ).toBeInTheDocument();
   });
 });

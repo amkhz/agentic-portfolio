@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import type { CommitTrim } from "@core/works/flight-deck/commit";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import {
-  drillOperatorDelta,
+  operatorLoadAt,
   type DrillTimeline,
 } from "@core/works/flight-deck/drillEnvelopes";
 import {
   formatOperatorReadings,
   sampleOperator,
-  type OperatorTelemetry,
 } from "@core/works/flight-deck/operator";
+import { COUPLING_LAG_S } from "@core/works/flight-deck/paradigm";
 
 /**
  * The consciousness chamber (movement 5's end state): the operator-state
@@ -16,25 +17,27 @@ import {
  * space, become the control surface. The same pure model and the same
  * deck clock as the strip below, sampled large: the breath waveform
  * front and center, coherence beside it, and the promotion caption that
- * carries the arc's proof. No new inputs are invented; the coupling to
- * the field render (the deck breathing with the operator) IS the
- * control, and the caption says so honestly.
+ * carries the arc's proof.
  *
- * The waveform draws on its own rAF loop (gated like the canvases:
- * off-viewport and hidden-tab both pause, D6): the strip's readings
- * cadence is right for a peripheral monitor, but a control surface
- * that breathes must breathe smoothly, and the field render it is
- * coupled to is already sampling the same model every frame. Numbers
- * and the sr mirror stay on the readings cadence; only the trace is
- * continuous.
+ * The coupling proves itself here (live pass 2026-07-05): under the
+ * operator's breath rides the FIELD echo, a bone-ink trace of the same
+ * waveform the bubble's wall is actually breathing — the field render
+ * samples the operator exactly COUPLING_LAG_S behind, so the echo IS
+ * the ship's response, not an illustration of it. The gap between the
+ * two lines is the intent-to-action gap, visible without touching a
+ * single control: you breathe, and 0.6 seconds later the ship does.
  *
- * Arrival and departure are authored by the session's crossing timeline
- * (.js-chamber-* targets); this component only renders the living data.
+ * The waveforms draw on a gated rAF loop (off-viewport and hidden-tab
+ * both pause, D6); numbers and the sr mirror stay on the readings
+ * cadence. Arrival and departure are authored by the session's crossing
+ * timeline (.js-chamber-* targets).
  */
 
 interface ConsciousnessChamberProps {
   clock: () => number;
   drill?: { current: DrillTimeline } | null;
+  /** The riding maneuver, if any: the watcher carries its cost here too. */
+  trim?: CommitTrim | null;
 }
 
 const READINGS_INTERVAL_MS = 400;
@@ -43,13 +46,21 @@ const WINDOW_S = 16;
 const TRACE_SAMPLES = 96;
 const TRACE_W = 100;
 const TRACE_H = 26;
+/** The echo draws subordinate: the ship answers, it does not compete. */
+const ECHO_AMPLITUDE = 0.62;
 
-function breathPoints(t: number, drill: DrillTimeline | null | undefined): string {
+function wavePoints(
+  t: number,
+  drill: DrillTimeline | null | undefined,
+  trim: CommitTrim | null | undefined,
+  lagS: number,
+  amplitude: number,
+): string {
   const points: string[] = [];
   for (let i = 0; i < TRACE_SAMPLES; i++) {
-    const ti = t - WINDOW_S + (i / (TRACE_SAMPLES - 1)) * WINDOW_S;
-    const o: OperatorTelemetry = sampleOperator(ti, drillOperatorDelta(ti, drill));
-    const v = (o.breath + 1) / 2;
+    const ti = t - WINDOW_S + (i / (TRACE_SAMPLES - 1)) * WINDOW_S - lagS;
+    const o = sampleOperator(ti, operatorLoadAt(ti, drill, trim));
+    const v = (o.breath * amplitude + 1) / 2;
     const x = (i / (TRACE_SAMPLES - 1)) * TRACE_W;
     const y = TRACE_H - 3 - v * (TRACE_H - 6);
     points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
@@ -57,14 +68,21 @@ function breathPoints(t: number, drill: DrillTimeline | null | undefined): strin
   return points.join(" ");
 }
 
-export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps) {
+export function ConsciousnessChamber({
+  clock,
+  drill,
+  trim,
+}: ConsciousnessChamberProps) {
   const drillRef = useRef<{ current: DrillTimeline } | null>(null);
   drillRef.current = drill ?? null;
+  const trimRef = useRef<CommitTrim | null>(null);
+  trimRef.current = trim ?? null;
   const [t, setT] = useState(() => clock());
   const clockRef = useRef(clock);
   clockRef.current = clock;
   const hostRef = useRef<HTMLElement>(null);
-  const polylineRef = useRef<SVGPolylineElement>(null);
+  const breathRef = useRef<SVGPolylineElement>(null);
+  const echoRef = useRef<SVGPolylineElement>(null);
 
   // Numbers and the mirror on the readings cadence, like every gauge.
   useEffect(() => {
@@ -75,7 +93,7 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
     return () => window.clearInterval(interval);
   }, []);
 
-  // The waveform itself is continuous: an rAF loop writes the polyline
+  // The waveforms are continuous: an rAF loop writes both polylines
   // imperatively (no React re-render per frame), gated twice per D6.
   useEffect(() => {
     const host = hostRef.current;
@@ -86,9 +104,16 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
     let inView = true;
 
     const update = () => {
-      polylineRef.current?.setAttribute(
+      const now = clockRef.current();
+      const timeline = drillRef.current?.current;
+      const riding = trimRef.current;
+      breathRef.current?.setAttribute(
         "points",
-        breathPoints(clockRef.current(), drillRef.current?.current),
+        wavePoints(now, timeline, riding, 0, 1),
+      );
+      echoRef.current?.setAttribute(
+        "points",
+        wavePoints(now, timeline, riding, COUPLING_LAG_S, ECHO_AMPLITUDE),
       );
       frame = requestAnimationFrame(update);
     };
@@ -120,7 +145,7 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
   }, []);
 
   const timeline = drillRef.current?.current;
-  const now = sampleOperator(t, drillOperatorDelta(t, timeline));
+  const now = sampleOperator(t, operatorLoadAt(t, timeline, trimRef.current));
   const readings = formatOperatorReadings(now, true);
 
   return (
@@ -133,13 +158,31 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
         {deckCopy.paradigm.chamberKicker}
       </p>
       <div className="deck-chamber__traces js-chamber-part" aria-hidden="true">
-        <svg
-          className="deck-chamber__breath"
-          viewBox={`0 0 ${TRACE_W} ${TRACE_H}`}
-          preserveAspectRatio="none"
-        >
-          <polyline ref={polylineRef} points={breathPoints(t, timeline)} />
-        </svg>
+        <div className="deck-chamber__waves">
+          <svg
+            className="deck-chamber__breath"
+            viewBox={`0 0 ${TRACE_W} ${TRACE_H}`}
+            preserveAspectRatio="none"
+          >
+            <polyline
+              ref={echoRef}
+              className="deck-chamber__echo"
+              points={wavePoints(t, timeline, trimRef.current, COUPLING_LAG_S, ECHO_AMPLITUDE)}
+            />
+            <polyline
+              ref={breathRef}
+              points={wavePoints(t, timeline, trimRef.current, 0, 1)}
+            />
+          </svg>
+          <p className="deck-chamber__legend">
+            <span className="deck-chamber__legend-breath">
+              {deckCopy.paradigm.chamberBreathLabel}
+            </span>
+            <span className="deck-chamber__legend-echo">
+              {deckCopy.paradigm.chamberEchoLabel}
+            </span>
+          </p>
+        </div>
         <span className="deck-chamber__coherence">
           <span className="deck-chamber__coherence-label">
             {deckCopy.operator.coherence}
@@ -155,7 +198,9 @@ export function ConsciousnessChamber({ clock, drill }: ConsciousnessChamberProps
       <p className="deck-chamber__caption js-chamber-caption">
         {deckCopy.paradigm.promotion}
       </p>
-      <p className="sr-only">{readings.mirror}</p>
+      <p className="sr-only">
+        {readings.mirror} {deckCopy.paradigm.chamberEchoMirror}
+      </p>
     </section>
   );
 }

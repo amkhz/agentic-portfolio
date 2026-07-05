@@ -72,6 +72,37 @@ export function commitGlow(dtSeconds: number): number {
   return Math.max(held, commitResponse(dtSeconds));
 }
 
+import type { OperatorDelta } from "./operator";
+
+const ZERO_OPERATOR_LOAD: OperatorDelta = {
+  blink: 0,
+  respiration: 0,
+  coherence: 0,
+};
+
+/**
+ * The watcher shows the work (phase 6 live pass): a commit costs
+ * attention, and the operator channel is honest about it. Blink dips
+ * (visual load), respiration rises a touch, coherence barely moves —
+ * a working operator, not a stressed one. Rides the same consequence
+ * envelope as every instrument, so the strip stirs whenever the ship
+ * moves, without the operator touching a single consciousness control.
+ */
+export function commitOperatorDelta(
+  tSeconds: number,
+  trim: CommitTrim | null | undefined,
+): OperatorDelta {
+  if (!trim) return ZERO_OPERATOR_LOAD;
+  const r = commitResponse(tSeconds - trim.atSeconds);
+  if (r === 0) return ZERO_OPERATOR_LOAD;
+  const effort = 0.6 + 0.4 * trim.urgency;
+  return {
+    blink: -1.6 * effort * r,
+    respiration: 0.55 * effort * r,
+    coherence: -0.02 * r,
+  };
+}
+
 export interface OrientationDelta {
   bank: number;
   pitch: number;

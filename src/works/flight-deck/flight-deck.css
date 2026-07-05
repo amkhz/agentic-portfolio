@@ -62,9 +62,13 @@
   display: flex;
   flex-direction: column;
 }
+/* overflow: clip is the never-overlap guarantee: if the panel column
+   ever outgrows its row again, it truncates inside its own region
+   instead of writing over the vacuum gauge below. */
 .deck-region--panel {
   grid-area: panel;
   min-height: 0;
+  overflow: clip;
 }
 .deck-region--review {
   grid-area: review;
@@ -534,12 +538,6 @@
 
 .deck-meter[data-over] .deck-meter__over {
   fill: var(--deck-caution);
-}
-
-.deck-panel__explainer {
-  font-size: 0.6875rem;
-  line-height: 1.5;
-  color: var(--deck-ink-label);
 }
 
 /* The alert grammar, visual side (phase 5; annunciator design from
@@ -1051,16 +1049,49 @@
   gap: 1.5rem;
 }
 
-.deck-chamber__breath {
+.deck-chamber__waves {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.deck-chamber__breath {
+  width: 100%;
   height: 3.25rem;
-  filter: drop-shadow(0 0 8px var(--deck-emit-ready));
 }
 
 .deck-chamber__breath polyline {
   fill: none;
   stroke: var(--deck-operator);
   stroke-width: 1.5;
+  filter: drop-shadow(0 0 8px var(--deck-emit-ready));
+}
+
+/* The ship's answer: bone ink, subordinate, no emission of its own —
+   the light stays with the operator; the field only follows. */
+.deck-chamber__breath polyline.deck-chamber__echo {
+  stroke: var(--deck-ink-dim);
+  stroke-width: 1;
+  filter: none;
+}
+
+.deck-chamber__legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.deck-chamber__legend-breath {
+  color: var(--deck-operator);
+}
+
+.deck-chamber__legend-echo {
+  color: var(--deck-ink-label);
 }
 
 .deck-chamber__coherence {

@@ -118,6 +118,12 @@ export const deckCopy = {
     chamberKicker: "Consciousness chamber",
     /** The chamber's live line: what the coupling is doing, honestly. */
     chamberCoupled: "The field is breathing with you.",
+    /** Trace legend: the operator's line and the ship's answer. */
+    chamberBreathLabel: "BREATH",
+    chamberEchoLabel: "FIELD · 0.6S BEHIND",
+    /** The sr sentence for the echo, since the trace is visual only. */
+    chamberEchoMirror:
+      "The field's wall follows the breath six tenths of a second behind.",
   },
   sound: {
     /** The opt-in toggle in the deck chrome (ADR-017 D5: default off). */

@@ -9,7 +9,12 @@
  * vacuum margin crossing MARGIN_FLOOR and the expanded strip pegging
  * during the warning are designed-in drama.
  */
-import type { OrientationDelta, VacuumDelta } from "./commit";
+import {
+  commitOperatorDelta,
+  type CommitTrim,
+  type OrientationDelta,
+  type VacuumDelta,
+} from "./commit";
 import type { FieldDelta } from "./field";
 import type { OperatorDelta } from "./operator";
 import type { DrillBeatId } from "./drill";
@@ -218,5 +223,29 @@ export function drillOperatorDelta(
     blink: -1.5 * laneB - 4 * asym - 7 * collapse,
     respiration: 0.6 * laneB + 1.8 * asym + 3.4 * collapse,
     coherence: -0.02 * laneB - 0.09 * asym - 0.16 * collapse,
+  };
+}
+
+/**
+ * Everything currently leaning on the watcher, one call: the drill's
+ * escalation plus the riding maneuver's attention cost. The strip, the
+ * chamber, and the field's coupling all sample through this, so the
+ * operator the deck shows is one operator.
+ */
+export function operatorLoadAt(
+  t: number,
+  tl: DrillTimeline | null | undefined,
+  trim?: CommitTrim | null,
+): OperatorDelta {
+  const drill = drillOperatorDelta(t, tl);
+  const commit = commitOperatorDelta(t, trim);
+  const commitQuiet =
+    commit.blink === 0 && commit.respiration === 0 && commit.coherence === 0;
+  if (commitQuiet) return drill;
+  if (drill === ZERO_OPERATOR) return commit;
+  return {
+    blink: drill.blink + commit.blink,
+    respiration: drill.respiration + commit.respiration,
+    coherence: drill.coherence + commit.coherence,
   };
 }

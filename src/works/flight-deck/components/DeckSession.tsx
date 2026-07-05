@@ -477,6 +477,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             live={booted}
             clock={deckClock}
             drill={drill.timelineRef}
+            trim={trim}
             promoted={regime === "consciousness"}
           />
         }
@@ -510,7 +511,11 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
               />
             )
           ) : chamber !== "down" ? (
-            <ConsciousnessChamber clock={deckClock} drill={drill.timelineRef} />
+            <ConsciousnessChamber
+              clock={deckClock}
+              drill={drill.timelineRef}
+              trim={trim}
+            />
           ) : (
             <ProposalRow
               live={booted}

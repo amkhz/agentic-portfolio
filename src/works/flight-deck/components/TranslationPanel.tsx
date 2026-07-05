@@ -138,7 +138,14 @@ export function TranslationPanel({
         {status}
       </p>
 
-      <div className="deck-panel__meter js-deck-chrome">
+      {/* The 70% ceiling explainer is a hover reveal per the shape brief
+          (and always in the mirror): the visible paragraph was crowding
+          the vacuum region below once the paradigm slider claimed its
+          height (Justin's live pass, 2026-07-05). */}
+      <div
+        className="deck-panel__meter js-deck-chrome"
+        title={deckCopy.panel.utilizationExplainer}
+      >
         <div className="flex items-baseline justify-between">
           <span className="deck-intent__label">
             {deckCopy.panel.utilizationLabel}
@@ -151,10 +158,9 @@ export function TranslationPanel({
           </span>
         </div>
         <UtilizationMeter value={utilization} />
-        <p className="deck-panel__explainer">
-          {deckCopy.panel.utilizationExplainer}
+        <p className="sr-only">
+          {reading.mirror} {deckCopy.panel.utilizationExplainer}
         </p>
-        <p className="sr-only">{reading.mirror}</p>
       </div>
     </div>
   );

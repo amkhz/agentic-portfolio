@@ -16,6 +16,7 @@
  * the deck from boot as a monitoring channel, and the consciousness
  * end makes it the control surface. Promoted, never introduced.
  */
+import { commitScore } from "./commit";
 import { paradigmRegime, type ParadigmRegime } from "./machine";
 
 export interface DissolveEnvelope {
@@ -39,6 +40,15 @@ export interface DissolveEnvelope {
 
 /** The consciousness end is nearly dark, never black (house hand). */
 export const LIGHT_FLOOR = 0.16;
+
+/**
+ * The coupling answers on the deck's one lag (the commit score's own
+ * 0.6s): the gap between intent and action is the piece's subject, and
+ * it survives even when the intent is a breath. The field render and
+ * the chamber's echo trace both read the operator this far behind, so
+ * what the echo shows IS what the bubble is doing.
+ */
+export const COUPLING_LAG_S = commitScore.lagMs / 1000;
 
 function smooth(edge0: number, edge1: number, x: number): number {
   const t = Math.min(Math.max((x - edge0) / (edge1 - edge0), 0), 1);

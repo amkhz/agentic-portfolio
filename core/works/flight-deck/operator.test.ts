@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { drillOperatorDelta } from "./drillEnvelopes";
+import { COMMIT_DONE_S, commitOperatorDelta, type CommitTrim } from "./commit";
+import { drillOperatorDelta, operatorLoadAt } from "./drillEnvelopes";
 import type { DrillTimeline } from "./drillEnvelopes";
 import {
   COHERENCE_STEADY_FLOOR,
@@ -66,6 +67,41 @@ describe("sampleOperator", () => {
     const late = drillOperatorDelta(170, tl);
     expect(Math.abs(late.coherence)).toBeLessThan(0.01);
     expect(operatorStatus(sampleOperator(170, late))).toBe("steady");
+  });
+});
+
+describe("the commit's cost on the watcher", () => {
+  const trim: CommitTrim = { atSeconds: 50, bearing: 1, urgency: 0.6, draw: 0.02 };
+
+  it("stirs the traces when the ship moves, then spends itself", () => {
+    const during = commitOperatorDelta(54, trim);
+    expect(during.blink).toBeLessThan(-0.5);
+    expect(during.respiration).toBeGreaterThan(0.2);
+    // A commit is work, never an upset: the operator stays steady.
+    const loaded = sampleOperator(54, during);
+    expect(operatorStatus(loaded)).toBe("steady");
+    // Spent with the maneuver, exactly zero after the envelope.
+    expect(commitOperatorDelta(50 + COMMIT_DONE_S, trim)).toEqual({
+      blink: 0,
+      respiration: 0,
+      coherence: 0,
+    });
+  });
+
+  it("operatorLoadAt sums the drill and the maneuver", () => {
+    const tl: DrillTimeline = { beatAt: { "caution-asymmetry": 40 }, resolvedAt: {} };
+    const both = operatorLoadAt(54, tl, trim);
+    const drillOnly = drillOperatorDelta(54, tl);
+    const commitOnly = commitOperatorDelta(54, trim);
+    expect(both.blink).toBeCloseTo(drillOnly.blink + commitOnly.blink, 10);
+    expect(both.respiration).toBeCloseTo(
+      drillOnly.respiration + commitOnly.respiration,
+      10,
+    );
+    // With no commit riding, the drill's delta passes straight through.
+    expect(operatorLoadAt(54, tl, null)).toEqual(drillOnly);
+    // Fully quiet inputs share the zero reference: no per-frame garbage.
+    expect(operatorLoadAt(54, null, null)).toBe(drillOperatorDelta(54, null));
   });
 });
 

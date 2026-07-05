@@ -9,9 +9,10 @@ import { Mesh, Program, Renderer, Triangle } from "ogl";
 import { commitGlow, type CommitTrim } from "@core/works/flight-deck/commit";
 import {
   drillFieldDelta,
-  drillOperatorDelta,
+  operatorLoadAt,
   type DrillTimeline,
 } from "@core/works/flight-deck/drillEnvelopes";
+import { COUPLING_LAG_S } from "@core/works/flight-deck/paradigm";
 import {
   formatFieldReadings,
   formatStressLanes,
@@ -525,11 +526,16 @@ export function FieldIntegrity({
       ];
 
       // The consciousness coupling: while the dissolve holds the gain
-      // open, the loop reads the operator on the same clock the chamber
-      // and strip sample, so the breathing they show is the breathing
-      // the bubble does.
+      // open, the loop reads the operator COUPLING_LAG_S behind on the
+      // same clock the chamber samples — the deck's one lag, kept open
+      // even when the intent is a breath. The chamber's FIELD echo
+      // reads the identical function, so the echo IS this response.
       if (glStateRef.current.coupling > 0) {
-        const op = sampleOperator(t, drillOperatorDelta(t, drillRef.current?.current));
+        const tLag = t - COUPLING_LAG_S;
+        const op = sampleOperator(
+          tLag,
+          operatorLoadAt(tLag, drillRef.current?.current, trimRef.current),
+        );
         program.uniforms.uOpBreath.value = op.breath;
         program.uniforms.uOpCoherence.value = op.coherence;
       }

@@ -22,7 +22,10 @@ import type {
   UtilizationEvent,
 } from "@core/works/flight-deck/translation";
 import { enableDeckAudio, playSignature } from "../audio/deckAudio";
-import { buildBootTimeline } from "../timelines/bootTimeline";
+import {
+  buildBootTimeline,
+  buildShutdownTimeline,
+} from "../timelines/bootTimeline";
 import { buildCommitTimeline } from "../timelines/commitTimeline";
 import {
   buildAlertPostingTimeline,
@@ -44,6 +47,7 @@ import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
 import { OperatorStrip } from "./OperatorStrip";
 import { ParadigmSlider } from "./ParadigmSlider";
 import { ProposalRow } from "./ProposalRow";
+import { StandingOrders } from "./StandingOrders";
 import { SyntheticOrientation } from "./SyntheticOrientation";
 import { TranslationPanel } from "./TranslationPanel";
 import { useDrill } from "./useDrill";
@@ -63,6 +67,8 @@ interface DeckSessionProps {
   state: DeckState;
   dispatch: (event: DeckEvent) => void;
   onExitToColophon: () => void;
+  /** Fired when the power-down finishes: the parent resets and remounts. */
+  onShutDown: () => void;
 }
 
 /**
@@ -73,7 +79,12 @@ interface DeckSessionProps {
  * extracted per Roy's phase-6 pre-read; this file decides WHEN each
  * timeline runs and what state lands with it.
  */
-export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionProps) {
+export function DeckSession({
+  state,
+  dispatch,
+  onExitToColophon,
+  onShutDown,
+}: DeckSessionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<FieldIntegrityHandle>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -464,6 +475,23 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
     });
   });
 
+  // Shutdown: the boot's mirror plays, then the parent resets the
+  // machine and remounts this component fresh (drill re-armed, paradigm
+  // at rest, inline styles reverted by unmount) — the restart path that
+  // used to need a page reload.
+  const shuttingDownRef = useRef(false);
+  const onShutDownRef = useRef(onShutDown);
+  onShutDownRef.current = onShutDown;
+  const runShutdown = contextSafe(() => {
+    const container = containerRef.current;
+    if (!container || shuttingDownRef.current) return;
+    shuttingDownRef.current = true;
+    setAnnouncement(deckCopy.shutdown.announced);
+    timelineRef.current?.kill();
+    scrubRef.current?.kill();
+    buildShutdownTimeline(container, () => onShutDownRef.current());
+  });
+
   return (
     <div ref={containerRef} className="deck-session">
       <DeckBench
@@ -486,6 +514,18 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             {deckCopy.sound.label}{" "}
             {state.soundOn ? deckCopy.sound.on : deckCopy.sound.off}
           </button>
+        }
+        shutdownControl={
+          booted ? (
+            <button
+              type="button"
+              onClick={runShutdown}
+              title={deckCopy.shutdown.hint}
+              className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
+            >
+              {deckCopy.shutdown.label}
+            </button>
+          ) : null
         }
         hero={
           <FieldIntegrity
@@ -619,6 +659,7 @@ export function DeckSession({ state, dispatch, onExitToColophon }: DeckSessionPr
             <p className="js-wake-copy mt-2 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
               {deckCopy.wakeHold}
             </p>
+            <StandingOrders />
           </div>
         </div>
       ) : null}

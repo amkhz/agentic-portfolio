@@ -32,6 +32,8 @@ interface DeckBenchProps {
   alertEcho?: { instrument: InstrumentId; severity: Severity } | null;
   /** The opt-in sound toggle, deck chrome beside the colophon exit. */
   soundControl?: React.ReactNode;
+  /** The shutdown control (phase 7): power down, restart the sequence. */
+  shutdownControl?: React.ReactNode;
   /**
    * The operator-state strip (phase 6): the system watching the
    * watcher, on the deck from boot. The plate variant renders its
@@ -120,6 +122,7 @@ export function DeckBench({
   alert,
   alertEcho,
   soundControl,
+  shutdownControl,
   operator,
   paradigm,
 }: DeckBenchProps) {
@@ -195,6 +198,7 @@ export function DeckBench({
           )}
           <span className="flex items-baseline gap-5">
             {variant === "live" ? soundControl : null}
+            {variant === "live" ? shutdownControl : null}
             <button
               type="button"
               onClick={onExitToColophon}

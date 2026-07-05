@@ -22,6 +22,23 @@ export const deckCopy = {
   staticPlate: {
     note: "You are reading the deck as a still instrument plate. Every instrument is shown at a legible nominal state.",
   },
+  /** The shutdown control, deck chrome: back to dormant, fresh session. */
+  shutdown: {
+    label: "Shut down",
+    hint: "Power the deck down and start the session over.",
+    announced: "Deck shutting down.",
+  },
+  /**
+   * Standing orders: the first-watch brief on the dormant overlay,
+   * teaching the arc before the operator's hands touch the controls.
+   */
+  orders: {
+    kicker: "You have the watch",
+    lines: [
+      "Every instrument on this deck is live once it wakes. Nothing here is a picture.",
+      "State an intent, commit a route, and watch the ship answer. The deck asks for your judgment when it matters.",
+    ],
+  },
   panel: {
     /** The intent group's legend. */
     intentLegend: "Intent",

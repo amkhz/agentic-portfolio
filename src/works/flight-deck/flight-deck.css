@@ -436,6 +436,21 @@
   padding-top: 0.625rem;
 }
 
+/* Standing orders: the first-watch brief on the dormant overlay, read
+   before the hands touch the controls. Human voice, body face. */
+.deck-orders {
+  max-width: 26rem;
+  margin: 3rem auto 0;
+}
+
+.deck-orders__line {
+  margin-top: 0.375rem;
+  font-family: var(--deck-font-body);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--deck-ink-dim);
+}
+
 .deck-proposal__style {
   font-size: 0.625rem;
   letter-spacing: 0.2em;
@@ -849,11 +864,19 @@
   gap: 0.375rem;
 }
 
+/* Cert lamps flash in the boot's emission grammar: --emit drives a
+   severity-colored glow so the test flash gives off light, not just
+   lightens. The 0.4s transition is the drill's held-echo grammar; the
+   boot silences it inline (transition: none) for the 140ms flash score
+   and hands it back at the settle. */
 .deck-lamp {
   width: 0.4375rem;
   height: 0.4375rem;
   border-radius: 50%;
   opacity: 0.18;
+  --emit: 0;
+  box-shadow: 0 0 calc(var(--emit) * 12px) calc(var(--emit) * 3px)
+    var(--lamp-emit, var(--deck-emit-gauge));
   transition:
     opacity 0.4s ease,
     box-shadow 0.4s ease;
@@ -880,12 +903,15 @@
 
 .deck-lamp--advisory {
   background: var(--deck-advisory);
+  --lamp-emit: var(--deck-emit-advisory);
 }
 .deck-lamp--caution {
   background: var(--deck-caution);
+  --lamp-emit: var(--deck-emit-caution);
 }
 .deck-lamp--warning {
   background: var(--deck-warning);
+  --lamp-emit: var(--deck-emit-warning);
 }
 
 /* Certification sweep arm for the non-canvas instruments. */

@@ -24,6 +24,10 @@ export function FlightDeck() {
   const mode = useDeckCapabilities();
   const [state, dispatch] = useReducer(deckReducer, initialDeckState);
   const [surface, setSurface] = useState<"deck" | "colophon">("deck");
+  // Bumped by shutdown: the session remounts fresh (unmount reverts
+  // every inline style and timeline), so restarting the sequence never
+  // needs a page reload.
+  const [sessionEpoch, setSessionEpoch] = useState(0);
 
   useEffect(() => {
     const work = getWork("flight-deck");
@@ -48,9 +52,14 @@ export function FlightDeck() {
             />
           ) : (
             <DeckSession
+              key={sessionEpoch}
               state={state}
               dispatch={dispatch}
               onExitToColophon={() => setSurface("colophon")}
+              onShutDown={() => {
+                dispatch({ type: "SHUT_DOWN" });
+                setSessionEpoch((epoch) => epoch + 1);
+              }}
             />
           )}
         </>

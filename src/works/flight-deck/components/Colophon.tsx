@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { guides } from "@core/lab/guides";
 import { deckCopy } from "@core/works/flight-deck/copy";
-import { getWork } from "@core/works/works";
+import { getWork, worksArmLine } from "@core/works/works";
 
 interface ColophonProps {
   onReturn: () => void;
@@ -9,8 +9,9 @@ interface ColophonProps {
 
 /**
  * The quiet surface reached by deliberate exit (ADR-017 D1): title,
- * thesis, source-guide links back to the Archive, exit. Copy here is
- * scaffold grade; the shipping pass is Writer + Gaff, Joi-gated.
+ * thesis, source-guide links back to the Archive, exit, and the arm's
+ * own line at the end (D7, mirroring where the Archive's line lives in
+ * the lab footer). Copy final as of the 2026-07-05 Writer + Gaff pass.
  */
 export function Colophon({ onReturn }: ColophonProps) {
   const work = getWork("flight-deck");
@@ -62,6 +63,10 @@ export function Colophon({ onReturn }: ColophonProps) {
           {deckCopy.colophon.exitToArchive}
         </Link>
       </div>
+
+      <p className="mt-14 font-[family-name:var(--deck-font-body)] text-sm italic leading-relaxed text-[var(--deck-ink-label)]">
+        {worksArmLine}
+      </p>
     </main>
   );
 }

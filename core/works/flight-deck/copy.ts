@@ -1,8 +1,10 @@
 /**
- * Deck copy, scaffold grade. Writer + Gaff pass everything here before
- * ship; the colophon voice is Joi-gated (shape brief, content section).
- * Register: plain language, no physics credentials assumed, no
- * permission framing, mission test per line.
+ * Deck copy. Register: plain language, no physics credentials assumed,
+ * no permission framing, mission test per line. The colophon block is
+ * FINAL as of 2026-07-05 (Writer + Gaff pass, Joi profile gating the
+ * voice; arm line locked per ADR-017 D7 and sourced from works.ts).
+ * The in-deck strings (panel, alerts, orders) remain scaffold grade
+ * pending their own pass.
  */
 import { COUPLING_LAG_S } from "./paradigm";
 
@@ -156,7 +158,7 @@ export const deckCopy = {
     title: "The Flight Deck",
     kicker: "Perihelion Works 01",
     thesis:
-      "Film cockpits are designed to be read in about three seconds of screen time. This one is designed to be operated. Every instrument is live, every control does something, every alert has a procedure, and the research behind each of them is one link away.",
+      "Film cockpits are designed to be read in about three seconds of screen time. This one is designed to be operated. Every instrument is live, every control moves the ship, and every alert has a procedure you can work at your own pace. The research behind it all is one link away.",
     sourcesHeading: "Built from the Archive",
     exitToDeck: "Back to the deck",
     exitToArchive: "Perihelion Archive",

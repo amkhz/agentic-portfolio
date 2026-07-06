@@ -11,6 +11,7 @@ import {
   formatSlicePlane,
   type AxialRidgeMark,
 } from "@core/works/flight-deck/field";
+import { DECK_TAB } from "./deckTab";
 import { HullSection } from "./HullSection";
 
 /**
@@ -103,6 +104,7 @@ export function SliceScrubber({
         <input
           type="range"
           className="deck-slice__input"
+          tabIndex={DECK_TAB}
           min={-100}
           max={100}
           step={1}

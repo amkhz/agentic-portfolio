@@ -8,6 +8,7 @@ import {
 } from "@core/works/flight-deck/drillEnvelopes";
 import { sampleVacuumTelemetry } from "@core/works/flight-deck/vacuum";
 import { deckSpringSoft } from "./deckMotion";
+import { DECK_TAB } from "./deckTab";
 
 /**
  * Beat 6, the residual status (ECAM after-state): what tripped, what
@@ -83,6 +84,7 @@ export function DrillResidual({
           ref={acknowledgeRef}
           type="button"
           className="deck-commit"
+          tabIndex={DECK_TAB}
           onClick={onAcknowledge}
         >
           {deckCopy.alerts.residual.acknowledge}

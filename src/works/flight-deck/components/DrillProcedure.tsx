@@ -12,6 +12,7 @@ import {
 } from "@core/works/flight-deck/drillEnvelopes";
 import { sampleFieldTelemetry } from "@core/works/flight-deck/field";
 import { deckSpringSoft } from "./deckMotion";
+import { DECK_TAB } from "./deckTab";
 
 /**
  * The guided procedure (ECAM posture, shape brief §7): the checklist
@@ -156,6 +157,7 @@ export function DrillProcedure({
                       ref={c === 0 ? firstChoiceRef : undefined}
                       type="button"
                       className="deck-commit"
+                      tabIndex={DECK_TAB}
                       onClick={() => onJudge(choice.id)}
                     >
                       {choice.label}

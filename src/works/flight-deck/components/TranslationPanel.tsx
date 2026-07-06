@@ -1,5 +1,6 @@
 import { useEffect, useState, type MutableRefObject } from "react";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { DECK_TAB } from "./deckTab";
 import {
   DESTINATIONS,
   formatUtilization,
@@ -64,6 +65,9 @@ function IntentRow({
               name={name}
               value={option.id}
               checked={value === option.id}
+              // Roving: one stop per group, checked radio carries it
+              // (see deckTab.ts for why the tabindex is explicit).
+              tabIndex={value === option.id ? DECK_TAB : -1}
               onChange={() => onChange(option.id)}
             />
             <span>{option.label}</span>

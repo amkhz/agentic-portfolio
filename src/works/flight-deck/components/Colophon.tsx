@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { guides } from "@core/lab/guides";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { getWork, worksArmLine } from "@core/works/works";
+import { DECK_TAB } from "./deckTab";
 
 interface ColophonProps {
   onReturn: () => void;
@@ -40,6 +41,7 @@ export function Colophon({ onReturn }: ColophonProps) {
           <li key={source.slug}>
             <Link
               to={`/g/${source.slug}`}
+              tabIndex={DECK_TAB}
               className="font-[family-name:var(--deck-font-body)] text-base text-[var(--deck-caution)] hover:text-[var(--deck-ink)]"
             >
               {source.title}
@@ -51,6 +53,7 @@ export function Colophon({ onReturn }: ColophonProps) {
       <div className="mt-16 flex gap-8">
         <button
           type="button"
+          tabIndex={DECK_TAB}
           onClick={onReturn}
           className="text-sm uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
         >
@@ -58,6 +61,7 @@ export function Colophon({ onReturn }: ColophonProps) {
         </button>
         <Link
           to="/"
+          tabIndex={DECK_TAB}
           className="text-sm uppercase tracking-[0.2em] text-[var(--deck-ink-dim)] hover:text-[var(--deck-ink)]"
         >
           {deckCopy.colophon.exitToArchive}

@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { getWork } from "@core/works/works";
 import { ResponsiveImage } from "@/components/content/ResponsiveImage";
+import { DECK_TAB } from "./deckTab";
 import { FlightDeckSigil } from "../../sigils/FlightDeckSigil";
 
 /**
@@ -41,6 +42,7 @@ export function DeclineCard() {
         </p>
         <Link
           to="/"
+          tabIndex={DECK_TAB}
           className="mt-10 inline-block text-sm uppercase tracking-[0.2em] text-[var(--deck-caution)] hover:text-[var(--deck-ink)]"
         >
           {deckCopy.colophon.exitToArchive}

@@ -99,3 +99,13 @@ This mission is complete when:
 - The new repo's own lint/build/test gates pass; doctrine files ratified
 - Roy has reviewed against this manifest and ADR-018
 - Mission recorded: roadmap exploration #4 updated, memory updated
+
+---
+
+## Completion Record (2026-07-06)
+
+**Mission complete, same day it was scoped.** All seven tasks shipped as lastfm-mcp PRs #1-#7 (T2∥T3 and T4∥T5∥T6 ran as parallel worktree waves, create-only file rule, zero collisions). Roy verdict: SHIP WITH NOTES; his layer flag (stats logic in server/) fixed on PR #7 before merge; remaining notes filed as issues #8-#11.
+
+**Done state, verified:** backfill ingested 221,074 scrobbles across 1,106 pages -- an exact match to the profile playcount; incremental sync clean; all 13 tools answered a scripted STDIO handshake (archive tools offline); real aggregates.json (22 years, 140KB, schema v1) passed the contract guard; gates green (82 tests); server registered in the workspace .mcp.json.
+
+**Facts Mission 2 planning must carry:** schema v1 exports NO genre/tag dimension (archive has no tag data; issue #11), and artist-name variants split playcounts (Knxwledge appears as two entries whose sum would rank #1 all-time). The genre-constellation flagship form requires v2 enrichment; eras timeline and rediscovery shelf do not.

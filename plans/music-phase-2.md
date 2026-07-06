@@ -29,7 +29,9 @@ Everything downstream needs more than the live API can comfortably serve. A 20-y
 
 ---
 
-## Track A -- Mission 1: the Last.fm MCP server
+## Track A -- Mission 1: the Last.fm MCP server ✅ SHIPPED 2026-07-06
+
+> **Done, same day.** Repo: [amkhz/lastfm-mcp](https://github.com/amkhz/lastfm-mcp) (private). Full record: `vector/missions/archive/lastfm-mcp-mission-1.md`. 221,074 scrobbles archived (exact profile match), 13 tools live, schema-v1 aggregates exporting, Roy-reviewed. Fold-in proxy also shipped (PRs #196/#198). Facts for Track B's form decision: v1 aggregates carry no genre/tag data, and artist-name variants split counts (lastfm-mcp issues #11, #10).
 
 **Stack:** TypeScript, `@modelcontextprotocol/sdk`, STDIO transport first (local Claude Code / Cursor use). SQLite via `better-sqlite3`. HTTP transport is a later option if remote use ever matters.
 
@@ -88,10 +90,9 @@ Tier 1.5 "ambient influence" grown up: not the site reacting to music, but a *pl
 ## Sequencing
 
 ```
-Now:        A fold-in (API proxy PR, portfolio repo)        -- small, immediate
-Mission 1:  A (lastfm-mcp repo: sync + archive + tools)     -- unblocks everything
-Mission 2:  B (flagship, portfolio)  <- needs A's aggregates
-Parallel:   C shape session          <- needs A's tools; exports need no portfolio work
+DONE:       A fold-in (proxy, PRs #196/#198) + Mission 1 (lastfm-mcp, PRs #1-#7)
+Mission 2:  B (flagship, portfolio)  <- aggregates ready; form decision pending (genre needs v2)
+Parallel:   C shape session          <- MCP tools live; exports need no portfolio work
 Parallel:   D shape + ADR cycle      <- independent of B/C; build after B ships
 ```
 

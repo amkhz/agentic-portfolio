@@ -5,7 +5,7 @@
 >
 > **How plans graduate:** Ideas and Dreamer output live in `plans/`. When scoped for building via invest-crew, they produce a mission in `vector/missions/`. Completed work moves to `plans/archive/` and `vector/missions/archive/`.
 
-**Last updated:** 2026-06-30
+**Last updated:** 2026-07-06
 
 ---
 
@@ -125,13 +125,13 @@
 
 ### 4. Music integration (Last.fm + MCP)
 
-**Status:** Tier 1 shipped (NowPlaying widget live in production). API key moved server-side (2026-07-06, `api/lastfm.ts` proxy). Phase 2 planned.
-**Plan:** `plans/music-phase-2.md` (supersedes the archived plan's Tier 1.5/2/3 sections) | **Original vision:** `plans/archive/lastfm-music-integration.md`
+**Status:** Tier 1 shipped (NowPlaying widget live). API key server-side (2026-07-06, `api/lastfm.ts` proxy, PRs #196/#198). **Mission 1 SHIPPED 2026-07-06:** the lastfm-mcp server is live at [github.com/amkhz/lastfm-mcp](https://github.com/amkhz/lastfm-mcp) -- archive-first per ADR-018, full 221,074-scrobble backfill (exact profile match), 13 MCP tools, schema-v1 portfolio aggregates, registered in the workspace. Roy-reviewed (ship-with-notes; notes filed as repo issues #8-#11).
+**Plan:** `plans/music-phase-2.md` | **Mission record:** `vector/missions/archive/lastfm-mcp-mission-1.md` | **ADR:** ADR-018
 
 **Next steps:**
-- Last.fm MCP server + full-history archive (Mission 1, separate repo)
-- "Twenty Years of Listening" flagship experience (Mission 2)
-- The Selector DJ set-builder; The Lounge concept (Works 02 candidate)
+- "Twenty Years of Listening" flagship experience (Mission 2). Form decision constraint: schema v1 has no genre/tag dimension -- genre constellation needs v2 enrichment (lastfm-mcp issue #11); eras timeline / rediscovery shelf do not.
+- The Selector DJ set-builder (shape session; rekordbox + Serato exports validated)
+- The Lounge concept (Works 02 candidate, needs its own shape + ADR cycle)
 
 ### 5. Crew and skills evolution
 
@@ -170,7 +170,7 @@
 - **Testing:** Vitest in the stack, coverage minimal. Add tests for core/ utilities and content model validation.
 - **Code splitting:** React Router v7 supports lazy loading. Set up per-route splitting as the lab bundle grows.
 - **View transitions:** Explore View Transitions API for page-level and constellation node navigation.
-- **MCP development:** Last.fm MCP server first. Pattern extends to other data sources.
+- **MCP development:** Last.fm MCP server ✅ shipped (Mission 1, 2026-07-06, [amkhz/lastfm-mcp](https://github.com/amkhz/lastfm-mcp)). The archive-first pattern (ADR-018) extends to other data sources.
 - **Theme-switch optimization:** Global transition selector narrowed to containers + interactive elements. Monitor for edge cases.
 
 ---

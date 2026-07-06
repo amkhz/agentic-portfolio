@@ -34,7 +34,6 @@ import {
   type FieldMotionParams,
 } from "./fieldMotion";
 import { FieldLegend } from "./FieldLegend";
-import { LocatorGhost } from "./LocatorGhost";
 import { readOklabToken } from "./oklabTokens";
 import { SliceScrubber } from "./SliceScrubber";
 
@@ -322,6 +321,19 @@ void main() {
 
   float alpha = clamp(shell * (0.22 + 0.78 * x) + fill, 0.0, 1.0) * present;
   vec3 color = linearToSrgb(oklabToLinear(ramp(x))) * alpha;
+
+  /* Off the reference plane, a faint bone hairline holds the midship
+     diameter (Works 01.1 live pass: without it, the shrinking cut read
+     as zoom; against the full-size reference the smaller ring reads as
+     the hull narrowing at this station, the ultrasound read). Strength
+     rises as the cut leaves home and the line sits exactly where the
+     reference cut would: R is the scaled centerline, so R/uRingScale
+     is the same centerline at scale 1. */
+  float refR = r - (R / max(uRingScale, 0.05));
+  float refLine = exp(-refR * refR * 90000.0);
+  float refStrength = smoothstep(0.015, 0.10, 1.0 - uRingScale) * 0.20 * present;
+  color += linearToSrgb(oklabToLinear(uInk)) * refLine * refStrength;
+  alpha = min(alpha + refLine * refStrength, 1.0);
 
   /* The sweep arm itself: a bone-ink test edge, gone once certified. */
   float armActive = step(0.001, uSweep) * (1.0 - step(0.999, uSweep));
@@ -765,14 +777,13 @@ export function FieldIntegrity({
             </div>
           ) : null}
         </div>
-        <FieldLegend
-          ghost={<LocatorGhost slice={slice} marks={ghostMarks} />}
-        />
+        <FieldLegend />
       </div>
       <SliceScrubber
         value={slice}
         onChange={setSlice}
         onSweep={applySlice}
+        marks={ghostMarks}
         disabled={!live || alertActive}
       />
       <p

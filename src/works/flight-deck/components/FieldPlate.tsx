@@ -1,10 +1,12 @@
+import { deckCopy } from "@core/works/flight-deck/copy";
 import {
   axialRidgeMarks,
   formatFieldReadings,
+  formatSlicePlane,
   sampleFieldTelemetry,
 } from "@core/works/flight-deck/field";
 import { FieldLegend } from "./FieldLegend";
-import { LocatorGhost } from "./LocatorGhost";
+import { HullSection } from "./HullSection";
 
 /**
  * Field Integrity at a legible nominal state, no WebGL and no motion:
@@ -21,11 +23,18 @@ export function FieldPlate() {
         <div className="deck-field__canvas" aria-hidden="true">
           <div className="deck-field-plate__ring" />
         </div>
-        {/* The ghost still at the reference plane: one still serves
-            both plates, the vacuum-gauge precedent (Works 01.1). */}
-        <FieldLegend
-          ghost={<LocatorGhost slice={0} marks={axialRidgeMarks(0)} />}
-        />
+        <FieldLegend />
+      </div>
+      {/* The hull still, cut at the reference plane: the slice plane's
+          story survives into both plates (Works 01.1). */}
+      <div className="deck-slice deck-slice--still" aria-hidden="true">
+        <span className="deck-slice__label">{deckCopy.slice.label}</span>
+        <span className="deck-slice__end">{deckCopy.slice.aft}</span>
+        <div className="deck-slice__track-box">
+          <HullSection marks={axialRidgeMarks(0)} cut={0} />
+        </div>
+        <span className="deck-slice__end">{deckCopy.slice.fore}</span>
+        <span className="deck-slice__value">{formatSlicePlane(0)}</span>
       </div>
       <p
         className="mt-3 text-2xl tabular-nums text-[var(--deck-ink)]"

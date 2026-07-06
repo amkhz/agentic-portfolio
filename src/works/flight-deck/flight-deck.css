@@ -153,17 +153,10 @@
   color: var(--deck-ink-label);
 }
 
-/* The locator ghost (Works 01.1): the ultrasound body marker, seated
-   above the ramp bar in the legend column (present at every aspect,
-   unlike the annotation layer). A schematic, never an image. */
-.deck-ghost {
-  width: 3.5rem;
-  height: auto;
-  flex: none;
-}
-
-/* The slice-plane scrubber (Works 01.1): the sweep, one compact row in
-   instrument grammar directly under the canvas. The thumb speaks the
+/* The slice-plane scrubber (Works 01.1, reworked after Justin's live
+   read): the track IS the bubble's silhouette (HullSection) and the
+   thumb IS the cut line traveling through the body, so the control
+   depicts a plane cutting a volume, never a zoom. The cut speaks the
    pressable brass (treatment B): quiet control ink at rest, full amber
    under the hand. The row's children dim while an alert holds the
    plane home (the root's opacity is boot-owned inline, so the rested
@@ -199,44 +192,36 @@
 .deck-slice__track-box {
   position: relative;
   flex: 1;
-  height: 1.5rem;
+  height: 2.25rem;
 }
 
-.deck-slice__track {
+.deck-hull {
   position: absolute;
-  top: 50%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The cut line: a vertical hairline through the whole hull, centered
+   on its own width by margin (the spring owns the transform channel,
+   the paradigm thumb's own pattern). */
+.deck-slice__cut {
+  position: absolute;
+  top: 0.125rem;
+  bottom: 0.125rem;
   left: 0;
-  right: 0;
-  border-top: 1px solid var(--deck-line);
-}
-
-.deck-slice__ref {
-  position: absolute;
-  left: 50%;
-  top: -0.25rem;
-  height: 0.5rem;
-  border-left: 1px solid var(--deck-ink-faint);
-}
-
-.deck-slice__thumb {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 0.75rem;
-  height: 0.75rem;
-  /* Centers by margins: the spring owns the transform channel (the
-     paradigm thumb's own pattern). */
-  margin: -0.375rem 0 0 -0.375rem;
-  border-radius: 50%;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 999px;
   background: var(--deck-control);
   pointer-events: none;
   transition: background-color 0.15s ease-out;
 }
 
 .deck-slice__track-box:has(.deck-slice__input:hover:not(:disabled))
-  .deck-slice__thumb,
+  .deck-slice__cut,
 .deck-slice__track-box:has(.deck-slice__input:active:not(:disabled))
-  .deck-slice__thumb {
+  .deck-slice__cut {
   background: var(--deck-caution);
 }
 
@@ -260,7 +245,7 @@
 }
 
 .deck-slice__track-box:has(.deck-slice__input:focus-visible)
-  .deck-slice__thumb {
+  .deck-slice__cut {
   outline: 2px solid var(--deck-focus);
   outline-offset: 3px;
 }
@@ -272,6 +257,11 @@
   letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums;
   color: var(--deck-ink-dim);
+}
+
+/* The plate's still: same grammar, nothing interactive, sits back. */
+.deck-slice--still {
+  opacity: 0.8;
 }
 
 /* Annotation layer ("earn the width", locked 2026-07-04): caliper arcs

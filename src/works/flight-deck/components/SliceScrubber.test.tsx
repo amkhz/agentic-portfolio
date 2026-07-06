@@ -2,7 +2,10 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render } from "@testing-library/react";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { axialRidgeMarks } from "@core/works/flight-deck/field";
 import { SliceScrubber } from "./SliceScrubber";
+
+const marks = axialRidgeMarks(0);
 
 const renderScrubber = (
   value = 0,
@@ -17,6 +20,7 @@ const renderScrubber = (
       value={value}
       onChange={onChange}
       onSweep={onSweep}
+      marks={marks}
       disabled={disabled}
     />,
   ),
@@ -54,8 +58,21 @@ describe("SliceScrubber", () => {
     const { getByText, rerender, onChange, onSweep } = renderScrubber(-0.85);
     expect(getByText("-0.85")).toBeTruthy();
     rerender(
-      <SliceScrubber value={0} onChange={onChange} onSweep={onSweep} />,
+      <SliceScrubber
+        value={0}
+        onChange={onChange}
+        onSweep={onSweep}
+        marks={marks}
+      />,
     );
     expect(getByText("REF")).toBeTruthy();
+  });
+
+  it("carries the hull silhouette as its track (the body being cut)", () => {
+    const { container } = renderScrubber();
+    const hull = container.querySelector(".deck-hull");
+    expect(hull).not.toBeNull();
+    // Three tracked ridge ticks + the flank + the midship notch.
+    expect(hull!.querySelectorAll("line").length).toBeGreaterThanOrEqual(5);
   });
 });

@@ -9,18 +9,24 @@ import { deckCopy } from "@core/works/flight-deck/copy";
 import {
   describeSlicePlane,
   formatSlicePlane,
+  type AxialRidgeMark,
 } from "@core/works/flight-deck/field";
+import { HullSection } from "./HullSection";
 
 /**
  * The slice-plane scrubber (Works 01.1): the ultrasound move. The
  * display stays a computed cross-section; this sweeps the cut fore and
  * aft through the bubble, so the third dimension is revealed by
- * operating, not by rendering. Interaction pattern is the paradigm
- * slider's, exactly: a real range input as the surface (keyboard free),
- * a spring thumb on transform, and the model riding the SPRING value
+ * operating, not by rendering.
+ *
+ * Reworked after Justin's live read (the plain track read as a zoom
+ * control): the track IS the bubble's silhouette (HullSection), and the
+ * thumb IS the cut line traveling through the body, so the control
+ * depicts exactly what it does. Interaction pattern stays the paradigm
+ * slider's: a real range input as the surface (keyboard free), a
+ * spring-driven cut on transform, and the model riding the SPRING value
  * per frame (onSweep) so the cut eases between planes with the same
- * damped feel as the thumb. Reactive lane (ADR-017 D4): it answers the
- * hand.
+ * damped feel. Reactive lane (ADR-017 D4): it answers the hand.
  *
  * While a drill alert is posted the scrubber rests disabled and the
  * plane snaps home (owner: FieldIntegrity): procedures read against the
@@ -33,6 +39,8 @@ interface SliceScrubberProps {
   onChange: (value: number) => void;
   /** The spring's live value, every frame: drives the render's cut. */
   onSweep: (value: number) => void;
+  /** Axial ridge positions for the hull's ticks. */
+  marks: AxialRidgeMark[];
   disabled?: boolean;
 }
 
@@ -43,6 +51,7 @@ export function SliceScrubber({
   value,
   onChange,
   onSweep,
+  marks,
   disabled = false,
 }: SliceScrubberProps) {
   const spring = useSpring(value, thumbSpring);
@@ -83,12 +92,11 @@ export function SliceScrubber({
       <span className="deck-slice__label">{deckCopy.slice.label}</span>
       <span className="deck-slice__end">{deckCopy.slice.aft}</span>
       <div className="deck-slice__track-box" ref={trackBoxRef}>
-        <span className="deck-slice__track" aria-hidden="true">
-          {/* The reference plane's home mark at center. */}
-          <span className="deck-slice__ref" />
-        </span>
+        {/* The body being cut: hull silhouette, keel, ridge ticks. */}
+        <HullSection marks={marks} />
+        {/* The cut itself, riding the spring through the hull. */}
         <motion.span
-          className="deck-slice__thumb"
+          className="deck-slice__cut"
           aria-hidden="true"
           style={{ x: thumbX }}
         />

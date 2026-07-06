@@ -27,6 +27,7 @@ import {
 import { AlertRegion } from "./AlertRegion";
 import { ConsciousnessChamber } from "./ConsciousnessChamber";
 import { DeckBench } from "./DeckBench";
+import { DECK_TAB } from "./deckTab";
 import { DrillProcedure } from "./DrillProcedure";
 import { DrillResidual } from "./DrillResidual";
 import { FieldIntegrity, type FieldIntegrityHandle } from "./FieldIntegrity";
@@ -383,6 +384,7 @@ export function DeckSession({
         soundControl={
           <button
             type="button"
+            tabIndex={DECK_TAB}
             onClick={toggleSound}
             aria-pressed={state.soundOn}
             title={deckCopy.sound.hint}
@@ -396,6 +398,7 @@ export function DeckSession({
           booted ? (
             <button
               type="button"
+              tabIndex={DECK_TAB}
               onClick={runShutdown}
               title={deckCopy.shutdown.hint}
               className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
@@ -502,6 +505,7 @@ export function DeckSession({
             <button
               type="button"
               aria-label={deckCopy.wakeHold}
+              tabIndex={DECK_TAB}
               className="deck-wake__control mx-auto"
               onPointerDown={beginHold}
               onPointerUp={releaseHold}

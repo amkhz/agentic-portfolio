@@ -1,6 +1,7 @@
 import { instruments, type InstrumentId } from "@core/works/flight-deck/instruments";
 import { SEVERITY_ORDER, type Severity } from "@core/works/flight-deck/boot";
 import { deckCopy } from "@core/works/flight-deck/copy";
+import { DECK_TAB } from "./deckTab";
 import { FieldPlate } from "./FieldPlate";
 import { OperatorStrip } from "./OperatorStrip";
 import { OrientationPlate } from "./OrientationPlate";
@@ -211,6 +212,7 @@ export function DeckBench({
             {variant === "live" ? shutdownControl : null}
             <button
               type="button"
+              tabIndex={DECK_TAB}
               onClick={onExitToColophon}
               className="deck-hit text-xs uppercase tracking-[0.2em] text-[var(--deck-control)] hover:text-[var(--deck-caution)] transition-colors duration-150"
             >

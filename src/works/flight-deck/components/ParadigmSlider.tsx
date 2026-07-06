@@ -16,6 +16,7 @@ import {
   type ParadigmRegime,
 } from "@core/works/flight-deck/paradigm";
 import { deckSpringSoft } from "./deckMotion";
+import { DECK_TAB } from "./deckTab";
 
 /**
  * The paradigm slider, the final instrument (movement 5): DIRD 28's
@@ -127,6 +128,7 @@ export function ParadigmSlider({
         <input
           type="range"
           className="deck-paradigm__input"
+          tabIndex={DECK_TAB}
           min={0}
           max={100}
           step={1}

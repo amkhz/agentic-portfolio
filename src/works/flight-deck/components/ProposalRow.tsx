@@ -5,6 +5,7 @@ import {
   type Proposal,
 } from "@core/works/flight-deck/translation";
 import { deckSpringSoft } from "./deckMotion";
+import { DECK_TAB } from "./deckTab";
 
 /**
  * The review surface (option D, 2026-07-04): drafted routes surface as
@@ -110,6 +111,7 @@ export function ProposalRow({
                   <button
                     type="button"
                     className="deck-commit"
+                    tabIndex={DECK_TAB}
                     disabled={committing}
                     onClick={() => onCommit(proposal)}
                   >

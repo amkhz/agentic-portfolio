@@ -1,19 +1,8 @@
 import type { NowPlayingData, Track } from "@core/content/lastfm";
 
-const API_KEY = import.meta.env.VITE_LASTFM_API_KEY;
-const USER = import.meta.env.VITE_LASTFM_USER;
-const BASE_URL = "https://ws.audioscrobbler.com/2.0/";
-
-function buildUrl(method: string, params: Record<string, string> = {}): string {
-  const searchParams = new URLSearchParams({
-    method,
-    user: USER,
-    api_key: API_KEY,
-    format: "json",
-    ...params,
-  });
-  return `${BASE_URL}?${searchParams}`;
-}
+// Same-origin serverless proxy (api/lastfm.ts). The key and username
+// live server-side; the client only ever sees scrobble data.
+const PROXY_URL = "/api/lastfm";
 
 function parseTrack(raw: Record<string, unknown>): Track {
   const images = raw.image as Array<{ "#text": string; size: string }> | undefined;
@@ -35,8 +24,7 @@ function parseTrack(raw: Record<string, unknown>): Track {
 }
 
 export async function fetchNowPlaying(): Promise<NowPlayingData> {
-  const url = buildUrl("user.getRecentTracks", { limit: "5" });
-  const response = await fetch(url);
+  const response = await fetch(`${PROXY_URL}?limit=5`);
 
   if (!response.ok) {
     throw new Error(`Last.fm API error: ${response.status}`);

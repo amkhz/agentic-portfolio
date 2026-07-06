@@ -125,13 +125,13 @@
 
 ### 4. Music integration (Last.fm + MCP)
 
-**Status:** Tier 1 shipped (NowPlaying widget live in production).
-**Plan:** `plans/archive/lastfm-music-integration.md`
+**Status:** Tier 1 shipped (NowPlaying widget live in production). API key moved server-side (2026-07-06, `api/lastfm.ts` proxy). Phase 2 planned.
+**Plan:** `plans/music-phase-2.md` (supersedes the archived plan's Tier 1.5/2/3 sections) | **Original vision:** `plans/archive/lastfm-music-integration.md`
 
 **Next steps:**
-- Move API key server-side via Vercel serverless function
-- Last.fm MCP server (Tier 2)
-- Listening history visualizations, genre maps, DJ playlist mining
+- Last.fm MCP server + full-history archive (Mission 1, separate repo)
+- "Twenty Years of Listening" flagship experience (Mission 2)
+- The Selector DJ set-builder; The Lounge concept (Works 02 candidate)
 
 ### 5. Crew and skills evolution
 

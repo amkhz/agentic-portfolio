@@ -1,9 +1,14 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => {
+  // Server-side vars (LASTFM_*) for the dev proxy mirror below. The empty
+  // prefix loads everything from .env.local; nothing here reaches the client.
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
   define: {
     // Baked at build time. Used by the lab library header as a
     // fallback 'Last updated' stamp until guides grow a frontmatter
@@ -31,6 +36,54 @@ export default defineConfig({
             req.url = '/labs.html';
           }
           next();
+        });
+      },
+    },
+    {
+      // Dev mirror of the production serverless proxy (api/lastfm.ts):
+      // `npm run dev` has no Vercel functions, so the dev server answers
+      // /api/lastfm itself with the same contract the function serves.
+      name: 'lastfm-dev-proxy',
+      configureServer(server) {
+        server.middlewares.use('/api/lastfm', (req, res) => {
+          void (async () => {
+            const apiKey = env.LASTFM_API_KEY;
+            const user = env.LASTFM_USER;
+            if (!apiKey || !user) {
+              res.statusCode = 500;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ error: 'Last.fm proxy is not configured' }));
+              return;
+            }
+            const requested = Number(
+              new URL(req.url ?? '/', 'http://localhost').searchParams.get('limit'),
+            );
+            const limit = Number.isInteger(requested)
+              ? Math.min(Math.max(requested, 1), 50)
+              : 5;
+            const upstream = new URL('https://ws.audioscrobbler.com/2.0/');
+            upstream.search = new URLSearchParams({
+              method: 'user.getRecentTracks',
+              user,
+              api_key: apiKey,
+              format: 'json',
+              limit: String(limit),
+            }).toString();
+            try {
+              const response = await fetch(upstream);
+              res.statusCode = response.ok ? 200 : 502;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(
+                response.ok
+                  ? await response.text()
+                  : JSON.stringify({ error: `Last.fm API error: ${response.status}` }),
+              );
+            } catch {
+              res.statusCode = 502;
+              res.setHeader('Content-Type', 'application/json');
+              res.end(JSON.stringify({ error: 'Last.fm upstream unreachable' }));
+            }
+          })();
         });
       },
     },
@@ -109,4 +162,5 @@ export default defineConfig({
     ],
     setupFiles: ['./src/test-setup.ts'],
   },
+  };
 });

@@ -39,6 +39,8 @@ Two `VITE_`-prefixed variables are required: `VITE_LASTFM_API_KEY` and `VITE_LAS
 
 The Last.fm API key is embedded in client-side code via `import.meta.env`. This key is read-only with no write access to the Last.fm account. The risk is minimal: an attacker could make read requests against the same public scrobble data that Last.fm already exposes on the user's profile page. A future improvement is to proxy requests through a Vercel serverless function to remove the key from client bundles entirely.
 
+> **Update (2026-07-06):** the deferred proxy shipped. `api/lastfm.ts` (Vercel serverless function) now fronts `user.getRecentTracks` with a 30s edge cache; `services/lastfm.ts` fetches same-origin `/api/lastfm`; env vars moved server-side (`LASTFM_API_KEY` / `LASTFM_USER`, no `VITE_` prefix). A Vite middleware mirrors the function in dev. See `plans/music-phase-2.md`.
+
 ### UI design
 
 - **Inverted tab** positioned absolutely below the header, right-aligned on desktop, centered on mobile.

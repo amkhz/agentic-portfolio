@@ -4,6 +4,7 @@ import { Container } from "./Container";
 import { MobileMenu } from "./MobileMenu";
 import { ThemeToggle } from "@/components/interactive/ThemeToggle";
 import { NowPlaying } from "@/components/interactive/NowPlaying";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const navLinks = [
   { to: "/", label: "Home" },
@@ -19,6 +20,7 @@ export function Header() {
   return (
     <header className="relative sticky top-0 z-50 border-b border-border-subtle bg-bg-deep/80 backdrop-blur-md">
       <a
+        tabIndex={SITE_TAB}
         href="#main"
         className="absolute left-4 top-3 z-[60] -translate-y-16 rounded-md bg-accent-primary px-4 py-2 font-heading text-sm font-semibold text-text-inverse transition-transform duration-normal focus:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
       >
@@ -26,8 +28,12 @@ export function Header() {
       </a>
 
       <Container>
-        <nav aria-label="Primary navigation" className="flex h-16 items-center justify-between">
+        <nav
+          aria-label="Primary navigation"
+          className="flex h-16 items-center justify-between"
+        >
           <Link
+            tabIndex={SITE_TAB}
             to="/"
             className="font-display text-xl leading-none tracking-tight text-text-primary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             aria-label="Justin Hernandez - Home"
@@ -40,6 +46,7 @@ export function Header() {
             {navLinks.map((link) => (
               <li key={link.to}>
                 <NavLink
+                  tabIndex={SITE_TAB}
                   to={link.to}
                   end={link.to === "/"}
                   className={({ isActive }) =>

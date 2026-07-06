@@ -1,5 +1,6 @@
 import { DossierFrame } from "@/components/fieldnotebook";
 import { parseInline } from "@/lib/parseInline";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /**
  * CtaBlock — an external call-to-action that links out of the portfolio
@@ -29,6 +30,7 @@ export function CtaBlock({
 
   return (
     <a
+      tabIndex={SITE_TAB}
       href={href}
       target="_blank"
       rel="noopener noreferrer"
@@ -46,7 +48,10 @@ export function CtaBlock({
           <span className="font-medium transition-colors duration-normal group-hover:text-text-primary group-focus-visible:text-text-primary">
             {action}
           </span>
-          <span aria-hidden="true" className="transition-transform duration-normal group-hover:translate-x-1">
+          <span
+            aria-hidden="true"
+            className="transition-transform duration-normal group-hover:translate-x-1"
+          >
             &rarr;
           </span>
           <span className="text-text-muted">{host}</span>

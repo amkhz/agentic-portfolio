@@ -1,9 +1,13 @@
 import { Link } from "react-router";
 import { Container } from "./Container";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border-subtle bg-bg-deep" style={{ backgroundImage: "none" }}>
+    <footer
+      className="border-t border-border-subtle bg-bg-deep"
+      style={{ backgroundImage: "none" }}
+    >
       <Container>
         <div className="flex flex-col gap-8 py-12 sm:py-16">
           {/* Navigation row */}
@@ -12,30 +16,35 @@ export function Footer() {
             className="flex flex-wrap items-center gap-x-8 gap-y-3"
           >
             <Link
+              tabIndex={SITE_TAB}
               to="/work"
               className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               Work
             </Link>
             <Link
+              tabIndex={SITE_TAB}
               to="/notes"
               className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               Notes
             </Link>
             <Link
+              tabIndex={SITE_TAB}
               to="/about"
               className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               About
             </Link>
             <Link
+              tabIndex={SITE_TAB}
               to="/resume"
               className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               Resume
             </Link>
             <a
+              tabIndex={SITE_TAB}
               href="mailto:justin@justinh.design"
               className="inline-flex min-h-[44px] items-center font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
@@ -44,12 +53,16 @@ export function Footer() {
           </nav>
 
           {/* Accent line */}
-          <div className="h-px w-12 bg-accent-primary opacity-30" aria-hidden="true" />
+          <div
+            className="h-px w-12 bg-accent-primary opacity-30"
+            aria-hidden="true"
+          />
 
           {/* Cross-surface link to the lab */}
           <p className="font-body text-sm text-text-muted">
             Also building{" "}
             <a
+              tabIndex={SITE_TAB}
               href="https://labs.justinh.design"
               className="font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary hover:underline hover:decoration-accent-primary hover:underline-offset-4 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
@@ -63,7 +76,8 @@ export function Footer() {
               &copy; {new Date().getFullYear()} Justin Hernandez
             </p>
             <p className="font-body text-xs text-text-muted">
-              Designed and built with craft, curiosity, and a crew of AI collaborators.
+              Designed and built with craft, curiosity, and a crew of AI
+              collaborators.
             </p>
           </div>
         </div>

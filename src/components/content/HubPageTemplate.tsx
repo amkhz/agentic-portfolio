@@ -4,6 +4,7 @@ import type { CaseStudy } from "@core/content/case-studies";
 import { Container } from "@/components/layout/Container";
 import { DossierFrame } from "@/components/fieldnotebook";
 import { parseInline } from "@/lib/parseInline";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface HubPageProps {
   slug: string;
@@ -13,6 +14,7 @@ interface HubPageProps {
 function BackLink({ label }: { label: string }) {
   return (
     <Link
+      tabIndex={SITE_TAB}
       to="/work"
       className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
@@ -34,6 +36,7 @@ function DoorCard({
 
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/work/${target.slug}`}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
@@ -66,7 +69,9 @@ function DoorCard({
 function BodyOfWorkItem({
   item,
 }: {
-  item: NonNullable<NonNullable<CaseStudy["hub"]>["bodyOfWork"]>["items"][number];
+  item: NonNullable<
+    NonNullable<CaseStudy["hub"]>["bodyOfWork"]
+  >["items"][number];
 }) {
   const target = item.slug
     ? caseStudies.find((s) => s.slug === item.slug)
@@ -94,6 +99,7 @@ function BodyOfWorkItem({
 
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/work/${target.slug}`}
       className="group block border-t border-border-subtle pt-6 transition-colors duration-normal hover:[border-color:var(--fieldnote-rule-strong)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >

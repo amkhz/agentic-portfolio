@@ -7,6 +7,7 @@ import { AboutSnippet } from "@/components/content/AboutSnippet";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import { TocLinkList, type TocItem } from "@/components/fieldnotebook";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function HomePage() {
   const featured = metaCaseStudy;
@@ -19,16 +20,16 @@ export function HomePage() {
   const selected: TocItem[] = caseStudies
     .filter((study) => !study.parentHub)
     .map((study, i) => ({
-    id: study.slug,
-    to: `/work/${study.slug}`,
-    label: study.title,
-    thumbnail: {
-      src: study.mark?.thumb,
-      alt: study.mark?.alt ?? `${study.title} project mark`,
-      placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
-    },
-    kicker: study.tags.slice(0, 2).join(" / "),
-  }));
+      id: study.slug,
+      to: `/work/${study.slug}`,
+      label: study.title,
+      thumbnail: {
+        src: study.mark?.thumb,
+        alt: study.mark?.alt ?? `${study.title} project mark`,
+        placeholder: `Fig.${String(i + 1).padStart(2, "0")}`,
+      },
+      kicker: study.tags.slice(0, 2).join(" / "),
+    }));
 
   return (
     <>
@@ -54,7 +55,10 @@ export function HomePage() {
       {/* Selected work - Field Notebook ledger in an asymmetric two-column
           spread: the index heading and dossier metadata live in the margin,
           the registration-line list carries the weight. */}
-      <section id="work" className="border-t border-border-subtle py-20 sm:py-24">
+      <section
+        id="work"
+        className="border-t border-border-subtle py-20 sm:py-24"
+      >
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             {/* Margin column - kicker, heading, dossier note */}
@@ -70,6 +74,7 @@ export function HomePage() {
                   A short ledger of recent case files.
                 </p>
                 <Link
+                  tabIndex={SITE_TAB}
                   to="/work"
                   className="mt-6 inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 >

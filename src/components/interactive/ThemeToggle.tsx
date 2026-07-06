@@ -1,5 +1,6 @@
 import { useTheme } from "@/lib/useTheme";
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useTheme();
@@ -7,6 +8,7 @@ export function ThemeToggle({ className }: { className?: string }) {
 
   return (
     <button
+      tabIndex={SITE_TAB}
       type="button"
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
@@ -15,7 +17,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         "text-text-secondary",
         "hover:bg-bg-subtle hover:text-text-primary",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
-        className
+        className,
       )}
     >
       <svg
@@ -35,21 +37,21 @@ export function ThemeToggle({ className }: { className?: string }) {
           d="M9 18h6"
           className={cn(
             "transition-opacity duration-normal motion-reduce:transition-none",
-            isDark ? "opacity-50" : "opacity-100"
+            isDark ? "opacity-50" : "opacity-100",
           )}
         />
         <path
           d="M10 22h4"
           className={cn(
             "transition-opacity duration-normal motion-reduce:transition-none",
-            isDark ? "opacity-50" : "opacity-100"
+            isDark ? "opacity-50" : "opacity-100",
           )}
         />
         <path
           d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"
           className={cn(
             "transition-[opacity,stroke-width] duration-normal motion-reduce:transition-none",
-            isDark ? "opacity-60" : "opacity-100"
+            isDark ? "opacity-60" : "opacity-100",
           )}
         />
         <path
@@ -58,12 +60,39 @@ export function ThemeToggle({ className }: { className?: string }) {
             "transition-[opacity,stroke-width] duration-normal motion-reduce:transition-none",
             isDark
               ? "opacity-40 [stroke-width:1.5]"
-              : "opacity-100 [stroke-width:2]"
+              : "opacity-100 [stroke-width:2]",
           )}
         />
-        <line x1="12" y1="1" x2="12" y2="3" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-60")} />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
-        <line x1="19.78" y1="4.22" x2="18.36" y2="5.64" className={cn("transition-opacity duration-normal motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
+        <line
+          x1="12"
+          y1="1"
+          x2="12"
+          y2="3"
+          className={cn(
+            "transition-opacity duration-normal motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-60",
+          )}
+        />
+        <line
+          x1="4.22"
+          y1="4.22"
+          x2="5.64"
+          y2="5.64"
+          className={cn(
+            "transition-opacity duration-normal motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-40",
+          )}
+        />
+        <line
+          x1="19.78"
+          y1="4.22"
+          x2="18.36"
+          y2="5.64"
+          className={cn(
+            "transition-opacity duration-normal motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-40",
+          )}
+        />
       </svg>
     </button>
   );

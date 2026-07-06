@@ -1,4 +1,5 @@
 import type { ResumeContactItem } from "@core/content/resume";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ResumeHeaderProps {
   name: string;
@@ -22,6 +23,7 @@ export function ResumeHeader({ name, title, contacts }: ResumeHeaderProps) {
             {contact.href ? (
               contact.href.startsWith("http") ? (
                 <a
+                  tabIndex={SITE_TAB}
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -31,6 +33,7 @@ export function ResumeHeader({ name, title, contacts }: ResumeHeaderProps) {
                 </a>
               ) : (
                 <a
+                  tabIndex={SITE_TAB}
                   href={contact.href}
                   className="transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 >

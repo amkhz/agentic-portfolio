@@ -7,6 +7,7 @@ import { ImageBlock } from "./ImageBlock";
 import { Tag } from "@/components/interactive/Tag";
 import { CodexSpine } from "./CodexSpine";
 import { renderSection } from "./renderSection";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -28,6 +29,7 @@ export function CodexPageTemplate({ slug }: CodexPageProps) {
         <Container>
           <nav aria-label="Breadcrumb" className="mb-8">
             <Link
+              tabIndex={SITE_TAB}
               to="/work"
               className="inline-flex items-center gap-1.5 font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
@@ -77,7 +79,7 @@ export function CodexPageTemplate({ slug }: CodexPageProps) {
             <div className="mx-auto max-w-[65ch]">
               <div className="flex flex-col gap-8">
                 {preamble.map((section, index) =>
-                  renderSection(section, index, "h2")
+                  renderSection(section, index, "h2"),
                 )}
               </div>
             </div>
@@ -114,6 +116,7 @@ export function CodexPageTemplate({ slug }: CodexPageProps) {
         <Container>
           <div className="border-t border-border-subtle pt-10">
             <Link
+              tabIndex={SITE_TAB}
               to="/work"
               className="inline-flex items-center gap-1.5 font-heading text-sm font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >

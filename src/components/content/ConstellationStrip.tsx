@@ -1,5 +1,6 @@
 import type { ConstellationNode } from "@core/content/constellation";
 import { readingOrder } from "@core/content/constellation";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ConstellationStripProps {
   nodes: ConstellationNode[];
@@ -41,6 +42,7 @@ export function ConstellationStrip({
 
         <div className="relative min-w-0 flex-1">
           <select
+            tabIndex={SITE_TAB}
             aria-label="Jump to section"
             value={selectedId ?? ""}
             onChange={(e) => onSelectNode(e.target.value)}

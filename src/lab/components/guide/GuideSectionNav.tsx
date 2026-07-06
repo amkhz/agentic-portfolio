@@ -1,6 +1,7 @@
 import type { GuideSection } from "@core/lab/guide-types";
 import { SectionIcon } from "./SectionIcon";
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 // Matches the callout-chip icon size; color inherits from the row.
 const CHIP_ICON_SIZE = 13;
@@ -37,6 +38,7 @@ export function GuideSectionNav({
           return (
             <li key={section.id}>
               <button
+                tabIndex={SITE_TAB}
                 type="button"
                 onClick={() => onSelect(section.id)}
                 aria-current={selected ? "location" : undefined}

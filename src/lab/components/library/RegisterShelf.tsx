@@ -20,6 +20,7 @@ import { Link } from "react-router";
 import type { Guide, GuideStatus } from "@core/lab/guide-types";
 import type { UpcomingGuide, UpcomingStatus } from "@core/lab/upcoming";
 import { STATUS_LABEL, useGuideAccentStyle } from "./guideShelfCommon";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const STATUS_DOT: Record<GuideStatus, string> = {
   complete: "text-guide-accent",
@@ -53,6 +54,7 @@ function RegisterEntry({ guide, index }: { guide: Guide; index: number }) {
 
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/g/${guide.slug}`}
       style={accentStyle}
       aria-label={`${title} — ${STATUS_LABEL[status]}`}

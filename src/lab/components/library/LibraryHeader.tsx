@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import { springSoft } from "@/components/effects/motionConfig";
 import { labStats } from "@core/lab/territories";
 import { PerihelionSigil } from "./PerihelionSigil";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface LibraryHeaderProps {
   guideCount: number;
@@ -65,7 +66,9 @@ export function LibraryHeader({
         <span aria-hidden className="text-lab-border-strong">
           ·
         </span>
-        <span>{labStats.peerReviewedPapersCited} peer-reviewed papers cited</span>
+        <span>
+          {labStats.peerReviewedPapersCited} peer-reviewed papers cited
+        </span>
         <span aria-hidden className="text-lab-border-strong">
           ·
         </span>
@@ -79,7 +82,10 @@ export function LibraryHeader({
 function ColophonNote() {
   return (
     <details className="group mt-6 max-w-xl [&_summary::-webkit-details-marker]:hidden">
-      <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-sm py-1.5 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent">
+      <summary
+        tabIndex={SITE_TAB}
+        className="inline-flex cursor-pointer list-none items-center gap-2 rounded-sm py-1.5 font-lab-mono text-[0.7rem] uppercase tracking-[0.18em] text-lab-text-muted transition-colors duration-[var(--duration-normal)] hover:text-guide-accent"
+      >
         <Plus
           aria-hidden="true"
           strokeWidth={2}
@@ -90,9 +96,9 @@ function ColophonNote() {
       <p className="mt-3 font-lab-body text-sm leading-relaxed text-lab-text-secondary">
         Many guides walk a <span className="font-lab-mono">DIRD</span>, a
         Defense Intelligence Reference Document declassified from the AAWSAP
-        intelligence collection. The rest of the corpus is peer-reviewed
-        journal articles, NASA technical reports, and proceedings from
-        contemporary frontier-science gatherings.
+        intelligence collection. The rest of the corpus is peer-reviewed journal
+        articles, NASA technical reports, and proceedings from contemporary
+        frontier-science gatherings.
       </p>
     </details>
   );

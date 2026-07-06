@@ -1,6 +1,7 @@
 import type { CaseStudySection } from "@core/content/case-studies";
 import { cn } from "@core/utils";
 import { renderSection } from "./renderSection";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface CodexChapterProps {
   id: string;
@@ -28,7 +29,7 @@ export function CodexChapter({
       aria-labelledby={nodeId}
       className={cn(
         "grid motion-safe:transition-[grid-template-rows] motion-safe:duration-slower motion-safe:ease-spring",
-        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
       )}
     >
       <div className="overflow-hidden">
@@ -54,36 +55,40 @@ export function CodexChapter({
           })}
 
           {/* Connection tags */}
-          {connections && connections.length > 0 && onNavigate && chapterTitles && (
-            <nav
-              aria-label="Related chapters"
-              className="flex flex-wrap items-center gap-2 border-t border-border-subtle pt-6"
-            >
-              <span className="font-heading text-[11px] font-medium uppercase tracking-wider text-text-muted">
-                Related
-              </span>
-              {connections.map((connId) => {
-                const title = chapterTitles[connId];
-                if (!title) return null;
-                return (
-                  <button
-                    key={connId}
-                    type="button"
-                    onClick={() => onNavigate(connId)}
-                    className={cn(
-                      "rounded-full border border-border-subtle px-3 py-1",
-                      "font-heading text-xs font-medium text-text-secondary",
-                      "transition-[border-color,color] duration-normal",
-                      "hover:border-accent-primary/40 hover:text-accent-primary",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
-                    )}
-                  >
-                    {title}
-                  </button>
-                );
-              })}
-            </nav>
-          )}
+          {connections &&
+            connections.length > 0 &&
+            onNavigate &&
+            chapterTitles && (
+              <nav
+                aria-label="Related chapters"
+                className="flex flex-wrap items-center gap-2 border-t border-border-subtle pt-6"
+              >
+                <span className="font-heading text-[11px] font-medium uppercase tracking-wider text-text-muted">
+                  Related
+                </span>
+                {connections.map((connId) => {
+                  const title = chapterTitles[connId];
+                  if (!title) return null;
+                  return (
+                    <button
+                      tabIndex={SITE_TAB}
+                      key={connId}
+                      type="button"
+                      onClick={() => onNavigate(connId)}
+                      className={cn(
+                        "rounded-full border border-border-subtle px-3 py-1",
+                        "font-heading text-xs font-medium text-text-secondary",
+                        "transition-[border-color,color] duration-normal",
+                        "hover:border-accent-primary/40 hover:text-accent-primary",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
+                      )}
+                    >
+                      {title}
+                    </button>
+                  );
+                })}
+              </nav>
+            )}
         </div>
       </div>
     </div>

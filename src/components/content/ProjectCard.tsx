@@ -3,6 +3,7 @@ import type { CaseStudy } from "@core/content/case-studies";
 import { Container } from "@/components/layout/Container";
 import { DossierFrame, DossierTags } from "@/components/fieldnotebook";
 import { ResponsiveImage } from "@/components/content/ResponsiveImage";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /**
  * ProjectCard - repurposed as the Home "featured dossier" spread (ADR-013 /
@@ -20,7 +21,10 @@ interface ProjectCardProps {
   kicker?: string;
 }
 
-export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCardProps) {
+export function ProjectCard({
+  study,
+  kicker = "Featured case file",
+}: ProjectCardProps) {
   const hasRealImage =
     typeof study.heroImage.src === "string" &&
     study.heroImage.src.length > 0 &&
@@ -29,6 +33,7 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
   return (
     <Container as="section">
       <Link
+        tabIndex={SITE_TAB}
         to={`/work/${study.slug}`}
         aria-label={`View case study: ${study.title}`}
         className="group block rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-8 focus-visible:ring-offset-bg-deep"
@@ -36,9 +41,7 @@ export function ProjectCard({ study, kicker = "Featured case file" }: ProjectCar
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
           {/* Cover plate - image lives within the padded registration frame */}
           <div className="lg:col-span-7">
-            <DossierFrame
-              className="bg-bg-base transition-[border-color] duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)]"
-            >
+            <DossierFrame className="bg-bg-base transition-[border-color] duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)]">
               {hasRealImage ? (
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <ResponsiveImage

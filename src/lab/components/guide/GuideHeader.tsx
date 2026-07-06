@@ -1,4 +1,5 @@
 import type { Guide, SourceMeta } from "@core/lab/guide-types";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface GuideHeaderProps {
   guide: Guide;
@@ -32,6 +33,7 @@ function SourceLine({ source }: { source: SourceMeta }) {
     <p className="mt-8 font-lab-mono text-sm tracking-wide text-lab-text-muted">
       {url ? (
         <a
+          tabIndex={SITE_TAB}
           href={url}
           target="_blank"
           rel="noopener noreferrer"

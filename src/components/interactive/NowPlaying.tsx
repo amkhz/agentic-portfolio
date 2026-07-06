@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNowPlaying } from "@/lib/useNowPlaying";
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const PROFILE_URL = "https://www.last.fm/user/amkhz_";
 
@@ -57,13 +58,14 @@ export function NowPlaying({ className }: { className?: string }) {
       className={cn(
         "absolute left-1/2 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0",
         "top-full z-40",
-        className
+        className,
       )}
     >
       {/* Tab + expanded panel container */}
       <div className="flex w-[280px] flex-col items-stretch sm:w-auto">
         {/* Tab trigger */}
         <button
+          tabIndex={SITE_TAB}
           onClick={() => setIsOpen((prev) => !prev)}
           className={cn(
             "flex items-center justify-end gap-2.5 px-4 py-2",
@@ -71,7 +73,7 @@ export function NowPlaying({ className }: { className?: string }) {
             isOpen ? "border-b-0" : "border-b rounded-b-lg",
             "cursor-pointer transition-colors duration-normal",
             "hover:bg-bg-subtle",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
           )}
           aria-expanded={isOpen}
           aria-label={`${statusLabel}: ${track.name} by ${track.artist}. Click to ${isOpen ? "collapse" : "expand"}.`}
@@ -82,20 +84,20 @@ export function NowPlaying({ className }: { className?: string }) {
               {statusLabel}
             </span>
             <svg
-            aria-hidden="true"
-            className={cn(
-              "h-3 w-3 text-text-muted transition-transform duration-normal",
-              isOpen && "rotate-180"
-            )}
-            viewBox="0 0 12 12"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M3 4.5 L6 7.5 L9 4.5" />
-          </svg>
+              aria-hidden="true"
+              className={cn(
+                "h-3 w-3 text-text-muted transition-transform duration-normal",
+                isOpen && "rotate-180",
+              )}
+              viewBox="0 0 12 12"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M3 4.5 L6 7.5 L9 4.5" />
+            </svg>
           </span>
         </button>
 
@@ -103,7 +105,7 @@ export function NowPlaying({ className }: { className?: string }) {
         <div
           className={cn(
             "grid motion-safe:transition-[grid-template-rows] motion-safe:duration-slower motion-safe:ease-spring",
-            isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
           )}
         >
           <div className="overflow-hidden">
@@ -113,7 +115,7 @@ export function NowPlaying({ className }: { className?: string }) {
                 "motion-safe:transition-opacity motion-safe:duration-slower motion-safe:ease-spring",
                 isOpen ? "opacity-100" : "opacity-0",
                 "bg-bg-elevated/80 backdrop-blur-md border-x border-b border-border-subtle",
-                "rounded-b-lg"
+                "rounded-b-lg",
               )}
             >
               {track.albumArt ? (
@@ -144,6 +146,7 @@ export function NowPlaying({ className }: { className?: string }) {
               </div>
 
               <a
+                tabIndex={SITE_TAB}
                 href={PROFILE_URL}
                 target="_blank"
                 rel="noopener noreferrer"

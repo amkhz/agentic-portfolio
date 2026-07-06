@@ -2,6 +2,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { Link } from "react-router";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { springSettle, springHover } from "@/components/effects/motionConfig";
+import { SITE_TAB } from "@/lib/tabOrder";
 import { RegistrationMark } from "./RegistrationMark";
 
 // Spring-driven hover targets: glide right + a hair of scale so the row leans in.
@@ -80,7 +81,11 @@ const swatchStyle = (color: string): CSSProperties => ({
 });
 
 /** Square specimen thumbnail with brass registration ticks; placeholder-aware. */
-function Thumb({ thumbnail }: { thumbnail: NonNullable<TocItem["thumbnail"]> }) {
+function Thumb({
+  thumbnail,
+}: {
+  thumbnail: NonNullable<TocItem["thumbnail"]>;
+}) {
   const real =
     typeof thumbnail.src === "string" &&
     thumbnail.src.length > 0 &&
@@ -123,7 +128,11 @@ function RowBody({ item }: { item: TocItem }) {
         </span>
       )}
       {item.swatchColor && (
-        <span aria-hidden="true" className="shrink-0" style={swatchStyle(item.swatchColor)} />
+        <span
+          aria-hidden="true"
+          className="shrink-0"
+          style={swatchStyle(item.swatchColor)}
+        />
       )}
 
       <span className="block min-w-0 sm:flex sm:flex-col sm:gap-1.5">
@@ -177,7 +186,12 @@ function Row({ item }: { item: TocItem }) {
 
   if (item.to) {
     return (
-      <MotionLink to={item.to} className={rowClass} {...motionProps}>
+      <MotionLink
+        to={item.to}
+        tabIndex={SITE_TAB}
+        className={rowClass}
+        {...motionProps}
+      >
         <RowBody item={item} />
       </MotionLink>
     );
@@ -186,6 +200,7 @@ function Row({ item }: { item: TocItem }) {
     return (
       <motion.a
         href={item.href}
+        tabIndex={SITE_TAB}
         className={rowClass}
         {...motionProps}
         {...(item.href.startsWith("#")
@@ -216,7 +231,9 @@ export function TocLinkList({
   if (reveal && !reduced) {
     const listContainer: Variants = {
       hidden: {},
-      show: { transition: { staggerChildren: revealStagger, delayChildren: 0.05 } },
+      show: {
+        transition: { staggerChildren: revealStagger, delayChildren: 0.05 },
+      },
     };
     return (
       <motion.ul

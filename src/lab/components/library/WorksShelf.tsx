@@ -25,6 +25,7 @@ import { springSoft } from "@/components/effects/motionConfig";
 import type { WorkEntry, WorkStatus } from "@core/works/works";
 import { worksArmLine } from "@core/works/works";
 import { workSigils } from "@/works/sigils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const WORK_STATUS_LABEL: Record<WorkStatus, string> = {
   "in-progress": "In progress",
@@ -52,6 +53,7 @@ export function WorksNotice({ works }: { works: WorkEntry[] }) {
 
   return (
     <a
+      tabIndex={SITE_TAB}
       href={`#${WORKS_SECTION_ID}`}
       onClick={handleClick}
       className="group mt-12 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-sm border-y border-lab-border-subtle px-1 py-4 transition-colors duration-[var(--duration-normal)] [--sigil-accent:var(--guide-accent)] [--sigil-halo:0.45] hover:bg-[color-mix(in_oklab,var(--guide-accent)_5%,transparent)] hover:[--sigil-halo:0.9] focus-visible:[--sigil-halo:0.9]"
@@ -125,6 +127,7 @@ function WorkBenchEntry({ work, index }: { work: WorkEntry; index: number }) {
 
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/w/${work.slug}`}
       aria-label={`${work.title} — ${WORK_STATUS_LABEL[work.status]}`}
       className="group grid grid-cols-1 gap-x-6 gap-y-4 rounded-sm px-4 py-8 transition-colors duration-[var(--duration-normal)] [--sigil-accent:var(--guide-accent)] [--sigil-halo:0.45] hover:bg-[color-mix(in_oklab,var(--guide-accent)_5%,transparent)] hover:[--sigil-halo:0.9] focus-visible:[--sigil-halo:0.9] md:grid-cols-[7rem_minmax(0,1fr)] md:px-5 md:py-10"

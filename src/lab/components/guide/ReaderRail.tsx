@@ -8,13 +8,17 @@ import type { ReadingPrefs } from "@core/lab/reading-prefs";
 import { useTheme } from "@/lib/useTheme";
 import { GuideSectionNav } from "./GuideSectionNav";
 import { ReaderControls } from "./ReaderControls";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ReaderRailProps {
   sections: GuideSection[];
   activeSection: string;
   onSelect: (id: string) => void;
   prefs: ReadingPrefs;
-  onPrefChange: <K extends keyof ReadingPrefs>(key: K, value: ReadingPrefs[K]) => void;
+  onPrefChange: <K extends keyof ReadingPrefs>(
+    key: K,
+    value: ReadingPrefs[K],
+  ) => void;
   onReset: () => void;
   isDefault: boolean;
   progress: number;
@@ -99,6 +103,7 @@ function ThemeRow() {
           const selected = isDark === dark;
           return (
             <button
+              tabIndex={SITE_TAB}
               key={label}
               type="button"
               onClick={() => select(dark)}
@@ -173,10 +178,13 @@ function RailBody({
         </div>
         {onToggleCollapsed && (
           <button
+            tabIndex={SITE_TAB}
             type="button"
             onClick={onToggleCollapsed}
             aria-expanded={!collapsed}
-            aria-label={collapsed ? "Expand reader rail" : "Collapse reader rail"}
+            aria-label={
+              collapsed ? "Expand reader rail" : "Collapse reader rail"
+            }
             className="-mr-2 -mt-2 inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
           >
             <motion.span
@@ -215,6 +223,7 @@ function RailBody({
 
             <div>
               <button
+                tabIndex={SITE_TAB}
                 type="button"
                 onClick={onToggleControls}
                 aria-expanded={controlsOpen}
@@ -335,6 +344,7 @@ export function ReaderRail(props: ReaderRailProps) {
           same edge so the panel emerges next to the button. */}
       <div className="lg:hidden">
         <button
+          tabIndex={SITE_TAB}
           ref={triggerRef}
           type="button"
           onClick={() => setOpen(true)}
@@ -368,6 +378,7 @@ export function ReaderRail(props: ReaderRailProps) {
                   Reader
                 </p>
                 <button
+                  tabIndex={SITE_TAB}
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close reader controls"

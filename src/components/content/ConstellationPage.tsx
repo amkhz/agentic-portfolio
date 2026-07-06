@@ -13,6 +13,7 @@ import { DossierTags } from "@/components/fieldnotebook";
 import { ConstellationField } from "./ConstellationField";
 import { ConstellationStrip } from "./ConstellationStrip";
 import { ConstellationContent } from "./ConstellationContent";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -32,7 +33,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
 
   const positionedNodes = useMemo(
     () => buildConstellationLayout(constellationNodes),
-    []
+    [],
   );
 
   const [selectedId, setSelectedId] = useState<string | null>(() => {
@@ -58,7 +59,8 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
             const el = document.getElementById("constellation-content");
             if (el) {
               const headerOffset = 80; // header (64px) + breathing room
-              const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+              const top =
+                el.getBoundingClientRect().top + window.scrollY - headerOffset;
               window.scrollTo({
                 top,
                 behavior: getReducedMotion() ? "instant" : "smooth",
@@ -107,12 +109,13 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         id="constellation-hero"
         className={cn(
           "border-b border-border-subtle pt-24 sm:pt-32",
-          isReading ? "pb-8" : "pb-12"
+          isReading ? "pb-8" : "pb-12",
         )}
       >
         <Container>
           <nav aria-label="Breadcrumb" className="mb-10">
             <Link
+              tabIndex={SITE_TAB}
               to="/work"
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
@@ -160,7 +163,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
           className={cn(
             "order-2 mx-auto w-full max-w-[1200px] px-6 sm:px-8 lg:order-1 lg:px-12",
             "lg:grid lg:gap-12",
-            "motion-safe:transition-[grid-template-columns] motion-safe:duration-ambient motion-safe:ease-spring"
+            "motion-safe:transition-[grid-template-columns] motion-safe:duration-ambient motion-safe:ease-spring",
           )}
           style={{
             gridTemplateColumns: isReading
@@ -169,16 +172,10 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
           }}
         >
           {/* Column 1: Constellation field */}
-          <div
-            className={cn(
-              isReading
-                ? "hidden lg:block"
-                : "block"
-            )}
-          >
+          <div className={cn(isReading ? "hidden lg:block" : "block")}>
             <div
               className={cn(
-                isReading && "lg:sticky lg:top-[80px] lg:h-[calc(100vh-96px)]"
+                isReading && "lg:sticky lg:top-[80px] lg:h-[calc(100vh-96px)]",
               )}
             >
               <ConstellationField
@@ -190,15 +187,14 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
             </div>
 
             {/* Tags below field in hero state */}
-            {!isReading && <DossierTags tags={study.tags} className="mt-6 px-2" />}
+            {!isReading && (
+              <DossierTags tags={study.tags} className="mt-6 px-2" />
+            )}
           </div>
 
           {/* Column 2: Content (collapsed in hero, expands in reading) */}
           <div
-            className={cn(
-              "min-w-0",
-              !isReading && "lg:overflow-hidden"
-            )}
+            className={cn("min-w-0", !isReading && "lg:overflow-hidden")}
             ref={contentRef}
           >
             {isReading && selectedNode && selectedSections ? (
@@ -239,6 +235,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
         <Container>
           <div className="border-t border-border-subtle pt-10">
             <Link
+              tabIndex={SITE_TAB}
               to="/work"
               className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >

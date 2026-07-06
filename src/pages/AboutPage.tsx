@@ -5,6 +5,7 @@ import { Button } from "@/components/interactive/Button";
 import { ProfileCard } from "@/components/effects/ProfileCard";
 import { EditorialSection } from "@/components/content/EditorialSection";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function AboutPage() {
   return (
@@ -48,14 +49,14 @@ export function AboutPage() {
                 multiplier, and collaborator. I&apos;ve been designing for
                 digital products since 2010, across healthcare, financial
                 services, e-commerce, non-profit, marketing automation, and
-                human capital management. Lots of enterprise, tons of complexity,
-                always tons to learn.
+                human capital management. Lots of enterprise, tons of
+                complexity, always tons to learn.
               </p>
               <p>
                 Today I lead a small team of designers at Kiavi, a hard money
                 lender helping to revitalize thousands of aged homes across the
-                United States. We make complex things efficient and satisfying to
-                use. Recently, I&apos;ve been designing AI-augmented lending
+                United States. We make complex things efficient and satisfying
+                to use. Recently, I&apos;ve been designing AI-augmented lending
                 tools, the kind of products where a bad interaction isn&apos;t
                 just frustrating, it&apos;s a compliance risk or a delayed
                 closing.
@@ -63,19 +64,22 @@ export function AboutPage() {
               <p>
                 I helped lead AI adoption across our design and product org: the
                 training, the prototyping workflow, and the framework for how
-                design operates when the interface starts thinking for itself. The work I&apos;ve been doing at Kiavi reflects that: embedding principles like decision
-                versioning, human-in-the-loop review, and auditable AI directly
-                into our products. I love to observe and listen, to
-                question and hypothesize, to learn, and to iterate.
+                design operates when the interface starts thinking for itself.
+                The work I&apos;ve been doing at Kiavi reflects that: embedding
+                principles like decision versioning, human-in-the-loop review,
+                and auditable AI directly into our products. I love to observe
+                and listen, to question and hypothesize, to learn, and to
+                iterate.
               </p>
               <p>
                 In the future I&apos;d like to see a world that integrates
-                technology, privacy, and nature. But NOT Skynet. Far
-                out, right? Maybe, but maybe not.
+                technology, privacy, and nature. But NOT Skynet. Far out, right?
+                Maybe, but maybe not.
               </p>
 
               <div className="pt-2">
                 <Link
+                  tabIndex={SITE_TAB}
                   to="/work/design-infrastructure"
                   className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent-primary transition-colors duration-normal focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
                 >
@@ -94,46 +98,46 @@ export function AboutPage() {
       </section>
 
       <RevealOnScroll>
-      <EditorialSection index="01" label="Life" heading="Life these days">
-        <div className="max-w-[65ch] space-y-6 font-body text-base leading-normal text-text-secondary sm:text-lg">
-          <p>
-            I live in Michigan in a 1950s ranch house with my wonderful
-            wife. We&apos;re both fortunate to work from home, which makes it
-            easier to take on projects together. Right now
-            we&apos;re renovating the house and cultivating our backyard into
-            a place we can grow food and flowers and watch our animals run
-            around. Our rascally dog Carlos and our cats Pistachio and Larry
-            complete the picture.
-          </p>
-          <p>
-            I&apos;m a music and technology nerd, a living room DJ, a
-            motorsports enthusiast, a knowledge curator, and a relentlessly
-            curious human. I enjoy backcountry camping, feeling the warmth of
-            the sun on the California coast, and searching for music I
-            haven&apos;t heard yet. And of course, Porsches.
-          </p>
-          <p>
-            Talk to me about product design, art, music, design culture, architecture, record
-            collecting, photography, hiking, sustainable living, cooking and dining, all
-            things Porsche, video games, cybersecurity, home networking, open
-            source intelligence, aerospace, or even cryptozoology. And probably
-            a lot of other stuff too.
-          </p>
-        </div>
-      </EditorialSection>
+        <EditorialSection index="01" label="Life" heading="Life these days">
+          <div className="max-w-[65ch] space-y-6 font-body text-base leading-normal text-text-secondary sm:text-lg">
+            <p>
+              I live in Michigan in a 1950s ranch house with my wonderful wife.
+              We&apos;re both fortunate to work from home, which makes it easier
+              to take on projects together. Right now we&apos;re renovating the
+              house and cultivating our backyard into a place we can grow food
+              and flowers and watch our animals run around. Our rascally dog
+              Carlos and our cats Pistachio and Larry complete the picture.
+            </p>
+            <p>
+              I&apos;m a music and technology nerd, a living room DJ, a
+              motorsports enthusiast, a knowledge curator, and a relentlessly
+              curious human. I enjoy backcountry camping, feeling the warmth of
+              the sun on the California coast, and searching for music I
+              haven&apos;t heard yet. And of course, Porsches.
+            </p>
+            <p>
+              Talk to me about product design, art, music, design culture,
+              architecture, record collecting, photography, hiking, sustainable
+              living, cooking and dining, all things Porsche, video games,
+              cybersecurity, home networking, open source intelligence,
+              aerospace, or even cryptozoology. And probably a lot of other
+              stuff too.
+            </p>
+          </div>
+        </EditorialSection>
       </RevealOnScroll>
 
       <RevealOnScroll>
-      <EditorialSection index="02" label="Beliefs" heading="What I believe">
-        <div className="max-w-[65ch] space-y-12">
+        <EditorialSection index="02" label="Beliefs" heading="What I believe">
+          <div className="max-w-[65ch] space-y-12">
             <div>
               <p className="font-body text-base leading-normal text-text-secondary sm:text-lg">
                 <strong className="font-bold text-accent-primary">
                   Trust is designed, not declared.
                 </strong>{" "}
-                People don&apos;t trust AI because you tell them to. They trust it
-                because they can see what it did, why it&apos;s useful to them, and how to fix it or turn it off when
-                it&apos;s wrong.
+                People don&apos;t trust AI because you tell them to. They trust
+                it because they can see what it did, why it&apos;s useful to
+                them, and how to fix it or turn it off when it&apos;s wrong.
               </p>
             </div>
 
@@ -142,8 +146,8 @@ export function AboutPage() {
                 <strong className="font-bold text-accent-primary">
                   Automation should augment judgment, not replace it.
                 </strong>{" "}
-                The best AI tools make us work smarter, not harder. The worst ones make
-                everyone equally sloppy.
+                The best AI tools make us work smarter, not harder. The worst
+                ones make everyone equally sloppy.
               </p>
             </div>
 
@@ -153,59 +157,64 @@ export function AboutPage() {
                   Accessibility isn&apos;t a feature.
                 </strong>{" "}
                 It&apos;s the baseline. Every token, component, and interaction
-                meets modern accessibility standards. Not because it&apos;s required,
-                but because design that excludes people isn&apos;t design.
+                meets modern accessibility standards. Not because it&apos;s
+                required, but because design that excludes people isn&apos;t
+                design.
               </p>
             </div>
           </div>
-      </EditorialSection>
+        </EditorialSection>
       </RevealOnScroll>
 
       <RevealOnScroll>
-      <EditorialSection index="03" label="Elsewhere" heading="Elsewhere I'm working">
-        <p className="max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
+        <EditorialSection
+          index="03"
+          label="Elsewhere"
+          heading="Elsewhere I'm working"
+        >
+          <p className="max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
             I&apos;m also building{" "}
             <a
+              tabIndex={SITE_TAB}
               href="https://labs.justinh.design"
               className="text-text-secondary underline decoration-accent-primary/40 underline-offset-4 transition-colors duration-normal hover:text-accent-primary hover:decoration-accent-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
               Perihelion
             </a>
-            , a two-arm house for frontier science. The Archive is a library
-            of research guides on frontier physics, UAP detection, and
-            consciousness as technology. Works is the
-            applied-design practice that comes with it. Both are prep and
-            practice for a world already being built in peer-reviewed papers
-            and NSF-funded labs.
+            , a two-arm house for frontier science. The Archive is a library of
+            research guides on frontier physics, UAP detection, and
+            consciousness as technology. Works is the applied-design practice
+            that comes with it. Both are prep and practice for a world already
+            being built in peer-reviewed papers and NSF-funded labs.
           </p>
-      </EditorialSection>
+        </EditorialSection>
       </RevealOnScroll>
 
       <RevealOnScroll>
-      <EditorialSection
-        index="04"
-        label="Contact"
-        heading="Let's talk"
-        className="pb-24 sm:pb-32"
-      >
-        <p className="max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
-          I&apos;m open to conversations about design leadership, AI product
-          strategy, and building the systems that make both possible.
-        </p>
+        <EditorialSection
+          index="04"
+          label="Contact"
+          heading="Let's talk"
+          className="pb-24 sm:pb-32"
+        >
+          <p className="max-w-[65ch] font-body text-base leading-normal text-text-secondary sm:text-lg">
+            I&apos;m open to conversations about design leadership, AI product
+            strategy, and building the systems that make both possible.
+          </p>
 
-        <div className="mt-10 flex flex-wrap gap-4">
-          <Button variant="primary" href="mailto:justin@justinh.design">
-            Email me
-          </Button>
-          <Button
-            variant="secondary"
-            href="https://www.linkedin.com/in/justinah"
-            aria-label="Connect on LinkedIn"
-          >
-            LinkedIn
-          </Button>
-        </div>
-      </EditorialSection>
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Button variant="primary" href="mailto:justin@justinh.design">
+              Email me
+            </Button>
+            <Button
+              variant="secondary"
+              href="https://www.linkedin.com/in/justinah"
+              aria-label="Connect on LinkedIn"
+            >
+              LinkedIn
+            </Button>
+          </div>
+        </EditorialSection>
       </RevealOnScroll>
     </>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function parseInline(text: string): React.ReactNode[] {
   // Order matters: bold (**) is matched before italic (*) so the double
@@ -29,9 +30,12 @@ export function parseInline(text: string): React.ReactNode[] {
       const isExternal = /^https?:\/\//.test(href);
       return (
         <a
+          tabIndex={SITE_TAB}
           key={i}
           href={href}
-          {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+          {...(isExternal
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
           className="text-accent-primary underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
         >
           {linkMatch[1]}

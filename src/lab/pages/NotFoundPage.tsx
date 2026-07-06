@@ -1,5 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function NotFoundPage() {
   return (
@@ -15,9 +16,11 @@ export function NotFoundPage() {
           This page isn&apos;t in the archive
         </h1>
         <p className="mt-6 font-lab-body text-lg leading-relaxed text-lab-text-secondary">
-          The guide you&apos;re looking for may have been renamed or hasn&apos;t been published yet.
+          The guide you&apos;re looking for may have been renamed or hasn&apos;t
+          been published yet.
         </p>
         <Link
+          tabIndex={SITE_TAB}
           to="/"
           className="mt-10 inline-block font-lab-body text-base text-guide-accent hover:underline"
         >

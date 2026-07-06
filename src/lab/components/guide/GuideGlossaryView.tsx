@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface GuideGlossaryViewProps {
   glossary: Record<string, string>;
@@ -40,10 +41,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
   }
 
   return (
-    <section
-      aria-labelledby="glossary-heading"
-      className="mt-10"
-    >
+    <section aria-labelledby="glossary-heading" className="mt-10">
       <h2 id="glossary-heading" className="sr-only">
         Glossary
       </h2>
@@ -55,6 +53,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
           {groups.map(([letter]) => (
             <li key={letter}>
               <a
+                tabIndex={SITE_TAB}
                 href={`#glossary-${letter}`}
                 className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-lab-border-subtle bg-lab-bg-surface font-lab-mono text-sm tracking-wide text-lab-text-secondary hover:border-guide-accent hover:text-guide-accent"
               >
@@ -100,6 +99,7 @@ export function GuideGlossaryView({ glossary }: GuideGlossaryViewProps) {
 
       <div className="mt-16 flex justify-center">
         <button
+          tabIndex={SITE_TAB}
           type="button"
           onClick={scrollToTop}
           className="inline-flex min-h-11 items-center px-3 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"

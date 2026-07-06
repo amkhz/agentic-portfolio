@@ -2,10 +2,10 @@ import { describe, expect, it } from "vitest";
 
 /**
  * Every interactive element on the deck must declare an explicit
- * tabIndex (see deckTab.ts: macOS keyboard-nav-off browsers skip
- * native buttons, links, and sliders on Tab; the explicit attribute
- * opts them back in). This scans the sources so a new control cannot
- * ship without opting in.
+ * tabIndex (see deckTab.ts: Safari under the default macOS keyboard
+ * setting skips native buttons, links, and sliders on Tab; the
+ * explicit attribute opts them back in). This scans the sources so a
+ * new control cannot ship without opting in.
  */
 
 // Raw sources of every deck component (dev/ is the DialKit tuner,

@@ -5,27 +5,61 @@
  * item). The edge cache collapses polling across visitors: one upstream
  * call per 30s window serves everyone.
  *
- * Deploy infrastructure, not app code -- lives outside the four layers
- * and outside tsconfig's include, so it declares its own process global
- * instead of pulling in @types/node.
+ * Uses the classic Node (req, res) handler signature -- the Web-standard
+ * Request/Response form 500'd on the production runtime (relative
+ * req.url broke `new URL()` when invoked Node-style). Deploy
+ * infrastructure, not app code: lives outside the four layers and
+ * outside tsconfig's include, so it declares its own minimal types
+ * instead of pulling in @vercel/node.
  */
 
 declare const process: { env: Record<string, string | undefined> };
 
+interface ProxyRequest {
+  url?: string;
+}
+
+interface ProxyResponse {
+  statusCode: number;
+  setHeader(name: string, value: string): void;
+  end(body: string): void;
+}
+
 const BASE_URL = "https://ws.audioscrobbler.com/2.0/";
 
-export default async function handler(request: Request): Promise<Response> {
+function send(
+  res: ProxyResponse,
+  status: number,
+  body: string,
+  cacheable = false,
+): void {
+  res.statusCode = status;
+  res.setHeader("Content-Type", "application/json");
+  if (cacheable) {
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=30, stale-while-revalidate=30",
+    );
+  }
+  res.end(body);
+}
+
+export default async function handler(
+  req: ProxyRequest,
+  res: ProxyResponse,
+): Promise<void> {
   const apiKey = process.env.LASTFM_API_KEY ?? process.env.VITE_LASTFM_API_KEY;
   const user = process.env.LASTFM_USER ?? process.env.VITE_LASTFM_USER;
 
   if (!apiKey || !user) {
-    return Response.json(
-      { error: "Last.fm proxy is not configured" },
-      { status: 500 },
-    );
+    send(res, 500, JSON.stringify({ error: "Last.fm proxy is not configured" }));
+    return;
   }
 
-  const requested = Number(new URL(request.url).searchParams.get("limit"));
+  // req.url is a relative path on the Node runtime; give URL a base.
+  const requested = Number(
+    new URL(req.url ?? "/", "http://localhost").searchParams.get("limit"),
+  );
   const limit = Number.isInteger(requested)
     ? Math.min(Math.max(requested, 1), 50)
     : 5;
@@ -39,22 +73,18 @@ export default async function handler(request: Request): Promise<Response> {
     limit: String(limit),
   }).toString();
 
-  const response = await fetch(upstream);
-
-  if (!response.ok) {
-    return Response.json(
-      { error: `Last.fm API error: ${response.status}` },
-      { status: 502 },
-    );
+  try {
+    const response = await fetch(upstream);
+    if (!response.ok) {
+      send(
+        res,
+        502,
+        JSON.stringify({ error: `Last.fm API error: ${response.status}` }),
+      );
+      return;
+    }
+    send(res, 200, await response.text(), true);
+  } catch {
+    send(res, 502, JSON.stringify({ error: "Last.fm upstream unreachable" }));
   }
-
-  const data = await response.text();
-
-  return new Response(data, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30",
-    },
-  });
 }

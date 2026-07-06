@@ -194,3 +194,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 012 | Perihelion house identity | 2026-06 | Accepted |
 | 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, shipped to main via PR #130 |
 | 018 | Archive-first Last.fm data architecture in a standalone MCP repo | 2026-07-06 | Accepted |
+| 019 | Aphelion: a third arm for personal experimental work | 2026-07-06 | Accepted |

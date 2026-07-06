@@ -193,3 +193,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 011 | Portfolio visual recalibration to editorial-craftsperson register | 2026-05-17 | Superseded by ADR-013 |
 | 012 | Perihelion house identity | 2026-06 | Accepted |
 | 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, shipped to main via PR #130 |
+| 018 | Archive-first Last.fm data architecture in a standalone MCP repo | 2026-07-06 | Accepted |

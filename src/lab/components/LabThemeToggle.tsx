@@ -16,6 +16,7 @@
  */
 import { useTheme } from "@/lib/useTheme";
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function LabThemeToggle({ className }: { className?: string }) {
   const { theme, toggleTheme } = useTheme();
@@ -23,6 +24,7 @@ export function LabThemeToggle({ className }: { className?: string }) {
 
   return (
     <button
+      tabIndex={SITE_TAB}
       type="button"
       onClick={toggleTheme}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
@@ -84,9 +86,36 @@ export function LabThemeToggle({ className }: { className?: string }) {
               : "opacity-100 [stroke-width:2]",
           )}
         />
-        <line x1="12" y1="1" x2="12" y2="3" className={cn("transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-60")} />
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" className={cn("transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
-        <line x1="19.78" y1="4.22" x2="18.36" y2="5.64" className={cn("transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none", isDark ? "opacity-0" : "opacity-40")} />
+        <line
+          x1="12"
+          y1="1"
+          x2="12"
+          y2="3"
+          className={cn(
+            "transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-60",
+          )}
+        />
+        <line
+          x1="4.22"
+          y1="4.22"
+          x2="5.64"
+          y2="5.64"
+          className={cn(
+            "transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-40",
+          )}
+        />
+        <line
+          x1="19.78"
+          y1="4.22"
+          x2="18.36"
+          y2="5.64"
+          className={cn(
+            "transition-opacity duration-[var(--duration-normal)] motion-reduce:transition-none",
+            isDark ? "opacity-0" : "opacity-40",
+          )}
+        />
       </svg>
     </button>
   );

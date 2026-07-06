@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router";
 import type { PositionedNode } from "@core/content/constellation";
 import { cn } from "@core/utils";
 import { ConstellationNode } from "./ConstellationNode";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ConstellationFieldProps {
   nodes: PositionedNode[];
@@ -88,7 +89,9 @@ export function ConstellationField({
   const fieldRef = useRef<HTMLDivElement>(null);
 
   // In tune mode, maintain mutable positions
-  const [tunedPositions, setTunedPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [tunedPositions, setTunedPositions] = useState<
+    Record<string, { x: number; y: number }>
+  >({});
 
   // Apply tuned positions over prop nodes
   const nodes = useMemo(() => {
@@ -119,25 +122,44 @@ export function ConstellationField({
   };
 
   // Drag handling for tune mode
-  const dragRef = useRef<{ nodeId: string; startX: number; startY: number; startPos: { x: number; y: number } } | null>(null);
+  const dragRef = useRef<{
+    nodeId: string;
+    startX: number;
+    startY: number;
+    startPos: { x: number; y: number };
+  } | null>(null);
 
-  const handleTuneDragStart = useCallback((nodeId: string, e: React.PointerEvent) => {
-    if (!tuneMode || !fieldRef.current) return;
-    e.preventDefault();
-    e.stopPropagation();
-    const node = nodes.find((n) => n.id === nodeId);
-    if (!node) return;
-    dragRef.current = { nodeId, startX: e.clientX, startY: e.clientY, startPos: { ...node.position } };
-    fieldRef.current.setPointerCapture(e.pointerId);
-  }, [tuneMode, nodes]);
+  const handleTuneDragStart = useCallback(
+    (nodeId: string, e: React.PointerEvent) => {
+      if (!tuneMode || !fieldRef.current) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const node = nodes.find((n) => n.id === nodeId);
+      if (!node) return;
+      dragRef.current = {
+        nodeId,
+        startX: e.clientX,
+        startY: e.clientY,
+        startPos: { ...node.position },
+      };
+      fieldRef.current.setPointerCapture(e.pointerId);
+    },
+    [tuneMode, nodes],
+  );
 
   const handleTuneDragMove = useCallback((e: React.PointerEvent) => {
     if (!dragRef.current || !fieldRef.current) return;
     const rect = fieldRef.current.getBoundingClientRect();
     const dx = (e.clientX - dragRef.current.startX) / rect.width;
     const dy = (e.clientY - dragRef.current.startY) / rect.height;
-    const newX = Math.max(0.05, Math.min(0.95, dragRef.current.startPos.x + dx));
-    const newY = Math.max(0.05, Math.min(0.95, dragRef.current.startPos.y + dy));
+    const newX = Math.max(
+      0.05,
+      Math.min(0.95, dragRef.current.startPos.x + dx),
+    );
+    const newY = Math.max(
+      0.05,
+      Math.min(0.95, dragRef.current.startPos.y + dy),
+    );
     setTunedPositions((prev) => ({
       ...prev,
       [dragRef.current!.nodeId]: { x: newX, y: newY },
@@ -149,12 +171,20 @@ export function ConstellationField({
   }, []);
 
   const copyPositions = useCallback(() => {
-    const output = nodes.map((n) => `'${n.id}': { x: ${n.position.x.toFixed(2)}, y: ${n.position.y.toFixed(2)} }`).join(",\n");
+    const output = nodes
+      .map(
+        (n) =>
+          `'${n.id}': { x: ${n.position.x.toFixed(2)}, y: ${n.position.y.toFixed(2)} }`,
+      )
+      .join(",\n");
     navigator.clipboard.writeText(output);
   }, [nodes]);
 
   return (
-    <nav aria-label="Case study topics" className={compact ? "h-full" : undefined}>
+    <nav
+      aria-label="Case study topics"
+      className={compact ? "h-full" : undefined}
+    >
       {/* Spatial field -- hidden on very small screens when not compact */}
       <div
         ref={fieldRef}
@@ -165,7 +195,7 @@ export function ConstellationField({
           // it. Touch -- phone, tablet, touch laptop at any width -- gets the
           // readable list below, where nothing hides behind a hover.
           compact ? "block h-full" : "hidden pointer-fine:block",
-          tuneMode && "cursor-crosshair"
+          tuneMode && "cursor-crosshair",
         )}
         style={
           compact
@@ -212,6 +242,7 @@ export function ConstellationField({
         {tuneMode && (
           <div className="absolute bottom-2 left-2 z-50 flex gap-2">
             <button
+              tabIndex={SITE_TAB}
               type="button"
               onClick={copyPositions}
               className="rounded bg-accent-primary px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-bg-base shadow-lg transition-opacity hover:opacity-80"
@@ -232,9 +263,14 @@ export function ConstellationField({
         <div className="flex flex-col gap-1 pointer-fine:hidden">
           {nodes.map((node) => (
             <button
+              tabIndex={SITE_TAB}
               key={node.id}
               type="button"
-              onClick={node.status !== "planned" ? () => onSelectNode(node.id) : undefined}
+              onClick={
+                node.status !== "planned"
+                  ? () => onSelectNode(node.id)
+                  : undefined
+              }
               disabled={node.status === "planned"}
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-left",
@@ -242,7 +278,7 @@ export function ConstellationField({
                 node.id === selectedId
                   ? "bg-bg-elevated"
                   : "hover:bg-bg-subtle/50",
-                node.status === "planned" && "cursor-default opacity-50"
+                node.status === "planned" && "cursor-default opacity-50",
               )}
             >
               <div
@@ -251,13 +287,13 @@ export function ConstellationField({
                   node.id === selectedId
                     ? "border-[var(--constellation-node-active-border)] bg-[var(--constellation-node-bg)]"
                     : "border-[var(--constellation-node-border)] bg-[var(--constellation-node-bg)]",
-                  node.status === "planned" && "border-dashed"
+                  node.status === "planned" && "border-dashed",
                 )}
               >
                 <div
                   className={cn(
                     "h-1.5 w-1.5 rounded-full bg-accent-primary",
-                    node.id === selectedId ? "opacity-100" : "opacity-60"
+                    node.id === selectedId ? "opacity-100" : "opacity-60",
                   )}
                 />
               </div>
@@ -265,7 +301,9 @@ export function ConstellationField({
                 <span
                   className={cn(
                     "block font-mono text-sm uppercase tracking-wider",
-                    node.id === selectedId ? "text-accent-primary" : "text-text-primary"
+                    node.id === selectedId
+                      ? "text-accent-primary"
+                      : "text-text-primary",
                   )}
                 >
                   {node.title}

@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { guidesBySlug } from "@core/lab/guides";
 import { GuideRenderer } from "@lab/components/guide/GuideRenderer";
 import { NotFoundPage } from "./NotFoundPage";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function GuideView() {
   const { slug } = useParams<{ slug: string }>();
@@ -16,7 +17,9 @@ export function GuideView() {
   // Search engines truncate meta descriptions around 155–160 chars; keep
   // the primary description as the meta so it never gets cut mid-citation.
   const metaDescription =
-    description.length > 160 ? `${description.slice(0, 157).trimEnd()}…` : description;
+    description.length > 160
+      ? `${description.slice(0, 157).trimEnd()}…`
+      : description;
 
   return (
     <>
@@ -35,6 +38,7 @@ export function GuideView() {
           <div aria-hidden className="hidden lg:block" />
           <div className="lab-reading-col">
             <Link
+              tabIndex={SITE_TAB}
               to="/"
               className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
             >
@@ -50,6 +54,7 @@ export function GuideView() {
           <div aria-hidden className="hidden lg:block" />
           <div className="lab-reading-col">
             <Link
+              tabIndex={SITE_TAB}
               to="/"
               className="inline-flex min-h-11 items-center gap-2 font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted transition-colors duration-[var(--duration-fast)] hover:text-guide-accent"
             >

@@ -34,6 +34,7 @@ import {
 } from "@/components/fieldnotebook";
 import { renderSection } from "./renderSection";
 import { RelatedStudyBanner } from "./RelatedStudyBanner";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 const allProjects = [...caseStudies, metaCaseStudy];
 
@@ -45,6 +46,7 @@ interface CaseStudyPageProps {
 function BackLink({ label }: { label: string }) {
   return (
     <Link
+      tabIndex={SITE_TAB}
       to="/work"
       className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
@@ -88,7 +90,11 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
 
   const containerProps = reduced
     ? {}
-    : { variants: entranceContainer, initial: "hidden" as const, animate: "show" as const };
+    : {
+        variants: entranceContainer,
+        initial: "hidden" as const,
+        animate: "show" as const,
+      };
   const groupProps = reduced ? {} : { variants: entranceGroup };
   const itemProps = reduced ? {} : { variants: entranceItem };
 
@@ -101,7 +107,10 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
             <BackLink label="All work" />
           </nav>
 
-          <motion.div className="grid gap-10 lg:grid-cols-12 lg:gap-12" {...containerProps}>
+          <motion.div
+            className="grid gap-10 lg:grid-cols-12 lg:gap-12"
+            {...containerProps}
+          >
             {/* Cover plate — image lives within the padded frame; the
                 registration marks sit in the margin and frame it. */}
             <motion.div className="lg:order-1 lg:col-span-5" {...itemProps}>
@@ -144,7 +153,10 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
               </motion.p>
 
               {study.heroMetric && (
-                <motion.div className="relative mt-8 flex items-baseline gap-3" {...itemProps}>
+                <motion.div
+                  className="relative mt-8 flex items-baseline gap-3"
+                  {...itemProps}
+                >
                   <span className="relative font-display text-4xl leading-tight tracking-tight text-accent-primary">
                     {study.heroMetric.value}
                   </span>
@@ -169,7 +181,10 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
             <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
               <div className="lg:col-span-7">
                 <DossierFrame kicker="Contents">
-                  <TocLinkList items={chapters} ariaLabel={`${study.title} contents`} />
+                  <TocLinkList
+                    items={chapters}
+                    ariaLabel={`${study.title} contents`}
+                  />
                 </DossierFrame>
               </div>
               <div className="lg:col-span-5">

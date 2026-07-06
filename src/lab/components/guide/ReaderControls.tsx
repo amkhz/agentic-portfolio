@@ -1,9 +1,13 @@
 import { READING_BOUNDS, type ReadingPrefs } from "@core/lab/reading-prefs";
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ReaderControlsProps {
   prefs: ReadingPrefs;
-  onChange: <K extends keyof ReadingPrefs>(key: K, value: ReadingPrefs[K]) => void;
+  onChange: <K extends keyof ReadingPrefs>(
+    key: K,
+    value: ReadingPrefs[K],
+  ) => void;
   onReset: () => void;
   isDefault: boolean;
   /** Disambiguates control ids when the rail + drawer are both mounted. */
@@ -42,6 +46,7 @@ export function ReaderControls({
     <div className="space-y-5">
       <div className="flex justify-end">
         <button
+          tabIndex={SITE_TAB}
           type="button"
           onClick={onReset}
           disabled={isDefault}
@@ -57,9 +62,12 @@ export function ReaderControls({
           className="flex items-baseline justify-between font-lab-mono text-[0.7rem] tracking-wide text-lab-text-secondary"
         >
           <span>Type size</span>
-          <span className="tabular-nums text-lab-text-muted">{prefs.sizePct}%</span>
+          <span className="tabular-nums text-lab-text-muted">
+            {prefs.sizePct}%
+          </span>
         </label>
         <input
+          tabIndex={SITE_TAB}
           id={sizeId}
           type="range"
           min={READING_BOUNDS.size.min}
@@ -83,6 +91,7 @@ export function ReaderControls({
           </span>
         </label>
         <input
+          tabIndex={SITE_TAB}
           id={weightId}
           type="range"
           min={READING_BOUNDS.weight.min}
@@ -111,6 +120,7 @@ export function ReaderControls({
             const selected = prefs.measure === option;
             return (
               <button
+                tabIndex={SITE_TAB}
                 key={option}
                 type="button"
                 onClick={() => onChange("measure", option)}

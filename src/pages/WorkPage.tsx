@@ -13,6 +13,7 @@ import {
 } from "@/components/fieldnotebook";
 import { HeroScrim } from "@/components/content/HeroScrim";
 import { caseStudies, metaCaseStudy } from "@core/content/case-studies";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 // Studies folded behind a hub are reached through it, not listed here.
 const indexedStudies = caseStudies.filter((study) => !study.parentHub);
@@ -35,6 +36,7 @@ const tocItems: TocItem[] = indexedStudies.map((study, i) => ({
 function FeaturedEntry() {
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/work/${metaCaseStudy.slug}`}
       aria-label={`View case study: ${metaCaseStudy.title}`}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
@@ -90,7 +92,10 @@ export function WorkPage() {
     <>
       <Helmet>
         <title>Work | Justin Hernandez</title>
-        <meta name="description" content="Case studies in AI-driven enterprise product design." />
+        <meta
+          name="description"
+          content="Case studies in AI-driven enterprise product design."
+        />
         <link rel="canonical" href="https://justinh.design/work" />
       </Helmet>
 
@@ -131,8 +136,15 @@ export function WorkPage() {
             <FeaturedEntry />
           </RevealOnScroll>
 
-          <DossierFrame kicker="Selected case files" className="mt-12 bg-bg-base">
-            <TocLinkList items={tocItems} ariaLabel="Selected case studies" reveal />
+          <DossierFrame
+            kicker="Selected case files"
+            className="mt-12 bg-bg-base"
+          >
+            <TocLinkList
+              items={tocItems}
+              ariaLabel="Selected case studies"
+              reveal
+            />
           </DossierFrame>
         </Container>
       </section>

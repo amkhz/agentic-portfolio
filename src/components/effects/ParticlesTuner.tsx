@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { Particles } from "./Particles";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /**
  * Dev-only tuning panel for the Particles background.
@@ -24,6 +25,7 @@ function Slider({ label, value, min, max, step, onChange }: SliderProps) {
         <span className="tabular-nums">{value}</span>
       </span>
       <input
+        tabIndex={SITE_TAB}
         type="range"
         min={min}
         max={max}
@@ -88,6 +90,7 @@ export function ParticlesTuner({ className }: ParticlesTunerProps) {
             Particles Tuner
           </span>
           <button
+            tabIndex={SITE_TAB}
             onClick={() => setOpen(!open)}
             className="text-xs text-[var(--theme-text-muted)] hover:text-[var(--theme-text-primary)]"
           >
@@ -157,15 +160,19 @@ export function ParticlesTuner({ className }: ParticlesTunerProps) {
             <div className="flex flex-wrap gap-4 pt-1">
               <label className="flex items-center gap-2 text-xs">
                 <input
+                  tabIndex={SITE_TAB}
                   type="checkbox"
                   checked={params.moveParticlesOnHover}
-                  onChange={(e) => set("moveParticlesOnHover", e.target.checked)}
+                  onChange={(e) =>
+                    set("moveParticlesOnHover", e.target.checked)
+                  }
                   className="accent-[var(--theme-accent-primary)]"
                 />
                 Hover
               </label>
               <label className="flex items-center gap-2 text-xs">
                 <input
+                  tabIndex={SITE_TAB}
                   type="checkbox"
                   checked={params.alphaParticles}
                   onChange={(e) => set("alphaParticles", e.target.checked)}
@@ -175,6 +182,7 @@ export function ParticlesTuner({ className }: ParticlesTunerProps) {
               </label>
               <label className="flex items-center gap-2 text-xs">
                 <input
+                  tabIndex={SITE_TAB}
                   type="checkbox"
                   checked={params.disableRotation}
                   onChange={(e) => set("disableRotation", e.target.checked)}
@@ -185,6 +193,7 @@ export function ParticlesTuner({ className }: ParticlesTunerProps) {
             </div>
 
             <button
+              tabIndex={SITE_TAB}
               onClick={reset}
               className="mt-1 w-full rounded border border-[var(--theme-border-subtle)] py-1 text-xs text-[var(--theme-text-muted)] hover:border-[var(--theme-accent-primary)] hover:text-[var(--theme-text-primary)]"
             >
@@ -192,8 +201,8 @@ export function ParticlesTuner({ className }: ParticlesTunerProps) {
             </button>
 
             <div className="border-t border-[var(--theme-border-subtle)] pt-2 text-[10px] leading-relaxed text-[var(--theme-text-muted)]">
-              Changing count/spread/alpha remounts the WebGL context.
-              Other params update live.
+              Changing count/spread/alpha remounts the WebGL context. Other
+              params update live.
             </div>
           </div>
         )}

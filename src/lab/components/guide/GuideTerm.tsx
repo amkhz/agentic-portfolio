@@ -1,4 +1,5 @@
 import { termCardId } from "./termCardId";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface GuideTermProps {
   term: string;
@@ -22,6 +23,7 @@ export function GuideTerm({ term, active = false, onToggle }: GuideTermProps) {
 
   return (
     <button
+      tabIndex={SITE_TAB}
       type="button"
       onClick={() => onToggle(term)}
       aria-expanded={active}

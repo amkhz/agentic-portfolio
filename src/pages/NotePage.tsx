@@ -4,11 +4,13 @@ import { Container } from "@/components/layout/Container";
 import { renderSection } from "@/components/content/renderSection";
 import { notesBySlug } from "@core/content/notes";
 import { formatNoteDate } from "@core/utils/format";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /** Back-to-notes link, styled as a mono dossier marker (matches case studies). */
 function BackLink({ label }: { label: string }) {
   return (
     <Link
+      tabIndex={SITE_TAB}
       to="/notes"
       className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-secondary transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
@@ -38,7 +40,10 @@ export function NotePage() {
       <Helmet>
         <title>{`${title} | Justin Hernandez`}</title>
         <meta name="description" content={summary} />
-        <link rel="canonical" href={`https://justinh.design/notes/${note.slug}`} />
+        <link
+          rel="canonical"
+          href={`https://justinh.design/notes/${note.slug}`}
+        />
       </Helmet>
 
       {/* Hero — single-column reading register: kicker, title, dek, dateline.

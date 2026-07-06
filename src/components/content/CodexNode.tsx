@@ -1,4 +1,5 @@
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface CodexNodeProps {
   id: string;
@@ -23,6 +24,7 @@ export function CodexNode({
 }: CodexNodeProps) {
   return (
     <button
+      tabIndex={SITE_TAB}
       id={id}
       type="button"
       aria-expanded={isOpen}
@@ -32,7 +34,7 @@ export function CodexNode({
         "group relative z-10 flex w-full items-center gap-4 py-3 pl-3 pr-3 text-left sm:gap-5",
         "rounded-lg transition-colors duration-normal",
         "hover:bg-bg-subtle/50",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
       )}
     >
       {/* Node marker -- rounded square on mobile, diamond on desktop */}
@@ -46,7 +48,7 @@ export function CodexNode({
             "motion-safe:group-hover:scale-110",
             isOpen
               ? "border-[var(--codex-node-active-border)] bg-[var(--codex-node-bg)] shadow-[0_0_16px_var(--codex-node-active-glow)]"
-              : "border-[var(--codex-node-border)] bg-[var(--codex-node-bg)] group-hover:border-accent-muted"
+              : "border-[var(--codex-node-border)] bg-[var(--codex-node-bg)] group-hover:border-accent-muted",
           )}
         >
           <span
@@ -54,7 +56,7 @@ export function CodexNode({
               "sm:-rotate-45 font-heading text-xs font-medium tracking-wide transition-colors duration-normal select-none",
               isOpen
                 ? "text-accent-primary"
-                : "text-text-muted group-hover:text-text-secondary"
+                : "text-text-muted group-hover:text-text-secondary",
             )}
           >
             {glyph ?? String(index + 1).padStart(2, "0")}
@@ -69,7 +71,7 @@ export function CodexNode({
             "block font-heading text-base font-medium leading-snug tracking-normal transition-colors duration-normal sm:text-[1.0625rem]",
             isOpen
               ? "text-text-primary"
-              : "text-text-secondary group-hover:text-text-primary"
+              : "text-text-secondary group-hover:text-text-primary",
           )}
         >
           {title}
@@ -80,7 +82,7 @@ export function CodexNode({
               "mt-1 line-clamp-1 block font-body text-sm leading-normal transition-colors duration-normal",
               isOpen
                 ? "text-text-muted"
-                : "text-text-muted/60 group-hover:text-text-muted"
+                : "text-text-muted/60 group-hover:text-text-muted",
             )}
           >
             {inscription}
@@ -96,7 +98,7 @@ export function CodexNode({
           "transition-[background-color] duration-normal",
           isOpen
             ? "bg-accent-muted"
-            : "bg-transparent group-hover:bg-bg-subtle"
+            : "bg-transparent group-hover:bg-bg-subtle",
         )}
         aria-hidden="true"
       >
@@ -107,7 +109,7 @@ export function CodexNode({
           fill="none"
           className={cn(
             "transition-transform duration-normal",
-            isOpen ? "rotate-0" : "-rotate-90"
+            isOpen ? "rotate-0" : "-rotate-90",
           )}
         >
           <path
@@ -120,7 +122,7 @@ export function CodexNode({
               "transition-colors duration-normal",
               isOpen
                 ? "text-accent-primary"
-                : "text-text-muted group-hover:text-text-secondary"
+                : "text-text-muted group-hover:text-text-secondary",
             )}
           />
         </svg>

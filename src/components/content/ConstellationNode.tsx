@@ -1,5 +1,6 @@
 import { cn } from "@core/utils";
 import type { PositionedNode, NodeStatus } from "@core/content/constellation";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ConstellationNodeProps {
   node: PositionedNode;
@@ -46,10 +47,16 @@ export function ConstellationNode({
   tuneMode = false,
   onTuneDragStart,
 }: ConstellationNodeProps) {
-  const showLabel = compact || node.size === "lg" || isSelected || isHighlighted || node.status === "planned";
+  const showLabel =
+    compact ||
+    node.size === "lg" ||
+    isSelected ||
+    isHighlighted ||
+    node.status === "planned";
 
   return (
     <button
+      tabIndex={SITE_TAB}
       type="button"
       onClick={node.status !== "planned" ? () => onSelect(node.id) : undefined}
       onMouseEnter={() => onHover(node.id)}
@@ -57,11 +64,15 @@ export function ConstellationNode({
       onFocus={() => onHover(node.id)}
       onBlur={() => onHover(null)}
       disabled={node.status === "planned"}
-      onPointerDown={tuneMode ? (e) => onTuneDragStart?.(node.id, e) : undefined}
+      onPointerDown={
+        tuneMode ? (e) => onTuneDragStart?.(node.id, e) : undefined
+      }
       className={cn(
         "group absolute -translate-x-1/2 -translate-y-1/2 m-0 appearance-none border-none bg-transparent p-0 leading-none",
         "motion-safe:animate-[fadeIn_500ms_var(--ease-settle)_both]",
-        tuneMode ? "cursor-grab active:cursor-grabbing" : node.status === "planned" && "cursor-default"
+        tuneMode
+          ? "cursor-grab active:cursor-grabbing"
+          : node.status === "planned" && "cursor-default",
       )}
       style={{
         left: `${node.position.x * 100}%`,
@@ -83,11 +94,16 @@ export function ConstellationNode({
           "transition-[border-color,box-shadow,transform] duration-fast",
           compact ? "h-5 w-5" : sizeMap[node.size],
           statusStyles[node.status],
-          isSelected && "shadow-[0_0_20px_var(--constellation-glow-shipped)] border-[var(--constellation-node-active-border)]",
-          isSelected && compact && "motion-safe:animate-[pulse_3s_ease-in-out_infinite]",
-          isHighlighted && !isSelected && "shadow-[0_0_12px_var(--constellation-glow-shipped)]",
+          isSelected &&
+            "shadow-[0_0_20px_var(--constellation-glow-shipped)] border-[var(--constellation-node-active-border)]",
+          isSelected &&
+            compact &&
+            "motion-safe:animate-[pulse_3s_ease-in-out_infinite]",
+          isHighlighted &&
+            !isSelected &&
+            "shadow-[0_0_12px_var(--constellation-glow-shipped)]",
           node.status !== "planned" && "motion-safe:group-hover:scale-110",
-          "focus-visible:outline-none"
+          "focus-visible:outline-none",
         )}
       >
         <div
@@ -98,7 +114,7 @@ export function ConstellationNode({
               ? "bg-accent-primary opacity-100"
               : node.status === "planned"
                 ? "bg-accent-primary opacity-30"
-                : "bg-accent-primary opacity-60 group-hover:opacity-100"
+                : "bg-accent-primary opacity-60 group-hover:opacity-100",
           )}
         />
       </div>
@@ -108,24 +124,30 @@ export function ConstellationNode({
         className={cn(
           "absolute left-1/2 top-full mt-1.5 flex -translate-x-1/2 flex-col items-center rounded px-1.5 py-0.5 transition-opacity duration-normal",
           "bg-bg-base/90",
-          showLabel ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
+          showLabel
+            ? "opacity-100"
+            : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100",
         )}
       >
         <span
           className={cn(
             "whitespace-nowrap font-mono uppercase tracking-wider",
             compact ? "text-[10px]" : "text-xs",
-            isSelected ? "text-accent-primary" : "text-text-primary"
+            isSelected ? "text-accent-primary" : "text-text-primary",
           )}
         >
           {node.title}
         </span>
         {!compact && (
-          <span className={cn(
-            "mt-0.5 max-w-[18ch] text-center font-body text-xs leading-tight text-text-muted",
-            "transition-opacity duration-normal",
-            showLabel ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
-          )}>
+          <span
+            className={cn(
+              "mt-0.5 max-w-[18ch] text-center font-body text-xs leading-tight text-text-muted",
+              "transition-opacity duration-normal",
+              showLabel
+                ? "opacity-100"
+                : "opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100",
+            )}
+          >
             {node.status === "planned" ? "Coming soon" : node.inscription}
           </span>
         )}

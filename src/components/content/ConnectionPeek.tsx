@@ -1,5 +1,6 @@
 import { cn } from "@core/utils";
 import type { PositionedNode } from "@core/content/constellation";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ConnectionPeekProps {
   targetNode: PositionedNode;
@@ -8,9 +9,14 @@ interface ConnectionPeekProps {
 }
 
 /** Inline peek into a connected constellation node. Appears within content flow. */
-export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeekProps) {
+export function ConnectionPeek({
+  targetNode,
+  tease,
+  onNavigate,
+}: ConnectionPeekProps) {
   return (
     <button
+      tabIndex={SITE_TAB}
       type="button"
       onClick={() => onNavigate(targetNode.id)}
       className={cn(
@@ -19,7 +25,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
         "bg-[var(--constellation-peek-bg)]",
         "transition-[border-color] duration-normal",
         "hover:border-accent-muted",
-        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
       )}
     >
       {/* Node marker */}
@@ -29,7 +35,7 @@ export function ConnectionPeek({ targetNode, tease, onNavigate }: ConnectionPeek
           "h-8 w-8 border border-[var(--constellation-node-border)]",
           "bg-[var(--constellation-node-bg)]",
           "transition-[border-color] duration-normal",
-          "group-hover:border-[var(--constellation-node-active-border)]"
+          "group-hover:border-[var(--constellation-node-active-border)]",
         )}
       >
         <div className="h-1.5 w-1.5 rounded-full bg-accent-primary opacity-60 transition-opacity duration-normal group-hover:opacity-100" />

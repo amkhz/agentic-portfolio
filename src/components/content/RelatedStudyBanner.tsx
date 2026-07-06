@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { caseStudies } from "@core/content/case-studies";
 import type { CaseStudy } from "@core/content/case-studies";
 import { DossierFrame } from "@/components/fieldnotebook";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /**
  * RelatedStudyBanner — the cross-link between a paired origin/evolution study.
@@ -21,6 +22,7 @@ export function RelatedStudyBanner({
 
   return (
     <Link
+      tabIndex={SITE_TAB}
       to={`/work/${target.slug}`}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >

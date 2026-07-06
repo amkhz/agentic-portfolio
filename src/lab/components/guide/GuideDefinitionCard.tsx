@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { springSnappy } from "@/components/effects/motionConfig";
 import { termCardId } from "./termCardId";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface GuideDefinitionCardProps {
   term: string;
@@ -42,6 +43,7 @@ export function GuideDefinitionCard({
             </p>
           </div>
           <button
+            tabIndex={SITE_TAB}
             type="button"
             onClick={onClose}
             aria-label={`Close definition of ${term}`}

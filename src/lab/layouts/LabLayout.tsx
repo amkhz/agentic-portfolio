@@ -3,6 +3,7 @@ import { Outlet, useLocation } from "react-router";
 import { ScrollToTop } from "@lab/components/ScrollToTop";
 import { LabThemeToggle } from "@lab/components/LabThemeToggle";
 import { PerihelionMark } from "@lab/components/PerihelionMark";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 export function LabLayout() {
   // On guide detail pages the reader rail (T4) owns the theme toggle, so the
@@ -13,7 +14,7 @@ export function LabLayout() {
   return (
     <>
       <ScrollToTop />
-      <a href="#main" className="skip-link">
+      <a tabIndex={SITE_TAB} href="#main" className="skip-link">
         Skip to content
       </a>
 
@@ -37,8 +38,15 @@ export function LabLayout() {
           {/* No aria-label: the structured content names the link, so
               screen readers receive the tagline (the name's one
               translation) on md+ where it lives inside the link. */}
-          <a href="/" className="group inline-flex items-center gap-4.5">
-            <span aria-hidden className="flex shrink-0 items-center justify-center">
+          <a
+            tabIndex={SITE_TAB}
+            href="/"
+            className="group inline-flex items-center gap-4.5"
+          >
+            <span
+              aria-hidden
+              className="flex shrink-0 items-center justify-center"
+            >
               <PerihelionMark width={44} animated />
             </span>
             <span className="flex flex-col gap-[3px]">
@@ -81,6 +89,7 @@ export function LabLayout() {
             <span>
               Perihelion is part of{" "}
               <a
+                tabIndex={SITE_TAB}
                 href="https://justinh.design"
                 className="text-lab-text-secondary hover:text-guide-accent hover:underline"
               >
@@ -89,6 +98,7 @@ export function LabLayout() {
               , the portfolio of Justin Hernandez.
             </span>
             <a
+              tabIndex={SITE_TAB}
               href="https://github.com/amkhz/agentic-portfolio"
               className="text-lab-text-muted hover:text-lab-text-secondary hover:underline"
             >

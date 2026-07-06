@@ -13,6 +13,7 @@ import { CalloutBlock } from "./CalloutBlock";
 import { CtaBlock } from "./CtaBlock";
 import { RevealOnScroll } from "@/components/effects/RevealOnScroll";
 import { ConnectionPeek } from "./ConnectionPeek";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface ConstellationContentProps {
   node: PositionedNode;
@@ -159,13 +160,14 @@ export function ConstellationContent({
       {/* Back to constellation */}
       <div className="max-w-[65ch]">
         <button
+          tabIndex={SITE_TAB}
           type="button"
           onClick={onBack}
           className={cn(
             "mb-8 inline-flex items-center gap-2",
             "font-mono text-xs uppercase tracking-wider text-text-secondary",
             "transition-colors duration-normal hover:text-accent-primary",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
           )}
         >
           <span aria-hidden="true">&larr;</span>
@@ -186,7 +188,13 @@ export function ConstellationContent({
       {/* Content sections -- images break out of 65ch, text stays contained */}
       <div className="flex flex-col gap-10">
         {sections.map((section, index) =>
-          renderConstellationSection(section, index, allNodes, onNavigate, node.title)
+          renderConstellationSection(
+            section,
+            index,
+            allNodes,
+            onNavigate,
+            node.title,
+          ),
         )}
       </div>
     </div>

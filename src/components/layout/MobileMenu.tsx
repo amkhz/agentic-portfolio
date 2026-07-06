@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { NavLink, useLocation } from "react-router";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { springSoft } from "@/components/effects/motionConfig";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 interface NavItem {
   to: string;
@@ -70,7 +71,7 @@ export function MobileMenu({
       const panel = panelRef.current;
       if (!panel) return;
       const focusables = panel.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled])'
+        "a[href], button:not([disabled])",
       );
       if (focusables.length === 0) return;
       const first = focusables[0];
@@ -90,7 +91,7 @@ export function MobileMenu({
     document.body.style.overflow = "hidden";
 
     // Move focus to the first link once the panel has mounted.
-    const firstLink = panelRef.current?.querySelector<HTMLElement>('a[href]');
+    const firstLink = panelRef.current?.querySelector<HTMLElement>("a[href]");
     firstLink?.focus();
 
     return () => {
@@ -133,6 +134,7 @@ export function MobileMenu({
   return (
     <div className="sm:hidden">
       <button
+        tabIndex={SITE_TAB}
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -166,68 +168,70 @@ export function MobileMenu({
             <>
               <motion.div
                 key="backdrop"
-              aria-hidden="true"
-              onClick={close}
-              className="fixed inset-0 z-[55] bg-bg-deep/60 backdrop-blur-sm"
-              {...backdropMotion}
-            />
-            <motion.div
-              key="panel"
-              ref={panelRef}
-              id={panelId}
-              className="fixed inset-y-0 right-0 z-[60] flex w-[min(80vw,20rem)] flex-col overflow-y-auto rounded-l-2xl border-l border-border-subtle bg-bg-elevated shadow-xl"
-              {...panelMotion}
-            >
-              <div className="flex h-16 shrink-0 items-center justify-end px-3">
-                <button
-                  type="button"
-                  onClick={close}
-                  aria-label="Close navigation menu"
-                  className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-border-subtle bg-bg-subtle text-text-primary transition-colors duration-normal hover:border-accent-primary hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-elevated"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                  </svg>
-                </button>
-              </div>
-              <nav
-                aria-label="Mobile navigation"
-                className="flex-1 px-3 pb-8"
+                aria-hidden="true"
+                onClick={close}
+                className="fixed inset-0 z-[55] bg-bg-deep/60 backdrop-blur-sm"
+                {...backdropMotion}
+              />
+              <motion.div
+                key="panel"
+                ref={panelRef}
+                id={panelId}
+                className="fixed inset-y-0 right-0 z-[60] flex w-[min(80vw,20rem)] flex-col overflow-y-auto rounded-l-2xl border-l border-border-subtle bg-bg-elevated shadow-xl"
+                {...panelMotion}
               >
-                <ul className="flex flex-col gap-1">
-                  {navLinks.map((link) => (
-                    <li key={link.to}>
-                      <NavLink
-                        to={link.to}
-                        end={link.to === "/"}
-                        onClick={close}
-                        className={({ isActive }) =>
-                          `flex min-h-[48px] items-center rounded-lg px-4 font-heading text-lg font-medium tracking-wide transition-colors duration-normal hover:bg-bg-subtle hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-elevated ${isActive ? "text-accent-primary" : "text-text-secondary"}`
-                        }
-                      >
-                        {link.label}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </motion.div>
+                <div className="flex h-16 shrink-0 items-center justify-end px-3">
+                  <button
+                    tabIndex={SITE_TAB}
+                    type="button"
+                    onClick={close}
+                    aria-label="Close navigation menu"
+                    className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full border border-border-subtle bg-bg-subtle text-text-primary transition-colors duration-normal hover:border-accent-primary hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-elevated"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                    </svg>
+                  </button>
+                </div>
+                <nav
+                  aria-label="Mobile navigation"
+                  className="flex-1 px-3 pb-8"
+                >
+                  <ul className="flex flex-col gap-1">
+                    {navLinks.map((link) => (
+                      <li key={link.to}>
+                        <NavLink
+                          tabIndex={SITE_TAB}
+                          to={link.to}
+                          end={link.to === "/"}
+                          onClick={close}
+                          className={({ isActive }) =>
+                            `flex min-h-[48px] items-center rounded-lg px-4 font-heading text-lg font-medium tracking-wide transition-colors duration-normal hover:bg-bg-subtle hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-elevated ${isActive ? "text-accent-primary" : "text-text-secondary"}`
+                          }
+                        >
+                          {link.label}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </motion.div>
             </>
           ) : null}
         </AnimatePresence>,
-        document.body
+        document.body,
       )}
     </div>
   );

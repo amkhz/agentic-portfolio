@@ -1,4 +1,5 @@
 import { cn } from "@core/utils";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
 
@@ -14,8 +15,7 @@ type ButtonProps = ButtonBaseProps &
   Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonBaseProps>;
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    "bg-accent-primary text-text-inverse hover:bg-accent-hover",
+  primary: "bg-accent-primary text-text-inverse hover:bg-accent-hover",
   secondary:
     "border border-secondary-primary text-secondary-primary bg-transparent hover:bg-secondary-primary hover:text-text-inverse",
   ghost:
@@ -39,15 +39,15 @@ export function Button({
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
     "cursor-pointer select-none",
     variantStyles[variant],
-    className
+    className,
   );
 
   if (href) {
-    const isExternal =
-      href.startsWith("http") || href.startsWith("//");
+    const isExternal = href.startsWith("http") || href.startsWith("//");
 
     return (
       <a
+        tabIndex={SITE_TAB}
         href={href}
         className={classes}
         aria-label={ariaLabel}
@@ -62,7 +62,12 @@ export function Button({
   }
 
   return (
-    <button className={classes} aria-label={ariaLabel} {...props}>
+    <button
+      tabIndex={SITE_TAB}
+      className={classes}
+      aria-label={ariaLabel}
+      {...props}
+    >
       {children}
     </button>
   );

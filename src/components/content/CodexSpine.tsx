@@ -3,6 +3,7 @@ import type { CodexChapter as CodexChapterType } from "@core/content/codex";
 import { cn } from "@core/utils";
 import { CodexNode } from "./CodexNode";
 import { CodexChapter } from "./CodexChapter";
+import { SITE_TAB } from "@/lib/tabOrder";
 
 /**
  * Spine layout geometry, derived from node marker size and button padding.
@@ -20,7 +21,7 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
 
   const chapterTitles = useMemo(
     () => Object.fromEntries(chapters.map((c) => [c.id, c.title])),
-    [chapters]
+    [chapters],
   );
 
   const allOpen = openChapters.size === chapters.length;
@@ -47,17 +48,14 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
     }
   }, [allOpen, chapters]);
 
-  const navigateToChapter = useCallback(
-    (id: string) => {
-      setOpenChapters((prev) => new Set(prev).add(id));
-      window.history.replaceState(null, "", `#${id}`);
-      requestAnimationFrame(() => {
-        const node = document.getElementById(`codex-node-${id}`);
-        node?.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    },
-    []
-  );
+  const navigateToChapter = useCallback((id: string) => {
+    setOpenChapters((prev) => new Set(prev).add(id));
+    window.history.replaceState(null, "", `#${id}`);
+    requestAnimationFrame(() => {
+      const node = document.getElementById(`codex-node-${id}`);
+      node?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, []);
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -75,6 +73,7 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
       {/* Expand/collapse all */}
       <div className="mb-4 flex justify-end sm:mb-2">
         <button
+          tabIndex={SITE_TAB}
           type="button"
           onClick={toggleAll}
           className={cn(
@@ -82,7 +81,7 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
             "text-text-muted transition-colors duration-normal",
             "hover:text-accent-primary",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep",
-            "rounded px-2 py-1"
+            "rounded px-2 py-1",
           )}
         >
           {allOpen ? "Collapse all" : "Expand all"}
@@ -124,7 +123,7 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
                 <div
                   className={cn(
                     "absolute inset-0 transition-opacity duration-slow",
-                    isOpen ? "opacity-100" : "opacity-0"
+                    isOpen ? "opacity-100" : "opacity-0",
                   )}
                   style={{
                     background: "var(--codex-spine-active)",
@@ -145,7 +144,9 @@ export function CodexSpine({ chapters }: CodexSpineProps) {
               />
 
               {/* Chapter content -- indented past the spine on desktop */}
-              <div className={cn("sm:pl-[calc(var(--codex-node-size)+1.75rem)]")}>
+              <div
+                className={cn("sm:pl-[calc(var(--codex-node-size)+1.75rem)]")}
+              >
                 <CodexChapter
                   id={chapterId}
                   nodeId={nodeId}

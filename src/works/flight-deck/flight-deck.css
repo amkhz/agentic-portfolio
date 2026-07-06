@@ -153,6 +153,117 @@
   color: var(--deck-ink-label);
 }
 
+/* The slice-plane scrubber (Works 01.1, reworked after Justin's live
+   read): the track IS the bubble's silhouette (HullSection) and the
+   thumb IS the cut line traveling through the body, so the control
+   depicts a plane cutting a volume, never a zoom. The cut speaks the
+   pressable brass (treatment B): quiet control ink at rest, full amber
+   under the hand. The row's children dim while an alert holds the
+   plane home (the root's opacity is boot-owned inline, so the rested
+   look lives on the children). */
+.deck-slice {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.625rem;
+}
+
+.deck-slice > * {
+  transition: opacity 0.2s ease-out;
+}
+
+.deck-slice:has(.deck-slice__input:disabled) > * {
+  opacity: 0.55;
+}
+
+.deck-slice__label {
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--deck-ink-label);
+}
+
+.deck-slice__end {
+  font-size: 0.5625rem;
+  letter-spacing: 0.15em;
+  color: var(--deck-ink-label);
+}
+
+.deck-slice__track-box {
+  position: relative;
+  flex: 1;
+  height: 2.25rem;
+}
+
+.deck-hull {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The cut line: a vertical hairline through the whole hull, centered
+   on its own width by margin (the spring owns the transform channel,
+   the paradigm thumb's own pattern). */
+.deck-slice__cut {
+  position: absolute;
+  top: 0.125rem;
+  bottom: 0.125rem;
+  left: 0;
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 999px;
+  background: var(--deck-control);
+  pointer-events: none;
+  transition: background-color 0.15s ease-out;
+}
+
+.deck-slice__track-box:has(.deck-slice__input:hover:not(:disabled))
+  .deck-slice__cut,
+.deck-slice__track-box:has(.deck-slice__input:active:not(:disabled))
+  .deck-slice__cut {
+  background: var(--deck-caution);
+}
+
+/* The input is the interaction surface, grown to the 44px target and
+   centered on the track (paradigm precedent; nothing interactive sits
+   above or below the row, so the overhang costs nothing). */
+.deck-slice__input {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2.75rem;
+  transform: translateY(-50%);
+  margin: 0;
+  opacity: 0;
+  cursor: ew-resize;
+}
+
+.deck-slice__input:disabled {
+  cursor: default;
+}
+
+.deck-slice__track-box:has(.deck-slice__input:focus-visible)
+  .deck-slice__cut {
+  outline: 2px solid var(--deck-focus);
+  outline-offset: 3px;
+}
+
+.deck-slice__value {
+  min-width: 3.25rem;
+  text-align: right;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--deck-ink-dim);
+}
+
+/* The plate's still: same grammar, nothing interactive, sits back. */
+.deck-slice--still {
+  opacity: 0.8;
+}
+
 /* Annotation layer ("earn the width", locked 2026-07-04): caliper arcs
    on the tracked stress concentrations, hairline leaders to per-lane
    readouts in the width the center-left anchor frees. Medical-imaging

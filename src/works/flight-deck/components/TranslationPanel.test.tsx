@@ -6,6 +6,7 @@ import {
   render,
   renderHook,
   screen,
+  waitFor,
 } from "@testing-library/react";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import {
@@ -24,7 +25,9 @@ import { useTranslationLayer } from "./useTranslationLayer";
 
 const activityRef = () => ({ current: [] as UtilizationEvent[] });
 
-function renderDock(overrides: Partial<Parameters<typeof TranslationPanel>[0]> = {}) {
+function renderDock(
+  overrides: Partial<Parameters<typeof TranslationPanel>[0]> = {},
+) {
   const activity = activityRef();
   const onIntentChange = vi.fn();
   render(
@@ -70,9 +73,7 @@ describe("TranslationPanel (dock)", () => {
     const committed = proposeTrajectories(DEFAULT_INTENT)[0];
     renderDock({ draftedCount: 0, enRoute: committed });
     expect(
-      screen.getByText(
-        `${deckCopy.panel.enRoutePrefix} ${committed.summary}`,
-      ),
+      screen.getByText(`${deckCopy.panel.enRoutePrefix} ${committed.summary}`),
     ).toBeInTheDocument();
   });
 
@@ -85,11 +86,15 @@ describe("TranslationPanel (dock)", () => {
     // The explainer is a hover reveal per the shape brief (the visible
     // paragraph crowded the vacuum region, live pass 2026-07-05): title
     // for pointers, always in the sr mirror.
-    expect(screen.getByTitle(deckCopy.panel.utilizationExplainer)).toBeInTheDocument();
     expect(
-      screen.getByText((_, el) =>
-        (el?.textContent ?? "").includes(deckCopy.panel.utilizationExplainer) &&
-        el?.classList.contains("sr-only") === true,
+      screen.getByTitle(deckCopy.panel.utilizationExplainer),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        (_, el) =>
+          (el?.textContent ?? "").includes(
+            deckCopy.panel.utilizationExplainer,
+          ) && el?.classList.contains("sr-only") === true,
       ),
     ).toBeInTheDocument();
   });
@@ -131,7 +136,7 @@ describe("ProposalRow (review surface)", () => {
     expect(onCommit.mock.calls[0][0]).toMatchObject({ style: "direct" });
   });
 
-  it("locks commits while a handoff runs, and vanishes when quiet", () => {
+  it("locks commits while a handoff runs, and leaves quietly when consumed", async () => {
     const { rerender, container } = render(
       <ProposalRow
         live
@@ -145,10 +150,35 @@ describe("ProposalRow (review surface)", () => {
     })) {
       expect(button).toBeDisabled();
     }
+    // The commit path: the authored timeline already consumed the cards,
+    // so the row leaves without playing the withdraw.
     rerender(
-      <ProposalRow live proposals={[]} onCommit={() => {}} committing={false} />,
+      <ProposalRow live proposals={[]} onCommit={() => {}} committing />,
     );
-    expect(container).toBeEmptyDOMElement();
+    await waitFor(() => expect(container).toBeEmptyDOMElement());
+  });
+
+  it("withdraws the drafts on redraft instead of deleting them", async () => {
+    const { rerender, container } = render(
+      <ProposalRow
+        live
+        proposals={proposeTrajectories(DEFAULT_INTENT)}
+        onCommit={() => {}}
+        committing={false}
+      />,
+    );
+    rerender(
+      <ProposalRow
+        live
+        proposals={[]}
+        onCommit={() => {}}
+        committing={false}
+      />,
+    );
+    // Withdrawn, not deleted: the row holds for its exit...
+    expect(container).not.toBeEmptyDOMElement();
+    // ...and is gone once the withdraw completes.
+    await waitFor(() => expect(container).toBeEmptyDOMElement());
   });
 });
 

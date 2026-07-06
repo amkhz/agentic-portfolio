@@ -3,9 +3,10 @@
  * layer drafts from an intent, and the operator's utilization. All of
  * it deterministic, so the panel, the meter, and their mirrors agree.
  *
- * Copy here is scaffold grade (Writer + Gaff pass before ship, same as
- * the instrument captions): plain language, honest names, no physics
- * credentials assumed.
+ * Copy here passed the Writer + Gaff strings pass 2026-07-05 (with the
+ * rest of the in-deck strings): plain language, honest names, no
+ * physics credentials assumed; the three summaries price themselves in
+ * one vocabulary (draw and exposure).
  */
 
 export interface IntentOption {
@@ -56,6 +57,17 @@ export const DEFAULT_INTENT: DeckIntent = {
   timeline: "standard",
   risk: "balanced",
 };
+
+/**
+ * Draft withdraw score: when the operator changes intent mid-review,
+ * the drafts on the bench are withdrawn, not deleted — a subtler and
+ * quicker exit than their arrival (phase 7 motion audit). Pure data
+ * like commitScore; the commit path never uses this (the authored
+ * commit timeline owns that exit).
+ */
+export const translationScore = {
+  withdrawMs: 160,
+} as const;
 
 export type ProposalStyle = "direct" | "sweep" | "drift";
 
@@ -127,11 +139,14 @@ export function proposeTrajectories(intent: DeckIntent): Proposal[] {
   const base = DESTINATION_BEARINGS[intent.destination] ?? 0.7;
   const urgencyBase = TIMELINE_URGENCY[intent.timeline] ?? 0.55;
   const riskDraw =
-    intent.risk === "conservative" ? 0.85 : intent.risk === "accepting" ? 1.15 : 1;
+    intent.risk === "conservative"
+      ? 0.85
+      : intent.risk === "accepting"
+        ? 1.15
+        : 1;
   const riskPush = intent.risk === "accepting" ? 1.1 : 1;
   const dest =
-    DESTINATIONS.find((d) => d.id === intent.destination)?.label ??
-    "the mark";
+    DESTINATIONS.find((d) => d.id === intent.destination)?.label ?? "the mark";
   const at = dest.charAt(0).toLowerCase() + dest.slice(1);
 
   const make = (
@@ -159,7 +174,7 @@ export function proposeTrajectories(intent: DeckIntent): Proposal[] {
       urgencyBase,
       0.012 + 0.014 * urgencyBase,
       0.09,
-      `Straight run at ${at}. Most draw, least time on the wall.`,
+      `Straight run at ${at}. Most draw, least exposure.`,
     ),
     make(
       "sweep",

@@ -1,13 +1,15 @@
 import { Link } from "react-router";
 import { deckCopy } from "@core/works/flight-deck/copy";
 import { getWork } from "@core/works/works";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 import { FlightDeckSigil } from "../../sigils/FlightDeckSigil";
 
 /**
  * The considered decline (ADR-017 D1): a designed card, never a broken
  * squeeze. The sigil mark landed with the Shelf work (its emission speaks
- * the deck's caution amber here). Capture slot ships in a later phase once
- * its format (still vs short clip) is decided.
+ * the deck's caution amber here). The capture is a static frame (format
+ * resolved 2026-07-05): one still of the awake bench, so the phone
+ * visitor sees what the wider bench holds.
  */
 export function DeclineCard() {
   const work = getWork("flight-deck");
@@ -24,6 +26,13 @@ export function DeclineCard() {
         <p className="mt-2 font-[family-name:var(--deck-font-body)] text-lg italic text-[var(--deck-ink-dim)]">
           {work?.thesisLine}
         </p>
+        <ResponsiveImage
+          src="/images/flight-deck-bench.png"
+          alt={deckCopy.decline.captureAlt}
+          loading="eager"
+          sizes="(min-width: 496px) 448px, calc(100vw - 48px)"
+          className="mt-8 w-full border border-[var(--deck-line)]"
+        />
         <h2 className="mt-10 text-base text-[var(--deck-ink)]">
           {deckCopy.decline.heading}
         </h2>

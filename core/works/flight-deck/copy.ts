@@ -3,8 +3,9 @@
  * no permission framing, mission test per line. The colophon block is
  * FINAL as of 2026-07-05 (Writer + Gaff pass, Joi profile gating the
  * voice; arm line locked per ADR-017 D7 and sourced from works.ts).
- * The in-deck strings (panel, alerts, orders) remain scaffold grade
- * pending their own pass.
+ * The in-deck strings (panel, alerts, orders) got the same pass
+ * 2026-07-05: the deck speaks plainly ("the layer" retired from the
+ * dock status lines), the drill prose stood as written.
  */
 import { COUPLING_LAG_S } from "./paradigm";
 
@@ -50,13 +51,13 @@ export const deckCopy = {
     riskLabel: "Risk tolerance",
     proposalsLabel: "Proposals",
     /** While the layer re-drafts (cadence slows past the ceiling). */
-    proposalPending: "The layer is drafting routes…",
+    proposalPending: "Drafting routes…",
     /** Dock status while drafts sit on the bench for review. */
     drafted: "Three routes on the bench. Review them against the render.",
     /** Dock status once a route is committed and the space is quiet. */
     enRoutePrefix: "En route:",
     /** Dock status before anything is drafted or flying. */
-    idle: "State an intent and the layer will draft routes.",
+    idle: "State an intent and the deck will draft routes.",
     /** The commit control on each proposal card. */
     commit: "Commit",
     /** Live region: the handoff is running. */

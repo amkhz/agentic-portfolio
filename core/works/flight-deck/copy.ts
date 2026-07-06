@@ -21,6 +21,9 @@ export const deckCopy = {
   decline: {
     heading: "This instrument wants a wider bench.",
     body: "The Flight Deck is an operable cockpit built for a desktop screen. Every instrument is live and every control does something, which is exactly why it will not squeeze down to a phone.",
+    /** The bench still on the card (capture format resolved 2026-07-05: static frame). */
+    captureAlt:
+      "The Flight Deck at watch on a desktop screen: the field render's glowing ring with caliper annotations, three drafted routes awaiting commit, and the instrument gauges reading nominal.",
   },
   staticPlate: {
     note: "You are reading the deck as a still instrument plate. Every instrument is shown at a legible nominal state.",

@@ -39,7 +39,7 @@ export const works: WorkEntry[] = [
       "dird-15-vacuum-spacetime-engineering",
     ],
     year: 2026,
-    status: "in-progress",
+    status: "live",
   },
 ];
 

@@ -34,6 +34,7 @@ export const imageManifest: Record<string, ImageVariantEntry> = {
   "/images/doctrine-not-prompts-mark.png": { width: 641, height: 802, widths: [640, 641] },
   "/images/doctrine-reads-doctrine.png": { width: 3416, height: 1906, widths: [640, 960, 1280, 1920, 2560] },
   "/images/feature-flow.png": { width: 3840, height: 2160, widths: [640, 960, 1280, 1920, 2560] },
+  "/images/flight-deck-bench.png": { width: 3200, height: 1800, widths: [640, 960, 1280, 1920, 2560] },
   "/images/future-vision.png": { width: 3840, height: 2160, widths: [640, 960, 1280, 1920, 2560] },
   "/images/idr-hero.png": { width: 3600, height: 2025, widths: [640, 960, 1280, 1920, 2560] },
   "/images/idr-hifi.png": { width: 3840, height: 2160, widths: [640, 960, 1280, 1920, 2560] },

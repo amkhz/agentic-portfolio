@@ -12,7 +12,7 @@ describe("works manifest", () => {
     const deck = getWork("flight-deck");
     expect(deck).toBeDefined();
     expect(deck?.title).toBe("The Flight Deck");
-    expect(deck?.status).toBe("in-progress");
+    expect(deck?.status).toBe("live");
   });
 
   it("only cites source guides that exist in the Archive", () => {

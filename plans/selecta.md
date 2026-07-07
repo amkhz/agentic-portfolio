@@ -20,8 +20,8 @@ Load-bearing framing: **Justin is newer to DJing and wants Selecta to teach as i
    - **v1 is digital.** Vinyl is a surfacing layer, not a separate mode: once #13 lands, candidates carry an owned-on-vinyl badge so hybrid sets can flag what can be dropped from the shelf.
    - **Scrobbled-but-not-owned report ships in v1** (one query once the tables exist), and set notes carry an acquire list: tracks the agent wanted for the set that Justin does not own.
 4. **Intake: guided hybrid with teaching built in.** Conversational riff plus a light interview that teaches the lingo as it goes; never gates on knowing a term. Justin's vibe vocabulary is the first-class input; the skill translates it into archive queries (tags, similar artists, eras, energy inference).
-   - **Three doors, one engine:** brief-first ("Sunday morning, 90 minutes"), vibe-first ("deep psychedelic and Latin grooves"), seed-first ("pull up that jazz song from last Saturday" -- an archive query, confirmed with Justin, set built outward from the anchor).
-   - **Persistent vibe lexicon.** What "nighttime banger" turned out to mean is learned from keeps and cuts and stored, so translation compounds across sets like the match table does.
+   - **Four doors, one engine:** brief-first ("Sunday morning, 90 minutes"), vibe-first ("deep psychedelic and Latin grooves"), seed-first ("pull up that jazz song from last Saturday" -- an archive query, confirmed with Justin, set built outward from the anchor), and **hand-picked-first** (added 2026-07-06, Justin's ask: "start sets manually"). A hand-picked start is round zero with Justin's chosen tracks already in slots, already locked; the agent matches them for real BPM/key, sequences around them, and mines the open slots. Falls out of the slots-and-locks model with no new machinery.
+   - **Persistent vibe lexicon, learned two ways.** Passively: what "nighttime banger" turned out to mean is learned from keeps and cuts. Explicitly (added 2026-07-06): Justin can teach -- "these tracks are jungle riddims" -- attaching his phrase to **exemplar tracks**, during intake, mid-round ("slot 4 is what I mean by funky bass soul"), or as a standalone move outside any set. A lexicon entry is therefore learned parameters (tags, BPM range, energy) PLUS exemplars; when a taught phrase comes up, the miner seeds live similar-track discovery from the exemplars, which captures "feels similar to me" better than tag math. Translation compounds across sets like the match table does.
 5. **Energy arc: named shapes.** Small vocabulary (slow burn, single peak, double peak, plateau, comedown) plus freeform bends ("single peak but late"), normalized internally to `(time%, energy%)` waypoints the validator checks against. Raw waypoints remain accepted input.
 6. **Sequencing: agent sequences, code referees.** The math ships as code; the order is the agent's. Code provides Camelot adjacency and key-compatibility scoring, BPM compatibility with halftime/doubletime awareness (87 into 174 is a valid liquid move), `score_transition` with reasons, and `validate_set` against the arc. Deliberate rule-breaks are allowed and must be named in the notes. No auto-sequencer in v1; a beam-search `suggest_order` is deferred until first drafts feel slow.
 7. **Iteration: slots and locks.** The set is numbered slots. Justin reacts in plain language ("cut 4, more like 7, keep the opener"); keeps lock, cuts open their slot, "more like N" seeds that slot's re-mine. Only open slots re-mine; transitions re-validate around every change. The set directory is the state, so any set is resumable days later.
@@ -71,7 +71,7 @@ sets/YYYY-MM-DD-<slug>/
 
 ## The skill flow
 
-1. **Door detect** -- brief, vibe, or seed; seed-first resolves the memory against the archive and confirms.
+1. **Door detect** -- brief, vibe, seed, or hand-picked; seed-first resolves the memory against the archive and confirms; hand-picked-first matches Justin's tracks and locks them into round-zero slots.
 2. **Guided intake** -- riff plus at most a couple of gap questions; teach terms as they come up; consult the vibe lexicon.
 3. **Mine** -- archive tools (loved, era snapshots, forgotten favorites, top lists) + live discovery (similar tracks/artists, tags), weighted by the freshness dial.
 4. **Bridge** -- `match_tracks` everything; unmatched wanted tracks go to the acquire list; matched arrive with real BPM/key.
@@ -79,7 +79,9 @@ sets/YYYY-MM-DD-<slug>/
 6. **Present** -- tracklist with plain-language why per transition; flag any deliberate rule-break.
 7. **Iterate** -- slots and locks until Justin calls it.
 8. **Export** -- `set export`, plus cue hints only if asked.
-9. **Close** -- write `notes.md`, update the vibe lexicon from keeps/cuts, log the round history.
+9. **Close** -- write `notes.md`, update the vibe lexicon from keeps/cuts and any explicit teachings this session, log the round history.
+
+A **teach move** is also available outside any set: "call these five tracks jungle riddims" writes exemplars + inferred parameters to the lexicon directly.
 
 ## Build phases (each lands as normal PRs in lastfm-mcp)
 

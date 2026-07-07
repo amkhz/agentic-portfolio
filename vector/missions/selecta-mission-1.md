@@ -97,7 +97,7 @@ No doctrine violations found.
 **Branch:** `feat/selecta-integration`
 **Commit prefix:** `chore:`
 **Inputs:** T5 + T6 + T7
-**Outputs:** Back up `_Serato_`, then real import of both libraries (~20,000 tracks -- Justin's corrected estimate; per-source counts, match-rate stats, AND import + match-build wall-clock reported, since scaling assumptions get verified here); not-owned report eyeballed against known gaps; all five tools answering in a live session; **first end-to-end set built with Justin in the room** (his brief, his reactions, real export imported into rekordbox 7 and visible in Serato -- this is the acceptance test and the first teaching session); README updated (library import, Selecta section, uv expectation, set directory format); lint/build/test green; Roy reviews against this manifest and ADR-020; deviations logged
+**Outputs:** Back up `_Serato_`, then real import of both libraries (20,000+ tracks -- Justin's recount in progress, 20k is a floor; per-source counts, match-rate stats, AND import + match-build wall-clock reported, since scaling assumptions get verified here); not-owned report eyeballed against known gaps; all five tools answering in a live session; **first end-to-end set built with Justin in the room** (his brief, his reactions, real export imported into rekordbox 7 and visible in Serato -- this is the acceptance test and the first teaching session); README updated (library import, Selecta section, uv expectation, set directory format); lint/build/test green; Roy reviews against this manifest and ADR-020; deviations logged
 **Scope boundary:** This task does NOT add features. Integration, verification, documentation, review only.
 
 ## Execution Order

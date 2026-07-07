@@ -8,6 +8,23 @@
       "port": 5173
     },
     {
+      "name": "aphelion-dev",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "BROWSER=none",
+        "npm",
+        "run",
+        "dev",
+        "--prefix",
+        "/Users/300mhz/projects/aphelion",
+        "--",
+        "--port",
+        "5198",
+        "--strictPort"
+      ],
+      "port": 5198
+    },
+    {
       "name": "dev-preview",
       "runtimeExecutable": "env",
       "runtimeArgs": [

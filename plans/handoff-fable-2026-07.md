@@ -18,7 +18,7 @@
 | API-key proxy | SHIPPED (portfolio PRs #196/#198), verified live | Optional: rename Vercel env vars to `LASTFM_*`, drop `VITE_` fallback |
 | Aphelion (third arm) | CHARTERED (ADR-019). Nibiru planned end-to-end (`plans/aphelion-nibiru.md`); north-star boards rendered | `/shape` session (room name confirm, budgets, guestbook flow), then P0 scaffold per the lastfm-mcp T1 pattern |
 | Twenty Years flagship (Mission 2) | Waiting. Aggregates exist | `/shape` first. HARD CONSTRAINT: schema v1 has no genre/tag data -- constellation form needs lastfm-mcp #11 first; eras timeline / rediscovery shelf are unblocked |
-| The Selector (DJ workflow) | Deep-planning session with Fable [pending at this doc's writing; section appended below when done] | -- |
+| Selecta (DJ workflow, was "The Selector") | PLANNED end to end (2026-07-06 session). ADR-020, `plans/selecta.md`, manifest `vector/missions/selecta-mission-1.md`, lastfm-mcp issues #14-#18 | Build when Justin calls it: T1+T4 start in parallel worktrees per the manifest |
 | Discogs | Fuel identified (discogs.com/user/300mhz), issue #13 filed | Sync lands in lastfm-mcp; feeds Nibiru's wall + Selector vinyl sets |
 
 ## The ways
@@ -45,6 +45,17 @@ Music Phase 2 turns twenty years of Justin's listening (scrobbling since 2005) i
 
 ---
 
-## The Selector (appended after the Fable planning session)
+## Selecta (appended after the Fable planning session, 2026-07-06)
 
-*Pending -- this section lands with the Selector deep-planning session.*
+The Selector became **Selecta** (Justin's pick; the patois form has the swagger and `/selecta` is the better invocation). Everything is decided; nothing at build time should need re-deciding. The plan of record is `plans/selecta.md`; the charter is ADR-020; the decomposition is `vector/missions/selecta-mission-1.md` (8 tasks, Mission 1's worktree pattern encoded in the manifest itself); the machinery is filed as lastfm-mcp issues #14-#18, and #13 (Discogs) gates the vinyl fast-follow.
+
+**The shape in one paragraph.** One house: a thin `/selecta` crew skill in lastfm-mcp is the brain; deterministic machinery ships in the repo. The ADR-018 archive grows into the library of record: `library_tracks` from Serato + rekordbox (per-source rows, config-driven precedence defaulting to Serato so a gear migration is a config flip) and a persistent `track_matches` table (confirmed matches survive rebuilds; matching compounds). Matching runs both precomputed (import-time, powers the not-owned report) and query-time (`match_tracks`, for candidates discovery invents mid-session). Sequencing: agent sequences, code referees (`score_transition`, `validate_set`; Camelot + BPM with halftime/doubletime awareness); no auto-sequencer in v1. Iteration is slots-and-locks; the set directory is resumable state. Deliverables: rekordbox XML (opt-in estimate-labeled cue hints), always-written m3u8, Serato .crate via the single Python file (`tools/serato_bridge.py`, PEP 723, uv run) -- the one cross-language boundary, read-db and write-crate, never a second package. Read-only against both libraries, forever. `sets/` and the vibe lexicon are gitignored personal data.
+
+**What the next model must not lose:**
+
+- **Justin is newer to DJing and asked for teaching built in.** This reframed the whole intake: guided hybrid (riff + light interview), plain language first, terms defined at first use, and full coaching in the set notes (rationale, mix-in guidance, technique when earned, per-set glossary). Do not ship a tool that assumes DJ fluency; Selecta exists partly to build it.
+- **His vibe vocabulary is the input language.** "Funky Mizell grooves, nighttime bangers, Zamrock, fuzzy guitars, deep psychedelic and Latin grooves" -- the miner translates these into tags/similar-artists/eras/energy. The persistent vibe lexicon learns what his phrases mean from keeps and cuts. Board-riffing lesson repeated: his correction ("I don't really talk like a DJ") completed the design the way "Nibiru is the room" did.
+- **Three doors, one engine:** brief-first, vibe-first, seed-first ("pull up that jazz song from last Saturday" -- resolve against the archive, confirm, build outward).
+- **Vinyl is a surfacing layer, not a mode** (his framing): owned-on-vinyl badges on candidates once #13 lands, so hybrid sets flag what can drop from the shelf.
+- **The acceptance test is a session, not a script:** Mission T8 ends with the first real set built with Justin in the room, exported, imported into rekordbox 7, visible in Serato. That session is also the first teaching session.
+- **Safety line that must never soften:** the only writes are new .crate files and `sets/` output. The Serato DB and rekordbox collection are never mutated; first crate write happens against a backed-up `_Serato_`.

@@ -59,6 +59,8 @@ The portfolio currently looks at one track; this looks at two decades. A Conserv
 
 ## Track C -- The Selector: DJ set-building workflow (riff, ready to shape)
 
+> **Superseded 2026-07-06:** Track C is now **Selecta**, fully planned in the Fable deep-planning session. All decisions locked (name, one-house architecture, library bridge with both matching paths, guided teaching intake with vibe lexicon, agent-sequences-code-referees, slots-and-locks iteration, deliverables incl. opt-in cue hints). See ADR-020, `plans/selecta.md` (the plan of record), and `vector/missions/selecta-mission-1.md` (8-task manifest). The sketch below is the ancestor, kept for the record.
+
 Agent-driven set building on top of the MCP server. Working name "The Selector" (sound-system culture; Justin names it).
 
 **The workflow:**
@@ -94,7 +96,7 @@ Tier 1.5 "ambient influence" grown up: not the site reacting to music, but a *pl
 ```
 DONE:       A fold-in (proxy, PRs #196/#198) + Mission 1 (lastfm-mcp, PRs #1-#7)
 Mission 2:  B (flagship, portfolio)  <- aggregates ready; form decision pending (genre needs v2)
-Parallel:   C shape session          <- MCP tools live; exports need no portfolio work
+Parallel:   C PLANNED as Selecta     <- ADR-020 + plans/selecta.md + selecta-mission-1 manifest; build when capacity allows
 Parallel:   D shape + ADR cycle      <- independent of B/C; build after B ships
 ```
 
@@ -119,7 +121,7 @@ Parallel:   D shape + ADR cycle      <- independent of B/C; build after B ships
 ## Open Questions
 
 1. **Lounge placement:** Works 02 with a charter amendment, or portfolio-side? (My lean: Works 02.)
-2. **Selector shape:** crew skill + export module in lastfm-mcp (my lean), or standalone CLI?
+2. ~~**Selector shape:**~~ RESOLVED 2026-07-06: named **Selecta**; thin crew skill + machinery in lastfm-mcp (ADR-020, `plans/selecta.md`).
 3. **Flagship form:** constellation, eras timeline, rediscovery shelf, or a composition? Decide at `/shape`.
 4. **MCP repo name:** `lastfm-mcp` is the working name; Justin may want something with more character.
 

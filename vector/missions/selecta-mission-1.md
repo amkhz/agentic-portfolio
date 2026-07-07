@@ -70,7 +70,7 @@ No doctrine violations found.
 **Branch:** `feat/selecta-cli`
 **Commit prefix:** `feat(cli):`
 **Inputs:** T1 + T2 (import path), T4 (set document types for export)
-**Outputs:** `library import --source serato|rekordbox [--path <p>]` (idempotent per-source replace, triggers match-table rebuild, reports counts + match stats), `library status`; `set export --dir sets/<slug> [--cue-hints]` reading `set.yaml` and writing all three artifacts to `exports/`: rekordbox XML (DJ_PLAYLISTS, `file://` locations from library paths, playlist node `SELECTA/<set>`, memory cues named `SELECTA: mix window` only with `--cue-hints`), m3u8 (always, the Serato fallback bridge), and `.crate` via the bridge's `write-crate` (crate name `Selecta - <set>`; skipped with a warning when uv is absent); XML/m3u8 generation as pure tested functions in `core/export/`
+**Outputs:** `library import --source serato|rekordbox [--path <p>]` (idempotent per-source replace, triggers match-table rebuild, reports counts + match stats), `library status`; `set export --dir sets/<slug> [--cue-hints]` reading `set.yaml` and writing all three artifacts to `exports/`: rekordbox XML (DJ_PLAYLISTS, `file://` locations from library paths, playlist node `SELECTA/<set>`, memory cues named `SELECTA: mix window` only with `--cue-hints`), m3u8 (always, the Serato fallback bridge), and `.crate` via the bridge's `write-crate` (crate name `Selecta - <set>`; skipped with a warning when uv is absent); the bridge also gains a `read-tags <files...>` verb (mutagen; extracts artist/track/album/BPM/key/duration from arbitrary audio files, read-only) with a services/ wrapper -- this powers hand-picked-first starts from dragged file paths; XML/m3u8 generation as pure tested functions in `core/export/`
 **Scope boundary:** This task does NOT write set notes or any prose (the skill owns notes.md), does NOT touch MCP registration, and NEVER writes into the Serato database or rekordbox collection -- new crate files and `exports/` only.
 
 ### T7: The Selecta skill
@@ -79,8 +79,17 @@ No doctrine violations found.
 **Branch:** `feat/selecta-skill`
 **Commit prefix:** `docs(skill):`
 **Inputs:** Tool and CLI surfaces as spec'd in plans/selecta.md (can be drafted in parallel; verified against reality in T8)
-**Outputs:** SKILL.md encoding the full flow (door detect: brief/vibe/seed -> guided intake with teaching -> mine -> bridge -> sequence with referee tools -> present -> slots-and-locks iteration -> export -> close with lexicon update); the teaching register (plain language first, term second, defined on first use; coaching depth per board 4: rationale + mix-in guidance + technique when earned + per-set glossary); set directory format (brief.yaml, set.yaml, rounds.md, notes.md, exports/); vibe lexicon format and update ritual; references/ for the Camelot wheel primer and notes.md template
+**Outputs:** SKILL.md encoding the full flow (door detect: brief/vibe/seed/**hand-picked** (Justin's tracks -- arriving as text, archive references, or dragged file paths via the bridge's `read-tags` -- matched then pre-locked in round-zero slots) -> guided intake with teaching -> mine -> bridge -> sequence with referee tools -> present -> slots-and-locks iteration -> export -> close with lexicon update); the teaching register (plain language first, term second, defined on first use; coaching depth per board 4: rationale + mix-in guidance + technique when earned + per-set glossary); set directory format (brief.yaml, set.yaml, rounds.md, notes.md, board.html, exports/); vibe lexicon format (learned parameters PLUS exemplar tracks) and update ritual including the explicit **teach move** ("call these jungle riddims" -- during intake, mid-round, or standalone outside any set; exemplars seed similar-track discovery when the phrase is used); references/ for the Camelot wheel primer and notes.md template
 **Scope boundary:** This task does NOT touch core/, services/, server/, or cli/. Skill documentation only. Tool names and CLI flags must match T5/T6 exactly -- deviations reported, not improvised.
+
+### T9: The set board -- local HTML view (added 2026-07-06, Justin's ask)
+**Layer:** `core/export/` (pure HTML generation) + `cli/` (`set view`)
+**Owner:** Tyrell
+**Branch:** `feat/set-board`
+**Commit prefix:** `feat(board):`
+**Inputs:** T4 (set document types, scores), T6 (CLI patterns, export hook)
+**Outputs:** Pure, tested `renderBoard(setDocument, brief, scores) -> string` in `core/export/` producing a single self-contained `board.html` (inline CSS/JS, no CDN, no framework, works via file://): brief header, target-arc SVG with actual sequenced energy overlaid, ordered slot cards (artist/track, BPM, Camelot badge, lock state, vinyl badge post-#13), transition connectors colored by referee score with coach reasons attached, runtime bar, acquire list; `set view --dir sets/<slug>` CLI command regenerating and opening it; `set export` also regenerates the board so the finished artifact ships with its visual
+**Scope boundary:** This task does NOT add interactivity that mutates set state (read-only board; clickable lock/cut is a parked v2 needing a local server), does NOT touch the skill, MCP tools, or any writer from T6, and adds zero dependencies.
 
 ### T8: Integration -- real import, first set with Justin, docs, review
 **Layer:** repo root
@@ -88,7 +97,7 @@ No doctrine violations found.
 **Branch:** `feat/selecta-integration`
 **Commit prefix:** `chore:`
 **Inputs:** T5 + T6 + T7
-**Outputs:** Back up `_Serato_`, then real import of both libraries (6000+ tracks; per-source counts and match-rate stats reported); not-owned report eyeballed against known gaps; all five tools answering in a live session; **first end-to-end set built with Justin in the room** (his brief, his reactions, real export imported into rekordbox 7 and visible in Serato -- this is the acceptance test and the first teaching session); README updated (library import, Selecta section, uv expectation, set directory format); lint/build/test green; Roy reviews against this manifest and ADR-020; deviations logged
+**Outputs:** Back up `_Serato_`, then real import of both libraries (20,000+ tracks -- Justin's recount in progress, 20k is a floor; per-source counts, match-rate stats, AND import + match-build wall-clock reported, since scaling assumptions get verified here); not-owned report eyeballed against known gaps; all five tools answering in a live session; **first end-to-end set built with Justin in the room** (his brief, his reactions, real export imported into rekordbox 7 and visible in Serato -- this is the acceptance test and the first teaching session); README updated (library import, Selecta section, uv expectation, set directory format); lint/build/test green; Roy reviews against this manifest and ADR-020; deviations logged
 **Scope boundary:** This task does NOT add features. Integration, verification, documentation, review only.
 
 ## Execution Order
@@ -96,7 +105,8 @@ No doctrine violations found.
 **Immediately (parallel):** T1, T4
 **After T1 (parallel):** T2, T3
 **After T2+T3+T4 (parallel):** T5, T6, T7 (T7 may draft earlier; it gates on nothing but verifies in T8)
-**After T5+T6+T7:** T8
+**After T6 (parallel with T7/T5 tail):** T9
+**After T5+T6+T7+T9:** T8
 
 **Critical path:** T1 -> T2 -> T6 -> T8 (4 sequential tasks; matches Mission 1's shape)
 
@@ -108,7 +118,7 @@ This mission is complete when:
 - `library import` has ingested Justin's real Serato and rekordbox libraries; per-source rows retained; precedence resolves per config; re-import is idempotent
 - The match table reports its build stats; `find_not_owned` answers with plausible, spot-checked results; a confirmed match survives a rebuild (tested)
 - `score_transition` and `validate_set` pass exhaustive fixture tests including halftime/doubletime and named-arc normalization
-- A real set exists in `sets/`: built conversationally through `/selecta`, exported, **imported into rekordbox 7 and visible in Serato**, with notes.md carrying full coaching and a glossary
+- A real set exists in `sets/`: built conversationally through `/selecta`, exported, **imported into rekordbox 7 and visible in Serato**, with notes.md carrying full coaching and a glossary, and its board.html rendering the finished set in a browser
 - `sets/` and the lexicon are demonstrably untracked (`git status` clean after a set)
 - lastfm-mcp gates green; Roy has reviewed against this manifest and ADR-020
 - Mission recorded: roadmap + music-phase-2.md pointers updated, memory updated, handoff section appended

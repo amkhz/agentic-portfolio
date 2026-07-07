@@ -144,6 +144,23 @@ without them:
 torso, feathered extremities) vs v1 both seeds + v1 q48 (headless V-shaped
 cloud). Same seed, same room, one element rewritten.
 
+### 8. "Well broken in leather jacket, never tattered — still wabi-sabi tho"
+**Bucket:** Material & light transport (element `desc`).
+**What it means:** patina without damage. Wabi-sabi in Justin's register is
+*history and care* — burnished, supple, hand-polished by decades of use — never
+neglect. "Cracked," "tattered," "torn," "frayed" pull renders toward visible
+damage (tears, split seams, exposed stuffing), which reads as a failing
+business, not a loved room.
+**The mechanic:** in leather/fabric element descs, replace damage words with
+care words: *"deep broken-in patina, supple and burnished by years of use,
+hand-polished sheen on the wear points, cared-for."* Keep the wabi-sabi
+carriers that don't imply damage: patina, sheen variation, softened edges,
+faded dye, wear points. This applies at doctrine level too — the kissa
+material spec now reads "broken-in oxblood leather," not "cracked."
+**Proof:** `mocks/nibiru-postcard/nibiru-postcard--s11` (the miss: "cracked
+patina leather" desc rendered the stool with an actual split and exposed
+batting) → corrected desc in the same caption, same seed (the fix).
+
 ---
 
 ## How to read a render that "feels off"

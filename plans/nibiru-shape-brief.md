@@ -48,11 +48,14 @@ Each shot holds 45 to 90 seconds with a very slow dolly drift, then a long cross
 |---|---|---|
 | Night, open, live | Justin scrobbling now | Needle-drop ritual on each new track, crew reacting, full light |
 | Night, open, memory | Justin away | The Memory DJ plays "this hour in years past" from baked archive slices; light dimmed one register so memory reads as memory |
-| Day, closed | Daytime in Justin's timezone | Grey daylight through the one window, chairs up, day routines: Gaff sweeping, Tyrell restocking, Writer at the counter with coffee |
+| Day, closed, live | Justin scrobbling by day | The staff-listening state: chairs up, grey daylight, and the turntable going anyway; needle drops fire as at night, crew pause their routines a beat to listen. The owner spinning records before opening is the most personal shot in the piece. |
+| Day, closed, quiet | Daytime, Justin not playing | Grey daylight through the one window, chairs up, day routines: Gaff sweeping, Tyrell restocking, Writer at the counter with coffee |
 | Sleeping room | No data, API failure, or `prefers-reduced-motion` | Dim static room, idle crew, last-played on the sleeve stand; live text data intact |
 | Postcard | Phones, or WebGL unavailable | Framed still of the room + live now-playing, sleeve stand, crew bios, slip form; no 3D |
 | Slip flow | Visitor writes a slip | Compose, confirm, "the keeper will read this" acknowledgment; no public echo |
 | Keeper's ledger | Justin, token-gated `/keeper` | Reads slips, keeps or discards; private |
+
+**No state gates access.** "Open" and "closed" are fiction, never a lockout: every state is fully visitable at any hour, all four touchpoints work, and live listening drives the needle-drop ritual whenever it happens, day or night. The circadian layer changes light and choreography only.
 
 ## 6. Interaction model
 

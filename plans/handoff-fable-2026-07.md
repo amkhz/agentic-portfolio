@@ -18,7 +18,7 @@
 | API-key proxy | SHIPPED (portfolio PRs #196/#198), verified live | Optional: rename Vercel env vars to `LASTFM_*`, drop `VITE_` fallback |
 | Aphelion (third arm) | CHARTERED (ADR-019). Nibiru planned end-to-end (`plans/aphelion-nibiru.md`); north-star boards rendered | `/shape` session (room name confirm, budgets, guestbook flow), then P0 scaffold per the lastfm-mcp T1 pattern |
 | Twenty Years flagship (Mission 2) | Waiting. Aggregates exist | `/shape` first. HARD CONSTRAINT: schema v1 has no genre/tag data -- constellation form needs lastfm-mcp #11 first; eras timeline / rediscovery shelf are unblocked |
-| Selecta (DJ workflow, was "The Selector") | PLANNED end to end (2026-07-06 session). ADR-020, `plans/selecta.md`, manifest `vector/missions/selecta-mission-1.md`, lastfm-mcp issues #14-#18 | Build when Justin calls it: T1+T4 start in parallel worktrees per the manifest |
+| Selecta (DJ workflow, was "The Selector") | BUILD IN FLIGHT (2026-07-06). Wave 1 MERGED (lastfm-mcp PRs #19 T1, #20 T4); wave 2 running (T2 readers, T3 matching). Set board added mid-build as T9 (Justin: "I'm a visual guy") | Merge wave 2, then wave 3 (T5 tools, T6 CLI, T7 skill), T9 board, T8 integration = first real set with Justin |
 | Discogs | Fuel identified (discogs.com/user/300mhz), issue #13 filed | Sync lands in lastfm-mcp; feeds Nibiru's wall + Selector vinyl sets |
 
 ## The ways
@@ -59,3 +59,4 @@ The Selector became **Selecta** (Justin's pick; the patois form has the swagger 
 - **Vinyl is a surfacing layer, not a mode** (his framing): owned-on-vinyl badges on candidates once #13 lands, so hybrid sets flag what can drop from the shelf.
 - **The acceptance test is a session, not a script:** Mission T8 ends with the first real set built with Justin in the room, exported, imported into rekordbox 7, visible in Serato. That session is also the first teaching session.
 - **Safety line that must never soften:** the only writes are new .crate files and `sets/` output. The Serato DB and rekordbox collection are never mutated; first crate write happens against a backed-up `_Serato_`.
+- **The set board (T9, added mid-build):** Justin reviews visually; every set carries a self-contained `board.html` (arc SVG, slot cards, scored transitions, acquire list), regenerated per round by `set view` and at export. Read-only v1; clickable board is a parked v2. The lesson repeats a third time: his additions complete the system -- leave room for them.

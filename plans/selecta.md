@@ -28,6 +28,7 @@ Load-bearing framing: **Justin is newer to DJing and wants Selecta to teach as i
 8. **Deliverables per set:** rekordbox XML playlist (import validated: Preferences -> Advanced -> rekordbox xml), Serato .crate written directly (m3u8 always written as the fallback bridge), and set-notes markdown with **full coaching**: per-transition rationale in plain language, where to bring the next track in, what to listen for, one technique note when it earns its place, plus a per-set lingo glossary (terms defined at first use).
 9. **Cue hints: per-set opt-in, labeled estimates.** Off by default. When requested, the rekordbox XML carries memory cues named `SELECTA: mix window`. Positions are duration/phrase estimates, not beat-accurate; accuracy gets tested on the real library before the feature is trusted, and it gets dropped without regret if it annoys.
 10. **Sets live at `lastfm-mcp/sets/`, gitignored.** Personal listening data stays out of git so the public flip stays clean. The vibe lexicon is gitignored for the same reason. Iteration history lives in the set doc's round log, not git.
+11. **The set board (added 2026-07-06, Justin's ask during the wave-1 review: "I'm a visual guy").** A local HTML view of any set: `set view` regenerates `board.html` inside the set directory (single self-contained file, inline CSS/JS, no CDN, opens via file://) and opens it in the browser. Renders: brief header, target arc curve as SVG with actual sequenced energy overlaid, ordered slot cards (artist/track, BPM, Camelot badge, lock state, vinyl badge post-#13), transition connectors colored by referee score with the coach reason attached, runtime bar, acquire list. Regenerated automatically each iteration round and at export, so the finished board doubles as a shareable artifact. **Read-only in v1**: reactions stay in the conversation. A clickable board (lock/cut from the page) needs a local server and message plumbing; parked as an explicit v2 candidate, not scoped.
 
 ## Data model (new tables, same SQLite archive)
 
@@ -50,7 +51,7 @@ New MCP tools (server/ layer, math and SQL below them per doctrine):
 | `score_transition` | key score, BPM score, combined score, human-readable reasons |
 | `validate_set` | ordered entries + arc in; per-transition scores, arc deviation, clash flags, runtime vs target out |
 
-CLI commands: `library import --source serato|rekordbox [--path <p>]`, `library status`, `set export --dir sets/<slug> [--cue-hints]`. Export reads the set doc and writes all three artifacts; the Python crate writer runs inside it via `uv run`.
+CLI commands: `library import --source serato|rekordbox [--path <p>]`, `library status`, `set export --dir sets/<slug> [--cue-hints]`, `set view --dir sets/<slug>` (regenerate + open the board). Export reads the set doc and writes all three artifacts plus the board; the Python crate writer runs inside it via `uv run`.
 
 Division of labor: **skill = judgment, CLI = deterministic I/O, tools = queries and referees.**
 
@@ -62,6 +63,7 @@ sets/YYYY-MM-DD-<slug>/
   set.yaml      # slots: position, artist, track, library_track_id, bpm, key_camelot, locked, source (archive|discovery), vinyl (post-#13)
   rounds.md     # round-by-round log: reactions, what re-mined, what changed
   notes.md      # final set notes (coaching deliverable)
+  board.html    # the set board: self-contained visual state, regenerated per round
   exports/      # <slug>.xml, <slug>.crate, <slug>.m3u8
 ```
 
@@ -85,6 +87,7 @@ sets/YYYY-MM-DD-<slug>/
 - **S1** -- matching: normalizers in core/ (the issue #10 dedupe family grows up), match-table build, `match_tracks` + `get_library_track` + `find_not_owned`
 - **S2** -- sequencing referee: Camelot/BPM math in core/, `score_transition` + `validate_set`
 - **S3** -- writers + `set export`: rekordbox XML (+ opt-in cue hints), m3u8, uv-run Python crate writer
+- **S3.5** -- the set board: pure HTML renderer in core/export + `set view` (mission T9)
 - **S4** -- the skill: SKILL.md, set directory format, vibe lexicon, teaching register; first real set end to end
 - **S5 (fast-follows)** -- vinyl surfacing on #13, cue-hint accuracy pass on the real library, `suggest_order` only if drafts feel slow
 
@@ -104,4 +107,5 @@ sets/YYYY-MM-DD-<slug>/
 
 ## Session log
 
+- 2026-07-06 (build kickoff): wave 1 shipped and merged (lastfm-mcp PRs #19 T1, #20 T4); wave 2 launched (T2 readers, T3 matching). Justin added the **set board** while reviewing wave 1 (locked decision 11, mission T9, issue filed).
 - 2026-07-06: Fable deep-planning session. Four boards riffed (name + architecture; library bridge; brief + loop; sequencing + deliverables). All decisions locked as Justin's picks, including two course corrections that improved the design: teaching-first guided intake with vibe vocabulary as the primary input, and vinyl as a surfacing layer rather than a mode. ADR-020 chartered, mission manifest generated via invest-crew (`vector/missions/selecta-mission-1.md`), machinery filed as lastfm-mcp issues #14 (S0), #15 (S1), #16 (S2), #17 (S3), #18 (S4); #13 gates the vinyl fast-follow.

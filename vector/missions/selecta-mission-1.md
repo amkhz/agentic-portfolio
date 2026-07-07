@@ -82,6 +82,15 @@ No doctrine violations found.
 **Outputs:** SKILL.md encoding the full flow (door detect: brief/vibe/seed -> guided intake with teaching -> mine -> bridge -> sequence with referee tools -> present -> slots-and-locks iteration -> export -> close with lexicon update); the teaching register (plain language first, term second, defined on first use; coaching depth per board 4: rationale + mix-in guidance + technique when earned + per-set glossary); set directory format (brief.yaml, set.yaml, rounds.md, notes.md, exports/); vibe lexicon format and update ritual; references/ for the Camelot wheel primer and notes.md template
 **Scope boundary:** This task does NOT touch core/, services/, server/, or cli/. Skill documentation only. Tool names and CLI flags must match T5/T6 exactly -- deviations reported, not improvised.
 
+### T9: The set board -- local HTML view (added 2026-07-06, Justin's ask)
+**Layer:** `core/export/` (pure HTML generation) + `cli/` (`set view`)
+**Owner:** Tyrell
+**Branch:** `feat/set-board`
+**Commit prefix:** `feat(board):`
+**Inputs:** T4 (set document types, scores), T6 (CLI patterns, export hook)
+**Outputs:** Pure, tested `renderBoard(setDocument, brief, scores) -> string` in `core/export/` producing a single self-contained `board.html` (inline CSS/JS, no CDN, no framework, works via file://): brief header, target-arc SVG with actual sequenced energy overlaid, ordered slot cards (artist/track, BPM, Camelot badge, lock state, vinyl badge post-#13), transition connectors colored by referee score with coach reasons attached, runtime bar, acquire list; `set view --dir sets/<slug>` CLI command regenerating and opening it; `set export` also regenerates the board so the finished artifact ships with its visual
+**Scope boundary:** This task does NOT add interactivity that mutates set state (read-only board; clickable lock/cut is a parked v2 needing a local server), does NOT touch the skill, MCP tools, or any writer from T6, and adds zero dependencies.
+
 ### T8: Integration -- real import, first set with Justin, docs, review
 **Layer:** repo root
 **Owner:** Tyrell (build) then Roy (review)
@@ -96,7 +105,8 @@ No doctrine violations found.
 **Immediately (parallel):** T1, T4
 **After T1 (parallel):** T2, T3
 **After T2+T3+T4 (parallel):** T5, T6, T7 (T7 may draft earlier; it gates on nothing but verifies in T8)
-**After T5+T6+T7:** T8
+**After T6 (parallel with T7/T5 tail):** T9
+**After T5+T6+T7+T9:** T8
 
 **Critical path:** T1 -> T2 -> T6 -> T8 (4 sequential tasks; matches Mission 1's shape)
 
@@ -108,7 +118,7 @@ This mission is complete when:
 - `library import` has ingested Justin's real Serato and rekordbox libraries; per-source rows retained; precedence resolves per config; re-import is idempotent
 - The match table reports its build stats; `find_not_owned` answers with plausible, spot-checked results; a confirmed match survives a rebuild (tested)
 - `score_transition` and `validate_set` pass exhaustive fixture tests including halftime/doubletime and named-arc normalization
-- A real set exists in `sets/`: built conversationally through `/selecta`, exported, **imported into rekordbox 7 and visible in Serato**, with notes.md carrying full coaching and a glossary
+- A real set exists in `sets/`: built conversationally through `/selecta`, exported, **imported into rekordbox 7 and visible in Serato**, with notes.md carrying full coaching and a glossary, and its board.html rendering the finished set in a browser
 - `sets/` and the lexicon are demonstrably untracked (`git status` clean after a set)
 - lastfm-mcp gates green; Roy has reviewed against this manifest and ADR-020
 - Mission recorded: roadmap + music-phase-2.md pointers updated, memory updated, handoff section appended

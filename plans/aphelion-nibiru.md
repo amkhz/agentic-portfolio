@@ -1,6 +1,6 @@
 # Aphelion / Nibiru -- the Listening Room
 
-> Dreamer + Wallace output, 2026-07-06. The planning record for Aphelion's first piece. Governs until superseded by the shape brief. ADR-019 is the arm's charter; `plans/music-phase-2.md` Track D is the ancestor.
+> Dreamer + Wallace output, 2026-07-06. The planning record for Aphelion's first piece. ADR-019 is the arm's charter; `plans/music-phase-2.md` Track D is the ancestor. **Superseded for open items by `plans/nibiru-shape-brief.md` (shape session 2026-07-07): Nibiru confirmed as the final name; the locked decisions below still stand.**
 
 ## What this is
 
@@ -47,12 +47,9 @@
 
 ## Open for the shape session
 
-1. Room name final confirm (Nibiru vs a name from Justin's obsessions -- riff planned)
-2. Per-figure reaction vocabularies beyond the Dreamer; how much lore the crew bios expose
-3. Perf budget numbers; tablet/mobile posture (decline card vs reduced room)
-4. Guestbook storage + review flow (KV vs simple store; moderation UX)
-5. Camera drift choreography (authored path vs slow orbit)
+All five resolved 2026-07-07; decisions and specs live in `plans/nibiru-shape-brief.md`.
 
 ## Session log
 
 - 2026-07-06: fiction locked (kissa), crew treatment locked (glyph beings), floor plan sketched, Wallace pass run (4 north-star boards + glyph iteration, `mocks/kissa-probes/`), arm named **Aphelion** (ADR-019), room working-titled **Nibiru**, away-mode/circadian/weather/visitor/audio decisions locked (this doc), Discogs surfaced as fuel.
+- 2026-07-07: shape session (Fable). **Nibiru confirmed final** over Quaoar/Sedna/Nemesis/Planet Nine riff. Five-move crew vocabularies, fiction-plus-one-true-line bios, perf gates accepted, postcard mobile + post-P2 phone spike, Upstash guestbook + keeper's ledger, shot-list camera + linger rail. Brief: `plans/nibiru-shape-brief.md`. P0 scaffold run same session.

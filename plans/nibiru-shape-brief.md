@@ -123,7 +123,17 @@ All through ADR-018 contracts: Aphelion's own `api/lastfm.ts` proxy for live now
 - **P3**: the Dreamer, from the v2 s11 board; five-move vocabulary as the template.
 - **P4**: Memory DJ + circadian layer + sleeping room.
 - **P5**: sound opt-in: foley + sonification, lazy, muted by default.
-- **P6+**: remaining six figures, weather layer, guestbook, Discogs wall, explorable camera (v2 candidates).
+- **P6+**: remaining six figures, weather layer, guestbook, Discogs wall, explorable camera, the Bottle Keep (v2 candidates).
+
+### The Bottle Keep (v2, banked 2026-07-07)
+
+Visitors connect their own streaming subscription and hear the actual track Justin is playing, poured through their own account. In fiction: bottle keep, the Japanese bar custom of keeping your own bottle behind the counter; the house pours what the owner's drinking. Justin's call: "cool as fuck." Supersedes the parked 30-second-preview idea (cleaner legally, better fiction).
+
+- **Apple Music first, viable now.** MusicKit JS gives full-track browser playback to any Apple Music subscriber. Entails: Apple Developer Program ($99/yr), MusicKit signing key, a small `api/` endpoint minting the developer-token JWT, one-time visitor authorize for the music user token. Works in Safari and Chrome, no user caps.
+- **Spotify: deep link only, for now.** Their February 2026 policy cut development-mode apps to 5 users with owner-held Premium, and extended quota requires a registered business at 250k MAU. No visitor OAuth is worth building against that. Fallback: an "open in Spotify" link on the sleeve stand (match via a cross-service resolver like Odesli), zero quota needed. Revisit if policy thaws.
+- **Mechanics:** needle drop, catalog search for artist + track on the visitor's service, their player starts. Sync is loose by design (scrobbles mark starts, not positions): listening along, not sample-accurate.
+- **The floor holds:** unmatched tracks (white labels, rips) fall back to the v1 fiction, you see what it does to the room. Playback needs a user gesture; sound is already opt-in, so doctrine is unchanged.
+- **Sequencing:** rides P2's now-playing plumbing and P5's sound opt-in; slots after P5.
 
 ## 12. Recommended references
 

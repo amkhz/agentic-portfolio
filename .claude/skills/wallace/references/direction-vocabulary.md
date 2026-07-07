@@ -108,6 +108,42 @@ screen, so they read as the room the subject lives in.
 **Proof:** every `env-*` render — the fern/stone framing is what makes the
 screen feel embedded rather than pasted.
 
+### 6. "Soft McIntosh-like glow on the gear"
+**Bucket:** Material & light transport (element-level, not style-level).
+**What it means:** vintage-amplifier meter faces backlit in soft pale blue —
+the audiophile cool-counterpoint against a warm tungsten room. Brand named as
+shorthand for the light quality; never bake marks or logos.
+**The mechanic:** keep it OUT of the shared `style.lighting` (it would tint
+everything). Put it in the gear element's `desc` ("large round analog meter
+faces backlit in soft pale blue, needles at rest, glass catching faint
+reflections") with a cool hex (`#4A7A9B`) in that element's palette, plus the
+same hex once in the style palette so it's sanctioned globally. For continuity
+across a set, echo it dim and out-of-focus on background gear in other frames.
+**Proof:** kissa probe pass 2026-07-06 — `kissa-altar--s47` (blue meters
+against ember tubes, the frame's thesis) and `kissa-counter--s11` (dim
+back-shelf echo). Element-level placement kept every non-gear frame clean.
+
+### 7. "A figure made of glyphs / text / ASCII"
+**Bucket:** Composition (the figure element's `desc`).
+**What it means:** a human presence whose body is a volume of typographic
+characters — translucent, luminous, sitting inside a photographic scene.
+**The mechanic:** two clauses are load-bearing, and the model omits the head
+without them:
+1. **Name the anatomy explicitly** — "a clearly defined round head and sloped
+   shoulders of densely packed glyphs above the torso." Without it the figure
+   renders as a headless glyph cloud (both first-pass seeds; 48 steps did NOT
+   fix it — this is caption-level, not step-count).
+2. **Give the glyphs a scale hierarchy** — "larger bold characters forming the
+   dense core of the head and torso, progressively smaller fine glyphs along
+   the limbs, sparse tiny marks scattering at the silhouette edges." Scale
+   variation is what makes the body read as having mass and bones; uniform
+   glyph size reads as a flat texture fill.
+   Keep luminosity restrained in the same desc ("dim enough that the warm room
+   stays dominant") so the being reads as phosphorescence, not neon.
+**Proof:** `kissa-glyph-regular-v2--s11` and `--s29` (resolved profile, massed
+torso, feathered extremities) vs v1 both seeds + v1 q48 (headless V-shaped
+cloud). Same seed, same room, one element rewritten.
+
 ---
 
 ## How to read a render that "feels off"

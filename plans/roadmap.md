@@ -130,8 +130,8 @@
 
 **Next steps:**
 - "Twenty Years of Listening" flagship experience (Mission 2). Form decision constraint: schema v1 has no genre/tag dimension -- genre constellation needs v2 enrichment (lastfm-mcp issue #11); eras timeline / rediscovery shelf do not.
-- The Selector DJ set-builder (shape session; rekordbox + Serato exports validated)
-- The Lounge concept (Works 02 candidate, needs its own shape + ADR cycle)
+- The Selector DJ set-builder (shape session; rekordbox + Serato exports validated; Discogs collection as vinyl-set fuel, lastfm-mcp issue #13)
+- **Aphelion / Nibiru** -- third arm CHARTERED 2026-07-06 (ADR-019, aphelion.justinh.design, own repo): the kissa listening room. Fiction, crew treatment, away-mode, visitor model locked; north-star boards in `mocks/kissa-probes/`. Plan: `plans/aphelion-nibiru.md`. Next: /shape, then P0 scaffold.
 
 ### 5. Crew and skills evolution
 
@@ -194,3 +194,4 @@ Significant choices get documented as ADRs in `vector/decisions/`.
 | 012 | Perihelion house identity | 2026-06 | Accepted |
 | 013 | Portfolio visual direction: "The Conservatory" (biophilic-future register) | 2026-06-20 | Accepted, shipped to main via PR #130 |
 | 018 | Archive-first Last.fm data architecture in a standalone MCP repo | 2026-07-06 | Accepted |
+| 019 | Aphelion: a third arm for personal experimental work | 2026-07-06 | Accepted |

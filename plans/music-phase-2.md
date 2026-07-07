@@ -73,6 +73,8 @@ Agent-driven set building on top of the MCP server. Working name "The Selector" 
 
 ## Track D -- The Lounge: virtual hi-fi listening room (concept, needs its own shape cycle)
 
+> **Superseded 2026-07-06:** Track D grew into its own arm. See ADR-019 (Aphelion) and `plans/aphelion-nibiru.md` -- fiction (kissa), crew (glyph beings), away-mode (Memory DJ + circadian), visitor model, and audio posture all locked there. The sketch below is the ancestor, kept for the record.
+
 Tier 1.5 "ambient influence" grown up: not the site reacting to music, but a *place* where the music lives. A virtual hi-fi lounge / club: a rendered room, a system playing what Justin scrobbles, and digital avatars who inhabit it and react to the sound.
 
 **The concept sketch:**

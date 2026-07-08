@@ -27,7 +27,7 @@ Watch the room. Everything else (crate-digging the shelves, reading the sleeve s
 
 ## 3. Design direction
 
-Ember-lit analog chiaroscuro, the kissa register locked in `plans/aphelion-nibiru.md`: roughly 80% darkness, all light in-world (tungsten filaments, cream paper lamps, VU breath, the one cool note of gear-blue meter faces). Materials are oiled walnut gone black, cracked oxblood leather, dust allowed. The reverence ceiling governs everything: the room reacts in watch-hands increments, nobody dances. The R3F build is graded against the four north-star boards in `agentic-portfolio/mocks/kissa-probes/*--q48.png` (altar, counter, glyph figure v2, wall of years v2), with caption sidecars as the reproducible source.
+Ember-lit analog chiaroscuro, the kissa register locked in `plans/aphelion-nibiru.md`: roughly 80% darkness, all light in-world (tungsten filaments, cream paper lamps, VU breath, the one cool note of gear-blue meter faces). Materials are oiled walnut gone black, broken-in oxblood leather (deep patina, supple and cared for, never cracked or tattered; wabi-sabi is history and care, not damage), dust allowed. The reverence ceiling governs everything: the room reacts in watch-hands increments, nobody dances. The R3F build is graded against the four north-star boards in `agentic-portfolio/mocks/kissa-probes/*--q48.png` (altar, counter, glyph figure v2, wall of years v2), with caption sidecars as the reproducible source.
 
 Aphelion owns this register. Conservatory and Reading Room doctrine do not apply here; the method constraints do (OKLCH by named token, WCAG 2.2 AA).
 

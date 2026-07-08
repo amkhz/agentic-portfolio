@@ -161,6 +161,26 @@ material spec now reads "broken-in oxblood leather," not "cracked."
 patina leather" desc rendered the stool with an actual split and exposed
 batting) → corrected desc in the same caption, same seed (the fix).
 
+### 9. Organic macro textures vs the safety filter
+**Bucket:** Palette + composition (and expectations, not caption wording).
+**What it means:** the NSFW filter runs on the OUTPUT image, per render, so
+identical captions pass or block by seed. Macro surfaces in skin-adjacent
+territory — full-grain leather with soft creases, wide warm-amber gradient
+fields — are the false-positive zone. On the Nibiru texture sweep
+(2026-07-08): leather/wood blocked ~1 in 5 (seed noise, re-roll fixes it);
+a backlit light-amber glass panel blocked 3 of 5 (systematic — a large soft
+flesh-toned gradient with no anchoring structure reads as skin to the
+classifier).
+**The mechanic:** when a texture caption keeps blocking across seeds, don't
+euphemize — restructure. Deepen the palette away from flesh tones (dark
+amber `#B05E20` over light `#FFC98A` as the dominant field), add anchoring
+structure (dense streaks, bubbles, mullions, hard edges), and name the
+man-made object class explicitly ("bottle glass," "upholstery swatch").
+Seed-level blocks on otherwise-fine materials: just re-roll; the render
+underneath the watermark was usually good.
+**Proof:** `aphelion/tools/blender/wallace-captions/texture-glass-amber`
+(3-of-5 blocked) vs `texture-leather-oxblood` (1-of-5, re-roll clean).
+
 ---
 
 ## How to read a render that "feels off"

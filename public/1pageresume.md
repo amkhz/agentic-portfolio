@@ -5,7 +5,7 @@ justin@justinh.design | [justinh.design](https://justinh.design) | [linkedin.com
 
 ## Profile
 
-Product designer specializing in AI-powered experiences, intelligent automation, and design systems. I translate complex technical requirements into intuitive user experiences while leading cross-functional teams. Currently driving GenAI strategy and automation initiatives at a $23B+ fintech platform.
+Product designer specializing in AI-powered experiences, agentic workflows, and design systems. I translate complex technical requirements into intuitive user experiences while leading cross-functional teams. Currently driving GenAI strategy and an agentic design practice at a $23B+ fintech platform.
 
 ## Professional Experience
 
@@ -15,10 +15,11 @@ Product designer specializing in AI-powered experiences, intelligent automation,
 Lead design for fintech/proptech platform funding $23B+ across 85,000+ real estate projects. Drive AI-powered personalization and intelligent automation for lending operations.
 
 - Spearhead GenAI product strategy including AI-powered scope of work tool and instant document review, eliminating manual data entry for complex lending workflows
+- Built an agentic design practice around Kiavi World, our team home base, and Key, our product design agent; design now ships features into production with shorter cycle times at full quality and usability
 - Lead automation projects reducing manual operational load on Loan Analysts and Underwriters through intelligent eligibility and compliance systems
 - Strategic partner to SVP of Product/Technology, providing technical direction on AI tools, Service-Oriented Architecture migration, and AI workflow integration
 - Led company rebrand from LendingHome to Kiavi and Innovation team launching investor-specific products
-- Manage and mentor senior product designers across multiple business areas
+- Manage and mentor senior product designers across multiple business areas, coaching the team into the agentic way of working
 
 ### User Experience Designer | UKG (Ultimate Kronos Group) (Remote)
 **February 2017 – June 2021**

@@ -67,9 +67,12 @@ export function AboutPage() {
                 design operates when the interface starts thinking for itself.
                 The work I&apos;ve been doing at Kiavi reflects that: embedding
                 principles like decision versioning, human-in-the-loop review,
-                and auditable AI directly into our products. I love to observe
-                and listen, to question and hypothesize, to learn, and to
-                iterate.
+                and auditable AI directly into our products. Lately that extends
+                to the infrastructure itself: doctrine under version control,
+                agents with scoped roles, and tooling that lets design ship
+                features straight into production instead of stopping at the
+                handoff. I love to observe and listen, to question and
+                hypothesize, to learn, and to iterate.
               </p>
               <p>
                 In the future I&apos;d like to see a world that integrates

@@ -5,7 +5,7 @@ Grand Rapids, Michigan | justin@dtls.us | +1 219.588.3056 | [dtls.us](https://dt
 
 ## Profile
 
-Product designer specializing in AI-powered experiences, intelligent automation, and design systems. I translate complex technical requirements into intuitive user experiences while leading cross-functional teams and mentoring senior designers. Currently driving GenAI strategy and automation initiatives at a $23B+ fintech platform.
+Product designer specializing in AI-powered experiences, agentic workflows, and design systems. I translate complex technical requirements into intuitive user experiences while leading cross-functional teams and mentoring senior designers. Currently driving GenAI strategy and an agentic design practice at a $23B+ fintech platform.
 
 ## Professional Experience
 

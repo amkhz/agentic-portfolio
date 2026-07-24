@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { removeStaticDescription } from "@/lib/staticMeta";
 import { App } from "./App";
 
 // Locked type stack v2 ("The Conservatory", ADR-013, amended 2026-06-24):
@@ -14,6 +15,8 @@ import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 
 import "./styles/globals.css";
+
+removeStaticDescription();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

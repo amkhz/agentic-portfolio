@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router";
 import { HelmetProvider } from "react-helmet-async";
 import { Analytics, SpeedInsights } from "@services/analytics";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import { removeStaticDescription } from "@/lib/staticMeta";
 import { App } from "./App";
 
 import "@fontsource-variable/bricolage-grotesque";
@@ -13,6 +14,8 @@ import "@fontsource-variable/newsreader/standard.css";
 import "@fontsource-variable/newsreader/standard-italic.css";
 
 import "./styles/lab.css";
+
+removeStaticDescription();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

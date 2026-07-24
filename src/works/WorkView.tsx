@@ -1,4 +1,5 @@
 import { lazy, Suspense, type ComponentType, type LazyExoticComponent } from "react";
+import { Helmet } from "react-helmet-async";
 import { Navigate, useParams } from "react-router";
 import { getWork } from "@core/works/works";
 
@@ -15,11 +16,19 @@ export function WorkView() {
   const work = slug ? getWork(slug) : undefined;
   const Work = work ? workComponents[work.slug] : undefined;
 
-  if (!Work) return <Navigate to="/" replace />;
+  if (!work || !Work) return <Navigate to="/" replace />;
 
   return (
-    <Suspense fallback={null}>
-      <Work />
-    </Suspense>
+    <>
+      {/* The deck owns its <title> (FlightDeck sets document.title with the
+          Works "·" separator); WorkView only supplies the description the
+          deck chunk never carries. */}
+      <Helmet>
+        <meta name="description" content={work.thesisLine} />
+      </Helmet>
+      <Suspense fallback={null}>
+        <Work />
+      </Suspense>
+    </>
   );
 }

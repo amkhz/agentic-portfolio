@@ -7,6 +7,11 @@ export function NotFoundPage() {
     <>
       <Helmet>
         <title>Not found — Perihelion</title>
+        <meta
+          name="description"
+          content="The guide you're looking for may have been renamed or hasn't been published yet."
+        />
+        <meta name="robots" content="noindex" />
       </Helmet>
       <div className="mx-auto max-w-2xl px-6 py-32 text-center md:px-10">
         <p className="font-lab-mono text-xs tracking-wider text-lab-text-muted">

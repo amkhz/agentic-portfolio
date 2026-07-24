@@ -30,6 +30,10 @@ export function NotFoundPage() {
     <>
       <Helmet>
         <title>404 | Justin Hernandez</title>
+        <meta
+          name="description"
+          content="This page drifted into the void. Whatever you were looking for isn't here, but the rest of the site is."
+        />
         <meta name="robots" content="noindex" />
       </Helmet>
 

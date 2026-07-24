@@ -8,13 +8,14 @@ The era lens taught the wall to answer a glance. The crate dig teaches it to ans
 
 Hover an era and the lens already wakes it. **Press, and the keeper pulls a record from that shelf**: a sleeve slides out on a spring — up and toward you, the way a record actually leaves a crate — and settles into a presentation pose in the near field. The cover art arrives through the proxy; until it does (and whenever art misses), the walnut-black house sleeve carries the pull, stamp out.
 
-Beside the sleeve, a card. **The card is the archive talking, never a wiki:**
+Beside the sleeve, a card. **The card is the archive talking, never a wiki — and it speaks in an informational register, written for any visitor, not addressed to the owner** (graded 2026-07-24):
 
 > *Madvillainy · Madvillain*
-> *You played this 214 times, mostly 2011, mostly after midnight.*
+> *hip-hop · underground rap*
+> *Played 214 times, mostly in 2011, mostly after midnight.*
 > *Not since March 2019.*
 
-Every line is assembled from baked per-album stats in the archive's voice. No release dates, no personnel, no genre prose — the room only knows what you did with the record.
+The stats lines are assembled from baked per-album data; the quiet metadata line (genre tags, so a stranger knows what they're holding) arrives at runtime with the cover art — `album.getInfo` returns last.fm's top tags in the same proxy call, so genre costs the export nothing and the archive schema (which has no genre dimension; lastfm-mcp issue #11) stays untouched. Top 2–3 tags, lowercase, no prose. No release dates, no personnel, no wiki paragraphs.
 
 Then the fork: **put it back** (the sleeve returns on the same spring, same tempo, and the wall is whole) or **keep it out** — the keeper hangs it in the wall's picture frame, where it stays for the rest of the visit. The frame vessel and its art lane already exist (P2 `AlbumArtLayer`); the kept record simply takes precedence over the weekly-top hotlink for the session.
 
@@ -49,11 +50,14 @@ Reduced motion: no travel — the presented sleeve and card crossfade in place; 
 - P1' taught that every new master is a full grading arc (composition rejections, registration, depth map). The ritual needs zero new paint — that's the whole living-painting dividend.
 - If the dig ever wants its own room — leafing through bins rather than receiving from the keeper — the banked s11 becomes a P4 "deeper dig" shot with its own brief. Justin's call whether that door ever opens; nothing in v1 forecloses it.
 
-## 5. Dealer's choice
+## 5. Dealer's choice: two hands (graded 2026-07-24)
 
-A quiet affordance in the wall shot — proposed: pressing the **flip bins** (the newest era's trapezoid doubles as the "surprise me" surface), plus a keyboard-reachable control — asks the keeper to choose. The pull is weighted toward **forgotten favorites**, the house concept `find_forgotten_favorites` already defines: heavily played once, quiet since.
+The keeper has two ways of choosing, both keyboard-reachable:
 
-Weight is computed client-side from baked fields — `weight = plays × dormancyYears`, normalized, with a floor so nothing is unpullable — seeded per visit. Client-side keeps the export dumb and the tuning in DialKit (a dormancy-bias dial for the grading rounds, baked when Justin locks it).
+1. **The dig (true random).** Uniform over the *entire* crate — all 17,547 records, including the ones played once or twice. This is the peek into the whole wall: most pulls will be records barely remembered, and that's the point. Proposed surface: pressing the **flip bins** — bins are for digging.
+2. **The keeper's pick (forgotten favorites).** Weighted by the house concept `find_forgotten_favorites` defines: heavily played once, quiet since. `weight = plays × dormancyYears`, normalized, floored so nothing is unpullable, seeded per visit. Proposed surface: a quiet spoken affordance near the rail.
+
+Both weights/draws compute client-side from baked fields — the export stays dumb, the tuning lives in DialKit (a dormancy-bias dial for the keeper's pick, baked when Justin locks it).
 
 ## 6. The data contract (what needs lastfm-mcp)
 
@@ -63,26 +67,25 @@ Weight is computed client-side from baked fields — `weight = plays × dormancy
 
 ### The crate
 
-One entry per album with **≥ 25 lifetime plays** — 1,546 records against today's archive (17,547 distinct albums total; ≥50 would give 781). Twenty-five plays ≈ three full listens: the threshold for "this is a record you lived with," and it sizes the artifact right.
+**GRADED 2026-07-24: the full crate publishes.** One entry per album with ≥1 play — **all 17,547 records**. The privacy call is resolved (Discogs precedent; the wall *is* the archive made visible), and the true-random dig (§5) requires the whole wall anyway: a threshold would quietly delete exactly the records the dig exists to surface. Raw scrobble rows still never leave, per doctrine.
 
-Per record (compact keys, bar-time bucketing via `core/bartime.ts`):
+Per record (bar-time bucketing via `core/bartime.ts`):
 
 | Field | Feeds |
 |---|---|
-| artist, album | card title, art lookup, deep links |
-| plays | "214 times" |
-| top year + its share | "mostly 2011" |
+| artist, album | card title, art + genre lookup, deep links |
+| plays | "played 214 times" |
+| top year + its share | "mostly in 2011" |
 | night share (plays landing 00:00–04:00 bar time) | "mostly after midnight" |
-| first / last play (uts) | "not since March 2019", dealer dormancy |
-| dominant era slot (0–5, the wall's rows) | which shelf the keeper pulls it from |
+| first / last play (uts) | "not since March 2019", keeper's-pick dormancy |
 
-Estimated ~200 KB raw / **~50–80 KB gz**. Card copy renders client-side from thresholds (e.g. top-year share > .5 → "mostly 2011"; night share > .4 → "mostly after midnight"; dormancy > 2 y → the "not since" line) — the copy voice iterates in aphelion without re-exporting.
+The era slot dropped out of the contract on purpose: the wall's six rows are an aphelion authored asset (his painted map), so aphelion derives the shelf from `topYear` client-side — repainting eras never forces a re-export.
 
-**Privacy call for Justin:** the crate is a 1,546-line listing of the collection with play stats, in a public repo — a step past the top-5 exposure of `lounge.json`. Precedent says yes (the Discogs collection is already public at discogs.com/user/300mhz; the wall *is* the archive made visible), but it's his line to draw. Raw scrobble rows still never leave, per doctrine.
+Estimated ~2 MB raw / **~300–450 KB gz** (measure at build; lounge.json's 306 KB gz is the sibling precedent). Lazy-fetched only on pull intent, never bundled. Card copy renders client-side from thresholds (top-year share > .5 → "mostly in 2011"; night share > .4 → "mostly after midnight"; dormancy > 2 y → the "not since" line) — the copy voice iterates in aphelion without re-exporting.
 
-### Cover art
+### Cover art & genre
 
-**Not baked.** CDN URLs rot and the export shouldn't hold 1,500 of them. Runtime, frame-lane precedent: aphelion's proxy (`api/lastfm.ts`) gains one mode — `mode=albuminfo&artist=&album=` wrapping `album.getInfo` — and the card hotlinks the returned art. The existing placeholder-hash detection (`PLACEHOLDER_HASHES`, `services/nowPlaying.ts`) and the house sleeve carry every miss. Art loads only on pull: zero cost until the ritual is touched.
+**Not baked.** CDN URLs rot, the export shouldn't hold 17,547 of them, and genre would cost 17,547 rate-limited API calls per export. Runtime, frame-lane precedent: aphelion's proxy (`api/lastfm.ts`) gains one mode — `mode=albuminfo&artist=&album=` wrapping `album.getInfo` — and the card takes both the hotlinked art **and the top tags for the genre line** from that single call. The existing placeholder-hash detection (`PLACEHOLDER_HASHES`, `services/nowPlaying.ts`) and the house sleeve carry every art miss; a missing tag list simply drops the genre line. Loads only on pull: zero cost until the ritual is touched.
 
 ## 7. Listen: deep links v1, the pour v2
 
@@ -104,7 +107,7 @@ No embeds, no players, no audio — the audio posture is unchanged. When Bottle 
 | Number | Note |
 |---|---|
 | Room chunk ≤ 250 KB gz | currently 247.80 — the dig mounts from a tiny trigger; **all ritual code is its own lazy chunk** (EraLens/liveArt pattern, est. 3–4 KB gz) |
-| crate.json | lazy-fetched on first pull intent (era-lens hover arms a prefetch), never in any bundle; ~50–80 KB gz |
+| crate.json | lazy-fetched on first pull intent (era-lens hover arms a prefetch), never in any bundle; ~300–450 KB gz for the full 17,547-record crate (lounge.json 306 KB gz is the sibling precedent) |
 | Art | one proxy call + one image per pull, only on pull |
 | Draw calls | +1 sleeve quad, +0 for the card (DOM) |
 | First-visit total | unchanged — nothing loads until the wall is touched |
@@ -132,11 +135,13 @@ Rigs before build, per house rule; every round graded in a real browser (pane rA
 
 ## 11. Open questions (Justin)
 
-1. **Privacy line** (§6): publish the 1,546-record crate listing? (Recommended yes — Discogs precedent — but it's his call. A middle path exists: raise the threshold to ≥50 → 781 records.)
-2. **Camera** (§4): confirm the wall serves alone in v1; flip-bin s11 stays banked for a possible P4 deeper dig.
-3. **Listen links** (§7): Last.fm only, or add streaming search links — and which services?
-4. **Keep persistence**: session-only v1 (proposed), or should the keeper's ledger (Upstash, guestbook spec) remember the kept record across visits as a later round?
-5. **Dealer's-choice surface** (§5): flip bins as the "surprise me" press — right, or should it be a spoken keeper affordance elsewhere?
+Resolved at the 2026-07-24 grade: ~~privacy~~ (full crate publishes), ~~camera~~ (wall serves alone, s11 stays banked), ~~voice~~ (informational register + genre metadata line), dealer's choice gains the true-random dig alongside forgotten favorites.
+
+Still open:
+
+1. **Listen links** (§7): Last.fm only, or add streaming search links — and which services?
+2. **Keep persistence**: session-only v1 (proposed), or should the keeper's ledger (Upstash, guestbook spec) remember the kept record across visits as a later round?
+3. **Dealer surfaces** (§5): flip bins = the random dig, spoken affordance = the keeper's pick — confirm the mapping at the R3 grade.
 
 ---
 

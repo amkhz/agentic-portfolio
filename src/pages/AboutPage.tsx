@@ -14,7 +14,7 @@ export function AboutPage() {
         <title>About | Justin Hernandez</title>
         <meta
           name="description"
-          content="Design leader at Kiavi working on AI-augmented lending tools. Lead of AI adoption across design and product."
+          content="Design leader at Kiavi building AI-augmented lending tools and an agentic design practice. Lead of AI adoption across design and product."
         />
         <link rel="canonical" href="https://justinh.design/about" />
       </Helmet>

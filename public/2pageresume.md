@@ -20,6 +20,12 @@ Leading product design for cutting-edge fintech/proptech platform that has funde
 - Lead design of intelligent automation projects focused on eligibility and compliance, dramatically reducing manual operational load on Loan Analysts and Underwriters
 - Design instant terms experience leveraging automation to accelerate loan decisioning and improve borrower experience
 
+#### Agentic Design Practice & Tooling
+
+- Built Kiavi World, our team home base, and Key, our product design agent, grounded in version-controlled doctrine that agents read every session
+- Shifted design to shipping features into production, cutting cycle time while holding quality and usability
+- Presented the operating model at the company's internal Tech Summit
+
 #### Strategic Leadership & Technical Direction
 
 - Function as key strategic partner and design leader for SVP of Product/Technology and cross-functional engineering teams
@@ -29,7 +35,7 @@ Leading product design for cutting-edge fintech/proptech platform that has funde
 
 #### Team Leadership & Mentorship
 
-- Manage and mentor team of senior product designers, fostering agility in highly shifting requirements
+- Manage and mentor team of senior product designers, coaching the team into the agentic way of working
 - Build systems that enhance experience for both borrowers and internal developers through user empathy and strategic thinking
 - Guide designers responsible for their own business areas while maintaining cohesive product vision
 
@@ -95,7 +101,7 @@ DePaul University | Chicago, IL | 2009
 Product Design, User Research, Design Strategy, Service Design, Design Systems, Information Architecture, Interaction Design, Prototyping, Storyboarding, Usability Testing, Wireframing
 
 **AI & Automation**  
-GenAI Product Design, Prompt Engineering, AI-Powered Automation, Intelligent Document Processing, Predictive Personalization, AI Tool Integration
+GenAI Product Design, Agentic Workflows, Agent Orchestration, AI-Powered Automation, Intelligent Document Processing, Predictive Personalization, AI Tool Integration
 
 
 **Leadership & Collaboration**  

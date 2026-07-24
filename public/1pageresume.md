@@ -53,7 +53,7 @@ Led design for the Marketo Marketing Calendar. Contributed product evolution dur
 
 **Design:** Product Design, User Research, Design Strategy, Service Design, Design Systems, Information Architecture, Interaction Design, Prototyping, Usability Testing
 
-**AI & Automation:** GenAI Product Design, Prompt Engineering, AI-Powered Automation, Intelligent Document Processing, Predictive Personalization
+**AI & Automation:** GenAI Product Design, Agentic Workflows, Agent Orchestration, AI-Powered Automation, Intelligent Document Processing, Predictive Personalization
 
 **Leadership:** Team Management, Mentorship, Cross-Functional Leadership, Strategic Partnership, Stakeholder Communication
 

@@ -129,7 +129,7 @@ No embeds, no players, no audio — the audio posture is unchanged. When Bottle 
 |---|---|---|
 | R1 | Pull / present / return, house sleeve only, card from real crate.json | the gesture's feel, card voice |
 | R2 | Art proxy + placeholder fallback + keep-it-out → frame | art seating, keep fiction |
-| R3 | Dealer's choice + listen links + a11y polish | the whole ritual |
+| R3 | Dealer's choice + listen links + record vessels in every room (§12) + keep murmur + a11y polish | the whole ritual |
 
 Rigs before build, per house rule; every round graded in a real browser (pane rAF is dead).
 
@@ -142,6 +142,37 @@ Still open:
 1. **Listen links** (§7): Last.fm only, or add streaming search links — and which services?
 2. **Keep persistence**: session-only v1 (proposed), or should the keeper's ledger (Upstash, guestbook spec) remember the kept record across visits as a later round?
 3. **Dealer surfaces** (§5): flip bins = the random dig, spoken affordance = the keeper's pick — confirm the mapping at the R3 grade.
+4. **Vessel precedence** (§12): when something is spinning *and* a record is kept, which does a room's vessel hold? (Proposed: now-playing wins while live, kept holds through silence.)
+5. **Discogs on the card** (§13): the R1 card round cut release-year/label as wiki prose — does Discogs data amend that doctrine, and in which slot?
+
+## 12. R3 amendment (2026-07-25): the record travels
+
+R2 shipped keep-it-out into the altar's picture frame, and the first live grade named the gap: the keep happens on the archive, the frame hangs in the altar — nobody but the keeper and the builder would connect them. The fix is also the answer to a second want: showing **what's playing** in every room.
+
+**Every room gets one record vessel** — a measured surface where the room's one live record sits:
+
+- **Altar**: already built — the sleeve stand (now playing) and the frame (kept). Unchanged.
+- **Counter**: a sleeve leaning against the raised counter rail, right of the glass, in the lamp's pool (master has clean lamp-lit wood there).
+- **Booth**: a sleeve propped on the banquette backrest at the right end of the table (near-vertical quad; the flat-on-table option foreshortens too hard).
+- **The archive**: the pulled sleeve itself is the vessel; no second seat.
+
+**The fiction**: the keeper sets your record out wherever you linger — one object, seen from different corners of the same room. Wherever the tour lands, the record you kept (or the record spinning right now) is in view; the mechanic teaches itself and the keep gesture finally has a visible consequence everywhere.
+
+**Method** (all proven plumbing): one measured quad per master (luminance edge-fits, never eyeballed) + `AlbumArtLayer` graded into the paint (exposure/wash/feather, passive under `finalDim`) + depth co-move at the surface's Depth Pro depth (the rain-pane/breath precedent on DepthPlate shots). Kept art and now-playing art feed from the state that already exists (`keptRecord`, `liveTrack`).
+
+**The keep murmur**: the instant KEEP IT OUT is pressed, a SleeveCaption-voice line — "Kept out." — rides the sleeve's return, so the action answers even before the visitor tours to another room.
+
+**Watch items**: the room chunk sits at 247.97/250 gz and the quads + mounts land in it (vessel render code joins the lazy liveArt pattern where possible); the counter and booth seats are the same real estate the P3 crew figures will want — place vessels so a figure can still sit (or plan the handoff).
+
+## 13. Discogs metadata lane (his call, 2026-07-25)
+
+Discogs' API can deepen what a pulled or spinning record knows about itself: **label, release year, genres, and styles** — and Discogs *styles* ("boom bap", "jazzy hip-hop") are meaningfully sharper than Last.fm's top tags, which would upgrade the card's existing gear-blue genre slot without new UI.
+
+**Runtime lane (fits R3+)**: a second proxy mode or `api/discogs.ts` — server-side token, required User-Agent, `database/search?artist=&release_title=&type=master` for original-release year + genres/styles + label. Rate doctrine: 60 req/min authenticated is generous for per-pull calls behind a 24h+ edge cache (same shape as albuminfo); misses change nothing, per posture. Matching is fuzzy (masters vs pressings) — take the top master hit, drop the line on low confidence, never guess.
+
+**Doctrine tension, flagged honestly**: the R1 card round explicitly cut release-year/label as *wiki prose the doctrine forbids* (the faceplate almost printed "2004 STONES THROW"). Discogs makes the data real, but the card's voice rule — the archive talking, zero wiki prose — was graded, not accidental. Options for his grade: (a) styles quietly replace Last.fm tags in the existing genre slot, nothing else changes; (b) a second mono data line (label · year) amends the doctrine; (c) Discogs data feeds only deeper surfaces (listen links, a future flip-side of the card).
+
+**Not this lane**: syncing his real collection (lastfm-mcp #13, the wall-as-real-collection dream) and baking a genre dimension into the archive schema (#11) stay their own missions — this lane is runtime-only, one record at a time.
 
 ---
 

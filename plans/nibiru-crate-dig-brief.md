@@ -129,7 +129,7 @@ No embeds, no players, no audio — the audio posture is unchanged. When Bottle 
 |---|---|---|
 | R1 | Pull / present / return, house sleeve only, card from real crate.json | the gesture's feel, card voice |
 | R2 | Art proxy + placeholder fallback + keep-it-out → frame | art seating, keep fiction |
-| R3 | Dealer's choice + listen links + a11y polish | the whole ritual |
+| R3 | Dealer's choice + listen links + record vessels in every room (§12) + keep murmur + a11y polish | the whole ritual |
 
 Rigs before build, per house rule; every round graded in a real browser (pane rAF is dead).
 
@@ -142,6 +142,41 @@ Still open:
 1. **Listen links** (§7): Last.fm only, or add streaming search links — and which services?
 2. **Keep persistence**: session-only v1 (proposed), or should the keeper's ledger (Upstash, guestbook spec) remember the kept record across visits as a later round?
 3. **Dealer surfaces** (§5): flip bins = the random dig, spoken affordance = the keeper's pick — confirm the mapping at the R3 grade.
+4. ~~**Vessel precedence**~~ Resolved at the 2026-07-25 grade — reframed as **two lanes** (§12): the vessel holds the visitor's lane while one exists (a kept record), the keeper's lane otherwise (now playing). Tuning back in = returning the kept record.
+5. ~~**Discogs on the card**~~ Resolved: **option B** — the card gains a `label · year` mono line. His words: the cards should let visitors learn a thing or two, about him and about his music. Discogs also becomes the art fallback (§13).
+
+## 12. R3 amendment (2026-07-25): the record travels
+
+R2 shipped keep-it-out into the altar's picture frame, and the first live grade named the gap: the keep happens on the archive, the frame hangs in the altar — nobody but the keeper and the builder would connect them. The fix is also the answer to a second want: showing **what's playing** in every room.
+
+**Every room gets one record vessel** — a measured surface where the room's one live record sits:
+
+- **Altar**: already built — the sleeve stand (now playing) and the frame (kept). Unchanged.
+- **Counter**: a sleeve leaning against the raised counter rail, right of the glass, in the lamp's pool (master has clean lamp-lit wood there).
+- **Booth**: a sleeve propped on the banquette backrest at the right end of the table (near-vertical quad; the flat-on-table option foreshortens too hard).
+- **The archive**: the pulled sleeve itself is the vessel; no second seat.
+
+**The fiction — two lanes (his grade, 2026-07-25)**: the room carries two listening lanes. The **keeper's lane** is what's actually spinning — his live scrobbles, the altar's needle-drop ritual. The **visitor's lane** opens the moment they pull and keep a record: they're exploring the archive on their own, sometimes while the keeper listens to something else entirely — and that's the point, they should be free. The vessel in each room holds *the visitor's lane while one exists* (their kept record), and the keeper's lane otherwise (now playing). Returning the kept record is how a visitor **tunes back in** to the keeper's lane — the vessels everywhere quietly swap back to what he's playing. When Bottle Keep lands (Apple Music / Tidal pours), the visitor's lane gains real audio and a service indicator, and this section's semantics carry over unchanged: the lanes were designed before the sound arrives.
+
+**Method** (all proven plumbing): one measured quad per master (luminance edge-fits, never eyeballed) + `AlbumArtLayer` graded into the paint (exposure/wash/feather, passive under `finalDim`) + depth co-move at the surface's Depth Pro depth (the rain-pane/breath precedent on DepthPlate shots). Kept art and now-playing art feed from the state that already exists (`keptRecord`, `liveTrack`).
+
+**The keep murmur**: the instant KEEP IT OUT is pressed, a SleeveCaption-voice line — "Kept out." — rides the sleeve's return, so the action answers even before the visitor tours to another room.
+
+**Tuning back in**: a press on any vessel holding a kept record returns it to the wall (the keeper re-shelves it with the same care) and the vessels swap back to the keeper's lane. Keyboard: the K that keeps also releases.
+
+**Watch items**: the room chunk sits at 247.97/250 gz and the quads + mounts land in it (vessel render code joins the lazy liveArt pattern where possible); the counter and booth seats are the same real estate the P3 crew figures will want — place vessels so a figure can still sit (or plan the handoff).
+
+## 13. Discogs metadata lane (his call, 2026-07-25)
+
+Discogs' API can deepen what a pulled or spinning record knows about itself: **label, release year, genres, and styles** — and Discogs *styles* ("boom bap", "jazzy hip-hop") are meaningfully sharper than Last.fm's top tags, which would upgrade the card's existing gear-blue genre slot without new UI.
+
+**Runtime lane (fits R3+)**: a second proxy mode or `api/discogs.ts` — server-side token, required User-Agent, `database/search?artist=&release_title=&type=master` for original-release year + genres/styles + label. Rate doctrine: 60 req/min authenticated is generous for per-pull calls behind a 24h+ edge cache (same shape as albuminfo); misses change nothing, per posture. Matching is fuzzy (masters vs pressings) — take the top master hit, drop the line on low confidence, never guess.
+
+**Doctrine amended (his grade, 2026-07-25): option B.** The card gains a second mono data line — `label · year` — and Discogs styles upgrade the gear-blue genre slot when they beat Last.fm's tags. The voice rule evolves rather than breaks: the archive still speaks first (plays, years, dormancy), but the card now also teaches — visitors should learn a thing or two, about the keeper and about the music. The line renders only from a confident master match; no guess ever prints.
+
+**Discogs as art fallback (his call, same grade)**: the search response carries `cover_image` — the art chain becomes Last.fm CDN → Discogs cover → house sleeve. Same hotlink posture as the frame's weekly top; the placeholder-hash miss that today seats the house sleeve first tries Discogs. One caveat to verify at build: Discogs image URLs are served from their CDN via authenticated search responses — confirm they hotlink cleanly from the browser (if not, the proxy relays the URL resolution, never the bytes).
+
+**Not this lane**: syncing his real collection (lastfm-mcp #13, the wall-as-real-collection dream) and baking a genre dimension into the archive schema (#11) stay their own missions — this lane is runtime-only, one record at a time.
 
 ---
 

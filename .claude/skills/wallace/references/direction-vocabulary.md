@@ -181,6 +181,38 @@ underneath the watermark was usually good.
 **Proof:** `aphelion/tools/blender/wallace-captions/texture-glass-amber`
 (3-of-5 blocked) vs `texture-leather-oxblood` (1-of-5, re-roll clean).
 
+### 10. Negations summon their nouns
+**Bucket:** Caption wording.
+**What it means:** telling the model what NOT to render plants the noun in
+the caption, and the noun is what renders. "No windows" summons a window;
+"no candles" summons candles. Twice confirmed on the altar-spike plates
+(2026-07-17), each time from a well-meaning exclusion clause.
+**The mechanic:** never write an absence. Describe what fills the space
+instead — the wall that would have held the window ("an unbroken run of
+dark plank paneling"), the shelf that would have held the candles. If a
+render keeps adding an object, search the caption for its name before
+touching anything else; the summons is usually sitting in a negation.
+**Proof:** altar back-plate rounds in `aphelion/mocks/plates/altar/` —
+"no windows" rendered a window, "no candles" rendered candles; both fixed
+by replacing the exclusion with a positive description of the same region.
+
+### 11. Light states live in element descs, not style fields
+**Bucket:** Structure (where a change goes decides whether it lands).
+**What it means:** editing only `style.lighting` to switch a scene's light
+state produces a noise-level delta — the render barely moves. Rewriting
+the light into each element's own `desc` ("the shade glows warm from
+within," "the meter faces sit dark") produces the real delta. Style fields
+set the grade; element descs decide what is actually lit.
+**The mechanic:** to change a light state, do desc surgery on every element
+the light touches, then let `style.lighting` agree with what the descs
+already say. A style-only edit that "didn't take" is not a seed problem —
+the caption never actually said anything changed.
+**Proof:** the altar-spike light-state pair (2026-07-17): the style-only
+dark variant rendered near-identical to the lit master; the desc-surgery
+variant carried the intended dark state. Downstream consequence: dark
+states became compositor grades + emissive masks over ONE lit master per
+band, and unlit renders were demoted to reference frames.
+
 ---
 
 ## How to read a render that "feels off"

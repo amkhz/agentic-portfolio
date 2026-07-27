@@ -122,4 +122,4 @@ dedicated CLI.
 
 ---
 
-<!-- SYNCED: 2026-06-29 — re-validated, zero drift since 2026-06-13. mflux STILL v0.18.0 (uv tool), ideogram-ai/ideogram-4-fp8 (26 GB cached, gate satisfied via on-disk token), M5 Max / 64 GB. Live `--help` reconciled flag-for-flag against this doc — identical. No interface change, so no re-smoke-render needed; prior smoke render PASSED (teapot, turbo-12, ~61s, peak 30.64 GB) remains valid. -->
+<!-- SYNCED: 2026-07-27 — re-validated, zero drift since 2026-06-29. mflux STILL v0.18.0 (uv tool; also latest on PyPI, released 2026-06-07 — no upgrade available). ideogram-ai/ideogram-4-fp8 cached, M5 Max / 64 GB. Live `--help` reconciled against this doc — identical validated surface. No interface change, so no re-smoke-render needed; day-probe renders (2026-07-25, 6 clean frames V4_DEFAULT_20) serve as fresher-than-teapot proof the pipeline works. -->

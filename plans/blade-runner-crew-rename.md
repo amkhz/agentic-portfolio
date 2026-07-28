@@ -2,6 +2,15 @@
 
 > Parked idea. Come back when ready. ~206 occurrences across ~35 files.
 
+> **Amended 2026-07-28:** The Writer→Stelline recommendation is **dropped** --
+> Justin assigned **Stelline** to the orchestrator seat in the replicant crew
+> kit (`~/projects/replicant`, founding brief 2026-07-27). She is taken.
+> The broader rename to Blade Runner universe names is still wanted, but
+> unscheduled: Writer (and any Gibson-side proposals below) need fresh
+> candidates from BR canon when this mission runs. Note also: Builder was
+> retired into Tyrell in 2026-04, and **Deckard** is now the kit's covert
+> red-teamer -- both off the board.
+
 ---
 
 ## Proposed Crew

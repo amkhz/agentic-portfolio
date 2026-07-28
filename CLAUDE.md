@@ -152,18 +152,11 @@ Blockers: [anything stopping progress]
 
 ## The Crew
 
-Tyrell is the base persona and handles all implementation directly, informed by doctrine (ARCHITECTURE.md, VECTOR.md, this file). Specialized work routes to the crew:
+The universal crew comes from the **replicant kit**, installed once at user level (`~/.claude`): Tyrell builds, Roy reviews, Stelline orchestrates from above the repos; Director, Dreamer, Writer, Gaff, Joi, and Wallace join when their lane is needed. Seat definitions, lanes, and doctrine live in the kit (`~/projects/replicant`) -- this repo no longer carries local copies (thinned 2026-07-27, Phase 4 rollout).
 
-- **Director** -- tracks status, coordinates work, prioritizes, runs Investiture health checks
-- **Dreamer** -- refines ideas into actionable plans and ADRs
-- **Writer** -- case study content and portfolio copy in core/content/
-- **Gaff** -- ruthless concision editor; runs marked-up critique passes that cut structure and redundancy while protecting the four load-bearing voice elements (pairs with Joi + Writer)
-- **Roy** -- post-build review against architecture, doctrine, and quality gates
-- **Joi** -- voice calibration; extracts Justin's writing patterns into a profile Writer references
+The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite for design quality work: `/impeccable craft` for shape-then-build feature work, `/critique` for scored review (its persisted snapshot becomes `/polish`'s backlog), `/audit`, `/shape`, `/typeset`, `/impeccable live` for in-browser variants, and the rest of the command table in `.claude/skills/impeccable/SKILL.md`.
 
-The pipeline: invest-crew (scope) -> Tyrell (build) -> Roy (review) -> Impeccable skills (targeted fixes). When a task clearly fits one crew member's lane, suggest invoking that skill. The crew also uses the Impeccable design skill suite (v3.5.0) for design quality work: `/impeccable craft` for shape-then-build feature work, `/critique` for scored review (its persisted snapshot becomes `/polish`'s backlog), `/audit`, `/shape`, `/typeset`, `/impeccable live` for in-browser variants, and the rest of the command table in `.claude/skills/impeccable/SKILL.md`.
-
-**Skill storage convention.** Hand-authored crew skills (director, writer, dreamer, roy, joi, and other project-owned skills) are single-sourced: the real file lives in `.claude/skills/<name>`, and `.agents/skills/<name>` is a symlink to it. Edit the `.claude/` copy; never make a second real copy (that was the old drift source, now removed). The Impeccable suite is the exception: it ships installer-managed per-harness variants (`.claude/` = Claude Code flavor with `/` commands, `.agents/` = Codex flavor with `$` commands + `agents/*.toml`), so those legitimately differ between trees and are managed by the Impeccable installer, not by hand.
+**Skill storage convention.** Kit-owned crew and invest-* skills live in the replicant kit and shadow into every repo via the user-level install; a same-named skill in `.claude/skills/` overrides the kit copy (shadow, never fork). Truly portfolio-local skills stay here, single-sourced in `.claude/skills/<name>` with `.agents/skills/<name>` as a symlink: **glossarian** (Perihelion-Archive tooling) and **design-motion-principles** (portfolio-tuned fork). The Impeccable suite is the exception: it ships installer-managed per-harness variants (`.claude/` = Claude Code flavor with `/` commands, `.agents/` = Codex flavor with `$` commands + `agents/*.toml`), so those legitimately differ between trees and are managed by the Impeccable installer, not by hand.
 
 ---
 

@@ -26,7 +26,7 @@ Voice is direct, warm, and witty -- like a skilled friend who builds amazing thi
 
 **Composition:** Field Notebook grammar, editorial spreads composed individually, never poured into a template grid. Work index as table-of-contents/links, not a card grid; case studies as hero + TOC with a per-project drafted-object mark. See DESIGN.md.
 
-**Motion:** A doctrine pillar. Tasteful, restrained-but-expressive, ease-out exponential, no bounce/elastic; serves arrival and focus, one ambitious moment per surface. See DESIGN.md.
+**Motion:** A doctrine pillar. Tasteful, restrained-but-expressive, and **wave-driven site-wide** (spring physics and spring-sampled easing, not fixed cubic-beziers). Arrival and focus are critically damped, no overshoot; micro-interactions may carry a small damped overshoot as a scoped exception. One ambitious moment per surface. See DESIGN.md.
 
 **Imagery:** Wallace-generated (local Ideogram 4), a deliberate accent at anchors, never wallpaper. Two registers, biophilic-architecture heroes and drafted-object schematic covers/marks. See DESIGN.md.
 
@@ -80,7 +80,7 @@ Adjacent audience: a scholarly community (Sol Foundation, Visible College, Hyper
 
 **Theme:** Dark mode primary. Light mode planned but deferred to Workstream C. When it lands, expect warm cream paper and warm ink, not parchment and linen.
 
-**Three-font lab stack (per ADR-009):** Podkova for headings (shared with portfolio), Georgia for body (a serif that signals long-form reading), JetBrains Mono for kickers and labels (epistemic honesty). The portfolio's stack is not used here.
+**Three-font lab stack (locked by ADR-016):** Bricolage Grotesque Variable for display (amended from Podkova during the T3 shelf build), Newsreader Variable for reading body (locked 2026-06-30, explicitly not Fraunces and not system Georgia), JetBrains Mono for kickers and labels (epistemic honesty). Per-mode body weight runs dark 330 / light 400. The portfolio's stack is not used here.
 
 **Per-guide accents:** Each guide carries a single accent color flowing through the surface via `--guide-accent`, tied to the guide's territory (T1 purple, T3 rose, T4 signal-green) and validated for WCAG contrast on the dark base.
 
@@ -95,7 +95,7 @@ Adjacent audience: a scholarly community (Sol Foundation, Visible College, Hyper
 
 ### Design Principles (Perihelion)
 
-These layer on top of the portfolio's five. They do not replace them.
+These layer on top of the portfolio's six. They do not replace them.
 
 1. **Open the door, never gatekeep.** The mission test, made operational. Every copy decision, every design moment, every interaction is checked against whether it invites a designer-without-physics-background in or pushes them out. When in doubt, invite.
 

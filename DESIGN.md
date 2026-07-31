@@ -81,7 +81,7 @@ Generated imagery is a **deliberate material accent at anchors** (hero, covers, 
 1. **Biophilic-architecture scenes** for heroes and atmosphere, at Atelier-grade realism, moody chiaroscuro. North-stars in `mocks/recalibration-sprint0/` (atrium-dark, corridor-golden are the landed references).
 2. **Modern technical-schematic "drafted fantastical object" plates** for per-project case-study covers and marks. Contemporary CAD/computer-schematic feeling, not steampunk or patent-archival. This *is* the per-project mark system (resolves ADR-011's open mark question).
 
-Source is **Wallace** (local Ideogram 4). Finals render at `V4_QUALITY_48`, exact aspect/crop per layout slot, fixed seeds from the locked sidecar captions, with in-code atmosphere (grain, radial light) layered over the renders. Ideogram weights are non-commercial, fine for this personal portfolio; flag before any client reuse. Production-render refinement notes are banked in `plans/recalibration-sprint0-notes.md` ("Finals imagery notes").
+Source is **Wallace** (local Ideogram 4). Finals render at `V4_QUALITY_48`, exact aspect/crop per layout slot, fixed seeds from the locked sidecar captions, with in-code atmosphere (grain, radial light) layered over the renders. Ideogram weights are non-commercial, fine for this personal portfolio; flag before any client reuse. Production-render refinement notes are banked in `plans/archive/recalibration-sprint0-notes.md` ("Finals imagery notes").
 
 ---
 
@@ -140,7 +140,7 @@ Moderate. Hand at the seams, not painted on walls. Textural moments at specific 
 - **ADR-013** — the binding direction lock.
 - **ADR-011** — superseded for visual specifics; the "refuse blandness / design is the credential" intent and three-face spirit are preserved.
 - **ADR-005** — CSS texture system, extends to the biophilic register.
-- `plans/recalibration-sprint0-notes.md` — exploration record + banked finals notes.
+- `plans/archive/recalibration-sprint0-notes.md` — exploration record + banked finals notes.
 - `design-system/tokens.css` — the literal CSS implementation of all values here.
 - Memory: `feedback_imagery_restraint`, `feedback_no_flat_color_covers`, `feedback_oklch_only`, `feedback_no_inter_for_portfolio`, `feedback_respect_slop_bans`.
 </content>

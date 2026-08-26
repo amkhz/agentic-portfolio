@@ -19,6 +19,10 @@ interface ImageBlockProps {
   /** Subtle scroll-linked parallax on the image, clipped within the slot. For
    *  case-study cover plates. Honors reduced-motion. */
   parallax?: boolean;
+  /** Layout-aware srcset hint. The default describes the full content column;
+   *  any caller mounting the block in a narrower slot must say so, or the
+   *  browser fetches for a column it does not have. */
+  sizes?: string;
 }
 
 const aspectMap = {
@@ -36,6 +40,13 @@ export function ImageBlock({
   expandable,
   bare = false,
   parallax = false,
+  // Measured, not guessed: the figure slot runs 100vw minus the 66px gutter
+  // pair until it caps at 1134px from a 1200px viewport up. The old 760px was
+  // an underestimate at every desktop width, which is the direction that costs
+  // sharpness -- it told the browser to fetch a 1920 variant for a slot that
+  // wants 2560 on a retina display (R2a cluster 2, and the standing "are the
+  // renders soft?" question).
+  sizes = "(min-width: 1200px) 1140px, calc(100vw - 60px)",
 }: ImageBlockProps) {
   const displayText = placeholder || alt;
   const hasRealImage =
@@ -75,14 +86,13 @@ export function ImageBlock({
             )}
           >
             {parallax ? (
-              <ParallaxImage src={src} alt={alt} />
+              <ParallaxImage src={src} alt={alt} sizes={sizes} />
             ) : (
               <ResponsiveImage
                 src={src}
                 alt={alt}
                 loading="lazy"
-                // Covers span most of the content column; body figures the same.
-                sizes="(min-width: 768px) 760px, 100vw"
+                sizes={sizes}
                 className={cn(
                   "absolute inset-0 h-full w-full",
                   // Covers (DossierFrame heroes) fill to the frame edge; body

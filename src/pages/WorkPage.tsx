@@ -55,6 +55,9 @@ function FeaturedEntry() {
                 alt={metaCaseStudy.heroImage.alt}
                 placeholder={metaCaseStudy.heroImage.placeholder}
                 aspect="4:3"
+                // A five-column plate inside the featured frame, not a content
+                // column.
+                sizes="(min-width: 1200px) 384px, (min-width: 1024px) 32vw, calc(100vw - 60px)"
               />
             </DossierFrame>
           </div>

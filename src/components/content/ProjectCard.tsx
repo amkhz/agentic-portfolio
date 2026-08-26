@@ -48,7 +48,13 @@ export function ProjectCard({
                     src={study.heroImage.src}
                     alt={study.heroImage.alt}
                     loading="lazy"
-                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    // Measured: the card caps at 574px from a 1200px viewport
+                    // up, tracks ~58vw minus 126px between 620 and 1200, and
+                    // sits at a fixed 238px below that. 58vw/100vw
+                    // overestimated everywhere -- at 1920 it asked for 1114px
+                    // of slot for a 574px card, and on a phone it fetched the
+                    // 960 variant for a 238px card.
+                    sizes="(min-width: 1200px) 580px, (min-width: 620px) calc(60vw - 120px), 250px"
                     className="absolute inset-0 h-full w-full object-contain motion-safe:transition-transform motion-safe:duration-slow motion-safe:group-hover:scale-[1.02]"
                   />
                 </div>

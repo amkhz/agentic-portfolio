@@ -223,8 +223,13 @@ export const caseStudies: CaseStudy[] = [
     },
     heroImage: {
       src: '/images/wallace-hero.png',
-      alt: 'Cinematic north-star render: a designer atelier at night in warm brass light with a Finn Juhl chair silhouette',
-      placeholder: 'Wallace north-star hero: dark atmospheric atelier interior, volumetric warm-brass light through haze, a Finn Juhl lounge chair in shadow, a single dusty-magenta glow, with the structured JSON caption that produced it shown alongside',
+      // Described from the render, not from the brief. The alt here used to
+      // describe an atelier with a Finn Juhl chair, which is the atelier
+      // image further down the study -- the hero was swapped at some point
+      // and its description never followed (R2a P0 8). On the case study
+      // whose thesis is that the caption is the spec, that one mattered.
+      alt: 'A brass multi-lens optical rig on a dark workbench, throwing a fan of light rays onto a standing pale panel, with foliage and hand tools around it',
+      placeholder: 'Wallace north-star hero: a brass multi-lens optical rig on a dark workbench, a fan of warm light resolving onto a standing pale panel, foliage and hand tools at the edges',
     },
     mark: {
       src: '/images/wallace-mark.png',

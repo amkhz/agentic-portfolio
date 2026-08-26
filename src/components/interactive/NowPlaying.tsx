@@ -108,7 +108,11 @@ export function NowPlaying({ className }: { className?: string }) {
             isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
           )}
         >
-          <div className="overflow-hidden">
+          {/* inert while collapsed: grid-rows-[0fr] + opacity-0 hides the
+              panel visually but leaves the Last.fm link in the tab order on
+              every page of the site, so Tab found an invisible stop on the
+              front door (R2a P0 3). */}
+          <div className="overflow-hidden" inert={!isOpen}>
             <div
               className={cn(
                 "flex items-center gap-3 px-4 pb-3 pt-1",

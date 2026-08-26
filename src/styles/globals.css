@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../../design-system/tokens.css";
+@import "./print.css";
 
 @theme inline {
   /* --- Fonts (locked: "The Conservatory", ADR-013, type-v2 amendment 2026-06-24) ---

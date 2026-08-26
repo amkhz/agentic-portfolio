@@ -1,6 +1,15 @@
 import type { ResumeContactItem } from "@core/content/resume";
 import { SITE_TAB } from "@/lib/tabOrder";
 
+/* The contact row is the highest-intent thing on the site's highest-intent
+ * page, and every item in it rendered pixel-identical to the plain-text items
+ * beside it: same size, same colour, no underline, nothing to say which ones
+ * you could act on until you happened to hover (R2a P0 10). A hairline
+ * underline is the quietest affordance that still is one, and it suits the
+ * Field Notebook register better than a colour change would. */
+const CONTACT_LINK =
+  "underline decoration-border-strong underline-offset-4 transition-colors duration-normal hover:text-accent-primary hover:decoration-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep";
+
 interface ResumeHeaderProps {
   name: string;
   title: string;
@@ -27,7 +36,7 @@ export function ResumeHeader({ name, title, contacts }: ResumeHeaderProps) {
                   href={contact.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                  className={CONTACT_LINK}
                 >
                   {contact.label}
                 </a>
@@ -35,7 +44,7 @@ export function ResumeHeader({ name, title, contacts }: ResumeHeaderProps) {
                 <a
                   tabIndex={SITE_TAB}
                   href={contact.href}
-                  className="transition-colors duration-normal hover:text-accent-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
+                  className={CONTACT_LINK}
                 >
                   {contact.label}
                 </a>

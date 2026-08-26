@@ -1,0 +1,101 @@
+/* ============================================
+   PRINT — the resume only.
+   Justin's ruling (craft arc decision 13): the PDF is the artifact, and
+   browser print-to-PDF is the pipeline that produces it. So this sheet is
+   not a courtesy for people who print web pages; it IS the export format,
+   and what it emits has to stand on its own as a document.
+
+   Every rule is gated on [data-print="resume"], which ResumePage sets on
+   <html> while it is mounted. Nothing here can reach another surface. A
+   site-wide print pass was explicitly out of scope.
+   ============================================ */
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.6in 0.7in;
+  }
+
+  /* Paper is paper. The site's dual mode has no meaning here, and dark mode
+     printed four pages of near-black chrome with inverted headings. Fixed
+     ink-on-white, declared as plain values because a printed page is outside
+     the theme system, not a third mode of it. */
+  [data-print="resume"],
+  [data-print="resume"] body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  [data-print="resume"] * {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    color: #111 !important;
+    /* Reveal-on-scroll and the page fade leave content at opacity 0 until
+       they run, and print never runs them: this is why an unprinted section
+       comes out blank. */
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Site chrome, the download button, and the decorative overlays. The
+     document is the deliverable; navigation is not part of it. */
+  [data-print="resume"] #root > header,
+  [data-print="resume"] #root > footer,
+  [data-print="resume"] #root > svg,
+  [data-print="resume"] #root > div[aria-hidden="true"],
+  [data-print="resume"] [data-print-hide] {
+    display: none !important;
+  }
+
+  /* The page's own framing: hairline plates and registration marks are the
+     screen grammar, and they print as clutter around a document that wants
+     margins instead. */
+  [data-print="resume"] main section {
+    padding: 0 !important;
+  }
+  [data-print="resume"] main [style*="border"] {
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  [data-print="resume"] main svg {
+    display: none !important;
+  }
+
+  /* Type at document scale rather than screen scale. */
+  [data-print="resume"] main {
+    font-size: 10.5pt;
+    line-height: 1.42;
+  }
+  [data-print="resume"] main h1 {
+    font-size: 22pt;
+    line-height: 1.1;
+  }
+  [data-print="resume"] main h2 {
+    font-size: 12pt;
+    margin-top: 16pt;
+  }
+  [data-print="resume"] main h3 {
+    font-size: 10.5pt;
+  }
+
+  /* A role and its bullets belong together, and a heading must not be the
+     last thing on a page. */
+  [data-print="resume"] main h1,
+  [data-print="resume"] main h2,
+  [data-print="resume"] main h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  [data-print="resume"] main li,
+  [data-print="resume"] main article {
+    break-inside: avoid;
+  }
+
+  /* Contact links read as text on paper: the label already carries the
+     address, so an appended href would only be noise. */
+  [data-print="resume"] main a {
+    text-decoration: none !important;
+  }
+}

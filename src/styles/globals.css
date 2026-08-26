@@ -142,6 +142,38 @@
 
 }
 
+/* Tailwind v4 has no --duration-* theme namespace: its duration utilities are
+   `duration-<number>` and `duration-[...]` only, so the tokens above never
+   produced `duration-normal` and every call site fell through to the 150ms
+   default transition (R2a cluster 1 — the site's authored motion timing was
+   silently ignored site-wide). Registering them as utilities restores the
+   authored names; the shape mirrors Tailwind's own output, which sets
+   --tw-duration so the `transition-*` shorthands pick the value up too. */
+@utility duration-fast {
+  --tw-duration: var(--duration-fast);
+  transition-duration: var(--duration-fast);
+}
+@utility duration-normal {
+  --tw-duration: var(--duration-normal);
+  transition-duration: var(--duration-normal);
+}
+@utility duration-slow {
+  --tw-duration: var(--duration-slow);
+  transition-duration: var(--duration-slow);
+}
+@utility duration-slower {
+  --tw-duration: var(--duration-slower);
+  transition-duration: var(--duration-slower);
+}
+@utility duration-reveal {
+  --tw-duration: var(--duration-reveal);
+  transition-duration: var(--duration-reveal);
+}
+@utility duration-ambient {
+  --tw-duration: var(--duration-ambient);
+  transition-duration: var(--duration-ambient);
+}
+
 /* Scroll-reveal arrival, mobile-tuned. On phones / coarse pointers the long
    900ms settle (built for a wide desktop canvas) reads as a slow fade in a
    single column, so shorten it to ~560ms. Desktop keeps the luxurious settle.
@@ -211,14 +243,24 @@ button:focus-visible,
 
 /* Theme-switch transitions — scoped to containers and interactive elements
    that carry background, border, or shadow tokens. Text elements inherit
-   color from parents and don't need their own transition declaration. */
-body,
-header, footer, main, nav, section, article, aside,
-a, button, input, textarea, select {
-  transition: background-color 300ms var(--ease-default),
-              color 300ms var(--ease-default),
-              border-color 300ms var(--ease-default),
-              box-shadow 300ms var(--ease-default);
+   color from parents and don't need their own transition declaration.
+
+   In @layer base, and that is load-bearing. Unlayered CSS outranks every
+   cascade layer, so while this rule sat outside one it beat Tailwind's
+   utilities layer outright: on any a / button / nav / section the
+   `transition` shorthand here replaced whatever the markup asked for, and
+   `transition-transform duration-normal` quietly animated background-color
+   at 300ms instead (R2a cluster 1, second half). Layered, it is what it was
+   meant to be all along: the default when the markup says nothing. */
+@layer base {
+  body,
+  header, footer, main, nav, section, article, aside,
+  a, button, input, textarea, select {
+    transition: background-color 300ms var(--ease-default),
+                color 300ms var(--ease-default),
+                border-color 300ms var(--ease-default),
+                box-shadow 300ms var(--ease-default);
+  }
 }
 
 [data-no-transition] * {

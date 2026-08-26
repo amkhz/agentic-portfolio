@@ -256,9 +256,12 @@ export function SyntheticOrientation({
       intersection.disconnect();
       resizeObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
-      if (host.contains(gl.canvas as HTMLCanvasElement)) {
-        host.removeChild(gl.canvas as HTMLCanvasElement);
-      }
+      // remove(), not host.removeChild(). host.contains() is true for any
+      // descendant while removeChild() demands a direct child, so that
+      // pairing is a NotFoundError waiting for the day the host gains a
+      // wrapper. ChildNode.remove() detaches from the real parent and is
+      // a no-op when there is none.
+      (gl.canvas as HTMLCanvasElement).remove();
       gl.getExtension("WEBGL_lose_context")?.loseContext();
     };
   }, []);

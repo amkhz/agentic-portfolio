@@ -4,7 +4,12 @@
     {
       "name": "dev",
       "runtimeExecutable": "env",
-      "runtimeArgs": ["BROWSER=none", "npm", "run", "dev"],
+      "runtimeArgs": [
+        "BROWSER=none",
+        "npm",
+        "run",
+        "dev"
+      ],
       "port": 5173
     },
     {
@@ -38,6 +43,21 @@
         "--strictPort"
       ],
       "port": 5199
+    },
+    {
+      "name": "prod-preview",
+      "runtimeExecutable": "env",
+      "runtimeArgs": [
+        "BROWSER=none",
+        "npm",
+        "run",
+        "preview",
+        "--",
+        "--port",
+        "5299",
+        "--strictPort"
+      ],
+      "port": 5299
     }
   ]
 }

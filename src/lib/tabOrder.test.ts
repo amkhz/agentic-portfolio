@@ -73,8 +73,11 @@ describe("site tab-order opt-in", () => {
         }
       }
     }
-    // The scan is real: the site ships with dozens of opted-in controls.
-    expect(scanned).toBeGreaterThanOrEqual(75);
+    // The scan is real: the site ships with dozens of opted-in controls. The
+    // floor is a sanity check on the scan, not a coverage target -- it moved
+    // 75 to 70 when the unreachable Codex subtree was deleted, which removed
+    // opted-in controls that no route had ever rendered.
+    expect(scanned).toBeGreaterThanOrEqual(70);
     expect(offenders, offenders.join("\n")).toEqual([]);
   });
 });

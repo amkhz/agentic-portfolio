@@ -154,7 +154,6 @@ agentic-portfolio/
 │   │   │   ├── GlowEffect.tsx
 │   │   │   ├── GrainOverlay.tsx
 │   │   │   ├── Particles.tsx
-│   │   │   ├── ParticlesTuner.tsx
 │   │   │   ├── ProfileCard.tsx
 │   │   │   ├── RevealOnScroll.tsx
 │   │   │   ├── SpotlightCard.tsx
@@ -163,7 +162,6 @@ agentic-portfolio/
 │   │   ├── /interactive   # Interactive UI components
 │   │   │   ├── Button.tsx
 │   │   │   ├── NowPlaying.tsx
-│   │   │   ├── Tag.tsx
 │   │   │   └── ThemeToggle.tsx
 │   │   └── /layout        # Page structure components
 │   │       ├── Container.tsx

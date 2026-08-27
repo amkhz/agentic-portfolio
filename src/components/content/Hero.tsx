@@ -68,7 +68,7 @@ export function Hero() {
               to carry now opens the lede, where it reads as a sentence rather
               than as a mono label announcing the headline below it. */}
           <motion.p
-            className="font-mono text-xs tabular-nums tracking-wider text-text-muted"
+            className="font-mono text-xs tabular-nums tracking-wider text-text-secondary"
             aria-hidden="true"
             {...itemProps}
           >

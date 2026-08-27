@@ -86,7 +86,6 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
       index: String(i + 1).padStart(2, "0"),
     }));
 
-  const kicker = study.tags[0] ?? "Case file";
 
   const containerProps = reduced
     ? {}
@@ -135,15 +134,8 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
               className="flex flex-col justify-center lg:order-2 lg:col-span-7"
               {...groupProps}
             >
-              <motion.p
-                className="font-mono text-xs uppercase tracking-wider text-accent-primary"
-                {...itemProps}
-              >
-                {kicker}
-              </motion.p>
-
               <motion.h1
-                className="mt-4 max-w-[18ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl"
+                className="max-w-[18ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl"
                 {...itemProps}
               >
                 {study.title}

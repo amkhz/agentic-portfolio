@@ -7,7 +7,7 @@ import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 import { springSettle } from "@/components/effects/motionConfig";
 
 // Hero settle — the home page's one ambitious moment. The type column rises
-// and settles in sequence (kicker, headline, lede, action) over the
+// and settles in sequence (numeral, headline, lede, action) over the
 // atmospheric atrium on a cushioned spring. No overshoot; honors reduced-motion.
 const settleContainer: Variants = {
   hidden: {},
@@ -64,15 +64,15 @@ export function Hero() {
         >
           <RegistrationMark corners={["tl", "bl"]} />
 
+          {/* Plate register: the numeral alone. The positioning phrase it used
+              to carry now opens the lede, where it reads as a sentence rather
+              than as a mono label announcing the headline below it. */}
           <motion.p
-            className="font-mono text-xs uppercase tracking-wider text-accent-primary"
+            className="font-mono text-xs tabular-nums tracking-wider text-text-secondary"
+            aria-hidden="true"
             {...itemProps}
           >
-            <span className="tabular-nums text-text-secondary">00</span>
-            <span aria-hidden="true" className="mx-2 text-text-muted">
-              /
-            </span>
-            Product design leadership
+            00
           </motion.p>
           <motion.h1
             className="mt-4 max-w-[20ch] font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl"
@@ -84,8 +84,8 @@ export function Hero() {
             className="mt-6 max-w-[54ch] font-body text-lg leading-normal text-text-secondary"
             {...itemProps}
           >
-            Fifteen years turning complex systems into experiences people
-            trust.
+            Product design leadership. Fifteen years turning complex systems
+            into experiences people trust.
           </motion.p>
           <motion.div className="mt-10" {...itemProps}>
             <Button variant="primary" href="#work">

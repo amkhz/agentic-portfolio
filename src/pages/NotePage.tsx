@@ -25,7 +25,7 @@ export function NotePage() {
   const note = slug ? notesBySlug[slug] : undefined;
   if (!note) return <Navigate to="/notes" replace />;
 
-  const { title, summary, date, kicker } = note.frontmatter;
+  const { title, summary, date } = note.frontmatter;
 
   const sectionNodes = note.sections.map((section, index) => {
     const hasHeading =
@@ -46,7 +46,8 @@ export function NotePage() {
         />
       </Helmet>
 
-      {/* Hero — single-column reading register: kicker, title, dek, dateline.
+      {/* Hero — single-column reading register: title, dek, dateline. The
+          frontmatter kicker is no longer rendered; the title carries the note.
           No cover plate; notes are prose, not case files. */}
       <section className="border-b border-border-subtle pb-12 pt-24 sm:pt-32">
         <Container>
@@ -55,11 +56,7 @@ export function NotePage() {
           </nav>
 
           <div className="max-w-[68ch]">
-            <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-              {kicker ?? "Note"}
-            </p>
-
-            <h1 className="mt-4 max-w-[24ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+            <h1 className="max-w-[24ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
               {title}
             </h1>
 

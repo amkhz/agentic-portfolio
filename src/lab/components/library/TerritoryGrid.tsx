@@ -88,12 +88,10 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
                   : "flex flex-col gap-3 border-b border-lab-border-subtle pb-6"
               }
             >
-              <div className="flex items-center gap-4">
-                <TerritoryBadge id={territory.id} />
-                <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
-                  {LIFECYCLE_LABEL[lifecycle]}
-                </span>
-              </div>
+              {/* The badge leads as a mark, not as a label. The lifecycle
+                  word follows the premise as status, rather than standing
+                  above the heading announcing it. */}
+              <TerritoryBadge id={territory.id} />
               <h2
                 id={`territory-${territory.id}-heading`}
                 className="font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
@@ -103,6 +101,9 @@ export function TerritoryGrid({ guides }: TerritoryGridProps) {
               <p className="max-w-3xl font-lab-body text-base italic leading-relaxed text-lab-text-secondary md:text-lg">
                 {territory.premise}
               </p>
+              <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
+                {LIFECYCLE_LABEL[lifecycle]}
+              </span>
             </header>
 
             {!hasBuilt && !hasUpcoming ? (

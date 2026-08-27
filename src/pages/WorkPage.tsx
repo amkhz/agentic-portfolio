@@ -41,10 +41,7 @@ function FeaturedEntry() {
       aria-label={`View case study: ${metaCaseStudy.title}`}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
-      <DossierFrame
-        kicker="Featured case file"
-        className="bg-bg-base transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]"
-      >
+      <DossierFrame className="bg-bg-base transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]">
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-10">
           <div className="lg:order-1 lg:col-span-5">
             <DossierFrame marked={false} className="bg-bg-base">
@@ -119,11 +116,8 @@ export function WorkPage() {
         <Container className="relative z-10 pb-14 pt-32 sm:pb-20 sm:pt-40">
           <div className="relative max-w-[60ch] py-8 pl-9 sm:py-10 sm:pl-14">
             <RegistrationMark corners={["tl", "bl"]} />
-            <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+            <h1 className="font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
               Field notebook
-            </p>
-            <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
-              Work
             </h1>
             <p className="mt-5 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
               A working index of case files spanning AI strategy, enterprise UX,
@@ -139,10 +133,11 @@ export function WorkPage() {
             <FeaturedEntry />
           </RevealOnScroll>
 
-          <DossierFrame
-            kicker="Selected case files"
-            className="mt-12 bg-bg-base"
-          >
+          <h2 className="mt-16 font-display text-2xl leading-tight tracking-tight text-text-primary sm:text-3xl">
+            Selected case files
+          </h2>
+
+          <DossierFrame className="mt-6 bg-bg-base">
             <TocLinkList
               items={tocItems}
               ariaLabel="Selected case studies"

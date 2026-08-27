@@ -23,14 +23,14 @@ export function Colophon({ onReturn }: ColophonProps) {
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-24">
-      <p className="text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
-        {deckCopy.colophon.kicker}
-      </p>
-      <h1 className="mt-4 font-[family-name:var(--deck-font-display)] text-4xl text-[var(--deck-ink)]">
+      <h1 className="font-[family-name:var(--deck-font-display)] text-4xl text-[var(--deck-ink)]">
         {deckCopy.colophon.title}
       </h1>
       <p className="mt-6 font-[family-name:var(--deck-font-body)] text-lg leading-relaxed text-[var(--deck-ink-dim)]">
         {deckCopy.colophon.thesis}
+      </p>
+      <p className="mt-6 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
+        {deckCopy.colophon.kicker}
       </p>
 
       <h2 className="mt-14 text-xs uppercase tracking-[0.2em] text-[var(--deck-ink-dim)]">

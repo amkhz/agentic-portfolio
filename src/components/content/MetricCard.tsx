@@ -1,5 +1,4 @@
 import { cn } from "@core/utils";
-import { CountUp } from "@/components/effects/CountUp";
 
 interface MetricCardProps {
   value: string;
@@ -54,6 +53,15 @@ export function MetricCard({ value, label, accent = "brass" }: MetricCardProps) 
   // label. No box, no shadow, so an odd last item reads as a readout line
   // rather than an orphaned card. Magenta is the rare signal flare; green is
   // never an emphasis color (atmosphere/material only).
+  //
+  // The figure is printed, not counted up. A count-up states a number that is
+  // not true for as long as it runs, and these figures are claims about real
+  // work on the surfaces where being believed is the entire product. It was
+  // also getting them wrong outright: the parser takes the FIRST number in the
+  // string, so "17 min -> <10 min" counted 0..17 while the rest of the line
+  // sat frozen, and "1 spec / 4 directions" rendered "0 spec / 4 directions"
+  // (R2a: four measured strikes). `parsed` stays, because deciding figure vs
+  // statement still depends on whether the value is a number at all.
   return (
     <div className="border-t border-border-subtle pt-5">
       <p
@@ -62,16 +70,7 @@ export function MetricCard({ value, label, accent = "brass" }: MetricCardProps) 
           accentClass
         )}
       >
-        {parsed ? (
-          <CountUp
-            to={parsed.numeric}
-            prefix={parsed.prefix}
-            suffix={parsed.suffix}
-            duration={2.5}
-          />
-        ) : (
-          value
-        )}
+        {value}
       </p>
       <p className="mt-2 font-mono text-xs uppercase tracking-wider text-text-secondary">
         {label}

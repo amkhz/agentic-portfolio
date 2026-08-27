@@ -11,7 +11,16 @@
  *
  * All layers resolve to `--theme-bg-deep`, so the scrim re-tints itself per mode
  * (humus-black at night, sand-light by day) and stays within the OKLCH token
- * system — no literal colors. Stops are tunable per call site.
+ * system — no literal colors.
+ *
+ * The bottom and left stops come from --hero-scrim-* tokens rather than living
+ * here, because day and night need different reach: at night the photograph and
+ * the copy already agree, while by day the copy inverts to dark ink over the
+ * same dark atrium and the sand has to carry much further before the ink has
+ * anything to sit on. The token indirection is what lets one component serve
+ * both without a mode branch in JS. The top seam stop stays a prop: it is a
+ * layout concern (how far under the sticky header a given hero sits), not a
+ * legibility one.
  */
 interface HeroScrimProps {
   /** Fade the top edge into the page bg (blends under the sticky header). */
@@ -36,9 +45,9 @@ export function HeroScrim({
     top &&
       `linear-gradient(to bottom, var(--theme-bg-deep) 0%, transparent ${topStop})`,
     bottom &&
-      "linear-gradient(to top, var(--theme-bg-deep) 6%, transparent 64%)",
+      "linear-gradient(to top, var(--theme-bg-deep) var(--hero-scrim-bottom-solid), transparent var(--hero-scrim-bottom-fade))",
     left &&
-      "linear-gradient(to right, var(--theme-bg-deep) 4%, transparent 52%)",
+      "linear-gradient(to right, var(--theme-bg-deep) var(--hero-scrim-left-solid), transparent var(--hero-scrim-left-fade))",
   ].filter(Boolean) as string[];
 
   return (

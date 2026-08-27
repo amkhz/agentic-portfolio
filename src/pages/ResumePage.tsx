@@ -19,6 +19,17 @@ export function ResumePage() {
     });
   }, []);
 
+  // The print sheet (src/styles/print.css) is gated on this attribute, so
+  // nothing it does can reach another surface. Print-to-PDF is the resume's
+  // export pipeline (craft arc decision 13), not a courtesy for people who
+  // print web pages, which is why it is scoped this tightly.
+  useEffect(() => {
+    document.documentElement.dataset.print = "resume";
+    return () => {
+      delete document.documentElement.dataset.print;
+    };
+  }, []);
+
   if (error) {
     return (
       <section className="py-24 sm:py-32">
@@ -85,21 +96,25 @@ export function ResumePage() {
       <section className="py-24 sm:py-32 motion-safe:animate-[fadeIn_400ms_var(--ease-settle)]">
         <Container>
           <div className="mx-auto max-w-[920px] space-y-10">
-            <DossierFrame kicker="Curriculum vitae" className="bg-bg-elevated">
-              <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-                <p className="font-body text-sm text-text-secondary">
-                  Web version generated from Markdown
-                </p>
+            {/* The download plate is chrome around the document, not part of
+                it: it does not print. */}
+            <div data-print-hide>
+              <DossierFrame kicker="Curriculum vitae" className="bg-bg-elevated">
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <p className="font-body text-sm text-text-secondary">
+                    Web version generated from Markdown
+                  </p>
 
-                <Button
-                  variant="primary"
-                  href="/resume/justin-hernandez-resume-1page.pdf"
-                  aria-label="Download Justin Hernandez resume PDF"
-                >
-                  Download Resume (PDF)
-                </Button>
-              </div>
-            </DossierFrame>
+                  <Button
+                    variant="primary"
+                    href="/resume/justin-hernandez-resume-1page.pdf"
+                    aria-label="Download Justin Hernandez resume PDF"
+                  >
+                    Download Resume (PDF)
+                  </Button>
+                </div>
+              </DossierFrame>
+            </div>
 
             <DossierFrame className="space-y-10 bg-bg-base">
               <ResumeHeader
@@ -124,7 +139,10 @@ export function ResumePage() {
               <ResumeSection title="Professional Experience">
                 <div className="space-y-5">
                   {resume.experience.map((item) => (
-                    <ResumeExperienceItem key={`${item.role}-${item.company}`} item={item} />
+                    <ResumeExperienceItem
+                      key={`${item.role}-${item.company}`}
+                      item={item}
+                    />
                   ))}
                 </div>
               </ResumeSection>
@@ -132,7 +150,10 @@ export function ResumePage() {
               <ResumeSection title="Education">
                 <div className="space-y-4">
                   {resume.education.map((entry) => (
-                    <div key={`${entry.degree}-${entry.institution}`}>
+                    <div
+                      key={`${entry.degree}-${entry.institution}`}
+                      data-resume="education-entry"
+                    >
                       <h3 className="font-heading text-base font-semibold text-text-primary">
                         {entry.degree}
                       </h3>

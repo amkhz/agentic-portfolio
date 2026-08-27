@@ -1,4 +1,5 @@
 import { DossierFrame } from "./DossierFrame";
+import { ResponsiveImage } from "@/components/content/ResponsiveImage";
 
 /**
  * DraftedObjectMark — the per-project specimen plate (ADR-013 / DESIGN.md). A
@@ -41,10 +42,12 @@ export function DraftedObjectMark({
       <DossierFrame kicker={kicker} className="bg-bg-base">
         <div className="relative w-full overflow-hidden" style={{ aspectRatio: aspect }}>
           {isRealImage(src) ? (
-            <img
+            <ResponsiveImage
               src={src}
               alt={alt}
               loading="lazy"
+              // Measured: caps at 382px from a 1200px viewport up.
+              sizes="(min-width: 1200px) 384px, (min-width: 768px) 32vw, 45vw"
               className="absolute inset-0 h-full w-full object-contain"
             />
           ) : (

@@ -66,7 +66,14 @@ export function Footer() {
               href="https://labs.justinh.design"
               className="font-medium text-text-secondary transition-colors duration-normal hover:text-accent-primary hover:underline hover:decoration-accent-primary hover:underline-offset-4 focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             >
-              Perihelion →
+              Perihelion
+              {/* Decorative, and pointing the right way: the accessible name
+                  is "Perihelion", not "Perihelion right arrow", and a
+                  north-east arrow says "leaves for another property" where the
+                  old plain right arrow said "next page here" (R2a cluster 7).
+                  It stays in the same tab on purpose -- Perihelion is Justin's
+                  own, not a third party, so there is nothing to return to. */}
+              <span aria-hidden="true"> ↗</span>
             </a>
           </p>
 

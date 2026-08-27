@@ -110,9 +110,28 @@
     --fieldnote-rule-strong: var(--theme-border-strong);    /* active/hover rule */
     --fieldnote-frame-pad: 1.5rem;          /* dossier interior padding */
     --fieldnote-leader-gap: 0.75rem;        /* gap flanking a TOC leader rule */
+
+    /* Hero scrim reach (HeroScrim). The solid anchors hold in both modes;
+       only the falloff differs, because the two modes are not the same
+       problem. At night the hero photograph and the copy already agree
+       (light type over a dark atrium), so the scrim only has to seat the
+       type. By day the copy inverts to dark ink while the photograph stays
+       a dark atrium, so the sand has to carry much further up and across
+       before the ink has anything to sit on. Measured on the composited
+       hero: at 64%/52% the day-mode h1 ran 33% of its area below WCAG AA
+       and the standfirst 55%; at the light values below both are at 0%
+       (R2a P0 2). */
+    --hero-scrim-bottom-solid: 6%;
+    --hero-scrim-bottom-fade: 64%;
+    --hero-scrim-left-solid: 4%;
+    --hero-scrim-left-fade: 52%;
   }
 
   [data-theme="light"] {
+    /* Hero scrim reach — see the dark-mode block for why day needs more. */
+    --hero-scrim-bottom-fade: 95%;
+    --hero-scrim-left-fade: 82%;
+
     /* Backgrounds — sun-bleached warm sand and amber, golden hour */
     --theme-bg-deep: oklch(0.9200 0.0300 80);
     --theme-bg-base: oklch(0.9050 0.0340 78);

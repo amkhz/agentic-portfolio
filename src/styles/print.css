@@ -1,0 +1,242 @@
+/* ============================================
+   PRINT — the resume only.
+   Justin's ruling (craft arc decision 13): the PDF is the artifact, and
+   browser print-to-PDF is the pipeline that produces it. So this sheet is
+   not a courtesy for people who print web pages; it IS the export format.
+
+   The target is TWO pages at 10pt (Justin, 2026-08-26). One page was
+   reachable, but only at 8.75pt with under a line of slack, and a resume
+   is read by a person: better two comfortable pages than one tight one.
+
+   The extra room is spent on STRUCTURE rather than leading -- section and
+   role spacing carry it, while prose stays at a normal 1.46. Airing the
+   leading out instead reads as padding, and it filled the second page
+   less. Measured: 1662px of content over two 950px pages, page two 79%
+   full, 38px of white at the foot of page one, and about ten lines of
+   headroom before a third page.
+
+   Every rule is gated on [data-print="resume"], which ResumePage sets on
+   <html> while it is mounted. Nothing here can reach another surface, and
+   printScope.test.ts fails the build if a rule slips the gate.
+   ============================================ */
+
+@media print {
+  @page {
+    size: letter;
+    margin: 0.55in 0.6in;
+  }
+
+  /* Paper is paper. The site's dual mode has no meaning here, and dark mode
+     printed near-black chrome with inverted headings. Fixed ink-on-white,
+     declared as plain values because a printed page is outside the theme
+     system, not a third mode of it. */
+  [data-print="resume"],
+  [data-print="resume"] body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+
+  [data-print="resume"] * {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    color: #111 !important;
+    /* Reveal-on-scroll and the page fade leave content at opacity 0 until
+       they run, and print never runs them: this is why an unprinted section
+       comes out blank. */
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Site chrome, the download plate, and the decorative overlays. The
+     document is the deliverable; navigation is not part of it. */
+  [data-print="resume"] #root > header,
+  [data-print="resume"] #root > footer,
+  [data-print="resume"] #root > svg,
+  [data-print="resume"] #root > div[aria-hidden="true"],
+  [data-print="resume"] [data-print-hide] {
+    display: none !important;
+  }
+
+  /* Screen framing off: hairline plates, registration marks, and the
+     scroll-length padding that separates sections on a page you move
+     through rather than see all at once. The @page margin is the margin. */
+  [data-print="resume"] main,
+  [data-print="resume"] main section,
+  [data-print="resume"] main > div,
+  [data-print="resume"] main > div > div {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: auto !important;
+    /* <main> carries min-h-screen for the screen layout. A 100vh floor is
+       meaningless on paper and can hold the page open past its content. */
+    min-height: 0 !important;
+  }
+  [data-print="resume"] main [style*="border"] {
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  [data-print="resume"] main svg {
+    display: none !important;
+  }
+
+  /* Document type scale. Everything below is spacing, and spacing is the
+     whole difference between four pages and one. */
+  [data-print="resume"] main {
+    font-size: 10pt;
+    line-height: 1.46;
+  }
+  [data-print="resume"] main p,
+  [data-print="resume"] main span {
+    font-size: 10pt !important;
+    line-height: 1.46 !important;
+  }
+  /* Bullets set a notch tighter than prose. They are the bulk of the page
+     and they read as a list, not as running text. */
+  [data-print="resume"] main li {
+    font-size: 10pt !important;
+    line-height: 1.38 !important;
+  }
+
+  [data-print="resume"] main h1 {
+    font-size: 20pt;
+    line-height: 1.05;
+    margin: 0 0 3pt;
+  }
+  /* Name and title read as one masthead line pair. */
+  [data-print="resume"] main header > p {
+    font-size: 11.5pt !important;
+    margin: 0 0 5pt;
+  }
+  [data-print="resume"] main header ul {
+    margin: 0;
+    gap: 0 14pt !important;
+  }
+  [data-print="resume"] main header ul li {
+    font-size: 9.5pt !important;
+  }
+
+  /* Section rules stay: they are the only structure left once the plates
+     are gone, and a printed resume wants them. */
+  [data-print="resume"] main section {
+    border-top: 0.5pt solid #999 !important;
+    padding-top: 15pt !important;
+    margin-top: 28pt !important;
+  }
+  [data-print="resume"] main h2 {
+    font-size: 9pt;
+    letter-spacing: 0.09em;
+    margin: 0 0 7pt;
+  }
+  [data-print="resume"] main section > div {
+    margin-top: 0 !important;
+  }
+
+  [data-print="resume"] main article {
+    border-top: 0 !important;
+    padding-top: 0 !important;
+    margin-top: 22pt !important;
+  }
+  [data-print="resume"] main article:first-child {
+    margin-top: 0 !important;
+  }
+  [data-print="resume"] main h3 {
+    font-size: 10.5pt;
+    margin: 0;
+  }
+  /* Role line and date share one row, and at print width a long role can
+     wrap. Let the role take the wrap and hold the date on one line: when
+     both wrapped, the date's second line landed alongside the role's and
+     read as a collision. */
+  [data-print="resume"] main article > div:first-child {
+    gap: 0 12pt !important;
+    margin: 0 !important;
+    align-items: baseline !important;
+  }
+  [data-print="resume"] main article > div:first-child > p {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    font-size: 8.5pt !important;
+    letter-spacing: 0.06em !important;
+  }
+  [data-print="resume"] main article > p {
+    margin: 4pt 0 0 !important;
+    max-width: none !important;
+  }
+  [data-print="resume"] main ul {
+    margin: 5pt 0 0 !important;
+    padding-left: 13pt !important;
+  }
+  [data-print="resume"] main ul li {
+    margin: 0 0 5pt !important;
+  }
+  [data-print="resume"] main section > div > div,
+  [data-print="resume"] main section > ul {
+    margin-top: 0 !important;
+  }
+  [data-print="resume"] main section > div > div + div {
+    margin-top: 6pt !important;
+  }
+
+  /* Skills and education are label-plus-value pairs, and on paper a pair
+     is one line. Stacked they cost four heading lines and four gaps in the
+     skills block alone, which is most of the difference between fitting and
+     not. The data-resume hooks exist because the two blocks are the same
+     shape as each other and CSS cannot tell them apart by structure, and
+     they want different separators. */
+  [data-print="resume"] main [data-resume="skill-group"],
+  [data-print="resume"] main [data-resume="education-entry"] {
+    margin: 0 0 10pt !important;
+    break-inside: avoid;
+  }
+  [data-print="resume"] main [data-resume="skill-group"] h3,
+  [data-print="resume"] main [data-resume="education-entry"] h3 {
+    display: inline;
+    font-size: 10pt;
+  }
+  [data-print="resume"] main [data-resume="skill-group"] p,
+  [data-print="resume"] main [data-resume="education-entry"] p {
+    display: inline;
+    margin: 0 !important;
+  }
+  [data-print="resume"] main [data-resume="skill-group"] h3::after {
+    content: ": ";
+  }
+  [data-print="resume"] main [data-resume="education-entry"] h3::after {
+    content: " | ";
+  }
+
+  /* Pagination. Two pages with room to spare changes the calculus: a role
+     may now stay whole, because the cost of moving one forward is a short
+     band of white at the foot of a page rather than the half-page hole the
+     one-page attempt produced. A role split across a page break is the
+     worse artifact of the two. If the content ever grows enough that a
+     single role is most of a page, this is the rule to revisit. */
+  [data-print="resume"] main h1,
+  [data-print="resume"] main h2,
+  [data-print="resume"] main h3 {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  [data-print="resume"] main article,
+  [data-print="resume"] main article > div:first-child {
+    break-after: avoid;
+    break-inside: avoid;
+  }
+  [data-print="resume"] main li {
+    break-inside: avoid;
+  }
+  [data-print="resume"] main p,
+  [data-print="resume"] main li {
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* Contact links read as text on paper: the label already carries the
+     address, so an underline or an appended href is only noise. */
+  [data-print="resume"] main a {
+    text-decoration: none !important;
+  }
+}

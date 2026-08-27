@@ -36,9 +36,24 @@ export function ThemeProvider({
     const resolved = resolveTheme();
     setTheme(resolved);
     document.documentElement.setAttribute("data-theme", resolved);
-    requestAnimationFrame(() => {
+    // [data-no-transition] is set inline in <head> so the resolved theme
+    // lands without animating; it comes off one frame later, once that
+    // paint is done. The timer is not belt-and-braces: a tab that loads
+    // in the background gets no animation frames at all, so on rAF alone
+    // the attribute would survive the whole session and every transition
+    // on the site would stay pinned at 0ms.
+    let cleared = false;
+    const clear = () => {
+      if (cleared) return;
+      cleared = true;
       document.documentElement.removeAttribute("data-no-transition");
-    });
+    };
+    const frame = requestAnimationFrame(clear);
+    const timer = window.setTimeout(clear, 100);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   useEffect(() => {

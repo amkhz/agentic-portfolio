@@ -122,6 +122,10 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                   alt={study.heroImage.alt}
                   placeholder={study.heroImage.placeholder}
                   aspect="4:3"
+                  // Measured: the cover plate caps at 382px from a 1200px
+                  // viewport up. It is a five-column plate, not a content
+                  // column, and it was being fetched as though it were one.
+                  sizes="(min-width: 1200px) 384px, (min-width: 1024px) 32vw, calc(100vw - 60px)"
                 />
               </DossierFrame>
             </motion.div>

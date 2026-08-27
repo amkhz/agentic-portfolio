@@ -16,18 +16,24 @@ export function ParallaxImage({
   alt,
   distance = 16,
   className,
+  sizes = "(min-width: 1024px) 60vw, 100vw",
 }: {
   src: string;
   alt: string;
   distance?: number;
   className?: string;
+  /** Layout-aware srcset hint. Callers know their slot; this default is
+   *  only a fallback for one that does not say. */
+  sizes?: string;
 }) {
   const ref = useRef<HTMLImageElement>(null);
   const reduced = useReducedMotion();
 
-  // AVIF/WebP responsive sources (covers are full-bleed within their column).
+  // AVIF/WebP responsive sources. `sizes` comes from the caller: this
+  // component used to hardcode 60vw, which described no slot it was ever
+  // mounted in -- on a case study it declared 768px of slot for a cover that
+  // renders 382px wide, so every case study fetched a 1920 variant for it.
   const sources = buildResponsiveSources(src);
-  const sizes = "(min-width: 1024px) 60vw, 100vw";
 
   const { scrollYProgress } = useScroll({
     target: ref,

@@ -1,5 +1,10 @@
 import { ImageBlock } from "./ImageBlock";
 
+/** Two-up inside the content column: each cell is half the column less the
+ *  gap, so the block must not inherit ImageBlock's full-column default. */
+const HALF_COLUMN =
+  "(min-width: 1200px) 560px, (min-width: 768px) calc((100vw - 92px) / 2), calc(100vw - 60px)";
+
 interface ComparisonSide {
   label: string;
   image: {
@@ -27,6 +32,7 @@ export function ComparisonBlock({ before, after }: ComparisonBlockProps) {
           alt={before.image.alt}
           placeholder={before.image.placeholder}
           aspect="4:3"
+          sizes={HALF_COLUMN}
         />
         {before.description && (
           <p className="mt-2 font-body text-sm leading-normal text-text-secondary">
@@ -44,6 +50,7 @@ export function ComparisonBlock({ before, after }: ComparisonBlockProps) {
           alt={after.image.alt}
           placeholder={after.image.placeholder}
           aspect="4:3"
+          sizes={HALF_COLUMN}
         />
         {after.description && (
           <p className="mt-2 font-body text-sm leading-normal text-text-secondary">

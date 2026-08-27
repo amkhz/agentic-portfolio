@@ -27,8 +27,6 @@ drafts/the-evolution-draft.md   — Draft constellation node: evolution/growth n
 drafts/the-evolution-notes.md   — Working notes for the evolution node
 case-studies.ts                 — Type definitions for case study sections; exports parsed content indexed by slug
 case-studies.test.ts            — Tests: content coverage, structure validation, section type contracts
-codex.ts                        — Groups flat sections into chapters with heading-derived IDs, override support
-codex.test.ts                   — Tests: heading-to-kebab, chapter grouping, preamble extraction
 constellation.ts                — Pure data + seeded radial layout algorithm for spatial node navigation
 constellation.test.ts           — Tests: node positioning, boundary clamping, deterministic seeding
 lastfm.ts                       — Type-only definitions for Last.fm data (Track, NowPlayingData)
@@ -89,10 +87,6 @@ Hero.tsx                        — Full-width hero with animated particles back
 AboutSnippet.tsx                — Profile card with bio and CTA button
 ProjectCard.tsx                 — Case study link card with hero image, title, metric badge, tags
 CaseStudyPageTemplate.tsx       — Linear case study template: hero, breadcrumb, tags, rendered sections
-CodexPage.tsx                   — Multi-chapter case study with expandable spine navigation
-CodexSpine.tsx                  — Interactive vertical accordion with spine line and staggered entrance
-CodexChapter.tsx                — Collapsible chapter section with grid animation and connections
-CodexNode.tsx                   — Expandable chapter button with rotating diamond marker
 ConstellationPage.tsx           — Spatial case study container: dual-column grid, mobile strip, hash navigation
 ConstellationField.tsx          — SVG node field with animated connection lines and position tuning
 ConstellationNode.tsx           — Positioned node marker with size/status styling and drag-to-tune
@@ -128,7 +122,6 @@ DecryptedText.tsx               — Character-by-character scramble reveal with 
 GlowEffect.tsx                  — Configurable radial gradient glow overlay (brass/magenta)
 GrainOverlay.tsx                — SVG fractal noise grain filter applied full-screen
 Particles.tsx                   — WebGL point cloud with Perlin motion and hover tracking (ogl)
-ParticlesTuner.tsx              — Dev-only slider panel for tuning Particles parameters
 ProfileCard.tsx                 — 3D tilt card with pointer-driven parallax and holographic shine
 tiltEngine.ts                   — Pointer-driven tilt physics engine extracted from ProfileCard
 RevealOnScroll.tsx              — Intersection-triggered fade-in with blur transition
@@ -141,7 +134,6 @@ Threads.tsx                     — WebGL animated line threads with Perlin nois
 ```
 Button.tsx                      — Polymorphic button/anchor with 3 variants (primary/secondary/ghost)
 NowPlaying.tsx                  — Last.fm now-playing indicator with expandable panel and EQ bars
-Tag.tsx                         — Capsule badge with default/highlight tone variants
 ThemeToggle.tsx                 — Dark/light toggle with adaptive SVG icon
 ```
 
@@ -217,7 +209,7 @@ index.html                      — HTML template with theme detection script
 
 ## 2. Architecture Overview
 
-**agentic-portfolio** is a single-page application serving Justin Hernandez's design portfolio. It is built for hiring managers, design leads, and collaborators evaluating design and technical capabilities. The site showcases case studies in three presentation formats: linear pages, expandable codex (accordion spine), and a spatial constellation field.
+**agentic-portfolio** is a single-page application serving Justin Hernandez's design portfolio. It is built for hiring managers, design leads, and collaborators evaluating design and technical capabilities. The site showcases case studies in three presentation formats: linear pages, an opinionated hub of doors, and a spatial constellation field.
 
 **Stack:** React 19 + Vite 6 + TypeScript (strict) + Tailwind v4 + React Router v7. Deployed to Vercel. No backend, no database, no auth. Content is Markdown parsed at build time.
 
@@ -252,10 +244,6 @@ index.html                      — HTML template with theme detection script
 | AboutSnippet | 44 | Profile card + CTA | — | No |
 | ProjectCard | 98 | Case study link card | study | No |
 | CaseStudyPageTemplate | 101 | Linear case study template | slug | No |
-| CodexPage | 134 | Multi-chapter case study | slug | Yes |
-| CodexSpine | 165 | Vertical accordion spine | chapters | Yes |
-| CodexChapter | 91 | Collapsible chapter | id, isOpen, sections | No |
-| CodexNode | 130 | Expandable chapter button | id, title, isOpen | No |
 | ConstellationPage | 252 | Spatial case study shell | slug | Yes |
 | ConstellationField | 277 | SVG node field | nodes, selectedId | Yes |
 | ConstellationNode | 135 | Positioned node marker | node, isSelected | No |
@@ -277,14 +265,12 @@ index.html                      — HTML template with theme detection script
 | GlowEffect | 49 | Radial gradient glow | color, size | No |
 | GrainOverlay | 56 | SVG grain filter overlay | — | No |
 | Particles | 247 | WebGL point cloud (ogl) | particleCount, speed | Yes |
-| ParticlesTuner | 204 | Dev-only particle tuner | className | Yes |
 | ProfileCard | 431 | 3D tilt card with parallax | avatarUrl, enableTilt | Yes |
 | RevealOnScroll | 65 | Intersection fade-in | children, delay | Yes |
 | SpotlightCard | 66 | Mouse-tracked light effect | children, spotlightColor | Yes |
 | Threads | 210 | WebGL line threads (ogl) | color, amplitude | Yes |
 | Button | 70 | Polymorphic button/anchor | variant, href | No |
 | NowPlaying | 187 | Last.fm now-playing | className | Yes |
-| Tag | 29 | Capsule badge | children, tone | No |
 | ThemeToggle | 71 | Dark/light toggle | className | No |
 | Container | 25 | Max-width wrapper | children, as | No |
 | Header | 58 | Sticky nav bar | — | No |
@@ -307,7 +293,7 @@ index.html                      — HTML template with theme detection script
 | `getSiteUrl` | Site URL from env | string | OG generation, metadata |
 | `cn` | clsx + tailwind-merge | string | Most components |
 | `formatDate` | Date formatting | string | Resume, content display |
-| `slugify` | Text to kebab-case | string | Codex chapter IDs |
+| `slugify` | Text to kebab-case | string | Case-study chapter anchors |
 | `truncate` | Truncate with ellipsis | string | Content display |
 | `debounce` | Timer-based delay | debounced function | Event handlers |
 | `services/analytics` | Vercel tracking | Analytics, SpeedInsights | Layout |
@@ -347,10 +333,9 @@ index.html                      — HTML template with theme detection script
 
 ### Case Studies
 - **Linear template** with hero, breadcrumb, tags, rendered sections — Working
-- **Codex template** with expandable spine accordion, chapter navigation — Working
 - **Constellation template** with SVG spatial field, connection lines, node selection — Working
 - **Mobile constellation strip** for small screens — Working
-- **Hash-based deep linking** to constellation nodes and codex chapters — Working
+- **Hash-based deep linking** to constellation nodes and case-study chapters — Working
 - **Connection peeks** between related nodes — Working
 - **Section types:** text, image, metrics, comparison, quote, callout — All working
 

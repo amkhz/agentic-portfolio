@@ -64,7 +64,9 @@ function FeaturedEntry() {
             </DossierFrame>
           </div>
 
-          <div className="flex flex-col justify-center lg:order-2 lg:col-span-7">
+          {/* Flush at the top with the cover plate, same reasoning as the
+              case-study spread. */}
+          <div className="flex flex-col lg:order-2 lg:col-span-7">
             <h2 className="max-w-[18ch] font-display text-2xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-3xl lg:text-4xl">
               {metaCaseStudy.title}
             </h2>

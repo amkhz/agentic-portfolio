@@ -45,6 +45,11 @@ export interface CaseStudy {
     src: string;
     alt: string;
     placeholder?: string;
+    /** How the cover fills its plate. Default 'cover': an atmospheric render
+     *  can be reframed by a crop without losing anything that matters. Set
+     *  'contain' for a UI screenshot or any asset whose edges carry content --
+     *  cropping those destroys them, so the plate pillarboxes instead. */
+    fit?: 'cover' | 'contain';
   };
   /** Per-project drafted-object mark (ADR-013 / DESIGN.md): a modern
    *  technical-schematic specimen of a fantastical instrument. `src` is the
@@ -185,6 +190,8 @@ export const caseStudies: CaseStudy[] = [
       src: '/images/sow-toolbox-hero.png',
       alt: 'My SOW Toolbox interface showing Upload, Describe, and Recycle options',
       placeholder: 'High-fidelity mockup of the "My Scope of Work Toolbox" UI showing the three AI-assisted paths: Upload Files, Describe Your Project, Select Previous SOW',
+      // A product screenshot, not a render: its edges are content.
+      fit: 'contain',
     },
     mark: {
       src: '/images/instant-sow-mark.png',

@@ -16,12 +16,15 @@ export function ParallaxImage({
   alt,
   distance = 16,
   className,
+  fit = "cover",
   sizes = "(min-width: 1024px) 60vw, 100vw",
 }: {
   src: string;
   alt: string;
   distance?: number;
   className?: string;
+  /** 'contain' opts out of the effect entirely -- see below. */
+  fit?: "cover" | "contain";
   /** Layout-aware srcset hint. Callers know their slot; this default is
    *  only a fallback for one that does not say. */
   sizes?: string;
@@ -41,7 +44,11 @@ export function ParallaxImage({
   });
   const y = useSpring(useTransform(scrollYProgress, [0, 1], [distance, -distance]), scrollSpring);
 
-  if (reduced) {
+  // A contained asset does not fill its slot, so there is nothing to overscan
+  // and nothing to clip: drifting it would slide a screenshot against visible
+  // plate ground. Contained covers are specimens, not atmosphere -- they hold
+  // still.
+  if (reduced || fit === "contain") {
     return (
       <picture>
         {sources && <source type="image/avif" srcSet={sources.avif} sizes={sizes} />}
@@ -50,7 +57,11 @@ export function ParallaxImage({
           src={src}
           alt={alt}
           loading="lazy"
-          className={cn("absolute inset-0 h-full w-full object-cover object-center", className)}
+          className={cn(
+            "absolute inset-0 h-full w-full object-center",
+            fit === "contain" ? "object-contain" : "object-cover",
+            className
+          )}
         />
       </picture>
     );

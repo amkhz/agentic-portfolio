@@ -127,6 +127,7 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                   // 42% of the image never reached the page. The plate now
                   // matches what Wallace renders.
                   aspect="16:9"
+                  fit={study.heroImage.fit}
                   // Measured: the cover plate caps at 382px from a 1200px
                   // viewport up. It is a five-column plate, not a content
                   // column, and it was being fetched as though it were one.
@@ -135,9 +136,15 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
               </DossierFrame>
             </motion.div>
 
-            {/* Type spread — inks in element by element after the cover */}
+            {/* Type spread — inks in element by element after the cover.
+                Flush at the top with the cover plate. The column used to
+                centre its content, which floated a short plate in the middle
+                of a tall column: at 16:9 the plate hangs 90-181px above the
+                type's last line depending on the study, and centring turned
+                that into dead space above AND below. An editorial spread
+                sharing a top edge reads composed at any type height. */}
             <motion.div
-              className="flex flex-col justify-center lg:order-2 lg:col-span-7"
+              className="flex flex-col lg:order-2 lg:col-span-7"
               {...groupProps}
             >
               <motion.p

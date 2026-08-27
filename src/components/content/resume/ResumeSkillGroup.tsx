@@ -6,7 +6,10 @@ interface ResumeSkillGroupProps {
 
 export function ResumeSkillGroup({ group }: ResumeSkillGroupProps) {
   return (
-    <div>
+    // data-resume is a print hook: on paper a skill group is one line,
+    // "Design: Product Design, User Research, ...", and the print sheet
+    // cannot tell this block apart from an education entry by shape alone.
+    <div data-resume="skill-group">
       <h3 className="font-heading text-base font-semibold text-text-primary">
         {group.label}
       </h3>

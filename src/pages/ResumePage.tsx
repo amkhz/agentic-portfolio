@@ -150,7 +150,10 @@ export function ResumePage() {
               <ResumeSection title="Education">
                 <div className="space-y-4">
                   {resume.education.map((entry) => (
-                    <div key={`${entry.degree}-${entry.institution}`}>
+                    <div
+                      key={`${entry.degree}-${entry.institution}`}
+                      data-resume="education-entry"
+                    >
                       <h3 className="font-heading text-base font-semibold text-text-primary">
                         {entry.degree}
                       </h3>

@@ -6,6 +6,26 @@ interface MetricCardProps {
   accent?: "brass" | "magenta";
 }
 
+/**
+ * A caption stops being a ledger label and starts being a sentence somewhere
+ * in the 30-55 character band, and raw length alone does not find the line:
+ * measured across every metric block in core/content, 45 leaves "Rendered as
+ * finished heroes, not mood boards" (44) shouting while 30 demotes "Eligible
+ * loans used SOW Recycle" (31), which was never shouting to begin with. What
+ * separates them is the clause, and the comma is where the clause shows. So:
+ * long, or shorter but jointed.
+ *
+ * Terse ledger labels ("Team AI tool adoption", "Target SOW completion time",
+ * "Condition rate (down from 54%)") keep the mono register.
+ */
+const SENTENCE_LABEL_CHARS = 45;
+const CLAUSE_LABEL_CHARS = 30;
+
+function isSentenceLabel(label: string): boolean {
+  if (label.length > SENTENCE_LABEL_CHARS) return true;
+  return label.length > CLAUSE_LABEL_CHARS && label.includes(",");
+}
+
 function parseNumericValue(value: string): {
   numeric: number;
   prefix: string;
@@ -23,13 +43,18 @@ export function MetricCard({ value, label, accent = "brass" }: MetricCardProps) 
   const accentClass =
     accent === "magenta" ? "text-signal-primary" : "text-accent-primary";
 
+  // A sentence-length caption is prose, whatever sits above it. Uppercase mono
+  // is a label register: it is legible for two or three words and turns into
+  // shouting the moment it carries a clause. Both branches below switch the
+  // caption to body prose past the threshold; only the register changes, never
+  // the words.
+  const isSentence = isSentenceLabel(label);
+
   // Statement entry: when the value is a status phrase ("Real, today") rather
   // than a figure, and the label runs sentence-length, the ledger treatment
-  // inverts wrong -- a phrase blown up huge over a full sentence shouted in
-  // mono caps. Flip it: status becomes a small kicker tag, the sentence reads
-  // as body prose. Only non-numeric values with long labels take this path, so
-  // every numeric metric block keeps the ledger figure untouched.
-  const isStatement = !parsed && label.length > 72;
+  // inverts wrong -- a phrase blown up huge over a full sentence. Flip it:
+  // status becomes a small kicker tag, the sentence reads as body prose.
+  const isStatement = !parsed && isSentence;
 
   if (isStatement) {
     return (
@@ -72,7 +97,19 @@ export function MetricCard({ value, label, accent = "brass" }: MetricCardProps) 
       >
         {value}
       </p>
-      <p className="mt-2 font-mono text-xs uppercase tracking-wider text-text-secondary">
+      {/* R2a: lowering the statement threshold alone fixed none of the
+          shouted captions, because every one of them sits under a value that
+          parses as a figure ("4 directions", "50%") and so never reached the
+          statement branch at all. The caption's register is what was wrong,
+          not the branch it took. */}
+      <p
+        className={cn(
+          "mt-2",
+          isSentence
+            ? "max-w-[42ch] font-body text-sm leading-normal text-text-secondary"
+            : "font-mono text-xs uppercase tracking-wider text-text-secondary"
+        )}
+      >
         {label}
       </p>
     </div>

@@ -61,13 +61,10 @@ export function HomePage() {
       >
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
-            {/* Margin column - kicker, heading, dossier note */}
+            {/* Margin column - heading, dossier note, index link */}
             <div className="lg:col-span-4">
               <RevealOnScroll>
-                <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-                  Index
-                </p>
-                <h2 className="mt-4 font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
+                <h2 className="font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
                   Selected work
                 </h2>
                 <p className="mt-5 max-w-[34ch] font-body text-base leading-normal text-text-secondary">

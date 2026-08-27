@@ -3,7 +3,7 @@
  * chosen shelf layout. A researcher's logged holdings: a per-guide accent margin
  * rule (the bound edge — present at rest so the guide's domain color reads), a
  * mono provenance gutter (call-number · year · status) against a hairline, a wide
- * entry field (kicker, full display title, Newsreader dek, full mono authorship),
+ * entry field (full display title, Newsreader dek, full mono authorship),
  * and the source venue hung in the outer margin. Titles read horizontally and
  * never truncate.
  *
@@ -47,8 +47,7 @@ export function RegisterShelf({ guides }: { guides: Guide[] }) {
 }
 
 function RegisterEntry({ guide, index }: { guide: Guide; index: number }) {
-  const { title, kicker, source, status, description, territory } =
-    guide.frontmatter;
+  const { title, source, status, description, territory } = guide.frontmatter;
   const accentStyle = useGuideAccentStyle(guide);
   const callNumber = `${territory} · ${String(index).padStart(2, "0")}`;
 
@@ -83,12 +82,12 @@ function RegisterEntry({ guide, index }: { guide: Guide; index: number }) {
         </span>
       </div>
 
-      {/* Entry field: kicker, full title, dek, full authorship. */}
+      {/* Entry field: full title, dek, full authorship. The frontmatter kicker
+          is not rendered: eleven of twelve rows carried the same three words
+          ("Research Guide Series") above their own titles, on a shelf whose
+          every row is a guide in the series. */}
       <div className="min-w-0">
-        <span className="block font-lab-mono text-[0.6rem] uppercase tracking-wider text-lab-text-muted">
-          {kicker}
-        </span>
-        <h3 className="mt-1.5 font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:text-guide-accent md:text-2xl">
+        <h3 className="font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:text-guide-accent md:text-2xl">
           {title}
         </h3>
         {description ? (
@@ -148,11 +147,10 @@ function UpcomingEntry({ guide }: { guide: UpcomingGuide }) {
         </span>
       </div>
 
+      {/* No "In the pipeline" label: the gutter already carries the status and
+          the shelf sits under its own pipeline divider. */}
       <div className="min-w-0">
-        <span className="block font-lab-mono text-[0.6rem] uppercase tracking-wider text-lab-text-muted">
-          In the pipeline
-        </span>
-        <h3 className="mt-1.5 font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-secondary md:text-2xl">
+        <h3 className="font-lab-heading text-xl font-semibold leading-snug tracking-tight text-lab-text-secondary md:text-2xl">
           {title}
         </h3>
         {note ? (

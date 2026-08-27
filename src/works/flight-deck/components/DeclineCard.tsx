@@ -18,14 +18,14 @@ export function DeclineCard() {
     <main className="grid min-h-dvh place-items-center px-6 py-16">
       <div className="max-w-md">
         <FlightDeckSigil className="h-16 w-16 text-[var(--deck-ink-dim)] [--sigil-accent:var(--deck-caution)] [--sigil-halo:0.55]" />
-        <p className="mt-8 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
-          {deckCopy.colophon.kicker}
-        </p>
-        <h1 className="mt-4 font-[family-name:var(--deck-font-display)] text-3xl text-[var(--deck-ink)]">
+        <h1 className="mt-8 font-[family-name:var(--deck-font-display)] text-3xl text-[var(--deck-ink)]">
           {work?.title}
         </h1>
         <p className="mt-2 font-[family-name:var(--deck-font-body)] text-lg italic text-[var(--deck-ink-dim)]">
           {work?.thesisLine}
+        </p>
+        <p className="mt-5 text-xs uppercase tracking-[0.3em] text-[var(--deck-ink-label)]">
+          {deckCopy.colophon.kicker}
         </p>
         <ResponsiveImage
           src="/images/flight-deck-bench.png"

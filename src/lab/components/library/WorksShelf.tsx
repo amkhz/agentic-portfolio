@@ -93,9 +93,6 @@ export function WorksShelf({ works }: { works: WorkEntry[] }) {
       {...sectionMotion}
     >
       <header className="flex flex-col gap-3 border-b border-lab-border-subtle pb-6">
-        <span className="font-lab-mono text-xs uppercase tracking-wider text-guide-accent">
-          The applied arm
-        </span>
         <h2
           id="works-heading"
           className="font-lab-heading text-2xl font-semibold tracking-tight text-lab-text-primary md:text-3xl"
@@ -132,17 +129,19 @@ function WorkBenchEntry({ work, index }: { work: WorkEntry; index: number }) {
       aria-label={`${work.title} — ${WORK_STATUS_LABEL[work.status]}`}
       className="group grid grid-cols-1 gap-x-6 gap-y-4 rounded-sm px-4 py-8 transition-colors duration-[var(--duration-normal)] [--sigil-accent:var(--guide-accent)] [--sigil-halo:0.45] hover:bg-[color-mix(in_oklab,var(--guide-accent)_5%,transparent)] hover:[--sigil-halo:0.9] focus-visible:[--sigil-halo:0.9] md:grid-cols-[7rem_minmax(0,1fr)] md:px-5 md:py-10"
     >
-      {/* The instrument mark, seated in the register's gutter column */}
-      <div className="flex items-start text-lab-text-secondary md:justify-end md:border-r md:border-lab-border-subtle md:pr-6">
+      {/* The instrument mark and the accession registration, seated in the
+          register's gutter column -- the same place RegisterShelf keeps its
+          call number, rather than stacked above the title as a kicker. */}
+      <div className="flex items-start gap-3 text-lab-text-secondary md:flex-col md:items-end md:gap-2 md:border-r md:border-lab-border-subtle md:pr-6 md:text-right">
         {Sigil ? <Sigil className="h-16 w-16 md:h-20 md:w-20" /> : null}
-      </div>
-
-      {/* Title block: registration, title, thesis, provenance */}
-      <div className="min-w-0">
-        <span className="block font-lab-mono text-[0.6rem] uppercase tracking-wider text-guide-accent">
+        <span className="font-lab-mono text-[0.6rem] uppercase tracking-wider text-guide-accent">
           {registration}
         </span>
-        <h3 className="mt-1.5 font-lab-heading text-2xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:text-guide-accent md:text-3xl">
+      </div>
+
+      {/* Title block: title, thesis, provenance */}
+      <div className="min-w-0">
+        <h3 className="font-lab-heading text-2xl font-semibold leading-snug tracking-tight text-lab-text-primary transition-colors duration-[var(--duration-normal)] group-hover:text-guide-accent md:text-3xl">
           {work.title}
         </h3>
         <p className="mt-2 max-w-2xl font-lab-body text-lg italic leading-relaxed text-lab-text-secondary">

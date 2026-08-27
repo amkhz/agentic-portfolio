@@ -21,10 +21,7 @@ export function AboutPage() {
 
       <section className="pt-24 pb-16 sm:pt-32 sm:pb-20">
         <Container>
-          <span className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-            About
-          </span>
-          <h1 className="mt-4 max-w-[20ch] font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
+          <h1 className="max-w-[20ch] font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
             Drawn to complexity. Designing for people.
           </h1>
         </Container>

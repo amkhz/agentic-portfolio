@@ -53,9 +53,36 @@ Three-face *spirit* holds: **warm humanist body sans + refined display + structu
 
 - **Display** — h1, h2, section openers, hero. Editorial gravity, should feel *set*, not typed. **Hedvig Letters Serif** (single-weight, characterful low-baggage serif; carries the moment through scale + the hanging-mark pull-quote, not variable axes).
 - **Body sans** — long-form prose, UI, navigation. Geometric-humanist warmth across weights. **Figtree** (variable wght; Albert-Sans-adjacent, clean and warm without reading SaaS-default).
-- **Mono kicker** — metadata, labels, captions, project numbering. Carries the epistemic-honesty voice. **JetBrains Mono**.
+- **Mono label** — metadata, captions, catalog and registration marks, instrument labels, project numbering. Carries the epistemic-honesty voice. **JetBrains Mono**.
 
 **Faces are LOCKED v2 (2026-06-24).** Hedvig Letters Serif / Figtree / JetBrains Mono — "Stack E", validated live on Home + a case study, both modes, Justin-approved. This deliberately **reopened the 2026-06-21 Fraunces/Source Sans lock**: Fraunces had begun to read as an AI tell. Figtree won the body on Albert-Sans-adjacent warmth; Hedvig won the display for low ubiquity and character. The three-face spirit collapses UI/nav into the body sans: `--font-heading` is retained as an alias of `--font-body` (both Figtree) for existing call sites. Tokens live in `src/styles/globals.css` `@theme`. **Dark-mode body weight is trimmed** (`--body-weight: 350` at night) to counter light-on-dark bloom; day keeps regular. Hedvig is single-weight, so the prior Fraunces SOFT/WONK/opsz axis tuning is retired. See the ADR-013 type-v2 amendment.
+
+**The mono face is a label face, not a kicker face (amended 2026-08-27, craft
+arc R2b).** The third face was named "mono kicker," and the composition grammar
+below opened the case-study type spread with one. Read together, those two lines
+licensed a single recipe -- a short uppercase mono line stacked directly above a
+heading -- which the R2a sweep then found 31 times across 17 components: 29 on
+the constellation, 27 on doctrine-not-prompts, 24 on instant-doc-review, 14 on
+home. At that volume it stopped being a device and became the site's default way
+to open anything, which is precisely the tell the arc exists to remove. The
+craft floor's ban on the eyebrow governs, and this document now agrees with it.
+
+What the mono face keeps: metadata rows, figure captions, datelines, instrument
+and avionics labels, catalog call numbers and accession marks, section
+numbering, and link affordances. What it no longer does: **stand above a heading
+to announce it.** Where a kicker carried real information, that information moved
+rather than vanished -- into the heading itself (`/work` and `/notes` now lead
+with "Field notebook" and "Marginalia"; hub door cards head with the door's own
+label), into the lede (the home hero's positioning phrase), or into the gutter
+alongside the other catalog marks (Perihelion Works registrations). A label that
+survived the move was carrying something; one that could not be moved anywhere
+was never carrying anything.
+
+**The margin running head survives, and only in the margin.** A mono numeral and
+running-head tag set in a genuine outside margin is a monograph device and reads
+as one. The same pair reflowed above the heading on a narrow viewport is an
+eyebrow wearing a margin's clothes, so it is dropped there rather than restacked
+(`EditorialSection`, Justin's call).
 
 Details: body line length capped 65-75ch; hierarchy through scale + weight contrast (≥1.25 ratio between steps); tabular numerals for metadata, proportional for prose; **drop caps struck** (2026-06-24, Justin's call — Field Notebook + slop bans; Perihelion already owns a sigil drop cap, sibling-not-copy); pull quotes sparingly, set as the display serif with a hanging brass quotation mark (no colored side-stripe). **No Inter as the portfolio body** (`feedback_no_inter_for_portfolio`): reads SaaS-default; propose editorial-grade sans (Geist validated; GT America, ABC Diatype) before any workhorse.
 
@@ -90,8 +117,8 @@ Source is **Wallace** (local Ideogram 4). Finals render at `V4_QUALITY_48`, exac
 Editorial spreads, composed individually, never poured into a template grid. Refuse the "every section is a 1200px max-width container" reflex and the 3-column card-grid reflex.
 
 - **Work index:** Field Notebook table-of-contents grammar, hero + table-of-contents/links with instrument/dossier framing and registration marks. Not a card grid. Rhymes with the existing constellation navigation.
-- **Case-study shell:** hero + TOC/links, per-project drafted-object mark, day/night. Canonical opener, full-bleed cover panel (Committed accent, atmospheric) + editorial type spread (kicker / chapter indicator / headline / body / pull quote / metadata footer).
-- Variable column structures per page; generous outside margins on long-form, with kickers and metadata living in those margins; vertical rhythm varies per section. The grid is visible enough that breaks read composed, not accidental.
+- **Case-study shell:** hero + TOC/links, per-project drafted-object mark, day/night. Canonical opener, full-bleed cover panel (Committed accent, atmospheric) + editorial type spread (headline / body / pull quote / metadata footer). **No kicker above the headline** (see the 2026-08-27 amendment under Typography): the study's own title opens the spread, and the tags that used to be lifted into a kicker are already printed in the metadata row below it.
+- Variable column structures per page; generous outside margins on long-form, with running heads and metadata living in those margins (and dropped, not restacked above the heading, where the margin collapses); vertical rhythm varies per section. The grid is visible enough that breaks read composed, not accidental.
 
 ---
 

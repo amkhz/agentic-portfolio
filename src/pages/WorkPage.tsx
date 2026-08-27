@@ -54,7 +54,9 @@ function FeaturedEntry() {
                 src={metaCaseStudy.heroImage.src}
                 alt={metaCaseStudy.heroImage.alt}
                 placeholder={metaCaseStudy.heroImage.placeholder}
-                aspect="4:3"
+                // Same asset family as the case-study cover, same crop, so
+                // the same ratio. See CaseStudyPageTemplate.
+                aspect="16:9"
                 // A five-column plate inside the featured frame, not a content
                 // column.
                 sizes="(min-width: 1200px) 384px, (min-width: 1024px) 32vw, calc(100vw - 60px)"

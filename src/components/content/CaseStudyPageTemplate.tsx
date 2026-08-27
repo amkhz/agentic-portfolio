@@ -121,7 +121,12 @@ export function CaseStudyPageTemplate({ slug }: CaseStudyPageProps) {
                   src={study.heroImage.src}
                   alt={study.heroImage.alt}
                   placeholder={study.heroImage.placeholder}
-                  aspect="4:3"
+                  // Covers are 16:9 renders. Mounted in a 4:3 plate with
+                  // object-cover they lost 34% of their width, and the
+                  // parallax layer's 114% box took another 12% of height --
+                  // 42% of the image never reached the page. The plate now
+                  // matches what Wallace renders.
+                  aspect="16:9"
                   // Measured: the cover plate caps at 382px from a 1200px
                   // viewport up. It is a five-column plate, not a content
                   // column, and it was being fetched as though it were one.

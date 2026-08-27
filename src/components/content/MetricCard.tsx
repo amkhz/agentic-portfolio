@@ -7,13 +7,24 @@ interface MetricCardProps {
 }
 
 /**
- * Label length above which a metric caption stops being a ledger label and
- * starts being a sentence. Measured (R2a): the captions that read as whole
- * sentences shouted in uppercase mono run 31-55 characters. 45 catches every
- * one of them while leaving terse ledger labels ("Team AI tool adoption",
- * "Target SOW completion time") in the mono register where they belong.
+ * A caption stops being a ledger label and starts being a sentence somewhere
+ * in the 30-55 character band, and raw length alone does not find the line:
+ * measured across every metric block in core/content, 45 leaves "Rendered as
+ * finished heroes, not mood boards" (44) shouting while 30 demotes "Eligible
+ * loans used SOW Recycle" (31), which was never shouting to begin with. What
+ * separates them is the clause, and the comma is where the clause shows. So:
+ * long, or shorter but jointed.
+ *
+ * Terse ledger labels ("Team AI tool adoption", "Target SOW completion time",
+ * "Condition rate (down from 54%)") keep the mono register.
  */
 const SENTENCE_LABEL_CHARS = 45;
+const CLAUSE_LABEL_CHARS = 30;
+
+function isSentenceLabel(label: string): boolean {
+  if (label.length > SENTENCE_LABEL_CHARS) return true;
+  return label.length > CLAUSE_LABEL_CHARS && label.includes(",");
+}
 
 function parseNumericValue(value: string): {
   numeric: number;
@@ -37,7 +48,7 @@ export function MetricCard({ value, label, accent = "brass" }: MetricCardProps) 
   // shouting the moment it carries a clause. Both branches below switch the
   // caption to body prose past the threshold; only the register changes, never
   // the words.
-  const isSentence = label.length > SENTENCE_LABEL_CHARS;
+  const isSentence = isSentenceLabel(label);
 
   // Statement entry: when the value is a status phrase ("Real, today") rather
   // than a figure, and the label runs sentence-length, the ledger treatment

@@ -18,6 +18,25 @@ describe("MetricCard", () => {
     expect(screen.queryByText("0%")).not.toBeInTheDocument();
   });
 
+  // R2b: the shouted captions the sweep measured all sit under values that
+  // parse as figures, so the statement branch never saw them. Past the
+  // sentence threshold the caption drops the mono-caps register whichever
+  // branch it is on.
+  it("sets a sentence-length caption under a figure as body prose", () => {
+    const label = "Caption saved beside every image as the source of truth";
+    render(<MetricCard value="1 spec" label={label} />);
+    const caption = screen.getByText(label);
+    expect(caption.className).toContain("font-body");
+    expect(caption.className).not.toContain("uppercase");
+  });
+
+  it("keeps a terse ledger label in the mono register", () => {
+    render(<MetricCard value="100%" label="Team AI tool adoption" />);
+    const caption = screen.getByText("Team AI tool adoption");
+    expect(caption.className).toContain("uppercase");
+    expect(caption.className).toContain("font-mono");
+  });
+
   // The statement branch is unchanged: a status phrase over a sentence-length
   // label inverts to kicker-plus-prose rather than a huge phrase.
   it("keeps the statement treatment for a non-numeric value with a long label", () => {

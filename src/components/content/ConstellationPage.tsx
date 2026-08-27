@@ -124,10 +124,7 @@ export function ConstellationPageTemplate({ slug }: ConstellationPageProps) {
             </Link>
           </nav>
 
-          <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-            {study.tags[0] ?? "Case file"}
-          </p>
-          <h1 className="mt-4 max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
+          <h1 className="max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl">
             {study.title}
           </h1>
 

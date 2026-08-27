@@ -76,14 +76,11 @@ export function LibraryWelcome() {
               {...noteMotion}
             >
               <RegistrationMark />
-              <div className="flex items-baseline gap-3">
-                <span className="font-lab-mono text-xs tracking-wider text-guide-accent">
-                  {note.numeral}
-                </span>
-                <span className="font-lab-mono text-[0.65rem] uppercase tracking-[0.18em] text-lab-text-muted">
-                  {note.kicker}
-                </span>
-              </div>
+              {/* The numeral alone. The kicker beside it ("What this is")
+                  only restated the headline underneath. */}
+              <span className="font-lab-mono text-xs tracking-wider text-guide-accent">
+                {note.numeral}
+              </span>
               <h3 className="font-lab-heading text-lg font-semibold leading-snug tracking-tight text-lab-text-primary md:text-xl">
                 {note.headline}
               </h3>

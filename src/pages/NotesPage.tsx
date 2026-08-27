@@ -25,7 +25,7 @@ const tocItems: TocItem[] = notes.map((note, i) => ({
  *  on-register instead of rendering an empty frame. */
 function EmptyState() {
   return (
-    <DossierFrame kicker="Field notebook" className="bg-bg-base">
+    <DossierFrame className="bg-bg-base">
       <div className="py-6 sm:py-8">
         <h2 className="font-display text-2xl leading-tight tracking-tight text-text-primary sm:text-3xl">
           Notes are being set in type.
@@ -67,11 +67,8 @@ export function NotesPage() {
         <Container className="relative z-10 pb-14 pt-32 sm:pb-20 sm:pt-40">
           <div className="relative max-w-[60ch] py-8 pl-9 sm:py-10 sm:pl-14">
             <RegistrationMark corners={["tl", "bl"]} />
-            <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
+            <h1 className="font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
               Marginalia
-            </p>
-            <h1 className="mt-4 font-display text-4xl leading-tight tracking-tight text-text-primary sm:text-5xl">
-              Notes
             </h1>
             <p className="mt-5 max-w-[54ch] font-body text-lg leading-normal text-text-secondary">
               Working notes on design infrastructure, AI-native practice, and
@@ -83,8 +80,10 @@ export function NotesPage() {
 
       <section className="py-20 sm:py-24">
         <Container>
+          {/* No frame kicker on the list: the h1 and its dek already
+              introduced it, and "Entries" only restated the thing below. */}
           {notes.length > 0 ? (
-            <DossierFrame kicker="Entries" className="bg-bg-base">
+            <DossierFrame className="bg-bg-base">
               <TocLinkList items={tocItems} ariaLabel="Notes entries" reveal revealStagger={0.14} />
             </DossierFrame>
           ) : (

@@ -6,15 +6,16 @@ interface GuideHeaderProps {
 }
 
 export function GuideHeader({ guide }: GuideHeaderProps) {
-  const { kicker, title, description, source } = guide.frontmatter;
+  const { title, description, source } = guide.frontmatter;
   return (
     <header className="pt-16 pb-10">
-      <p className="font-lab-mono text-xs uppercase tracking-wider text-lab-text-muted">
-        {kicker}
-      </p>
+      {/* The frontmatter kicker is not rendered. It said "Research Guide
+          Series" on eleven of twelve guides, above each guide's own title,
+          inside a library whose every page is a guide in the series. The
+          source line below carries the provenance that actually varies. */}
       <h1
         id="guide-title"
-        className="mt-6 font-lab-heading text-3xl font-semibold tracking-tight text-lab-text-primary md:text-5xl md:leading-tight"
+        className="font-lab-heading text-3xl font-semibold tracking-tight text-lab-text-primary md:text-5xl md:leading-tight"
       >
         {title}
       </h1>

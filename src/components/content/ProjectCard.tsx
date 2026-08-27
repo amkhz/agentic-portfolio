@@ -9,22 +9,18 @@ import { SITE_TAB } from "@/lib/tabOrder";
  * ProjectCard - repurposed as the Home "featured dossier" spread (ADR-013 /
  * DESIGN.md). De-carded: no rounded SpotlightCard, no pill tags. An asymmetric
  * editorial spread that echoes the case-study hero (T4) - a flush cover plate
- * inside a registration frame on one side, a mono-kicked type spread on the
- * other. This is the page's one ambitious composed moment.
+ * inside a registration frame on one side, a type spread on the other. This is
+ * the page's one ambitious composed moment. No kicker: the cover plate and the
+ * frame already say "featured" louder than a mono label could.
  *
- * Brass owns every interaction (kicker, title warm-on-hover, link affordance,
- * focus ring, frame). Green stays out of the chrome entirely.
+ * Brass owns every interaction (title warm-on-hover, link affordance, focus
+ * ring, frame). Green stays out of the chrome entirely.
  */
 interface ProjectCardProps {
   study: CaseStudy;
-  /** Mono kicker above the title, e.g. "Featured case file". */
-  kicker?: string;
 }
 
-export function ProjectCard({
-  study,
-  kicker = "Featured case file",
-}: ProjectCardProps) {
+export function ProjectCard({ study }: ProjectCardProps) {
   const hasRealImage =
     typeof study.heroImage.src === "string" &&
     study.heroImage.src.length > 0 &&
@@ -74,11 +70,7 @@ export function ProjectCard({
 
           {/* Type spread */}
           <div className="relative flex flex-col justify-center lg:col-span-5">
-            <p className="relative font-mono text-xs uppercase tracking-wider text-accent-primary">
-              {kicker}
-            </p>
-
-            <h2 className="relative mt-4 max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary sm:text-4xl">
+            <h2 className="relative max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary sm:text-4xl">
               {study.title}
             </h2>
 

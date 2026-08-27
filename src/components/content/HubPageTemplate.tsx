@@ -25,7 +25,12 @@ function BackLink({ label }: { label: string }) {
 }
 
 /** A door into one of the studies the hub introduces. Brass owns the
- *  interaction; the study's title/subtitle come from its own metadata. */
+ *  interaction; the study's title/subtitle come from its own metadata.
+ *
+ *  The door's own label ("The origin story", "The story today") is the hub's
+ *  argument, so it heads the card rather than whispering above it in mono
+ *  caps. The destination's title follows as the dateline of where the door
+ *  leads, which is what the reader actually needs from it. */
 function DoorCard({
   door,
 }: {
@@ -41,14 +46,14 @@ function DoorCard({
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
     >
       <DossierFrame className="h-full bg-bg-base transition-colors duration-normal group-hover:[border-color:var(--fieldnote-rule-strong)] group-focus-visible:[border-color:var(--fieldnote-rule-strong)]">
-        <span className="font-mono text-xs uppercase tracking-wider text-text-muted">
+        <h2 className="max-w-[20ch] font-display text-2xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-3xl">
           {door.label}
-        </span>
-        <h2 className="mt-3 max-w-[20ch] font-display text-2xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-3xl">
-          {target.title}
         </h2>
         <p className="mt-3 max-w-[40ch] font-body text-base leading-normal text-text-secondary">
           {door.line}
+        </p>
+        <p className="mt-3 max-w-[40ch] font-body text-sm leading-normal text-text-muted">
+          {target.title}
         </p>
         <span className="mt-6 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-accent-primary">
           Read the story
@@ -125,7 +130,6 @@ export function HubPageTemplate({ slug }: HubPageProps) {
   if (!study?.hub) return <Navigate to="/work" replace />;
 
   const { headline, body, doors, bodyOfWork } = study.hub;
-  const kicker = study.title;
 
   return (
     <article>
@@ -136,10 +140,7 @@ export function HubPageTemplate({ slug }: HubPageProps) {
             <BackLink label="All work" />
           </nav>
 
-          <p className="font-mono text-xs uppercase tracking-wider text-accent-primary">
-            {kicker}
-          </p>
-          <h1 className="mt-4 max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
+          <h1 className="max-w-[20ch] font-display text-3xl leading-tight tracking-tight text-text-primary sm:text-4xl lg:text-5xl">
             {headline}
           </h1>
           <p className="mt-6 max-w-[60ch] font-body text-lg leading-normal text-text-secondary">

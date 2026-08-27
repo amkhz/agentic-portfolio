@@ -19,6 +19,11 @@ interface ImageBlockProps {
   /** Subtle scroll-linked parallax on the image, clipped within the slot. For
    *  case-study cover plates. Honors reduced-motion. */
   parallax?: boolean;
+  /** How a `bare` plate fills its slot. Default 'cover'. 'contain' shows the
+   *  whole asset inside the plate -- for screenshots and diagrams whose edges
+   *  carry content and cannot survive a crop. Ignored when not `bare`, which
+   *  already contains. */
+  fit?: "cover" | "contain";
   /** Layout-aware srcset hint. The default describes the full content column;
    *  any caller mounting the block in a narrower slot must say so, or the
    *  browser fetches for a column it does not have. */
@@ -40,6 +45,7 @@ export function ImageBlock({
   expandable,
   bare = false,
   parallax = false,
+  fit = "cover",
   // Measured, not guessed: the figure slot runs 100vw minus the 66px gutter
   // pair until it caps at 1134px from a 1200px viewport up. The old 760px was
   // an underestimate at every desktop width, which is the direction that costs
@@ -86,7 +92,7 @@ export function ImageBlock({
             )}
           >
             {parallax ? (
-              <ParallaxImage src={src} alt={alt} sizes={sizes} />
+              <ParallaxImage src={src} alt={alt} sizes={sizes} fit={fit} />
             ) : (
               <ResponsiveImage
                 src={src}
@@ -97,7 +103,9 @@ export function ImageBlock({
                   "absolute inset-0 h-full w-full",
                   // Covers (DossierFrame heroes) fill to the frame edge; body
                   // figures stay fully visible. Matches the `bare` contract.
-                  bare ? "object-cover" : "object-contain"
+                  // A bare cover can still opt into contain when its edges
+                  // carry content.
+                  bare && fit === "cover" ? "object-cover" : "object-contain"
                 )}
               />
             )}

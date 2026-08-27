@@ -51,7 +51,9 @@ function FeaturedEntry() {
                 src={metaCaseStudy.heroImage.src}
                 alt={metaCaseStudy.heroImage.alt}
                 placeholder={metaCaseStudy.heroImage.placeholder}
-                aspect="4:3"
+                // Same asset family as the case-study cover, same crop, so
+                // the same ratio. See CaseStudyPageTemplate.
+                aspect="16:9"
                 // A five-column plate inside the featured frame, not a content
                 // column.
                 sizes="(min-width: 1200px) 384px, (min-width: 1024px) 32vw, calc(100vw - 60px)"
@@ -59,7 +61,9 @@ function FeaturedEntry() {
             </DossierFrame>
           </div>
 
-          <div className="flex flex-col justify-center lg:order-2 lg:col-span-7">
+          {/* Flush at the top with the cover plate, same reasoning as the
+              case-study spread. */}
+          <div className="flex flex-col lg:order-2 lg:col-span-7">
             <h2 className="max-w-[18ch] font-display text-2xl leading-tight tracking-tight text-text-primary transition-colors duration-normal group-hover:text-accent-primary group-focus-visible:text-accent-primary sm:text-3xl lg:text-4xl">
               {metaCaseStudy.title}
             </h2>

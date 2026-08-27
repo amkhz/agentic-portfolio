@@ -4,8 +4,9 @@
 **Seat/model:** Tyrell on Opus, pinned at launch.
 **Prompt:** `~/projects/plans/prompts/2026-08-26-portfolio-r2b-eyebrow-tyrell.md`
 **Branched from:** origin/main `fc74b3d`. **Ends with four PRs open, nothing
-merged.** Justin ruled on five carried decisions in session; two of them are
-decided and not yet built, and are the next session's first work.
+merged.** Justin took eight rulings across the session as work was graded;
+seven are built. The one that is not -- framing the dual-mode assets -- is the
+next session's first work.
 
 ---
 
@@ -59,19 +60,43 @@ scan, not a coverage target, and the controls it lost were in files no route
 rendered. **Gates:** lint clean, build clean, **388/388** (401 minus the nine
 `codex.ts` unit tests).
 
-**PR #228 -- the cover slot at 16:9.** `fix/cover-slot-16x9`, one commit
-(`d5d2d27`), branched from main. Justin's ruling on the crop thread, taken in
-session against measured evidence.
+**PR #228 -- the covers.** `fix/cover-slot-16x9`, two commits (`d5d2d27`,
+`50263d6`), branched from main. Justin's ruling on the crop thread, then his
+grade on the result, then two more calls off that grade.
 
-Six of seven covers are 16:9 renders; the plate was 4:3 with `object-cover`, and
-`ParallaxImage` lays the image out at `h-[114%]` on top of that, so at rest the
-plate showed **58%** of the image. Slot moved to 16:9 in two places -- the
-case-study cover plate and `/work`'s featured entry, which mounts the same asset
-family through the same crop. Per-cover share never reaching the page:
-42-43% to 22-24% on the six 16:9 sources; `sow-toolbox-hero` (the one 4:3
-source, 1420x1065) goes 23% to 25%, which is the honest cost of matching the
-ratio the other six were rendered at. **Gates:** lint clean, build clean,
-**397/397**.
+*The plate matches what Wallace renders.* Six of seven covers are 16:9 renders;
+the plate was 4:3 with `object-cover`, and `ParallaxImage` lays the image out at
+`h-[114%]` on top of that, so at rest the plate showed **58%** of the image.
+Slot moved to 16:9 in two places -- the case-study cover plate and `/work`'s
+featured entry, which mounts the same asset family through the same crop.
+Per-cover share never reaching the page: **42-43% to 22-24%** on the six 16:9
+sources.
+
+*The SOW cover is a screenshot, not a render.* Justin's grade on the first pass
+was that the crop looked wrong on Instant Scope of Work, and he was right for a
+reason the ratio table did not show: `sow-toolbox-hero.png` is the "My Scope of
+Work Toolbox" UI at 1420x1065, so a crop **destroys content** rather than
+reframing it. At 16:9 it lost a quarter off the top and bottom and left a
+severed "Work to get started" fragment at the plate edge. `heroImage` now
+carries an optional **`fit`** so the asset declares its own kind instead of the
+template guessing; default stays `cover`, instant-sow is `contain` and shows
+whole at 287x215 inside the 382x215 plate with a 48px band each side. Every
+plate keeps the same height.
+
+*The spread is flush at the top.* Justin's second grade: the 16:9 plate left the
+text column off-balance. The type column centred its content while the plate sat
+at the top of a stretched grid cell, so a shorter plate floated with dead space
+above **and** below -- 90px on Wallace, 181px on instant-sow, varying with each
+study's type height, which is exactly why it read as accidental rather than
+composed. Dropping `justify-center` puts both on one top edge and moves the
+whole gap to the bottom. `/work`'s featured entry took the same change.
+
+*About's `h1`* went `text-3xl`/`sm:text-4xl` to `text-4xl`/`sm:text-5xl` here,
+at Justin's request, rather than on #225.
+
+**Gates:** lint clean, build clean, **397/397**. Verified at 1280: instant-sow
+`object-fit: contain` with nothing cropped, Wallace still `cover` at 1.559, both
+spreads flush, `/work` featured flush.
 
 **The two PRs compose.** Merged locally in combination: **392/392 tests**, build
 clean, no conflicts. Merge order does not matter.
@@ -110,20 +135,22 @@ Gotchas). This is the last open R2a claim.
 ## Open threads
 
 **Four PRs await Justin's merge.** #225 (the round), #226 (dead Codex subtree),
-#227 (this handoff), #228 (cover slot). All branched so as not to depend on each
+#227 (this handoff), #228 (the covers). All branched so as not to depend on each
 other; #225 and #226 verified to compose at 392/392.
 
 ### Decisions taken 2026-08-27 (Justin, in session)
 
-Five of the six carried threads are now ruled. **Two are decided but NOT yet
-built** -- they are the next session's first work, and the decision is made, so
-do not re-open them.
+Eight rulings, taken across the session as work was graded. Seven are built.
+**One is decided and NOT built** -- it is the next session's first work, and the
+decision is made, so do not re-open it or hand the choice back to him.
 
 | Thread | Ruling | State |
 |---|---|---|
-| Case-study cover crop | **Change the slot to 16:9.** | **BUILT** -- PR #228 |
-| Dual-mode assets (P0 7) | **Frame them.** Keep the rasters and give them a deliberate dark plate on the light page, so the dark ground reads as an intentional inset rather than a broken image. Not re-rendered, not dual-sourced, not redrawn. | **NOT BUILT** |
-| About `h1` | **Bump to `text-4xl`,** matching `/work` and `/notes`. It opens the page alone now that the eyebrow is off. | **NOT BUILT** -- one class |
+| Case-study cover crop | **Change the slot to 16:9.** | **BUILT** -- #228 |
+| SOW cover crop | Graded and rejected. **Show it whole, pillarboxed** -- a UI screenshot's edges are content and cannot survive a crop. Per-study `fit` on `heroImage`, not a template special case. Per-study aspect and an asset re-crop were both rejected. | **BUILT** -- #228 |
+| Hero spread balance | Graded as off-balance. **Flush the tops, drop the centring.** Centring the plate and widening the plate column were both rejected. | **BUILT** -- #228 |
+| About `h1` | **Bump to `text-4xl`,** matching `/work` and `/notes`. Justin asked for it on #228 rather than #225. | **BUILT** -- #228 |
+| Dual-mode assets (P0 7) | **Frame them.** Keep the rasters and give them a deliberate dark plate on the light page, so the dark ground reads as an intentional inset rather than a broken image. Not re-rendered, not dual-sourced, not redrawn. | **NOT BUILT -- the one unbuilt ruling** |
 | `/notes` hero `opacity-40` | **Keep the ghost, defer to R5.** The faintness is the intended register for the reflective surface; R5 shapes `/notes` properly, including whether it keeps a hero image at all. | Closed, no work |
 | Effects family | **Leave them.** `Particles`, `Threads`, `SpotlightCard`, `DecryptedText`, `GlowEffect` are unreached and stay, as do `core/tokens/index.ts` and `src/lib/site-metadata.ts`. | Closed, no work |
 | `ParticlesTuner` / `Particles` asymmetry | **Record it, leave both alone.** #226 deletes the tuner while `Particles` stays, so that component now has neither tuner nor consumer. This is a known state, not an oversight. | Closed, recorded |
@@ -134,8 +161,9 @@ do not re-open them.
 |---|---|
 | Flight Deck at 1280x800 | `WALL / EVEN / STRESS` overlaps the PROPOSALS row. Never put to Justin this session. Pre-existing, and sits beside arc ruling 15 (height-gate to the static plate). |
 | Parallax overscan on covers | Surfaced by #228 and deliberately not decided there. `ParallaxImage` lays the cover out at `h-[114%]`, which is now the *entire* remaining crop: a 16:9 cover in the 16:9 slot still loses 22% at `1.14`, 10% at `1.06`, nothing at `1.00`. How much travel the parallax needs is a design call. |
-| `sow-toolbox-hero` re-render | The one 4:3 cover (1420x1065). #228 costs it 2 points (23% to 25%) to match the ratio the other six were rendered at. Worth a 16:9 re-render whenever that cover is next touched. |
-| Cover spread composition | #228 takes the plate from 432x337 to 432x265 at 1440, so it sits 90px shorter than the type column where it used to be near flush. Wants Justin's eyes before #228 merges. |
+| `sow-toolbox-hero` re-render | The one 4:3 cover (1420x1065), now shown contained rather than cropped. A true 16:9 export would let it fill the plate like the other six. |
+| The contained SOW cover, ungraded | `contain` is honest, not ideal: the screenshot now paints 287x215 in a 382-wide plate, noticeably smaller than the six covers that fill theirs. Justin has not seen it since the change. A 16:9 re-export with deliberate margin would fill the plate and end the exception. |
+| `meta.png` | Renders as a dark IDE screenshot on the light page -- R2a's standing finding about the asset itself, not about the crop, and untouched here. It is arguably a second `fit: 'contain'` candidate, or a re-render. |
 
 **Stale drafts, untouched:** PRs #205 and #152, open before this round.
 
@@ -168,6 +196,33 @@ presentation formats" prose all named the Codex. Same commit, or Roy finds it.
 from a zero-reference grep, which is where the suspicion started -- but the
 subtree's real extent (eight files, including a core module with its own test
 suite) only came out of the import crawl.
+
+**`object-contain` and the parallax overscan are mutually exclusive, and
+nothing in the types said so.** `ParallaxImage` works by laying the image out at
+`h-[114%]` and letting the slot clip it, which is only coherent when the image
+fills the slot. A contained image does not, so drifting it slides the asset
+against visible plate ground. Adding `fit` meant `ParallaxImage` had to learn it
+too and opt out of the effect entirely on `contain`. Any future fill mode has
+the same obligation.
+
+**"It is 4:3, so it fits the 4:3 slot" was wrong, and the parallax is why.**
+Stated confidently in conversation before measuring. `sow-toolbox-hero` is a
+genuine 4:3 source, and it still lost 23% in the 4:3 plate, because the overscan
+takes 12% of height and the crop is computed against the overscanned box, not
+the slot. No cover on the site survived the plate intact.
+
+**A ratio table cannot tell you a crop is wrong.** The numbers said instant-sow
+was the *least* damaged cover, at 25% against 42% for the six renders. Justin
+looked at it and rejected it, because the asset is a UI screenshot and a crop
+destroys content instead of reframing it. The measurement was right and the
+conclusion drawn from it was not: what an image *is* governs whether it can be
+cropped at all, and no percentage carries that.
+
+**A grid child does not fill a stretched cell.** The cover column stretched to
+the row height while the `DossierFrame` inside sat at its natural height at the
+top, and the type column centred its own content. That is invisible until the
+plate gets shorter, and then it reads as a layout bug that varies per page,
+because the gap tracks each study's type height.
 
 **A washed-out screenshot is a finding until proven otherwise.** This session
 had the rAF gotcha banked, took a brown-screen screenshot of its own artifact,
@@ -207,7 +262,7 @@ nobody had looked at.
 
 ## Pickup prompt
 
-> Craft arc: R2b is built and graded. Two decided-but-unbuilt items first, then
+> Craft arc: R2b is built and graded. One decided-but-unbuilt item first, then
 > R3. agentic-portfolio.
 >
 > **First, check what landed.** Four PRs were open and MERGEABLE at handoff with
@@ -217,8 +272,9 @@ nobody had looked at.
 > [#226](https://github.com/amkhz/agentic-portfolio/pull/226) the unreachable
 > Codex subtree (1,034 lines),
 > [#227](https://github.com/amkhz/agentic-portfolio/pull/227) this handoff, and
-> [#228](https://github.com/amkhz/agentic-portfolio/pull/228) the cover slot at
-> 16:9. All four branch off main independently; #225 and #226 were verified to
+> [#228](https://github.com/amkhz/agentic-portfolio/pull/228) the covers (16:9
+> slot, the contained SOW cover, flush spread tops, About's `h1`). All four
+> branch off main independently; #225 and #226 were verified to
 > compose at 392/392. `gh pr list` first, then `git pull`, and take main's real
 > gate numbers from a run, not from this file.
 >
@@ -232,22 +288,25 @@ nobody had looked at.
 > 3. `~/projects/plans/2026-07-30-portfolio-craft-arc.md` -- decisions 4-15.
 >    Decision 4 governs what runs after R3-prep.
 >
-> **BUILD THESE TWO FIRST. Both are decided; neither is built. Do not re-open
-> the decision, and do not put the choice back to Justin.**
+> **BUILD THIS FIRST. It is decided and not built. Do not re-open the decision,
+> and do not put the choice back to Justin.**
 >
-> 1. **Dual-mode assets, P0 7 -- frame them.** `before-flow.png`,
->    `sow-flow-diagram.png` and `detail-ops.png` carry dark backgrounds baked
->    into the raster and read as black rectangles on the golden-hour page.
->    Justin's ruling 2026-08-27: **keep the rasters and give them a deliberate
->    dark plate on the light page**, so the dark ground reads as an intentional
->    inset rather than a broken image. Explicitly rejected: Wallace re-renders,
->    a dual-mode two-asset strategy, and redrawing them as themed SVG. Note for
->    context, not for scope creep: R2a separately called `sow-flow-diagram` an
->    archetypal generic AI flowchart using green as a status color against
->    doctrine. That is an R3-or-later content question, not part of framing them.
-> 2. **About's `h1` to `text-4xl`.** One class in `src/pages/AboutPage.tsx`. It
->    is `text-3xl` where `/work` and `/notes` are `text-4xl`, and since the
->    eyebrow came off it opens the page alone on a plain field.
+> **Dual-mode assets, R2a P0 7 -- frame them.** `before-flow.png`,
+> `sow-flow-diagram.png` and `detail-ops.png` carry dark backgrounds baked into
+> the raster and read as black rectangles on the golden-hour page. Justin's
+> ruling 2026-08-27: **keep the rasters and give them a deliberate dark plate on
+> the light page**, so the dark ground reads as an intentional inset rather than
+> a broken image. Explicitly rejected: Wallace re-renders, a dual-mode two-asset
+> strategy, and redrawing them as themed SVG. Note for context, not for scope
+> creep: R2a separately called `sow-flow-diagram` an archetypal generic AI
+> flowchart using green as a status color against doctrine. That is an
+> R3-or-later content question, not part of framing them.
+>
+> Worth reading first: #228 added a `fit: 'cover' | 'contain'` field to
+> `heroImage` for exactly this class of problem -- an asset whose edges carry
+> content and cannot be cropped. The framing work may want the same shape, and
+> if it touches `ParallaxImage` it must respect that `contain` opts out of the
+> overscan entirely.
 >
 > **Then R3, the copy pass, and it is Justin's hands.** `core/content/*.md` was
 > untouched through all of R2b by design. The workflow is IDE-direct (arc
@@ -273,11 +332,14 @@ nobody had looked at.
 >
 > **Genuinely open, and Justin's to call:** the Flight Deck at 1280x800
 > (`WALL / EVEN / STRESS` overlaps the PROPOSALS row -- never put to him, sits
-> beside arc ruling 15); the parallax overscan, which is now the entire
+> beside arc ruling 15); the parallax overscan, which after #228 is the entire
 > remaining cover crop (`h-[114%]` costs a 16:9 cover 22%, `1.06` would cost
-> 10%, `1.00` nothing); a 16:9 re-render of `sow-toolbox-hero`, the one 4:3
-> cover; and whether the shorter cover plate still balances the type column
-> beside it, which wants his eyes before #228 merges.
+> 10%, `1.00` nothing); a true 16:9 re-export of `sow-toolbox-hero` so it fills
+> its plate instead of being contained; `meta.png` rendering as a dark IDE
+> screenshot on the light page (R2a's finding about the asset, and arguably a
+> second `fit: 'contain'` candidate); and **the contained SOW cover itself,
+> which Justin has not seen since the change** -- it paints 287x215 in a
+> 382-wide plate, visibly smaller than the six covers that fill theirs.
 >
 > **Still owed to the arc, not to R3:** one manual pass through a *completed*
 > Flight Deck session in a real browser -- drill worked, paradigm dragged to the

@@ -63,7 +63,17 @@ export function renderSection(
     case "list":
       return (
         <RevealOnScroll key={index}>
-          <ListBlock ordered={section.ordered} items={section.items} />
+          <div id={chapterId} className={anchorClass(isChapterStart && "mt-4")}>
+            {section.heading && headingAs && (
+              <>
+                {isChapterStart && index > 0 && <ChapterBreak />}
+                <SectionHeading as={headingAs}>
+                  {section.heading}
+                </SectionHeading>
+              </>
+            )}
+            <ListBlock ordered={section.ordered} items={section.items} />
+          </div>
         </RevealOnScroll>
       );
 

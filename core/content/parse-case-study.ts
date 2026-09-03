@@ -148,10 +148,13 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
   let currentHeading: string | undefined;
   let textBuffer: string[] = [];
 
-  function flushText() {
-    if (textBuffer.length === 0) return;
+  /** Emits the buffered paragraph text as a section and clears the pending
+   *  heading. Returns whether a section was actually pushed, so a caller can
+   *  tell an "already spent" heading from one still looking for an owner. */
+  function flushText(): boolean {
     const body = textBuffer.join('\n').trim();
-    if (body) {
+    const pushed = Boolean(body);
+    if (pushed) {
       sections.push({
         type: 'text' as const,
         body,
@@ -160,6 +163,7 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
     }
     textBuffer = [];
     currentHeading = undefined;
+    return pushed;
   }
 
   let i = 0;
@@ -283,7 +287,12 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
     const isOrdered = ORDERED_ITEM_RE.test(line);
     const isUnordered = UNORDERED_ITEM_RE.test(line);
     if (isOrdered || isUnordered) {
-      flushText();
+      // A heading immediately followed by a list (`## Receipts` over bullets,
+      // with no lead-in paragraph) used to vanish: flushText cleared it and
+      // the list had nowhere to carry it. The list adopts it instead -- but
+      // only when the flush did not already spend it on a paragraph.
+      const pendingHeading = currentHeading;
+      const spentOnText = flushText();
       const itemRe = isOrdered ? ORDERED_ITEM_RE : UNORDERED_ITEM_RE;
       const items: string[] = [];
       while (i < lines.length) {
@@ -292,7 +301,12 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
         items.push(itemMatch[1].trim());
         i++;
       }
-      sections.push({ type: 'list' as const, ordered: isOrdered, items });
+      sections.push({
+        type: 'list' as const,
+        ordered: isOrdered,
+        items,
+        ...(!spentOnText && pendingHeading ? { heading: pendingHeading } : {}),
+      });
       continue;
     }
 

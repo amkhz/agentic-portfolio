@@ -120,6 +120,11 @@ export const caseStudies: CaseStudy[] = [
             slug: 'instant-doc-review',
           },
           {
+            label: 'Designer as a first-class contributor',
+            line: 'Not a prototype handed off: branches, pull requests, review and merge in the production lending repo, where a live pricing response proved a product assumption false.',
+            slug: 'instant-dscr',
+          },
+          {
             label: 'Bringing the team along',
             line: 'Growth plans, getting-started docs, and a dual-track prototyping workflow, so the team can step into the system at their own pace.',
           },
@@ -208,6 +213,11 @@ export const caseStudies: CaseStudy[] = [
       value: '50%',
       label: 'less PSA review time per loan',
     },
+    relatedStudy: {
+      slug: 'instant-dscr',
+      kicker: 'Where this went next',
+      direction: 'forward',
+    },
     heroImage: {
       src: '/images/idr-hero.png',
       alt: 'Property Asset review page with an Action Required panel flagging six failed rules, each with a remark and rationale, above a pass/fail rules table',
@@ -217,6 +227,39 @@ export const caseStudies: CaseStudy[] = [
       src: '/images/instant-doc-review-mark.png',
       thumb: '/images/instant-doc-review-thumb.png',
       alt: 'Drafted technical schematic of a reading-and-extraction instrument lifting ordered points off a flat plane',
+    },
+  },
+  {
+    slug: 'instant-dscr',
+    // Title is the source bundle's placeholder, carried over deliberately and
+    // left OPEN for the R3 voice pass (import interview, ruling 1). Subtitle
+    // is likewise provisional -- the source supplied no house subtitle.
+    title: 'Designing the rate a borrower can actually reach',
+    subtitle: 'Instant origination for DSCR rental loans, designed and shipped to the production repo.',
+    tags: ['Product Design', 'Design Engineering', 'Fintech', 'Accessibility'],
+    heroMetric: {
+      value: '27',
+      label: 'PRs merged to the production lending app',
+    },
+    relatedStudy: {
+      slug: 'instant-doc-review',
+      kicker: 'The earlier instant surface',
+      direction: 'back',
+    },
+    heroImage: {
+      src: '/images/instant-dscr-ragged-ladders.png',
+      alt: 'Design board headed "Every product\'s ladder stops in a different place", plotting which of six loan products has a rung at each of fourteen rate steps',
+      placeholder: 'Design board plotting rung-exists, no-rung and off-screen-product markers for six loan products across fourteen rate steps',
+      // A design board, not a render. Its headline sits against the top edge
+      // and its footnote against the bottom, and every line of type starts at
+      // the left margin -- at 2040x1257 a 16:9 cover crop takes 6% off each
+      // side of the width and clips the start of every line. Contained.
+      fit: 'contain',
+    },
+    mark: {
+      src: '/images/instant-dscr-mark.png',
+      thumb: '/images/instant-dscr-thumb.png',
+      alt: 'Drafted technical schematic of a stepped rate ladder, its rungs reaching unevenly from an upright rail, with a clamped dial gauge reading against them',
     },
   },
   {
@@ -331,6 +374,7 @@ export type CtaSection = {
  *  `1. ...` / `- ...` lines. */
 export type ListSection = {
   type: 'list';
+  heading?: string;
   ordered: boolean;
   items: string[];
 };
@@ -352,6 +396,7 @@ import aiLeadershipMd from './ai-leadership.md?raw';
 import doctrineNotPromptsMd from './doctrine-not-prompts.md?raw';
 import instantSowMd from './instant-sow.md?raw';
 import instantDocReviewMd from './instant-doc-review.md?raw';
+import instantDscrMd from './instant-dscr.md?raw';
 import wallaceMd from './wallace.md?raw';
 import buildingThisPortfolioMd from './building-this-portfolio.md?raw';
 import theCraftMd from './the-craft.md?raw';
@@ -366,6 +411,7 @@ export const caseStudyContent: Record<string, CaseStudySection[]> = {
   'doctrine-not-prompts': parseCaseStudyMarkdown(doctrineNotPromptsMd),
   'instant-sow': parseCaseStudyMarkdown(instantSowMd),
   'instant-doc-review': parseCaseStudyMarkdown(instantDocReviewMd),
+  'instant-dscr': parseCaseStudyMarkdown(instantDscrMd),
   'wallace': parseCaseStudyMarkdown(wallaceMd),
   'building-this-portfolio': parseCaseStudyMarkdown(buildingThisPortfolioMd),
 };

@@ -46,4 +46,38 @@ describe('parseCaseStudyMarkdown — lists', () => {
     const sections = parseCaseStudyMarkdown(md);
     expect(sections.every((s) => s.type !== 'list')).toBe(true);
   });
+
+  it('gives a list the heading that directly precedes it', () => {
+    const md = [
+      '## Receipts',
+      '',
+      '- **27 merged pull requests** to the production lending app',
+      '- **226 commits** across three months',
+    ].join('\n');
+
+    const sections = parseCaseStudyMarkdown(md);
+    const list = sections.find((s) => s.type === 'list') as ListSection;
+    // Without an owner the heading used to be dropped on the floor, taking its
+    // Contents-index entry and its anchor with it.
+    expect(list.heading).toBe('Receipts');
+    expect(list.items).toHaveLength(2);
+  });
+
+  it('leaves the heading on the lead-in paragraph when there is one', () => {
+    const md = [
+      '## Three decisions',
+      '',
+      'Three decisions worth naming:',
+      '',
+      '- first',
+      '- second',
+    ].join('\n');
+
+    const sections = parseCaseStudyMarkdown(md);
+    const text = sections.find((s) => s.type === 'text');
+    const list = sections.find((s) => s.type === 'list') as ListSection;
+    expect(text && 'heading' in text ? text.heading : undefined).toBe('Three decisions');
+    // The heading is already spent; the list must not claim it a second time.
+    expect(list.heading).toBeUndefined();
+  });
 });

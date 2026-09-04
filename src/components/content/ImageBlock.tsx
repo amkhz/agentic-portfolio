@@ -33,7 +33,12 @@ interface ImageBlockProps {
 const aspectMap = {
   "16:9": "aspect-[16/9]",
   "4:3": "aspect-[4/3]",
-  auto: "aspect-auto min-h-[200px]",
+  // 'auto' is handled in flow (see `flowHeight` below), not by a ratio class.
+  // It used to be `aspect-auto min-h-[200px]`, which was a trap: the image is
+  // absolutely positioned, so it contributes no height, the box collapsed to
+  // 200px, and a 1.6:1 screenshot got contained inside a 5.7:1 slot -- painting
+  // ~325px wide in a 1136px frame with 400px of dead border either side.
+  auto: "",
 } as const;
 
 export function ImageBlock({
@@ -63,6 +68,12 @@ export function ImageBlock({
   const canExpand = expandable ?? hasRealImage;
   const [isOpen, setIsOpen] = useState(false);
 
+  // A body figure at 'auto' lays the image out in normal flow so the figure
+  // takes the asset's own height: no ratio to letterbox against, no crop. For
+  // screenshots and boards, whose edges carry content and whose ratios vary.
+  // `bare` plates (covers) always fill a fixed slot, so they never flow.
+  const flowHeight = aspect === "auto" && !bare;
+
   return (
     <>
       <figure className={bare ? "" : "my-8"}>
@@ -85,7 +96,7 @@ export function ImageBlock({
             className={cn(
               "relative overflow-hidden bg-bg-elevated",
               !bare && "border border-border-subtle",
-              aspectMap[aspect],
+              flowHeight ? "" : aspectMap[aspect],
               canExpand && !bare && "cursor-zoom-in transition-[border-color] duration-normal hover:border-accent-muted",
               canExpand && bare && "cursor-zoom-in",
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
@@ -100,7 +111,11 @@ export function ImageBlock({
                 loading="lazy"
                 sizes={sizes}
                 className={cn(
-                  "absolute inset-0 h-full w-full",
+                  // In flow the image sets the figure's height; otherwise it
+                  // fills the ratio box it was given.
+                  flowHeight
+                    ? "block h-auto w-full"
+                    : "absolute inset-0 h-full w-full",
                   // Covers (DossierFrame heroes) fill to the frame edge; body
                   // figures stay fully visible. Matches the `bare` contract.
                   // A bare cover can still opt into contain when its edges

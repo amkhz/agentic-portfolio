@@ -231,11 +231,15 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'instant-dscr',
-    // Title is the source bundle's placeholder, carried over deliberately and
-    // left OPEN for the R3 voice pass (import interview, ruling 1). Subtitle
-    // is likewise provisional -- the source supplied no house subtitle.
-    title: 'Designing the rate a borrower can actually reach',
-    subtitle: 'Instant origination for DSCR rental loans, designed and shipped to the production repo.',
+    // Retitled 2026-09-04 on Justin's grade: the source bundle's placeholder
+    // ran twice the length of every sibling on the work index and read as
+    // incongruent next to "Instant Scope of Work" / "Instant Document
+    // Review". The family name takes the title slot; the placeholder drops to
+    // the subtitle, where a long descriptive line is the house norm. Both
+    // stay OPEN for the R3 voice pass (import interview, ruling 1), and the
+    // site-wide title question is handed to Stelline.
+    title: 'Instant Rate Buy-Up',
+    subtitle: 'Designing the rate a borrower can actually reach.',
     tags: ['Product Design', 'Design Engineering', 'Fintech', 'Accessibility'],
     heroMetric: {
       value: '27',

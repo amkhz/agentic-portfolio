@@ -40,7 +40,7 @@ Borrowers can buy their interest rate up or down. Pay points at closing for a lo
 
 The design that existed assumed **one shared ladder** — that every loan product offers the same set of rate steps, so one control could drive them all. That assumption was written down as an open question nobody had answered. So I answered it.
 
-## 1. I captured the real response and the assumption collapsed
+## I captured the real response and the assumption collapsed
 
 I deployed a throwaway branch to a QA environment and captured an actual pricing response: one loan, six qualifying products, all starting from the same base rate.
 
@@ -52,7 +52,7 @@ The sharpest finding: **the same rate costs different amounts on different produ
 *The finding*
 <!-- aspect:auto placeholder:Design board plotting rung-exists, no-rung, and off-screen-product markers for six loan products across fourteen rate steps, above a row of eight cards describing what the borrower gets at each buy-up press -->
 
-## 2. Reading the code turned up four defects, one of them serious
+## Reading the code turned up four defects, one of them serious
 
 With the real data in hand I walked the control and read the source alongside it. Four distinct failures, which I wrote up individually because they had different causes and different fixes:
 
@@ -65,7 +65,7 @@ That last one is the one I would point at. It was not visible in a mockup and no
 
 To be precise about severity, since it matters: all four were defects in the *prototype* state of this work, caught before any of it merged. None reached production and no borrower ever saw them. Finding them was the review pass on my own prototype, and the redesign below is the fix. I would rather say that plainly than let a number like $94,501 imply a production incident it never was.
 
-## 3. I explored the fix as design, then locked it
+## I explored the fix as design, then locked it
 
 Six directions, drawn as real screens, not boxes:
 
@@ -110,7 +110,7 @@ Within a family, every shared step agrees on both rate *and* dollars. Divergence
 
 I also killed a toggle. Once the dropdown scopes to a family, an "All / Interest-Only" switch can only subtract — it hides half of the exact comparison the pair exists to protect.
 
-## 4. Where a loan runs out, it says so
+## Where a loan runs out, it says so
 
 The most interesting state is the one where the borrower asks for a rate a loan cannot price. The old behavior repriced it at par, silently, with Select still live.
 
@@ -126,7 +126,7 @@ Here it is running:
 
 The amortizing loan is at its ceiling at 6.750% with Select gone. Its interest-only sibling reaches one step further to 6.875%. The credits — $2,556 and $2,931 — are the vendor's own figures, matching the captured response to the dollar.
 
-## 5. Then a second reading of the same data
+## Then a second reading of the same data
 
 The stepper answers "nudge me one step." It cannot answer "show me everything," because it is a stepper: ten rungs, one click each.
 
@@ -144,7 +144,7 @@ Three decisions worth naming:
 
 That last detail generalizes: the accessible name on each Select button carries the full loan identity, even though the visible label does not, because a screen-reader user has no dropdown in view to supply the context a sighted user gets for free.
 
-## 6. And the one state that had no disclosure at all
+## And the one state that had no disclosure at all
 
 Switching products carries the borrower's adjustment across, clamped to the nearest step the new loan can price, resolving ties toward base so a clamp never volunteers a *larger* adjustment than was asked for. Correct behavior. It also changes a number the borrower set.
 

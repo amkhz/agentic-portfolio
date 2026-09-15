@@ -33,6 +33,11 @@ function parseMeta(meta: string): Record<string, string> {
   const aspectMatch = meta.match(/aspect:(\S+)/);
   if (aspectMatch) result.aspect = aspectMatch[1];
 
+  // Directives precede placeholder prose; a mention inside prose is not a key.
+  const directives = meta.split('placeholder:')[0];
+  const plateMatch = directives.match(/(?:^|\s)plate:(\S+)/);
+  if (plateMatch?.[1] === 'dark') result.plate = 'dark';
+
   // Extract placeholder (everything after "placeholder:" to end of string)
   const placeholderMatch = meta.match(/placeholder:(.+)/);
   if (placeholderMatch) result.placeholder = placeholderMatch[1].trim();
@@ -245,6 +250,7 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
       const src = imgMatch[2];
       let caption: string | undefined;
       let aspect: '16:9' | '4:3' | 'auto' | undefined;
+      let plate: 'dark' | undefined;
       let placeholder = alt; // default placeholder to alt text
 
       // Check next lines for caption and metadata
@@ -263,6 +269,7 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
           const meta = parseMeta(metaMatch[1]);
           if (meta.aspect) aspect = meta.aspect as '16:9' | '4:3' | 'auto';
           if (meta.placeholder) placeholder = meta.placeholder;
+          if (meta.plate === 'dark') plate = 'dark';
           i++;
         }
       }
@@ -274,6 +281,7 @@ export function parseCaseStudyMarkdown(markdown: string): CaseStudySection[] {
         placeholder,
         ...(caption ? { caption } : {}),
         ...(aspect ? { aspect } : {}),
+        ...(plate ? { plate } : {}),
       });
       i++;
       continue;

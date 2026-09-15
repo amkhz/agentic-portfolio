@@ -274,6 +274,7 @@ export type ImageSection = {
   placeholder: string;
   caption?: string;
   aspect?: '16:9' | '4:3' | 'auto';
+  plate?: 'dark';
 };
 
 export type MetricsSection = {

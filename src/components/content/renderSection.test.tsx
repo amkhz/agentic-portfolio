@@ -15,7 +15,7 @@ describe("renderSection image plates", () => {
   it.each(["dark", undefined] as const)("passes plate %s to ImageBlock", (plate) => {
     render(renderSection({ type: "image", src: "/images/before-flow.png",
       alt: "Diagram", placeholder: "Diagram", aspect: "16:9", plate }, 0));
-    expect(screen.getByRole("button").classList.contains("bg-[var(--theme-figure-plate)]"))
+    expect(screen.getByRole("button").classList.contains("bg-figure-plate"))
       .toBe(plate === "dark");
   });
 });

@@ -88,7 +88,7 @@ export function ImageBlock({
             aria-label={canExpand ? `View full size: ${alt}` : undefined}
             className={cn(
               "relative overflow-hidden",
-              darkPlate ? "bg-[var(--theme-figure-plate)]" : "bg-bg-elevated",
+              darkPlate ? "bg-figure-plate" : "bg-bg-elevated",
               !bare && "border border-border-subtle",
               aspectMap[aspect],
               canExpand && !bare && "cursor-zoom-in transition-[border-color] duration-normal hover:border-accent-muted",

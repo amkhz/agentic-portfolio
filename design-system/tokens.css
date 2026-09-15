@@ -16,6 +16,10 @@
     --theme-bg-elevated: oklch(0.2150 0.0110 88);
     --theme-bg-subtle: oklch(0.2520 0.0130 90);
 
+    /* Dark raster inset: stays humus-dark through the day/night inversion. */
+    --theme-figure-plate: oklch(0.2600 0.0130 88);
+    --figure-plate-inset: clamp(0.75rem, 2vw, 1.5rem);
+
     /* Text — warm off-white */
     --theme-text-primary: oklch(0.9480 0.0090 88);
     --theme-text-secondary: oklch(0.7680 0.0150 86);
@@ -137,6 +141,7 @@
     --theme-bg-base: oklch(0.9050 0.0340 78);
     --theme-bg-elevated: oklch(0.9450 0.0240 82);
     --theme-bg-subtle: oklch(0.8850 0.0380 76);
+    --theme-figure-plate: oklch(0.2350 0.0120 88);
 
     /* Text — warm near-blacks, never achromatic */
     --theme-text-primary: oklch(0.2200 0.0150 70);

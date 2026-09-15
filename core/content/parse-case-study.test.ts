@@ -1,6 +1,29 @@
 import { describe, it, expect } from 'vitest';
 import { parseCaseStudyMarkdown } from './parse-case-study';
 import type { ListSection } from './case-studies';
+import docReview from './instant-doc-review.md?raw';
+import sow from './instant-sow.md?raw';
+
+describe('image plate metadata', () => {
+  it('reads plate:dark before the full placeholder', () => {
+    expect(parseCaseStudyMarkdown('![Diagram](/images/before-flow.png)\n*Caption*\n<!-- aspect:16:9 plate:dark placeholder:Original placeholder -->'))
+      .toEqual([{ type: 'image', src: '/images/before-flow.png', alt: 'Diagram',
+        caption: 'Caption', aspect: '16:9', plate: 'dark', placeholder: 'Original placeholder' }]);
+  });
+  it.each(['', '<!-- aspect:16:9 -->', '<!-- plate:light -->',
+    '<!-- placeholder:Instructions mentioning plate:dark -->'])(
+  'ignores absent or unsupported directives: %s', (meta) => {
+    expect(parseCaseStudyMarkdown(`![Diagram](/images/diagram.png)\n${meta}`)[0]).not.toHaveProperty('plate');
+  });
+  it.each([
+    ['instant-doc-review', '/images/before-flow.png', docReview],
+    ['instant-sow', '/images/sow-flow-diagram.png', sow],
+    ['instant-sow', '/images/detail-ops.png', sow],
+  ])('plates the ruled figure in %s: %s', (_page, src, markdown) => {
+    expect(parseCaseStudyMarkdown(markdown).filter(s => s.type === 'image' && s.src === src))
+      .toEqual([expect.objectContaining({ type: 'image', src, aspect: '16:9', plate: 'dark' })]);
+  });
+});
 
 describe('parseCaseStudyMarkdown — lists', () => {
   it('parses a consecutive ordered list into one list section', () => {

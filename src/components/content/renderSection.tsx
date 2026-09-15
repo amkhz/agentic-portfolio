@@ -77,6 +77,7 @@ export function renderSection(
               placeholder={section.placeholder}
               caption={section.caption}
               aspect={section.aspect}
+              plate={section.plate}
             />
           </div>
         </RevealOnScroll>

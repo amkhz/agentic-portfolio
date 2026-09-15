@@ -8,7 +8,7 @@ const image = { src: "/images/before-flow.png", alt: "An intact diagram" };
 describe("ImageBlock dark plate", () => {
   it("insets the contained ratio image inside the outer border", () => {
     render(<ImageBlock {...image} plate="dark" />);
-    expect(screen.getByRole("button")).toHaveClass("bg-[var(--theme-figure-plate)]", "border-border-subtle", "aspect-[16/9]");
+    expect(screen.getByRole("button")).toHaveClass("bg-figure-plate", "border-border-subtle", "aspect-[16/9]");
     const img = screen.getByRole("img");
     expect(img).toHaveClass("object-contain");
     expect(img.parentElement?.parentElement).toHaveClass("absolute", "inset-[var(--figure-plate-inset)]");
@@ -16,11 +16,16 @@ describe("ImageBlock dark plate", () => {
   it("preserves the unplated layout when absent", () => {
     render(<ImageBlock {...image} />);
     expect(screen.getByRole("button")).toHaveClass("bg-bg-elevated");
-    expect(screen.getByRole("button")).not.toHaveClass("bg-[var(--theme-figure-plate)]");
+    expect(screen.getByRole("button")).not.toHaveClass("bg-figure-plate");
     expect(screen.getByRole("img")).toHaveClass("absolute", "inset-0");
   });
   it("leaves bare covers unchanged", () => {
     render(<ImageBlock {...image} bare plate="dark" />);
+    expect(screen.getByRole("button")).toHaveClass("bg-bg-elevated");
+    expect(screen.getByRole("img")).toHaveClass("object-cover");
+  });
+  it("leaves parallax images unchanged", () => {
+    render(<ImageBlock {...image} parallax plate="dark" />);
     expect(screen.getByRole("button")).toHaveClass("bg-bg-elevated");
     expect(screen.getByRole("img")).toHaveClass("object-cover");
   });

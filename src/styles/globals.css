@@ -18,6 +18,7 @@
   --color-bg-base: var(--theme-bg-base);
   --color-bg-elevated: var(--theme-bg-elevated);
   --color-bg-subtle: var(--theme-bg-subtle);
+  --color-figure-plate: var(--theme-figure-plate);
 
   --color-text-primary: var(--theme-text-primary);
   --color-text-secondary: var(--theme-text-secondary);

@@ -3,6 +3,7 @@ import { parseCaseStudyMarkdown } from './parse-case-study';
 import type { ListSection } from './case-studies';
 import docReview from './instant-doc-review.md?raw';
 import sow from './instant-sow.md?raw';
+import aiLeadership from './ai-leadership.md?raw';
 
 describe('image plate metadata', () => {
   it('reads plate:dark before the full placeholder', () => {
@@ -19,6 +20,8 @@ describe('image plate metadata', () => {
     ['instant-doc-review', '/images/before-flow.png', docReview],
     ['instant-sow', '/images/sow-flow-diagram.png', sow],
     ['instant-sow', '/images/detail-ops.png', sow],
+    ['ai-leadership', '/images/diagram.png', aiLeadership],
+    ['instant-sow', '/images/feature-flow.png', sow],
   ])('plates the ruled figure in %s: %s', (_page, src, markdown) => {
     expect(parseCaseStudyMarkdown(markdown).filter(s => s.type === 'image' && s.src === src))
       .toEqual([expect.objectContaining({ type: 'image', src, aspect: '16:9', plate: 'dark' })]);

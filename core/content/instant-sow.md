@@ -36,7 +36,7 @@ Rather than rip out the manual form, I designed a "toolbox": three progressively
 
 ![Document upload UI showing file selection, extraction progress, and pre-filled results](/images/feature-flow.png)
 *The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review.*
-<!-- aspect:16:9 placeholder:The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review -->
+<!-- aspect:16:9 plate:dark placeholder:The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review -->
 
 ## Human Oversight Built In
 

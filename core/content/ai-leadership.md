@@ -8,7 +8,7 @@ I framed both as one initiative: adoption needs hands-on enablement and alignmen
 
 ![Diagram showing the dual challenge: tactical tooling gap and strategic design control shift](/images/diagram.png)
 *Two problems, one initiative: closing the tactical tooling gap while redefining design's strategic role in AI-driven products.*
-<!-- aspect:16:9 placeholder:Diagram: tactical (tooling gap) on one side, strategic (design control shifting) on the other, showing how both were addressed as one initiative -->
+<!-- aspect:16:9 plate:dark placeholder:Diagram: tactical (tooling gap) on one side, strategic (design control shifting) on the other, showing how both were addressed as one initiative -->
 
 ## Building the Playbook
 

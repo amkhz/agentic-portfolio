@@ -5,7 +5,8 @@ Updated: 2026-04-30 (Phase 2 — humor register and scientific voice)
 Updated: 2026-04-30 (Phase 3 — edited prose patterns from About-page corpus)
 Updated: 2026-04-30 (Phase 3.1 — calibration tweaks from Emergent Quantization rewrite)
 Updated: 2026-06-22 (Phase 4 — edited-prose patterns from the Conservatory case-study edit pass)
-Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3) + cold-read calibration on lab guide rewrite (Phase 3.1) + Justin's hand-edits across 8 case-study files (Phase 4)
+Updated: 2026-09-17 (Phase 5 — product-study registers from the Instant Rate Buy-Up calibration)
+Calibrated from: 16 interview samples (8 Phase 1 + 8 Phase 2) + About-page prose corpus (Phase 3) + cold-read calibration on lab guide rewrite (Phase 3.1) + Justin's hand-edits across 8 case-study files (Phase 4) + 9 spoken samples on product-study registers (Phase 5)
 
 ## What changed in Phase 2
 
@@ -27,6 +28,12 @@ New material: a Structural Templates section (identity-stack, verb-stack, hobby-
 Phases 1 through 3.1 calibrated from interviews and About-page prose. Phase 4 is calibrated from a different and higher-signal source: *Justin's own line edits* over Tyrell-drafted case-study copy (8 files, the Conservatory content pass). Watching what he deliberately changes (and what he leaves alone) exposes editing instincts that don't show up in fresh writing. The Phase 4 section near the end captures those instincts as falsifiable rules; the existing sections still hold.
 
 One drift-protection finding worth flagging up front: **Justin's prose expands when he edits.** His changes add more than they cut (maximalist list expansion, register-breakers, growth-framing clauses); only one edit in the whole pass was a pure tightening. The voice consequence: when a *separate* editorial cut happens, take it out of structure and redundancy, never out of the register-breakers or the intent throughline, because those are the voice, not the fat. (The editorial act itself, making the hard concision cuts on request, is a working preference, not a voice trait, so it lives in crew working-notes / memory, not here.)
+
+## What changed in Phase 5
+
+Phases 1 through 4 calibrated on About-page and Conservatory registers: identity, principles, the portfolio's own making. Phase 5 (2026-09-17) targets a feature-level product study, Instant Rate Buy-Up, whose source prose was imported voice-neutral: a designer reading code against real pricing data, a money figure two orders of magnitude wrong, credit inside an agent-built codebase, and an ending that stays open. Nine spoken samples (ten takes; one interrupted mid-sentence and kept as data). The Phase 5 section near the end holds the new rules. Gaff's four protections are unchanged; every new rule is checkable alongside them, and gaff should load Phase 4 and Phase 5 together for any pass on a product study.
+
+Headline finding: **at decision moments Justin's verdict verb is "feel,"** and the reason that follows ends on the borrower, not on the mechanism. The neutral draft ends its decisions on abstractions ("which fact a surface is responsible for"); Justin ends them on "get on with their loan."
 
 ## The Voice in One Sentence
 
@@ -294,6 +301,120 @@ These appeared in the hand-edit pass and should be corrected, not preserved as s
 - **Spaced-hyphen em-dash substitutes:** "and that's okay - we're constantly experimenting," "bigger picture - it's easy to get lost in the sauce." A spaced ` - ` is an em-dash in disguise. The no-em-dash rule wants the sentence *restructured*, not the dash respelled.
 - **Typos / broken clauses from fast editing:** "exisiting," "practce," "seperation," "critcally," "the your personal intent in the loop" (incomplete clause), "I wanted test the loop" (missing "to"). Dictation and typing artifacts, not voice.
 - **"gatekeep" retained** in the Lab node: framed as the rejected anti-pattern (acceptable), but it still carries gate energy against the no-permission-framing rule. Flag for Justin's call before publish.
+
+## Phase 5 — Product-study patterns (Instant Rate Buy-Up calibration, 2026-09-17)
+
+Spoken samples aimed at the registers a feature study needs. Every rule below is observed in at least two samples unless marked (1x).
+
+### The "just X to actually Y" arc (opener)
+
+The study opener is a personal trajectory, not a problem statement: "I went from just designing to actually building a pricing feature." "Just" lowers the prior state; "actually" marks the crossing into production. This is the one place he leads with "I": a specific personal action, per the Phase 1 rule. Checkable: the opener names the before-state with "just," the after-state with "actually," and closes on the humans ("and some help from my engineering team").
+
+### "Actually / actual" marks the production line
+
+Four uses in nine samples: "actually building," "to actually use agents to build for production," "my actual human brain and thinking," "my actual production code decisions." It always sits on the real-vs-mockup boundary. Checkable: "actual(ly)" appears only where the claim is shipped, production, or human as opposed to prototype or agent; never as a general intensifier.
+
+### Feel is the verdict verb
+
+"Once things felt right," "When things felt right," "to test how they felt," "a sentence didn't feel right," "felt like the right decision," "made me feel proud," "What made me feel confident." Seven in nine samples. Decisions are announced as feel, then justified. Checkable: at a decision moment the first clause states the verdict as feel ("felt right" / "didn't feel right"), and the reason follows in the next clause or sentence. "The decision:" and "The move was noticing" are draft voice, not Justin's.
+
+### Reasons end on the borrower
+
+Every defended decision closes on what the person gets, not on the mechanism: "to remove any ambiguity into what's going on," "get what they need quickly and get on with their loan," "help the person make the decision that they needed confidently." Checkable: the last clause of a decision paragraph names the borrower's outcome. A decision paragraph that ends on a design category ("which fact a surface is responsible for") is not in voice; keep the insight, land it on the person.
+
+### The credit split (inception framing)
+
+Engineering first, with "built": "Engineering built the framework to actually use agents to build for production." Then "I brought in," naming his tools by product name: "the design Skills, both for Claude, like Impeccable and the Kiavi brand doctrine, and also my actual human brain and thinking." Then the process in time order, gated by feel ("Once things felt right... When things felt right I again used Claude..."). Merge autonomy stated with its condition: "Sometimes, if I was confident enough in the implementation or the change was small enough, I'd merge the changes without needing to handoff to anyone." Confidence is attributed to his own prep ("my heavily customized Claude design Skills and the brand doctrine and design system work I did"), not to the agent.
+
+Checkable, in order: (1) engineering named first with "built"; (2) "I brought in" plus named tools plus the human brain; (3) time-ordered process with feel gates; (4) merge autonomy with its "if" condition; (5) confidence sourced to his own prep.
+
+### Name the tool
+
+"Claude" seven times, plus "Paper," "Impeccable," "the Kiavi brand doctrine." Never "the agent," "agent-assisted development," or "AI tooling" when he means a specific thing. Shares credit with it plainly: "Something I might have missed too if I didn't have Claude double checking my work." Checkable: when a specific tool did the work, the product name appears; "AI" is reserved for the general category ("whatever we created with AI").
+
+### Bugs to non-engineers: size and place, not mechanism (1x)
+
+"It was a simple math error, a wrong decimal point. Something that you wouldn't really catch unless you were looking at the details." No basis points, no rename, no propagation. Then the shared-credit close. Checkable: to a non-engineer, a defect is stated as (1) a plain name for the class ("a simple math error"), (2) the scale in everyday terms ("a wrong decimal point"), (3) where you'd have to be looking to see it. The mechanism is omitted, not simplified. Only sample of its kind; treat as the rule until contradicted.
+
+### Numbers carry a feeling and a comparison
+
+"merging close to 30 PRs into production and having almost as many commits as some of the other engineers on the team made me feel proud." "The velocity was impressive, yet still sometimes scary compared to the traditional way of building - 226 commits merged in 3 months - and me being the 4th highest human contributor." Casual round-off ("close to 30") and the exact figure ("226," "4th") appear in the same paragraph; digits, not words. Every number sits next to an affect word (proud, impressive, scary) and a comparison to the engineers. Checkable: in prose, a hard number never stands alone in its sentence; it has an affect word or a comparison in the same sentence. Bulleted receipts are data and are exempt (gaff protection 4 holds).
+
+### The self-limit next to the claim
+
+Immediately after the biggest claim comes the boundary: "I don't think I would ever replace an engineer. But these newfound powers that I have make me feel like combined with a talented engineer and this way of working, we can do so much more." Also time-placement on the learning curve (Phase 2 confirmed): "If I asked myself last year how much I expected to be contributing to a production code base, I don't think it would have been this much," "I have so much more to learn to feel confident in some of my actual production code decisions." Checkable: a contribution claim is followed within two sentences by either a stated limit ("I would never replace") or a learning-curve placement. "Newfound powers" is a half-ironic trope adoption (see Humor Register) and counts as a register-breaker; protect it.
+
+### I / we / you split
+
+"I" for process and credit (inception, receipts). "We / our borrowers" for decisions defended to stakeholders (Slack, the pair, the disclosure). Generalized "you" for lessons: "You constantly have to be aware of what you can say and you can't say from a legal standpoint," "the conversations you have to have with Product and with Risk." Checkable: a lesson sentence uses "you"; a decision sentence uses "we"; a contribution sentence uses "I." Mixing them inside one sentence is a tell.
+
+### Concession first, then the point, often after a sentence-starting "But"
+
+"Folding it into a drop down would have solved the implementation problem easily, but it isn't how our borrowers are looking to compare things." "Building the feature... certainly made easier... What isn't easier and what isn't faster are the conversations." "some of these questions can be left to be answered by our support team... But there are things that we're going to need to figure out." Checkable: the easier or obvious alternative is granted in the first clause, and the real point arrives in the second, frequently opening with "But" or "What isn't."
+
+### The open item names its holder and its date
+
+Asked for "still open," Justin never dramatizes the question. Twice he answered with team posture and custody: "We're constantly learning and staying flexible both in our design and our implementation. When we learn new things or get clarifying data, we can make informed changes easily." And: "Because we are operating in a very MVP style, some of these questions can be left to be answered by our support team and sales specialists. But there are things that we're going to need to figure out as this sees a wider rollout to the rest of our customers." Checkable: an unresolved item states (1) who holds it for now (support, sales, a stakeholder), (2) the milestone that reopens it (wider rollout), and (3) the license for leaving it ("MVP style"). "Honesty matters more than a clean ending" and "genuinely unresolved" are draft voice. The category question in the draft ("limit statement or event statement") is a real insight and can stay, but it lands on custody and timing, not on its own unresolvedness.
+
+### The hard part moved (closing thesis)
+
+The closing register for agent-era work: building got easy; the conversations did not. "What isn't easier and what isn't faster are the conversations you have to have with Product and with Risk and with other stakeholders to really nail down the things that rise to the surface once things are very easy to build." Repeated "with" ("with Product and with Risk and with other stakeholders") is the emphasis device. Regulated-industry constraint stated plainly ("what you can say and you can't say from a legal standpoint"). Checkable: the closing names what got easier in one sentence and what did not in the next, and the "did not" is the stakeholders, spelled out by name.
+
+### Intent throughline confirmed in speech
+
+Unprompted: "balancing that with what you can express in the user interface," "had a lot of information to convey." Gaff protection 2 holds in the product register.
+
+### Vocabulary additions
+
+- **Verb for small adjustments:** "tweak" (3x; Phase 2 had "tweaked the frequencies"). Prefer "tweak" over "adjust," "refine," "iterate on."
+- **Physical-work verbs (Phase 3.1 confirmed):** "nail down," "rise to the surface," "get on with their loan," "hands on," "stub out," "push flows to," "pushed up as PRs," "double checking my work."
+- **Casual intensifiers:** "extra clear," "a lot" (twice in one sentence, unbothered), "so much more," "very MVP style."
+- **"gonna"** in Slack register only.
+- **"stuff"** confirmed 3x ("see stuff side by side," "hide stuff from them," "build the stuff that I design").
+- **Ownership of the bar:** "the quality and accessibility standards I held us to," "the quality bar I've set." Phase 4 possessive ownership extends to standards.
+- **Lists close on the human item:** "production pricing, APIs, Claude, and some help from my engineering team"; "Impeccable and the Kiavi brand doctrine, and also my actual human brain and thinking." Same deflation shape as "And of course, Porsches."
+
+### Phase 5 calibration anchors
+
+> "I went from just designing to actually building a pricing feature with production pricing, APIs, Claude, and some help from my engineering team."
+
+> "Engineering built the framework to actually use agents to build for production. I brought in the design Skills, both for Claude, like Impeccable and the Kiavi brand doctrine, and also my actual human brain and thinking."
+
+> "What isn't easier and what isn't faster are the conversations you have to have with Product and with Risk and with other stakeholders to really nail down the things that rise to the surface once things are very easy to build."
+
+> "I don't think I would ever replace an engineer. But these newfound powers that I have make me feel like combined with a talented engineer and this way of working, we can do so much more while maintaining the quality bar I've set."
+
+### Phase 5 before/after (draft study prose vs. Justin, same content)
+
+**Drafted:** "I did not build this infrastructure. I am the designer who became a first-class contributor inside it."
+**Justin:** "Engineering built the framework to actually use agents to build for production. I brought in the design Skills, both for Claude, like Impeccable and the Kiavi brand doctrine, and also my actual human brain and thinking."
+
+**Drafted:** "A 100× unit error in the money. A rename to basis points had never propagated to the control's display file."
+**Justin:** "It was a simple math error, a wrong decimal point. Something that you wouldn't really catch unless you were looking at the details. Something I might have missed too if I didn't have Claude double checking my work."
+
+**Drafted:** "Suppressed rather than relabelled, because the control is the borrower's stated intent, and a live Select would take them somewhere they did not ask to go."
+**Justin:** "Rather than just changing the label we're going to tweak the copy and remove the button to remove any ambiguity into what's going on."
+
+**Drafted:** "Honesty matters more than a clean ending, and one question is genuinely unresolved."
+**Justin:** "Because we are operating in a very MVP style, some of these questions can be left to be answered by our support team and sales specialists. But there are things that we're going to need to figure out as this sees a wider rollout to the rest of our customers."
+
+### Phase 5 watch list (dictation artifacts, NOT voice; fix in polish)
+
+- **Spaced-hyphen em-dash substitutes, again (3x):** "felt like Kiavi - and maintained," "hide stuff from them - we want," "building - 226 commits merged in 3 months - and me." The em-dash ban stands: no em-dashes in published copy, and no spaced ` - ` standing in for one. Restructure the sentence.
+- **Stray punctuation and doubled words:** "build the stuff. that I design," "to be to be able," mid-sentence "Certainly," double spaces.
+- **"into" for "about":** "ambiguity into what's going on."
+- **Prompt drift on "open":** asked for the open question itself, the first answer was team posture ("constantly learning and staying flexible"). That is the warm-up; the custody-and-date rule above is the line.
+
+### Phase 5 anti-patterns (product-study register)
+
+- Announcing a decision as "The decision:" or "The move was noticing" instead of a feel verdict followed by the reason.
+- Ending a decision on the design category rather than the borrower's outcome.
+- "The agent" or "agent-assisted development" where "Claude" (or Paper, Impeccable) is the true subject.
+- A hard number standing alone in a prose sentence with no affect word or comparison.
+- A contribution claim with no self-limit or learning-curve placement within two sentences.
+- Dramatizing the open item ("genuinely unresolved," "honesty matters more than a clean ending") instead of naming who holds it and when it comes back.
+- Explaining a money bug to a non-engineer by mechanism ("basis points," "never propagated") instead of size and place.
+- Leading with "I did not build" (a negative claim) instead of "Engineering built ... I brought in" (two positive claims).
 
 ## Anti-Patterns
 

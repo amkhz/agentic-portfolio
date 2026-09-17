@@ -318,6 +318,8 @@ Four uses in nine samples: "actually building," "to actually use agents to build
 
 "Once things felt right," "When things felt right," "to test how they felt," "a sentence didn't feel right," "felt like the right decision," "made me feel proud," "What made me feel confident." Seven in nine samples. Decisions are announced as feel, then justified. Checkable: at a decision moment the first clause states the verdict as feel ("felt right" / "didn't feel right"), and the reason follows in the next clause or sentence. "The decision:" and "The move was noticing" are draft voice, not Justin's.
 
+**Frequency cap (Justin's call, 2026-09-17).** Seven in nine is spoken density. In edited case-study prose, cap the feel verdict at one or two per piece, placed on the decisions that were actually judgment calls. Every other decision states the reason without the verdict word. The non-negotiable half is the evidence clause: a bare "felt right" with no reason following is out of voice in any register, because a design director reads it as taste with nothing to inspect.
+
 ### Reasons end on the borrower
 
 Every defended decision closes on what the person gets, not on the mechanism: "to remove any ambiguity into what's going on," "get what they need quickly and get on with their loan," "help the person make the decision that they needed confidently." Checkable: the last clause of a decision paragraph names the borrower's outcome. A decision paragraph that ends on a design category ("which fact a surface is responsible for") is not in voice; keep the insight, land it on the person.
@@ -408,6 +410,7 @@ Unprompted: "balancing that with what you can express in the user interface," "h
 ### Phase 5 anti-patterns (product-study register)
 
 - Announcing a decision as "The decision:" or "The move was noticing" instead of a feel verdict followed by the reason.
+- A feel verdict with no reason in the next clause, or more than two feel verdicts in one piece.
 - Ending a decision on the design category rather than the borrower's outcome.
 - "The agent" or "agent-assisted development" where "Claude" (or Paper, Impeccable) is the true subject.
 - A hard number standing alone in a prose sentence with no affect word or comparison.

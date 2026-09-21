@@ -94,7 +94,7 @@ This project is built with a crew of specialized AI agents, each with a defined 
 | **Joi** | Voice calibration; extracts writing patterns for Writer reference. |
 | **Glossarian** | Glossary upkeep for Perihelion Archive guides, with definitions grounded in source material. |
 
-The crew also uses the **Impeccable design skill suite** (v3.5.0) for systematic design quality work: `/audit`, `/polish`, `/critique`, `/shape`, `/animate`, and more.
+The crew also uses the **Impeccable design skill suite** (v4) for systematic design quality work, as sub-commands of one skill: `/impeccable audit`, `/impeccable polish`, `/impeccable critique`, `/impeccable shape`, `/impeccable animate`, and more.
 
 ## Decisions
 

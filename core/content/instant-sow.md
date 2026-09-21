@@ -32,11 +32,11 @@ Rather than rip out the manual form, I designed a "toolbox": three progressively
 
 ![Flow diagram showing three SOW paths converging into the same review form](/images/sow-flow-diagram.png)
 *Three entry points, one destination. Every path feeds into the same review form so borrowers always have final control.*
-<!-- aspect:16:9 placeholder:Three entry points, one destination. Every path feeds into the same review form so borrowers always have final control -->
+<!-- aspect:16:9 plate:dark placeholder:Three entry points, one destination. Every path feeds into the same review form so borrowers always have final control -->
 
 ![Document upload UI showing file selection, extraction progress, and pre-filled results](/images/feature-flow.png)
 *The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review.*
-<!-- aspect:16:9 placeholder:The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review -->
+<!-- aspect:16:9 plate:dark placeholder:The Upload Files path: borrowers upload bids or plans, AI extracts line items, and the form pre-fills for review -->
 
 ## Human Oversight Built In
 
@@ -44,7 +44,7 @@ Every AI-generated SOW is flagged in the operations system so the internal team 
 
 ![Operations view showing AI-generated flag on submitted SOW](/images/detail-ops.png)
 *Every AI-assisted submission is flagged for the SOW team, placed where they do their work.*
-<!-- aspect:16:9 placeholder:Every AI-assisted submission is flagged for the SOW team, placed where they do their work. -->
+<!-- aspect:16:9 plate:dark placeholder:Every AI-assisted submission is flagged for the SOW team, placed where they do their work. -->
 
 ![Project Draws view with draw disbursal controls, construction holdback total, and a feasibility-analyst SOW sign-off task](/images/sow-draws.png)
 *The SOW doesn't end at submission. It feeds disbursal: draw schedules, the construction holdback, and a feasibility-analyst sign-off that gates the money. Human judgment stays on the critical path.*

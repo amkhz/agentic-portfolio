@@ -8,7 +8,7 @@ So a single PSA still took 20 minutes to review. Analysts bounced between the AI
 
 ![Diagram showing the fragmented before-state workflow for document review](/images/before-flow.png)
 *The before state: analysts bouncing between AI output, a separate document viewer, and the feedback system to review a single PSA.*
-<!-- aspect:16:9 placeholder:Before-state flow: analyst jumping between AI output -> separate document viewer -> feedback system -> manual cross-referencing. Pain points annotated. -->
+<!-- aspect:16:9 plate:dark placeholder:Before-state flow: analyst jumping between AI output -> separate document viewer -> feedback system -> manual cross-referencing. Pain points annotated. -->
 
 ## V1: The Property Admin Page
 

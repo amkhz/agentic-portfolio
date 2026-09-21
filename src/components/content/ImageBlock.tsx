@@ -11,6 +11,8 @@ interface ImageBlockProps {
   placeholder?: string;
   caption?: string;
   aspect?: "16:9" | "4:3" | "auto";
+  /** Dark inset for body rasters. Bare covers and parallax keep their layout. */
+  plate?: "dark";
   /** Allow click-to-expand lightbox. Default: true for real images. */
   expandable?: boolean;
   /** Flush plate mode: no figure margin, no rounded border of its own, and the
@@ -47,6 +49,7 @@ export function ImageBlock({
   placeholder,
   caption,
   aspect = "16:9",
+  plate,
   expandable,
   bare = false,
   parallax = false,
@@ -66,6 +69,7 @@ export function ImageBlock({
     !src.includes("placeholder-");
 
   const canExpand = expandable ?? hasRealImage;
+  const darkPlate = plate === "dark" && !bare && !parallax;
   const [isOpen, setIsOpen] = useState(false);
 
   // A body figure at 'auto' lays the image out in normal flow so the figure
@@ -94,7 +98,8 @@ export function ImageBlock({
             }
             aria-label={canExpand ? `View full size: ${alt}` : undefined}
             className={cn(
-              "relative overflow-hidden bg-bg-elevated",
+              "relative overflow-hidden",
+              darkPlate ? "bg-figure-plate" : "bg-bg-elevated",
               !bare && "border border-border-subtle",
               flowHeight ? "" : aspectMap[aspect],
               canExpand && !bare && "cursor-zoom-in transition-[border-color] duration-normal hover:border-accent-muted",
@@ -102,7 +107,19 @@ export function ImageBlock({
               canExpand && "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-deep"
             )}
           >
-            {parallax ? (
+            {darkPlate ? (
+              <div className={aspect === "auto"
+                ? "relative p-[var(--figure-plate-inset)]"
+                : "absolute inset-[var(--figure-plate-inset)]"}>
+                <ResponsiveImage
+                  src={src}
+                  alt={alt}
+                  loading="lazy"
+                  sizes={sizes}
+                  className={cn("block w-full object-contain", aspect === "auto" ? "h-auto" : "h-full")}
+                />
+              </div>
+            ) : parallax ? (
               <ParallaxImage src={src} alt={alt} sizes={sizes} fit={fit} />
             ) : (
               <ResponsiveImage

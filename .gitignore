@@ -10,6 +10,15 @@ dist/
 .claude/worktrees/
 .impeccable/
 
+# Machine-local Claude Code settings (Impeccable writes its per-developer hook here).
+.claude/settings.local.json
+
+# Impeccable engine binaries: platform-specific, ~13 MB each. The launcher next to
+# them falls back to a checksum-verified download into ~/.impeccable/bin/<version>/.
+.claude/skills/impeccable/scripts/bin/
+.cursor/skills/impeccable/scripts/bin/
+.agents/skills/impeccable/scripts/bin/
+
 # Wallace render output (local image generation; self-ignored, kept out of the repo).
 # Exception: the Flight Deck direction probes are a versioned design record
 # (Works 01 phase gate; sidecar captions are the spec phase 2 reads).

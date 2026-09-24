@@ -317,7 +317,7 @@ the profile: building got easy in one sentence; the conversations with
 Product and with Risk and with Legal did not in the next; the regulated
 constraint stated plainly. If "which fact a surface is responsible for"
 survives, it lands on the borrower or the stakeholder, not on itself. See V8.
-Decision:
+Decision: accept the cut; replaced with Justin's custody line (V8) and closing thesis: "It's now in the hands of sales support and our early adopter customers. As we hear more feedback and continue on with the broader rollout, we'll revisit it. We're still operating as an MVP and we're alright with leaving some things open." / "Building and expressing ideas certainly got easier. But what isn't easier are the conversations with Product, Risk, Legal, and Sales stakeholders that help define the experience you're actually able to deliver for customers. There are still regulations to abide by. And there are still constraints as to what we should and what we can deliver for customers.". "Honesty matters more than a clean ending" deleted per V8.
 
 ### 14. Mechanism in defect bullets 1 and 2 -- FILLER
 Lines 59 and 60.

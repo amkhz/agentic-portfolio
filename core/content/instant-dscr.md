@@ -179,10 +179,10 @@ All screenshots were captured from the running application in a local stack with
 
 ## What is still open
 
-Honesty matters more than a clean ending, and one question is genuinely unresolved.
-
 The disclosure explains where the ceiling sits. It doesn't say that the requested amount was reduced, which was the original issue. Nothing in the UI shows the ↑0.500% the borrower asked for. Fixing that sounds simple but it isn't, because it highlighted a prior decision I hadn't thought out yet: when we clamp, is it a statement about the limit or about the event that made the borrower hit the limit?
 
 Naming the reason puts a cause back into copy that never mentioned it, and then the eligibility case needs its own sentence. Those are two different designs.
 
-That is the shape of most of the work here. The interesting decisions are rarely about wording. They are about which fact a surface is responsible for.
+It's now in the hands of sales support and our early adopter customers. As we hear more feedback and continue on with the broader rollout, we'll revisit it. We're still operating as an MVP and we're alright with leaving some things open.
+
+Building and expressing ideas certainly got easier. But what isn't easier are the conversations with Product, Risk, Legal, and Sales stakeholders that help define the experience you're actually able to deliver for customers. There are still regulations to abide by. And there are still constraints as to what we should and what we can deliver for customers.

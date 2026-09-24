@@ -30,7 +30,9 @@ What that looks like now, on the mainline:
 - 2 engineers + me | Core team
 :::
 
-This matters to the story for a specific reason. **I did not build this infrastructure. I am the designer who became a first-class contributor inside it.** A production lending codebase is normally closed to me: unfamiliar monorepo, vendor integrations, typed domain models, a test suite with opinions. Agent-assisted development is what made that codebase legible enough for me to work in it directly, at the standard the engineers hold. That is the actual unlock, and it is worth more than a faster mockup.
+Let's be clear. I did not build this infrastructure, at least not all of it. But I am the lead designer who became a first-class contributor inside of the project repo. For the longest time, the production lending codebase had been closed to me. I didn't even really know what a monorepo was. Nor did I ever expect myself to be navigating vendor integrations, typed domain models, or dealing with a test suite with baked-in opinions. Claude and agent-assisted development are what made touching the code accessible to me, and up to the standards that our engineers held. Every merge was gated by CI and other quality checks that everyone had to abide by. Once I built up my confidence, I was able to contribute a lot more of my design intent, judgment, and all the things that make me good at what I do. I brought in design skills, some third party like Impeccable and some authored myself, like our handcrafted Kiavi brand doctrine and product voice. All this was augmented with good old-fashioned human brain thinking.
+
+As things started to click together for me, I was able to merge my own PRs, large and small. Some stubbed out features for engineers to pick up. Or if changes were small enough and the blast radius was manageable, I moved things all the way through from inception to release. It was pretty liberating being able to express my design intent and build it in the same afternoon.
 
 ## The problem
 

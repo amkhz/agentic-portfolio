@@ -392,7 +392,7 @@ Line 35, first sentence.
 **Why:** Pass 3. Throat-clearing before the protected paragraph. The Phase
 5 reshape (V2) replaces the paragraph's opener anyway.
 **Replace with:** (delete)
-Decision:
+Decision: accept (opener sentence gone); whole paragraph replaced by Justin's V2 rewrite, see V2.
 
 ### 20. "The sharpest finding:" -- FILLER
 Line 49, opening.
@@ -605,6 +605,8 @@ becomes Claude (V3); Kiavi enters the body (protection 5); and the
 models, a test suite with opinions) is a named list and stays whole. The
 self-limit ("I don't think I would ever replace an engineer") follows the
 "actual unlock" claim within two sentences (P4-4).
+
+**Applied (Justin, 2026-09-24), dictation fixes only:** "Let's be clear. I did not build this infrastructure, at least not all of it. But I am the lead designer who became a first-class contributor inside of the project repo. For the longest time, the production lending codebase had been closed to me. I didn't even really know what a monorepo was. Nor did I ever expect myself to be navigating vendor integrations, typed domain models, or dealing with a test suite with baked-in opinions. Claude and agent-assisted development are what made touching the code accessible to me, and up to the standards that our engineers held. Every merge was gated by CI and other quality checks that everyone had to abide by. Once I built up my confidence, I was able to contribute a lot more of my design intent, judgment, and all the things that make me good at what I do. I brought in design skills, some third party like Impeccable and some authored myself, like our handcrafted Kiavi brand doctrine and product voice. All this was augmented with good old-fashioned human brain thinking." / "As things started to click together for me, I was able to merge my own PRs, large and small. Some stubbed out features for engineers to pick up. Or if changes were small enough and the blast radius was manageable, I moved things all the way through from inception to release. It was pretty liberating being able to express my design intent and build it in the same afternoon." Kept the "I did not build" negative opener after one flag (his call). Kiavi, Impeccable, Claude named in body; P4-1 standards claim now sourced to CI gating; merge autonomy with its condition. Self-limit deferred to V9. Justin wants a second concision pass at the end with the whole piece in view.
 
 ### V3. Name the tool
 Every place a specific product is called "the agent" or hidden in a

@@ -97,7 +97,7 @@ label: D
 description: loan first, then rate
 :::
 
-The tension was real and worth stating plainly: keying the control on cost gives you a coherent shared *dollar* figure but incoherent *rate* steps. Keying it on rate gives you coherent rate steps but per-product dollars. You cannot have both across six products.
+Keying the control on cost gives you a coherent shared *dollar* figure but incoherent *rate* steps. Keying it on rate gives you coherent rate steps but per-product dollars.
 
 Things get easier once we scope the control to select a single product family. We can't have a coherent list of rates and dollars across all six loan products. But if we limit to one family, we can. This works because then the grid will only need to show two variants within the family. Fully amortizing and interest-only. Within that, every shared step up and down the rate ladder can agree across the rate and the dollar amount. The only thing that makes them different at this point is when we have to cap at the top part of the ladder. This keeps things a little simpler while still enabling borrowers to compare rates in a way that felt right to them.
 
@@ -115,8 +115,6 @@ When the borrower asks for a rate a loan cannot price:
 The new behavior shows the loan at its own boundary rate, says so in words, and **withholds Select**. Suppressed rather than relabelled, because the control is the borrower's stated intent, and a live Select would take them somewhere they did not ask to go.
 
 The copy is deliberately reason-agnostic: *"This loan doesn't go above ↑ 0.375%."* It does not name a cause, so if a rate sheet ever drifts or an eligibility clamp fires, the same sentence still tells the truth. The failure mode becomes an extra disclosed state, never a silent repricing.
-
-Here it is running:
 
 ![The running rate step at 0.500%, with the fully amortizing 30-year card held at its 6.750% ceiling reading "This loan doesn't go above 0.375%" and offering no Select button, beside its interest-only sibling at 6.875% with Select available](/images/instant-dscr-limit-state.png)
 *Limit state*
@@ -142,7 +140,7 @@ That last detail generalizes: the accessible name on each Select button carries 
 
 ## And the one state that had no disclosure at all
 
-Switching products carries the borrower's adjustment across, clamped to the nearest step the new loan can price, resolving ties toward base so a clamp never volunteers a *larger* adjustment than was asked for. Correct behavior. It also changes a number the borrower set.
+Switching products carries the borrower's adjustment across, clamped to the nearest step the new loan can price. Ties resolve toward base, so a clamp never offers a larger adjustment than what was asked for. That's the correct behavior, but it also changes a number the borrower set.
 
 Asking for ↑0.500% on the 30-year, then switching to the 5/1 adjustable:
 

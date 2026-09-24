@@ -352,7 +352,7 @@ stays.
 across, clamped to the nearest step the new loan can price. Ties resolve
 toward base, so a clamp never volunteers a larger adjustment than was asked
 for. Correct behavior. It also changes a number the borrower set."
-Decision:
+Decision: reword. Justin: "Switching products carries the borrower's adjustment across, clamped to the nearest step the new loan can price. Ties resolve toward base, so a clamp never offers a larger adjustment than what was asked for. That's the correct behavior, but it also changes a number the borrower set." (The "Correct behavior." short landing folded in by his choice.)
 
 ### 16. The A critique -- FILLER
 Line 165.
@@ -375,7 +375,7 @@ Line 121.
 
 **Why:** Pass 3. The figure caption "Limit state" does the job.
 **Replace with:** (delete)
-Decision:
+Decision: accept.
 
 ### 18. "The tension was real and worth stating plainly:" -- SCAFFOLDING
 Line 100, opening clause.
@@ -383,7 +383,7 @@ Line 100, opening clause.
 
 **Why:** Pass 3. Announces that the next sentence will be plain.
 **Replace with:** "Keying the control on cost gives you ..."
-Decision:
+Decision: accept; also cut the paragraph's last sentence ("You cannot have both across six products."), which Justin's entry-5 paragraph now says.
 
 ### 19. "This matters to the story for a specific reason." -- SCAFFOLDING
 Line 35, first sentence.

@@ -200,7 +200,23 @@ Line 169, last sentence.
 **Why:** Pass 1. Line 158 already made this exact point ("never a notification
 problem. It was a state problem").
 **Replace with:** (delete)
-Decision:
+Decision: accept (cut the repeat). Applied inside Justin's block rewrite of the clamp section, current lines 152-165; his final text, with dictation fixes only (Claude/Paper spelling, stray periods, tense, commas) and one Tyrell line he approved (marked [T]):
+
+> What made this hard isn't that the change was subtle. Rather, what the borrower saw was still completely self-consistent. The dial said 0.375%, both cards said `↑ 0.375% vs base`, the credits agreed, and both Select buttons were live. Everything still priced properly, so there wasn't any limit to display. From the borrower's point of view, there was no contradiction to see, because what they were asking for wasn't anywhere on the screen.
+>
+> The problem with the clamp wasn't notifying borrowers. It was about reflecting the correct state. The screen has to remember what the borrower requested and put that next to what's actually being priced before we have anything else to say about a potential clamp. This was something that the browse-versus-commit split on the all-rates view already did.
+>
+> So I drew up two solutions. I dictated my intent to Claude, then had Paper show it to me visually. I clicked around and moved stuff to see what felt right. Then I responded to what was in Paper, spoke to Claude and then built and refined it. It was a mix of hands-on and dictation. Then I compared them to see how they felt:
+>
+> - **A:** the existing sentence on each card
+> - **B:** one line above the pair
+>
+> Version A stated one fact four times. The `↑ 0.375% max` chip already says it once, so each card said the ceiling twice and the pair of cards said it four times. Both sentences landed at the same height, which was redundant, and they pushed each card's metrics down. B said it once, in the gap between the control that changed and the cards that changed, and the per-card chip still carries the per-card fact.
+>
+> B shipped. **B's weakness is prominence, which is tunable: size, weight, an icon, spacing. A's weakness is redundancy, which is structural.** Repeating yourself doesn't make things easier to discover, and in fact might make people tune out.
+>
+> There was one more subtle decision within version B. A clamped card is *not* at its limit, so Select stays live. Without that, it would have rebuilt the exact dead end the clamp was introduced to remove. And the disclosure decays with no timer and no dismiss affordance. [T] Once the borrower touches the control, the request equals what's being priced, and the note stops applying.
+
 
 ### 7. The limit-state figure, described in prose -- REDUNDANCY
 Line 127.
@@ -242,7 +258,7 @@ The dial said 0.375%, both cards said `↑ 0.375% vs base`, the credits
 agreed, both Select buttons were live, and no limit state fired because
 both loans price that step. The number the borrower actually asked for left
 no trace anywhere on the screen."
-Decision:
+Decision: reword, as part of Justin's block rewrite of the clamp section (current lines 152-165). See entry 6 for the full text.
 
 ### 10. Lead-in to the defects -- SCAFFOLDING
 Line 57.
@@ -351,7 +367,7 @@ sentences land at the same height, which reads as a stutter, and they push
 each card's metrics down. B says it once, in the gap between the control
 that changed and the cards that changed, and the per-card chip still carries
 the per-card fact."
-Decision:
+Decision: reword, as part of Justin's block rewrite of the clamp section (current lines 152-165). See entry 6 for the full text.
 
 ### 17. "Here it is running:" -- SCAFFOLDING
 Line 121.
@@ -408,7 +424,7 @@ start on the fact. Line 167's is handled in the em-dash inventory (2.15).
 full loan identity, even though the visible label does not, because a
 screen-reader user has no dropdown in view to supply the context a sighted
 user gets for free."
-Decision:
+Decision: (line-167 half) resolved inside Justin's clamp-section rewrite, see entry 6; line-145 half pending.
 
 ### 23. Bold as textbook emphasis -- FORMATTING TELL
 Lines 21, 41, 47, 49, 102, 117, 153-154, 156, 165, 167, 188 (twice).

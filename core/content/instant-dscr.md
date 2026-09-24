@@ -149,20 +149,20 @@ Asking for ↑0.500% on the 30-year, then switching to the 5/1 adjustable:
 - Before the switch, the dial reads **0.500%**.
 - After the switch, the dial reads **0.375%**. Nothing said why.
 
-What made this hard is not that the change was subtle. It is that **the resulting screen was completely self-consistent.** The dial said 0.375%, both cards said `↑ 0.375% vs base`, the credits agreed, and both Select buttons were live. Both loans price that step perfectly well, so no limit state fired either. There was no internal contradiction for a borrower to catch, because the number they actually asked for left no trace anywhere on the screen.
+What made this hard isn't that the change was subtle. Rather, what the borrower saw was still completely self-consistent. The dial said 0.375%, both cards said `↑ 0.375% vs base`, the credits agreed, and both Select buttons were live. Everything still priced properly, so there wasn't any limit to display. From the borrower's point of view, there was no contradiction to see, because what they were asking for wasn't anywhere on the screen.
 
-So it was never a notification problem. It was a state problem: the screen has to retain *requested* alongside *effective* before there is anything to disclose. Which the browse-versus-commit split built for the all-rates view already supplied.
+The problem with the clamp wasn't notifying borrowers. It was about reflecting the correct state. The screen has to remember what the borrower requested and put that next to what's actually being priced before we have anything else to say about a potential clamp. This was something that the browse-versus-commit split on the all-rates view already did.
 
-I drew two answers, then built both and compared them running:
+So I drew up two solutions. I dictated my intent to Claude, then had Paper show it to me visually. I clicked around and moved stuff to see what felt right. Then I responded to what was in Paper, spoke to Claude and then built and refined it. It was a mix of hands-on and dictation. Then I compared them to see how they felt:
 
-- **A** — the existing sentence on each card
-- **B** — one line above the pair
+- **A:** the existing sentence on each card
+- **B:** one line above the pair
 
-A states one fact **four times**. The `↑ 0.375% max` chip already says it in shorthand, so each card says the ceiling twice and the pair says it four times. Both sentences land at the same height, which reads as a stutter, and they push each card's metrics down. B says it once, in the gap between the control that changed and the cards that changed, and the per-card chip still carries the per-card fact.
+Version A stated one fact four times. The `↑ 0.375% max` chip already says it once, so each card said the ceiling twice and the pair of cards said it four times. Both sentences landed at the same height, which was redundant, and they pushed each card's metrics down. B said it once, in the gap between the control that changed and the cards that changed, and the per-card chip still carries the per-card fact.
 
-B shipped, and the reason generalizes: **B's weakness is prominence, which is tunable — size, weight, an icon, a rule. A's weakness is redundancy, which is structural.** You cannot make a fact said four times feel like a fact said once.
+B shipped. **B's weakness is prominence, which is tunable: size, weight, an icon, spacing. A's weakness is redundancy, which is structural.** Repeating yourself doesn't make things easier to discover, and in fact might make people tune out.
 
-One more decision inside it: a clamped card is *not* at its limit, so Select stays live. Withholding it would have rebuilt the exact dead end the clamp was introduced to remove. And the disclosure decays with no timer and no dismiss affordance — touch the control and the request equals what is being priced, so the note stops applying. That fell out of holding requested and effective as one piece of state rather than bolting on a notification.
+There was one more subtle decision within version B. A clamped card is *not* at its limit, so Select stays live. Without that, it would have rebuilt the exact dead end the clamp was introduced to remove. And the disclosure decays with no timer and no dismiss affordance. Once the borrower touches the control, the request equals what's being priced, and the note stops applying.
 
 ## Receipts
 

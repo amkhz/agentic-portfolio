@@ -228,7 +228,7 @@ sentence is the quality signal (real figures, matched to the dollar) and
 stays. Em-dash pair restructured here rather than in the inventory.
 **Replace with:** "Both credits are the vendor's own figures, $2,556 and
 $2,931, matching the captured response to the dollar."
-Decision:
+Decision: accept (covers em-dash 2.11).
 
 ### 8. Two one-liners, one thought -- SCAFFOLDING
 Lines 131 and 133.
@@ -242,7 +242,7 @@ theatre. Both sentences are good; the paragraph break is the fat.
 one step.' It cannot answer 'show me everything,' because it is a stepper:
 ten rungs, one click each. So I built the other view: every rate on one
 loan, with what each one costs."
-Decision:
+Decision: reword (merged). Justin: "The stepper says "nudge me one step." It doesn't say "show me everything," because it's a stepper: ten rungs, one click each. So I built the other familiar view for borrowers: every rate on one loan, with what each one costs."
 
 ### 9. The self-consistent screen -- REDUNDANCY / FILLER
 Line 156.
@@ -269,7 +269,7 @@ causes and different fixes" narrates the write-up. The first sentence is
 the W signal (read the source alongside the captured data) and stays.
 **Replace with:** "With the real data in hand I walked the control and read
 the source alongside it. Four failures:"
-Decision:
+Decision: reword. Justin: "With the real data readily available I could walk the control and read the source alongside it. There were four areas where it failed:" (stray period after "control" joined.)
 
 ### 11. "Two orders of magnitude" after "100x" -- REDUNDANCY
 Line 64.

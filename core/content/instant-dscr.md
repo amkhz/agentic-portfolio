@@ -44,7 +44,7 @@ I deployed a throwaway branch to a QA environment and captured an actual pricing
 
 Real ladders are **ragged**. Each product's rate steps are truncated at a price cap, and because each carries a different price offset, the cap bites at a different point on each one. On the buy-up side, the six products shared only two steps out of fourteen. Beyond that, every product was alone.
 
-The sharpest finding: **the same rate costs different amounts on different products.** The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was keyed on could select a rung within one product, but could never align a control across products. One shared dial over one shared unit was not a design that needed polish. It was a design that could not hold.
+The problematic finding: **the same rate costs different amounts on different products.** The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was set to could select a rung within one product, but it could never align a control across loan products. One shared dial over one shared unit didn't need improvement - it needed to change.
 
 ![Design board headed "Every product's ladder stops in a different place", plotting which of six loan products has a rung at each of fourteen rate steps, with the buy-up side ragged and the buy-down side complete](/images/instant-dscr-ragged-ladders.png)
 *The finding*
@@ -52,7 +52,7 @@ The sharpest finding: **the same rate costs different amounts on different produ
 
 ## Reading the code turned up four defects, one of them serious
 
-With the real data in hand I walked the control and read the source alongside it. Four distinct failures, which I wrote up individually because they had different causes and different fixes:
+With the real data readily available I could walk the control and read the source alongside it. There were four areas where it failed:
 
 - **The dial displayed "Par" while off par.** It derived one shared step from the *first* product only. On steps that product lacked, the value silently fell back to par and computed a zero delta. The readout printed "Par" and the "Reset to par" button rendered at the same time.
 - **Cards silently reverted to par.** When a product had no rung at the selected step, it displayed its par rate, payment, and DSCR with no indication — **and the Select button stayed live.** A borrower could select a par-priced loan while the control claimed an adjustment was applied.
@@ -120,13 +120,11 @@ Here it is running:
 *Limit state*
 <!-- aspect:auto placeholder:Borrower rate screen with the amortizing loan at its ceiling and Select withheld, beside the interest-only loan one step further with Select live -->
 
-The amortizing loan is at its ceiling at 6.750% with Select gone. Its interest-only sibling reaches one step further to 6.875%. The credits — $2,556 and $2,931 — are the vendor's own figures, matching the captured response to the dollar.
+Both credits are the vendor's own figures, $2,556 and $2,931, matching the captured response to the dollar.
 
 ## Then a second reading of the same data
 
-The stepper answers "nudge me one step." It cannot answer "show me everything," because it is a stepper: ten rungs, one click each.
-
-So I built the other view. Every rate on one loan, with what each one costs.
+The stepper says "nudge me one step." It doesn't say "show me everything," because it's a stepper: ten rungs, one click each. So I built the other familiar view for borrowers: every rate on one loan, with what each one costs.
 
 ![The all-rates table for the 30 Year Fixed: one radio row per rate from 5.750 to 6.875, each with monthly payment, DSCR, and a closing column reading "$5,157 cost" or "$2,556 credit" in words, with 6.375 marked Base](/images/instant-dscr-all-rates.png)
 *All rates*

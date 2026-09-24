@@ -285,7 +285,7 @@ checker, because both values were structurally valid numbers. It was only
 findable by holding the captured response, the rendered screen, and the
 source next to each other. A designer-shaped bug in a designer-shaped
 place: the money figure a borrower reads."
-Decision:
+Decision: reword via Justin's manual edit in the Files pane (current line 62): "That last one was tricky. It wasn't visible in a static mockup and wasn't caught by the type checker, because both values were structurally valid numbers. It was only found by putting the captured response, the rendered screen, and the source next to each other. That was a designer-shaped bug squarely in the designer's wheelhouse. I got the money figure a borrower reads quite wrong."
 
 ### 12. The severity paragraph -- SCAFFOLDING
 Line 66.
@@ -300,7 +300,7 @@ it merged." The last sentence is the voice of the paragraph and stays.
 of it merged. None reached production and no borrower ever saw them. I
 would rather say that plainly than let a number like $94,501 imply a
 production incident it never was."
-Decision:
+Decision: reword via Justin's manual edit (current line 64): "The big thing I learned about working this way and a nice bonus was that all four of these were defects in the *prototype* of this work, caught before anything merged. Nothing reached production and no borrower ever saw them. Finding them was the review pass on my own prototype, and the redesign below fixed it. In the old way of working that's something an engineer probably would have caught, and brought back to me. This time I was able to fix it on my own." Followed by his par/base note: "Throughout this case study and screenshots you might see par and base used. Before we released this, we swapped par for base because that better matched the legacy calculator and the language borrowers and the team were already using."
 
 ### 13. The closing moral -- HOLLOW CONCLUSION
 Line 192.
@@ -338,7 +338,7 @@ to par" button rendered at the same time.
 step showed its par rate, payment, and DSCR with no indication. The Select
 button stayed live. A borrower could select a par-priced loan while the
 control claimed an adjustment was applied."
-Decision:
+Decision: reword via Justin's manual edit: bullets 1-3 keep the mechanism in his lighter wording ("displayed", "didn't support", "combined", "said that"); "Par" kept on purpose (the prototype's word; the base note explains the swap). Bullet 4 is V6.
 
 ### 15. The clamp description -- FILLER
 Line 149.
@@ -403,7 +403,7 @@ the two dollar figures do the ranking on their own. Low priority; reject
 freely if the signpost reads as helpful.
 **Replace with:** "The same rate costs different amounts on different
 products."
-Decision:
+Decision: reword via Justin's manual edit (line 49): "The problematic finding:" ... "One shared dial over one shared unit didn't need improvement. It needed to change." (spaced hyphen restructured to a full stop).
 
 ### 21. "Three decisions worth naming:" -- SCAFFOLDING
 Line 139.
@@ -458,7 +458,7 @@ hold) and line 158 (state problem). Line 156 is handled in cut 9, line 192
 in cut 13, line 169 is a plain fact and fine as written.
 **Replace with:** keep 49 and 158. Cuts 9 and 13 remove 156 and 192. No
 further action.
-Decision:
+Decision: line 49 contrast reworded by Justin (see 20); line 156 contrast reworded inside his clamp-section rewrite; 158 kept in his words; 169 removed with cut 6; 192 pending cut 13.
 
 ### 25. EM-DASH inventory -- MECHANICAL (pass 2)
 23 em-dashes on 18 lines. Zero spaced hyphens. Three en-dashes are ranges
@@ -683,6 +683,8 @@ take in which Justin said he no longer remembered the specifics. If his
 rewrite here keeps the mechanism on purpose, the rule is wrong, not the
 rewrite, and Joi hears about it. The line-64 paragraph (cut 11) already
 does "place" well: "the money figure a borrower reads."
+
+**Applied (Justin, 2026-09-24):** "This was a simple math error." + the protected quote verbatim + "But the only way to really check it was by looking into the details. I gotta give credit to Claude for helping me double check this, because without it, it probably would have slipped through." No mechanism: second sample, the rule holds (Joi). "I gotta" is a register-breaker, protected.
 
 ### V7. "Suppressed rather than relabelled" -- line 117
 > The new behavior shows the loan at its own boundary rate, says so in words, and **withholds Select**. Suppressed rather than relabelled, because the control is the borrower's stated intent, and a live Select would take them somewhere they did not ask to go.

@@ -44,7 +44,7 @@ I deployed a throwaway branch to a QA environment and captured an actual pricing
 
 Real ladders are **ragged**. Each product's rate steps are truncated at a price cap, and because each carries a different price offset, the cap bites at a different point on each one. On the buy-up side, the six products shared only two steps out of fourteen. Beyond that, every product was alone.
 
-The problematic finding: **the same rate costs different amounts on different products.** The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was set to could select a rung within one product, but it could never align a control across loan products. One shared dial over one shared unit didn't need improvement - it needed to change.
+The problematic finding: **the same rate costs different amounts on different products.** The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was set to could select a rung within one product, but it could never align a control across loan products. One shared dial over one shared unit didn't need improvement. It needed to change.
 
 ![Design board headed "Every product's ladder stops in a different place", plotting which of six loan products has a rung at each of fourteen rate steps, with the buy-up side ragged and the buy-down side complete](/images/instant-dscr-ragged-ladders.png)
 *The finding*
@@ -54,14 +54,16 @@ The problematic finding: **the same rate costs different amounts on different pr
 
 With the real data readily available I could walk the control and read the source alongside it. There were four areas where it failed:
 
-- **The dial displayed "Par" while off par.** It derived one shared step from the *first* product only. On steps that product lacked, the value silently fell back to par and computed a zero delta. The readout printed "Par" and the "Reset to par" button rendered at the same time.
-- **Cards silently reverted to par.** When a product had no rung at the selected step, it displayed its par rate, payment, and DSCR with no indication — **and the Select button stayed live.** A borrower could select a par-priced loan while the control claimed an adjustment was applied.
-- **Three dead steps belonged to invisible products.** The step domain unioned all six qualifying products while the grid only ever showed two.
-- **A 100× unit error in the money.** A rename to basis points had never propagated to the control's display file. At one step the dial read **"63 points · $94,501 credited at closing"** directly above a panel correctly reading **"Rate credit −$937.50."**
+- **The dial displayed "Par" while off par.** It displayed one shared step from the *first* product only. On steps that product didn't support, the value fell back to par and computed a zero delta. The readout printed "Par" and the "Reset to par" button rendered at the same time.
+- **Cards silently reverted to par.** When a product had no rung at the selected step, it displayed its par rate, payment, and DSCR with no indication, **and the Select button stayed live.** A borrower could select a par-priced loan while the control said that an adjustment was applied.
+- **Three dead steps belonged to invisible products.** The step domain combined all six qualifying products while the grid only could show two.
+- **A 100× unit error in the money.** This was a simple math error. At one step the dial read **"63 points · $94,501 credited at closing"** directly above a panel correctly reading **"Rate credit −$937.50."** But the only way to really check it was by looking into the details. I gotta give credit to Claude for helping me double check this, because without it, it probably would have slipped through.
 
-That last one is the one I would point at. It was not visible in a mockup and not caught by the type checker, because both values were structurally valid numbers. It was only findable by holding the captured response, the rendered screen, and the source next to each other. That is a designer-shaped bug in a designer-shaped place — the money figure a borrower reads — and it was two orders of magnitude wrong.
+That last one was tricky. It wasn't visible in a static mockup and wasn't caught by the type checker, because both values were structurally valid numbers. It was only found by putting the captured response, the rendered screen, and the source next to each other. That was a designer-shaped bug squarely in the designer's wheelhouse. I got the money figure a borrower reads quite wrong.
 
-To be precise about severity, since it matters: all four were defects in the *prototype* state of this work, caught before any of it merged. None reached production and no borrower ever saw them. Finding them was the review pass on my own prototype, and the redesign below is the fix. I would rather say that plainly than let a number like $94,501 imply a production incident it never was.
+The big thing I learned about working this way and a nice bonus was that all four of these were defects in the *prototype* of this work, caught before anything merged. Nothing reached production and no borrower ever saw them. Finding them was the review pass on my own prototype, and the redesign below fixed it. In the old way of working that's something an engineer probably would have caught, and brought back to me. This time I was able to fix it on my own.
+
+Throughout this case study and screenshots you might see par and base used. Before we released this, we swapped par for base because that better matched the legacy calculator and the language borrowers and the team were already using.
 
 ## I explored the fix as design, then locked it
 

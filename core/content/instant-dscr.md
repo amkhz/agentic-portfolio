@@ -12,13 +12,13 @@
 
 ## The short version
 
-I am the lead product designer on this product, and I ship to the production repository. Not prototypes handed to engineering. Branches, pull requests, review, merge.
+I am the lead product designer on this product, and I ship designs and code to the production repository. I still made prototypes and worked with engineering to refine them. But branches, pull requests, reviews, and merges were also handled by me.
 
-This case study follows one feature end to end, because the feature is where the claim gets tested. Along the way I proved a product assumption false by reading a live pricing response, caught a 100× unit error in a money figure before it could ship, and rewrote the interaction model as a result. The design decisions and the code that implements them are the same artifact.
+Here's how I put this to work. While working on this feature, I discovered that a product assumption we made was incorrect. Something I only noticed after looking at our live pricing API. I caught a 100× unit error in some money figures before any of it was shipped, sparing the users the shock of seeing a $94,000 credit that we'd have to explain was an error. And then I recreated the interaction model as a result of what we found. The design decisions and the code that implemented them all came from the same place.
 
 ## Context: a codebase built for agents before I got there
 
-The repo was wired for agent-driven development on day one. Its **third commit** — same day as the initial commit — added an agent instruction file and an agent config directory. That was a deliberate inception choice by the engineering leads, not a retrofit.
+Specific design skills and agent rules are loaded through file paths, so each session loads just what it needs to keep things looking and feeling right. The repo was set up for agent-driven development on day one. Within the first three commits, it added agent instruction files and an agent config directory. That was a choice made at the beginning by engineering and something that I followed as soon as I jumped in. When I needed to make sweeping design changes, I made them in my rules and skills. And those cascaded outward.
 
 What that looks like now, on the mainline:
 
@@ -29,8 +29,6 @@ What that looks like now, on the mainline:
 - 6 | Meaningful human contributors
 - 2 engineers + me | Core team
 :::
-
-The tooling is not decoration. Agent rules load per file path, so a session touching the borrower UI gets the design doctrine and nothing else. The CI build **fails** if one of those rule files uses the wrong frontmatter key. There is a containerized sandbox that runs the agent with permissions skipped, on an isolated branch, so it cannot touch your working tree. Agent self-verification by scripted browser capture is the documented default, not a workaround.
 
 This matters to the story for a specific reason. **I did not build this infrastructure. I am the designer who became a first-class contributor inside it.** A production lending codebase is normally closed to me: unfamiliar monorepo, vendor integrations, typed domain models, a test suite with opinions. Agent-assisted development is what made that codebase legible enough for me to work in it directly, at the standard the engineers hold. That is the actual unlock, and it is worth more than a faster mockup.
 
@@ -99,12 +97,10 @@ description: loan first, then rate
 
 The tension was real and worth stating plainly: keying the control on cost gives you a coherent shared *dollar* figure but incoherent *rate* steps. Keying it on rate gives you coherent rate steps but per-product dollars. You cannot have both across six products.
 
-The move was noticing that **scoped to one product family, the tension collapses to a single step.** The grid only ever shows one family's two variants. Unioning all six was what put dead steps on the control in the first place.
+Things get easier once we scope the control to select a single product family. We can't have a coherent list of rates and dollars across all six loan products. But if we limit to one family, we can. This works because then the grid will only need to show two variants within the family. Fully amortizing and interest-only. Within that, every shared step up and down the rate ladder can agree across the rate and the dollar amount. The only thing that makes them different at this point is when we have to cap at the top part of the ladder. This keeps things a little simpler while still enabling borrowers to compare rates in a way that felt right to them.
 
-- all six products, keyed on cost (before): 14 rate steps, **5** dead
+- all six products, keyed on cost (before): 14 rate steps, **5** dead, 3 of them on products the grid never showed
 - one family, keyed on rate: 9–10 rate steps, **0–1** dead
-
-Within a family, every shared step agrees on both rate *and* dollars. Divergence happens only at the capped rung.
 
 **The decision:** the control keys on rate delta, its domain scopes to the displayed family, and interest-only stays paired with its amortizing sibling rather than being demoted into a dropdown. That last one took the most argument with myself. Collapsing it would have made the problem disappear entirely. But both variants price at the *same rate* at every shared step, which means the amortizing/interest-only difference is not a rate difference at all. It is $936 versus $797 a month, and DSCR 2.297 versus 2.697. That is the one trade on the screen the rate control cannot express, and DSCR drives the maximum leverage band. So the pair stays.
 
@@ -112,7 +108,7 @@ I also killed a toggle. Once the dropdown scopes to a family, an "All / Interest
 
 ## Where a loan runs out, it says so
 
-The most interesting state is the one where the borrower asks for a rate a loan cannot price. The old behavior repriced it at par, silently, with Select still live.
+When the borrower asks for a rate a loan cannot price:
 
 The new behavior shows the loan at its own boundary rate, says so in words, and **withholds Select**. Suppressed rather than relabelled, because the control is the borrower's stated intent, and a live Select would take them somewhere they did not ask to go.
 
@@ -185,8 +181,8 @@ All screenshots were captured from the running application in a local stack with
 
 Honesty matters more than a clean ending, and one question is genuinely unresolved.
 
-The disclosure says where the ceiling is. It does **not** say that the request was reduced, which was the original complaint — nothing on screen names the ↑0.500% the borrower asked for. Fixing that sounds trivial and isn't, because it forces a prior decision I had not separated out: **is a clamp a limit statement or an event statement?**
+The disclosure explains where the ceiling sits. It doesn't say that the requested amount was reduced, which was the original issue. Nothing in the UI shows the ↑0.500% the borrower asked for. Fixing that sounds simple but it isn't, because it highlighted a prior decision I hadn't thought out yet: when we clamp, is it a statement about the limit or about the event that made the borrower hit the limit?
 
-The existing copy is deliberately reason-agnostic. It names the bound and never the cause, which is why a ceiling that comes from eligibility rather than pricing reuses the same sentence unchanged. Naming the previous request reintroduces a cause, and then the eligibility case needs its own sentence. Those are two different designs, and picking between them is the real open item — not the copy, the category.
+Naming the reason puts a cause back into copy that never mentioned it, and then the eligibility case needs its own sentence. Those are two different designs.
 
 That is the shape of most of the work here. The interesting decisions are rarely about wording. They are about which fact a surface is responsible for.

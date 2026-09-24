@@ -140,7 +140,7 @@ doctrine loads; keep that clause and fold it into line 21.
 **Replace with:** one clause appended to the line-21 paragraph, shape:
 "Rules load per file path, so a session in the borrower UI gets the design
 doctrine and nothing else." Delete the rest.
-Decision:
+Decision: accept the cut (line 33 deleted); reword line 21 too, draft read as slop. Justin: "Specific design skills and agent rules are loaded through file paths, so each session loads just what it needs to keep things looking and feeling right. The repo was set up for agent-driven development on day one. Within the first three commits, it added agent instruction files and an agent config directory. That was a choice made at the beginning by engineering and something that I followed as soon as I jumped in. When I needed to make sweeping design changes, I made them in my rules and skills. And those cascaded outward."
 
 ### 2. The meta-narration opener -- SCAFFOLDING / REDUNDANCY
 Line 17.
@@ -154,7 +154,7 @@ the "assumption false" judgment. The last sentence is the thesis and stays.
 case study follows one feature end to end, because the feature is where the
 claim gets tested." Keep the three beats and the thesis sentence. V1 gives
 the Phase 5 opener shape for the merged paragraph.
-Decision:
+Decision: accept the cut; reword both paragraphs (lines 15 + 17). Justin: "I am the lead product designer on this product, and I ship designs and code to the production repository. I still made prototypes and worked with engineering to refine them. But branches, pull requests, reviews, and merges were also handled by me." / "Here's how I put this to work. While working on this feature, I discovered that a product assumption we made was incorrect. Something I only noticed after looking at our live pricing API. I caught a 100× unit error in some money figures before any of it was shipped, sparing the users the shock of seeing a $94,000 credit that we'd have to explain was an error. And then I recreated the interaction model as a result of what we found. The design decisions and the code that implemented them all came from the same place."
 
 ### 3. The old behaviour, restated -- REDUNDANCY
 Line 115.
@@ -164,7 +164,7 @@ Line 115.
 "The most interesting" is editorial.
 **Replace with:** "When the borrower asks for a rate a loan cannot price:"
 as the hinge into line 117, or fold the first clause into 117's opening.
-Decision:
+Decision: accept as proposed. Justin: use "base" instead of "par" (the product language changed to align with the legacy calculator; screenshots are slightly out of date).
 
 ### 4. Reason-agnostic copy, explained twice -- REDUNDANCY
 Line 190, first two sentences.
@@ -176,7 +176,7 @@ set up "two different designs."
 **Replace with:** "Naming the previous request puts a cause back into copy
 that never had one, and then the eligibility case needs its own sentence.
 Those are two different designs." Then the custody landing from V8.
-Decision:
+Decision: reword; also rewrote the line-188 paragraph above it (protected category question kept in his words). Justin: "The disclosure explains where the ceiling sits. It doesn't say that the requested amount was reduced, which was the original issue. Nothing in the UI shows the ↑0.500% the borrower asked for. Fixing that sounds simple but it isn't, because it highlighted a prior decision I hadn't thought out yet: when we clamp, is it a statement about the limit or about the event that made the borrower hit the limit?" / "Naming the reason puts a cause back into copy that never mentioned it, and then the eligibility case needs its own sentence. Those are two different designs." (Covers em-dashes 2.17 and 2.18.)
 
 ### 5. Dead steps, said three times -- REDUNDANCY
 Line 102, last sentence, plus line 107.
@@ -191,7 +191,7 @@ line 102, not as a separate two-sentence paragraph after the receipts.
 **Replace with:** delete the line-102 sentence. Move line 107 up to close
 the line-102 paragraph, so the insight and its reason sit together and the
 14/5 vs 9-10/0-1 bullets follow as the evidence.
-Decision:
+Decision: reword (both cuts taken; his paragraph replaces line 102 and absorbs line 107). Justin: "Things get easier once we scope the control to select a single product family. We can't have a coherent list of rates and dollars across all six loan products. But if we limit to one family, we can. This works because then the grid will only need to show two variants within the family. Fully amortizing and interest-only. Within that, every shared step up and down the rate ladder can agree across the rate and the dollar amount. The only thing that makes them different at this point is when we have to cap at the top part of the ladder. This keeps things a little simpler while still enabling borrowers to compare rates in a way that felt right to them."
 
 ### 6. The state-not-notification point, twice -- REDUNDANCY
 Line 169, last sentence.
@@ -521,6 +521,7 @@ limit closer.
   products). The reader has no way to know that. One clause reconciles
   them, or the bullet at line 104 says "5 dead, 3 of them on products the
   grid never showed."
+  **Resolved in apply (Justin, 2026-09-24):** 3 of the 5 confirmed; the bullet now reads "14 rate steps, **5** dead, 3 of them on products the grid never showed."
 - **P4-4, "That is the actual unlock, and it is worth more than a faster
   mockup" (line 35).** The thesis, unproven by design and fine as a thesis,
   but it is the biggest contribution claim in the piece and the self-limit

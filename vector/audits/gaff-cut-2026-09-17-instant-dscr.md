@@ -411,7 +411,7 @@ Line 139.
 
 **Why:** Pass 3. "Worth naming" rates the list before the reader sees it.
 **Replace with:** "Three decisions:"
-Decision:
+Decision: accept.
 
 ### 22. "That last detail generalizes:" -- SCAFFOLDING
 Line 145, opening clause. Also "and the reason generalizes:" at line 167.
@@ -424,7 +424,7 @@ start on the fact. Line 167's is handled in the em-dash inventory (2.15).
 full loan identity, even though the visible label does not, because a
 screen-reader user has no dropdown in view to supply the context a sighted
 user gets for free."
-Decision: (line-167 half) resolved inside Justin's clamp-section rewrite, see entry 6; line-145 half pending.
+Decision: line-145 half: accept. (Justin: still reads Claude-y; he'll do a rewrite pass before the final concision pass.) (line-167 half) resolved inside Justin's clamp-section rewrite, see entry 6; line-145 half pending.
 
 ### 23. Bold as textbook emphasis -- FORMATTING TELL
 Lines 21, 41, 47, 49, 102, 117, 153-154, 156, 165, 167, 188 (twice).
@@ -438,7 +438,7 @@ lead-ins). Drop the rest, or keep at most the two decision claims (102 and
 117) if they survive V4 as standalone aphorisms.
 **Replace with:** un-bold lines 21, 41, 47, 49, 153, 154, 156, 165, 167,
 188. Justin's call on 102 and 117.
-Decision:
+Decision: accept (Justin, bulk). Un-bolded: "one shared ladder", "ragged", the same-rate claim, the 0.500%/0.375% readouts. Lines 21, 156, 165, 188 were rewritten by Justin without bold. KEPT: the B/A prominence-redundancy bold (Justin dictated it bold in his clamp rewrite), "**withholds Select**" and "**The decision:**" (left for his V7/V4 rewrite pass), bullet lead-ins, UI-readout quotes, the 5 / 0-1 counts, comparison labels.
 
 ### 24. Negative parallelism, six times -- AI-TELL
 Lines 49, 64, 156, 158, 169, 192.
@@ -515,7 +515,7 @@ the callout. Every entry below restructures; none respells the dash.
   → "and the real open item is the category, not the copy." (cut 4 reshapes
   the surrounding sentences.)
 
-Decision:
+Decision: accept all (Justin, bulk). Applied as proposed: 2.1, 2.2, 2.4, 2.7, 2.8, 2.9, 2.10, 2.12. Already cleared by other entries or Justin's rewrites: 2.3, 2.5, 2.6, 2.11, 2.13-2.18. En-dash ranges and minus signs in quoted UI copy exempt. File em-dash count: 0.
 
 ---
 

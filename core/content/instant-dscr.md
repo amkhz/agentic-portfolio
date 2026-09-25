@@ -1,5 +1,5 @@
 ::: callout
-**Role:** Lead Product Designer — design and implementation
+**Role:** Lead Product Designer, design and implementation
 
 **Product:** Instant origination for DSCR rental loans (private lending)
 
@@ -7,7 +7,7 @@
 
 **Surface:** Borrower-facing web app, production
 
-**What I did:** designed it, wrote the code, opened the PRs, merged them — 27 in this repo
+**What I did:** designed it, wrote the code, opened 27 PRs in this repo, merged them
 :::
 
 ## The short version
@@ -38,15 +38,15 @@ As things started to click together for me, I was able to merge my own PRs, larg
 
 Borrowers can buy their interest rate up or down. Pay points at closing for a lower rate, or take a credit at closing in exchange for a higher one. The screen offers a stepper: press `−` to walk the rate down, `+` to walk it up, and the loan cards below reprice.
 
-The design that existed assumed **one shared ladder** — that every loan product offers the same set of rate steps, so one control could drive them all. That assumption was written down as an open question nobody had answered. So I answered it.
+The design that existed assumed one shared ladder: every loan product offers the same set of rate steps, so one control could drive them all. That assumption was written down as an open question nobody had answered. So I answered it.
 
 ## I captured the real response and the assumption collapsed
 
 I deployed a throwaway branch to a QA environment and captured an actual pricing response: one loan, six qualifying products, all starting from the same base rate.
 
-Real ladders are **ragged**. Each product's rate steps are truncated at a price cap, and because each carries a different price offset, the cap bites at a different point on each one. On the buy-up side, the six products shared only two steps out of fourteen. Beyond that, every product was alone.
+Real ladders are ragged. Each product's rate steps are truncated at a price cap, and because each carries a different price offset, the cap bites at a different point on each one. On the buy-up side, the six products shared only two steps out of fourteen. Beyond that, every product was alone.
 
-The problematic finding: **the same rate costs different amounts on different products.** The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was set to could select a rung within one product, but it could never align a control across loan products. One shared dial over one shared unit didn't need improvement. It needed to change.
+The problematic finding: the same rate costs different amounts on different products. The 30-year fixed reached 6.75% for a $2,556 credit. Its interest-only sibling reached the same 6.75% for $2,625. So the unit the control was set to could select a rung within one product, but it could never align a control across loan products. One shared dial over one shared unit didn't need improvement. It needed to change.
 
 ![Design board headed "Every product's ladder stops in a different place", plotting which of six loan products has a rung at each of fourteen rate steps, with the buy-up side ragged and the buy-down side complete](/images/instant-dscr-ragged-ladders.png)
 *The finding*
@@ -74,13 +74,13 @@ Six directions, drawn as real screens, not boxes:
 ::: comparison
 **Before**
 ![Option A board, "Intersection": a dial domain of nine rate steps with the +0.5 step struck through, and a note that the interest-only product can reach it for a $2,931 credit the borrower is never offered](/images/instant-dscr-option-a.png)
-placeholder: Option A, "Intersection" — a dial domain row with one step struck through, above gains and costs columns
+placeholder: Option A, "Intersection": a dial domain row with one step struck through, above gains and costs columns
 label: A
 description: only steps every visible product shares
 
 **After**
 ![Option B board, "Shared dial + per-card ceiling": a full-range dial at 0.50% above two loan cards, the interest-only card selectable at 6.875% and the 30-year card dashed at its 6.750% ceiling](/images/instant-dscr-option-b.png)
-placeholder: Option B, "Shared dial + per-card ceiling" — a rate dial above two loan cards, one at its ceiling, above gains and costs columns
+placeholder: Option B, "Shared dial + per-card ceiling": a rate dial above two loan cards, one at its ceiling, above gains and costs columns
 label: B
 description: shared dial, per-card ceiling
 :::
@@ -88,13 +88,13 @@ description: shared dial, per-card ceiling
 ::: comparison
 **Before**
 ![Option C board, "Rate scale, no stepper": a row of ten selectable rates from 5.750 to 6.875 with 6.625 chosen, above one row per product showing rate, monthly payment, and credit](/images/instant-dscr-option-c.png)
-placeholder: Option C, "Rate scale — no stepper" — a row of selectable rates above one row per product, with gains and costs columns
+placeholder: Option C, "Rate scale, no stepper": a row of selectable rates above one row per product, with gains and costs columns
 label: C
 description: a rate scale, no stepper
 
 **After**
 ![Option D board, "Loan first, then rate": step one picks among three loans all shown at par 6.375%, step two adjusts that one loan's rate on its own ladder to 6.625%](/images/instant-dscr-option-d.png)
-placeholder: Option D, "Loan first, then rate" — a two-step panel pairing loan choice with a per-loan rate ladder, above gains and costs columns
+placeholder: Option D, "Loan first, then rate": a two-step panel pairing loan choice with a per-loan rate ladder, above gains and costs columns
 label: D
 description: loan first, then rate
 :::
@@ -108,7 +108,7 @@ Things get easier once we scope the control to select a single product family. W
 
 **The decision:** the control keys on rate delta, its domain scopes to the displayed family, and interest-only stays paired with its amortizing sibling rather than being demoted into a dropdown. That last one took the most argument with myself. Collapsing it would have made the problem disappear entirely. But both variants price at the *same rate* at every shared step, which means the amortizing/interest-only difference is not a rate difference at all. It is $936 versus $797 a month, and DSCR 2.297 versus 2.697. That is the one trade on the screen the rate control cannot express, and DSCR drives the maximum leverage band. So the pair stays.
 
-I also killed a toggle. Once the dropdown scopes to a family, an "All / Interest-Only" switch can only subtract — it hides half of the exact comparison the pair exists to protect.
+I also killed a toggle. Once the dropdown scopes to a family, an "All / Interest-Only" switch can only subtract. It hides half of the exact comparison the pair exists to protect.
 
 ## Where a loan runs out, it says so
 
@@ -132,13 +132,13 @@ The stepper says "nudge me one step." It doesn't say "show me everything," becau
 *All rates*
 <!-- aspect:auto placeholder:A table of every rate on one loan, rows as native radio inputs, with monthly payment, DSCR, and the closing figure stated as cost or credit in words -->
 
-Three decisions worth naming:
+Three decisions:
 
 - **Browsing does not commit.** The table holds a *requested* rate; the control holds the *committed* one. Only the primary button converts one into the other. This started as a bug I filed against my own prototype: pick a row, leave the table, and the rate had followed you out.
-- **Rows are native radio inputs**, not buttons wearing a radio role. The browser then supplies the entire keyboard contract for free instead of forty lines of hand-rolled key handling. A rate the loan cannot price is not a *disabled* radio — it is not a radio at all, because arrowing onto it would select something unreachable.
+- **Rows are native radio inputs**, not buttons wearing a radio role. The browser then supplies the entire keyboard contract for free instead of forty lines of hand-rolled key handling. A rate the loan cannot price is not a disabled radio. It is not a radio at all, because arrowing onto it would select something unreachable.
 - **The closing column states direction in words.** A bare "−$2,556" under a header reading "At closing" says three contradictory things at once: the minus reads as below zero, the green reads as good, and the header reads as money owed. Borrowers do not experience a credit as a negative number. So the figure is always positive and the word carries the direction: "$2,556 credit," "$1,032 cost." One function decides it, and both the visible cell and the screen-reader name read through that function, so they cannot disagree.
 
-That last detail generalizes: the accessible name on each Select button carries the full loan identity, even though the visible label does not, because a screen-reader user has no dropdown in view to supply the context a sighted user gets for free.
+The accessible name on each Select button carries the full loan identity, even though the visible label does not, because a screen-reader user has no dropdown in view to supply the context a sighted user gets for free.
 
 ## And the one state that had no disclosure at all
 
@@ -146,8 +146,8 @@ Switching products carries the borrower's adjustment across, clamped to the near
 
 Asking for ↑0.500% on the 30-year, then switching to the 5/1 adjustable:
 
-- Before the switch, the dial reads **0.500%**.
-- After the switch, the dial reads **0.375%**. Nothing said why.
+- Before the switch, the dial reads 0.500%.
+- After the switch, the dial reads 0.375%. Nothing said why.
 
 What made this hard isn't that the change was subtle. Rather, what the borrower saw was still completely self-consistent. The dial said 0.375%, both cards said `↑ 0.375% vs base`, the credits agreed, and both Select buttons were live. Everything still priced properly, so there wasn't any limit to display. From the borrower's point of view, there was no contradiction to see, because what they were asking for wasn't anywhere on the screen.
 

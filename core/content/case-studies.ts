@@ -171,7 +171,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     slug: 'ai-leadership',
-    title: 'Pioneering AI Adoption',
+    title: 'AI Adoption at Kiavi',
     subtitle: 'Strategy, tooling, and the future of design control.',
     tags: ['Strategy', 'AI/ML', 'Design Leadership', 'Organizational Change'],
     parentHub: 'design-infrastructure',
